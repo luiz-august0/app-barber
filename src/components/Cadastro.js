@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import { SafeAreaView, TextInput, Text,  TouchableOpacity, View, Image, Alert } from 'react-native'
 import { Ionicons } from "@expo/vector-icons"
 import style from './style'
-import firebase from 'firebase';
-
-const db = firebase.firestore()
-const storage = firebase.storage();
 
 function C01 ({ navigation, route })  {
   const [nome, setNome] = useState('');
@@ -126,20 +122,6 @@ function C03 ({ navigation, route })  {
 
   const [input2, setInput2] = useState('');
   const [hidePass2, setHidePass2] = useState(true);
-
-  const enviarDados = async () => {
-    const usuarioId = firebase.auth().currentUser.uid;
-    try {
-      const doc = await db.collection('usuarios').doc(usuarioId).set({
-        nome: route.params?.nome,
-        sobrenome: route.params?.snome,
-        email: route.params?.email,
-        celular: route.params?.ncelular
-      })
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  }
     
   function validarC3() {
     if (input1.length < 6) {
@@ -149,20 +131,7 @@ function C03 ({ navigation, route })  {
       Alert.alert("Senhas não coincidem", "Por favor, digite novamente");
     }
     else {
-      try{
-        firebase.auth().createUserWithEmailAndPassword(route.params?.email, input1)
-          .then(() => {
-            navigation.navigate('Login') 
-            enviarDados();
-            Alert.alert("", "Cadastro realizado com sucesso!")
-        })       
-          .catch(error => {   
-            navigation.navigate('C02')
-            Alert.alert("Email já utilizado" ,"Tente novamente com outro Email");
-         })
-       }catch(err){
-        Alert.alert("Email já utilizado" ,"Tente novamente com outro Email");
-       }
+      navigation.navigate('Login') 
     }
   }
 
@@ -228,24 +197,12 @@ function redefinirSenha ({ navigation, route }) {
     return re.test(email);
   }
 
-  async function esqueciSenha(){
-    
-    await firebase.auth().sendPasswordResetEmail(email)
-        .then(() => {
-            Alert.alert('','Verifique sua caixa de email.')
-            navigation.navigate('Login')
-        })
-    .catch((error) => {
-      Alert.alert("Email sem cadastro", "Informe um email já cadastrado")
-    });
-  }
-
   function validarInputEmail(){
     if (validarEmail(email) === false) {
       Alert.alert("Email invalido", "Por favor, digite novamente");
     }
     else {
-      esqueciSenha();
+
     }
   }
   

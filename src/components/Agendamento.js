@@ -1,46 +1,16 @@
 import React, { useState } from 'react'
-import { SafeAreaView, TextInput, Platform, Text, Button, TouchableOpacity, View, Image, Alert, ActivityIndicator } from 'react-native'
+import { SafeAreaView, Platform, Text, TouchableOpacity, View, Image, Alert } from 'react-native'
 import style from './style'
-import firebase from 'firebase';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-  const db = firebase.firestore()
-  const storage = firebase.storage();
-
   function Agenda ({navigation, route}) {
-    const usuarioId = firebase.auth().currentUser.uid;
     const [barbeiro, setBarber] = useState('');
     const [servico, setServ] = useState('');
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
 
-    const getUser = () => {
-      firebase
-      .firestore()
-      .collection('agendamentos')
-      .doc(usuarioId)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          value={barbeiro}
-          value={servico}
-          value={data}
-          value={hora}
-          setBarber(doc.data().barbeiro, "barbeiro")
-          setServ(doc.data().servico, "servico")
-          setData(doc.data().data, "data")
-          setHora(doc.data().hora, "hora")
-        } else {
-          console.log("No such document!");
-        }
-    })
-  }
-
-
-
   function validarAgendamento() {
-    getUser()
     if (barbeiro === "" && servico === "" && hora === "" && data === "") {
         Alert.alert("","Não há agendamentos para este usuário")
     } else {
@@ -186,27 +156,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
     showMode('time');
   };
 
-  const enviarDados = async () => {
-    const usuarioId = firebase.auth().currentUser.uid;
-    try {
-      const doc = await db.collection('agendamentos').doc(usuarioId).set({
-        barbeiro: route.params?.BarberSel,
-        servico: route.params?.ServSel,
-        data: data,
-        hora: horario
-      })
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  }
-
   function validaHorario() {
     if (date < Date.now()) {
       Alert.alert("Agendamento invalido","Selecione outro horário")
     } else {
       Alert.alert("", "Agendamento realizado com sucesso!")
       navigation.navigate('Agenda')
-      enviarDados()
     }
   }
 
@@ -247,76 +202,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
     )
   }
 
-  function MeusAgendamentos ({ navigation, route }) {
-    const usuarioId = firebase.auth().currentUser.uid;
-    const [barbeiro, setBarber] = useState('');
-    const [servico, setServ] = useState('');
-    const [data, setData] = useState('');
-    const [hora, setHora] = useState('');
-
-    const enviarDados = async () => {
-      const usuarioId = firebase.auth().currentUser.uid;
-      try {
-        const doc = await db.collection('agendamentos').doc(usuarioId).set({
-          barbeiro: "",
-          servico: "",
-          data: "",
-          hora: ""
-        })
-      } catch (error) {
-        console.error("Error adding document: ", error);
-      }
-    }
-
-    function cancelarHorario() {
-      enviarDados()
-      Alert.alert("", "Agendamento cancelado com sucesso!")
-      navigation.navigate('Agenda')
-    }
-
-    const getUser = () => {
-      firebase
-      .firestore()
-      .collection('agendamentos')
-      .doc(usuarioId)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          value={barbeiro}
-          value={servico}
-          value={data}
-          value={hora}
-          setBarber(doc.data().barbeiro, "barbeiro")
-          setServ(doc.data().servico, "servico")
-          setData(doc.data().data, "data")
-          setHora(doc.data().hora, "hora")
-        } else {
-          console.log("No such document!");
-        }
-    })
-  }
-  
-  getUser();
-
-    return (
-      <View style={style.container}>
-        <Text style={{color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold',}} >Meus Agendamentos</Text>
-        	<SafeAreaView style={style.safeAreaAgendamento}>
-            <SafeAreaView style={style.safeAreaMeusAgendamentos}>
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18, textAlign: 'center', alignContent:'center' }}>Barbeiro {barbeiro}</Text>
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18, textAlign: 'center', alignContent:'center' }}>{servico}</Text>
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18, textAlign: 'center', alignContent:'center' }}>Horário: {data} ás {hora}</Text>
-            </SafeAreaView>
-          </SafeAreaView>
-          <TouchableOpacity
-              style={ style.btnCancelarAgenda }          
-              onPress={cancelarHorario}       
-            >
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Cancelar Agendamento</Text>
-            </TouchableOpacity>
-      </View>
-    )
-  }
   
 
-  export {Agenda, AgendaBarbeiro, AgendaServico, AgendaHorario, MeusAgendamentos};
+  export {Agenda, AgendaBarbeiro, AgendaServico, AgendaHorario};

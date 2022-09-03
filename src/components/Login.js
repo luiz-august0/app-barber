@@ -1,43 +1,12 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, ImageBackground, TextInput, StyleSheet, View, Image, Alert } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, TextInput, View, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import style from './style'
-import firebase from 'firebase';
 
-var firebaseConfig = {
-  apiKey: "AIzaSyDMSAWQf4wIgIxvmZRvtgc8A6sVgVEmFbU",
-  authDomain: "aircutapp-83c5a.firebaseapp.com",
-  projectId: "aircutapp-83c5a",
-  storageBucket: "aircutapp-83c5a.appspot.com",
-  messagingSenderId: "781356712087",
-  appId: "1:781356712087:web:99c050cebf0df1a03fa9d2",
-  measurementId: "G-9F81FWVVD4"
-};
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-
-
-export default Login = ({ navigation, route }) => {
+const Login = ({ navigation, route }) => {
   const [input, setInput] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [login, setLogin] = useState('');
-  
-
-  function validarLogin() {
-    try{
-      firebase.auth().signInWithEmailAndPassword(login, input)
-        .then(() => navigation.navigate('Home'))
-        .catch(error => {   
-          Alert.alert("Email ou senha inválidos", "Digite novamente");
-       })
-     }catch(err){
-        Alert.alert("Email ou senha inválidos", "Digite novamente");
-     }
-    }
 
     return (
       <View style={ style.container }>
@@ -74,8 +43,6 @@ export default Login = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
         
-        
-
         <TouchableOpacity
         onPress={() => navigation.navigate('redefinirSenha')}
         >
@@ -83,7 +50,7 @@ export default Login = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-        onPress={validarLogin}
+        onPress={''}
         style={ style.btnLogin }
         >
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login</Text>
@@ -102,3 +69,4 @@ export default Login = ({ navigation, route }) => {
     ) 
 }
 
+export default Login;
