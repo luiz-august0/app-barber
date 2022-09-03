@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FF7425'
+        backgroundColor: '#FCA311'
     }, 
     safeAreaL: {
         justifyContent: 'center',

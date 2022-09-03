@@ -11,7 +11,7 @@ const Login = ({ navigation, route }) => {
     return (
       <View style={ style.container }>
         <Image
-          source={require('../img/barbeiro.jpg')}
+          source={require('../../img/barbeiro.jpg')}
           style={ style.barberImage }
         />
     <SafeAreaView style={ style.safeAreaL } >
