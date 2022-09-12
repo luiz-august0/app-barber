@@ -44,7 +44,7 @@ const Login = ({ navigation, route }) => {
       </View>
         
         <TouchableOpacity
-        onPress={() => navigation.navigate('redefinirSenha')}
+        onPress={() => navigation.navigate('RedefinirSenha')}
         >
           <Text style={{ color: "#ffff", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
         </TouchableOpacity>

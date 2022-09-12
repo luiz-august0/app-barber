@@ -45,7 +45,7 @@ function C01 ({ navigation, route })  {
         onPress={validarC}
         >
           <Image
-            source={require('../img/next-button.png')}
+            source={require('../../img/next-button.png')}
             style={ style.btnNext }
           />
         </TouchableOpacity>
@@ -105,7 +105,7 @@ function C02 ({ navigation, route }) {
       onPress={validarC2}
       >
         <Image
-          source={require('../img/next-button.png')}
+          source={require('../../img/next-button.png')}
           style={ style.btnNext }
         />
       </TouchableOpacity>
@@ -189,7 +189,7 @@ function C03 ({ navigation, route })  {
  
 }
 
-function redefinirSenha ({ navigation, route }) {
+function RedefinirSenha ({ navigation, route }) {
   const [email, setEmail] = useState('');
 
   function validarEmail(email) {
@@ -234,4 +234,4 @@ function redefinirSenha ({ navigation, route }) {
   )
 }
 
-export { C01, C02, C03, redefinirSenha };
+export { C01, C02, C03, RedefinirSenha };

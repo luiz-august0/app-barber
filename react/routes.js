@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {C01, C02, C03, redefinirSenha} from './src/components/Cadastro';
-import Home from './src/components/Home';
-import Login from './src/components/Login/Login';
+import Inicio from './src/pages/Inicio';
+import Login from './src/pages/Login/index';
+import {C01, C02, C03, RedefinirSenha} from './src/pages/Cadastro/index';
+import Home from './src/pages/Home/index';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,8 +17,12 @@ const Routes = () => {
             }}
             >
                 <Stack.Screen
-                    name="Login"
-                    component={Login}
+                name="Inicio"
+                component={Inicio}
+                />
+                <Stack.Screen
+                name="Login"
+                component={Login}
                 />
                 <Stack.Screen 
                 name="C01" 
@@ -32,8 +37,8 @@ const Routes = () => {
                 component={C03} 
                 />
                 <Stack.Screen 
-                name="redefinirSenha" 
-                component={redefinirSenha} 
+                name="RedefinirSenha" 
+                component={RedefinirSenha} 
                 />
                 <Stack.Screen 
                 name="Home" 
