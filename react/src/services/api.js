@@ -5,8 +5,8 @@ export const api = axios.create({
 });
 
 //Rota de sessão
-export const createSession = async (usuario, senha) => {
-    return api.put('/sessions', { usuario, senha });
+export const createSession = async (email, senha) => {
+    return api.put('/sessions', { email, senha });
 };
 /**************************************************************/
 
@@ -15,14 +15,18 @@ export const getUsuarios = async () => {
     return api.get('/usuario');
 };
 
-export const createUsuario = async (usuario, senha, setor) => {
-    return api.post('/usuario', { usuario, senha, setor});
+export const createUsuario = async (email, nome, senha, contato, cpf, tipo) => {
+    return api.post('/usuario', { email, nome, senha, contato, cpf, tipo });
 };
 
-export const updateUsuario = async (usuario, senha, setor, usuarioID) => {
-    return api.put(`/usuario/${usuarioID}`, { usuario, senha, setor });
+export const updateUsuario = async (email, nome, senha, contato, cpf, usuarioID) => {
+    return api.put(`/usuario/${usuarioID}`, { email, nome, senha, contato, cpf });
 };
 
 export const deleteUsuario = async (usuarioID) => {
     return api.delete(`/usuario/${usuarioID}`);
+};
+
+export const getUsuario = async (usuarioID) => {
+    return api.get(`/usuario/${usuarioID}`);
 };

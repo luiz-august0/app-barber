@@ -81,7 +81,7 @@ class UsuarioController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { email, nome, senha, contato, cpf, tipo } = req.body;
+            const { email, nome, senha, contato, cpf } = req.body;
             const encryptedPassword = await createPasswordHash(senha);
 
             mysql.getConnection((error, conn) => {

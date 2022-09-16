@@ -1,6 +1,6 @@
 CREATE TABLE usuario(
     Usr_Codigo INT PRIMARY KEY AUTO_INCREMENT,
-    Usr_Email VARCHAR(110) NOT NULL,
+    Usr_Email VARCHAR(110) UNIQUE NOT NULL,
     Usr_Nome VARCHAR(80) NOT NULL,
     Usr_Senha VARCHAR(50) NOT NULL,
     Usr_Contato VARCHAR(20),
