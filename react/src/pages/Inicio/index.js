@@ -6,7 +6,7 @@ import imgBarber from '../../img/barber.png';
 
 const Inicio = ({ navigation, route }) => {
     const onClickButton = async (tipoUsuario) => {
-        await AsyncStorage.setItem('@tipoUsuario', tipoUsuario);
+        await AsyncStorage.setItem("TipoUsuario", tipoUsuario);
         navigation.navigate('Login');
     }
 

@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native'
+import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FCA311',
+        backgroundColor: globalStyles.main_color,
         alignItems: 'center',
     }, 
     image: {

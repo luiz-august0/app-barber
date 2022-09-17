@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { SafeAreaView, TextInput, Text,  TouchableOpacity, View, Image, Alert } from 'react-native'
-import { Ionicons } from "@expo/vector-icons"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from "@expo/vector-icons";
 import style from './style'
+import { createUsuario } from '../../services/api';
 
 function C01 ({ navigation, route })  {
   const [nome, setNome] = useState('');
   const [snome, setSnome] = useState('');
-
 
   function validarC() {
     if (nome == "" && snome == "") {
@@ -123,7 +124,9 @@ function C03 ({ navigation, route })  {
   const [input2, setInput2] = useState('');
   const [hidePass2, setHidePass2] = useState(true);
     
-  function validarC3() {
+  const validarC3 = async() => {
+    const tipo = await AsyncStorage.getItem("TipoUsuario");
+
     if (input1.length < 6) {
       Alert.alert("Senha invalida", "Por favor, digite uma senha com no minímo 6 caracteres");
     }
@@ -131,7 +134,14 @@ function C03 ({ navigation, route })  {
       Alert.alert("Senhas não coincidem", "Por favor, digite novamente");
     }
     else {
-      navigation.navigate('Login') 
+      try {
+        //await createUsuario(route.params?.email, route.params?.nome, input1, route.params?.telefone, "", tipo);
+        await createUsuario("teste@teste.com", "teste", "teste", "", "", "C");
+        Alert.alert('Cadastrado com sucesso!');
+        navigation.navigate('Login');
+      } catch (error) {
+        console.log((error));
+      }
     }
   }
 

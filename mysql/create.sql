@@ -2,7 +2,7 @@ CREATE TABLE usuario(
     Usr_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Usr_Email VARCHAR(110) UNIQUE NOT NULL,
     Usr_Nome VARCHAR(80) NOT NULL,
-    Usr_Senha VARCHAR(50) NOT NULL,
+    Usr_Senha VARCHAR(255) NOT NULL,
     Usr_Contato VARCHAR(20),
     Usr_CPF VARCHAR(11),
     Usr_Tipo CHAR(1) NOT NULL

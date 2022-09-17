@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, TextInput, View, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import style from './style'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = ({ navigation, route }) => {
   const [input, setInput] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [login, setLogin] = useState('');
-  console.log((AsyncStorage.getItem('@tipoUsuario')));
 
     return (
       <View style={ style.container }>
@@ -23,7 +21,6 @@ const Login = ({ navigation, route }) => {
             placeholderTextColor="#fff"
             value= {login}
             onChangeText={ (login) => setLogin(login) }
-
           />
 
       <View style={ style.inputAreaSenhaL}>
