@@ -73,8 +73,10 @@ function C02 ({ navigation, route }) {
     if (validarEmail(email) === false) {
       Alert.alert("Email invalido", "Por favor, digite novamente");
     }
-    else if (ncelular.length < 11 || ncelular.length > 11) {
-      Alert.alert("Número de telefone invalido", "Por favor, digite novamente");
+    else if (ncelular.length > 0) {
+      if (ncelular.length < 11 || ncelular.length > 11) {
+        Alert.alert("Número de telefone invalido", "Por favor, digite novamente");
+      }
     }
     else {
       navigation.navigate('C03', {email: email, ncelular: ncelular, nome: nome, snome: snome})
@@ -135,12 +137,13 @@ function C03 ({ navigation, route })  {
     }
     else {
       try {
-        //await createUsuario(route.params?.email, route.params?.nome, input1, route.params?.telefone, "", tipo);
-        await createUsuario("teste@teste.com", "teste", "teste", "", "", "C");
+        await createUsuario(route.params?.email, route.params?.nome + ' ' + route.params?.nome, input1, route.params?.ncelular, "", tipo);
         Alert.alert('Cadastrado com sucesso!');
         navigation.navigate('Login');
       } catch (error) {
-        console.log((error));
+        if (error.message === 'Request failed with status code 401') {
+          Alert.alert('Email já cadastrado', 'Informe outro e-mail');
+        }
       }
     }
   }

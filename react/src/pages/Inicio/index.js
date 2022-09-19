@@ -16,13 +16,13 @@ const Inicio = ({ navigation, route }) => {
         <Text style={style.text_title}>Barber</Text>
         <TouchableOpacity
         style={style.button1}
-        onPress={() => onClickButton('b')}
+        onPress={() => onClickButton('B')}
         >
             <Text style={style.text}>Sou Barbeiro</Text>
         </TouchableOpacity>
         <TouchableOpacity
         style={style.button2}
-        onPress={() => onClickButton('c')}
+        onPress={() => onClickButton('C')}
         >
             <Text style={style.text}>Sou Cliente</Text>
         </TouchableOpacity>

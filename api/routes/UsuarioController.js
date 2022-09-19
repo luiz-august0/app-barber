@@ -57,7 +57,7 @@ class UsuarioController {
                         if (error) { return res.status(500).send({ error: error }) }
                     
                         if (JSON.stringify(result) != '[]') {
-                            return res.status(401).json('Email já cadastrado');
+                            return res.status(401).json('Email ja cadastrado');
                         } else {
                             conn.query(
                                 `INSERT INTO usuario (Usr_Email, Usr_Nome, Usr_Senha, Usr_Contato, Usr_CPF, Usr_Tipo) VALUES ` + 
@@ -100,7 +100,7 @@ class UsuarioController {
                                     if (error) { return res.status(500).send({ error: error }) }
 
                                     if (JSON.stringify(result) != '[]') {
-                                        return res.status(401).json('Email já cadastrado');
+                                        return res.status(401).json('Email ja cadastrado');
                                     } else {
                                         conn.query(
                                             `UPDATE usuario SET Usr_Email = "${email}", Usr_Nome = "${nome}", Usr_Senha = "${encryptedPassword}", ` + 
