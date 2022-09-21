@@ -10,6 +10,11 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    safeAreaCfinaliza: {
+        marginTop: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     inputC: {
         marginTop: 20,
         color: '#fff',
