@@ -48,7 +48,7 @@ const Routes = () => {
                 name="Home" 
                 component={Home} 
                 />
-        </Stack.Navigator>
+            </Stack.Navigator>
         </NavigationContainer>
     )
 }

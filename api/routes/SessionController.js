@@ -1,22 +1,21 @@
 import jwt from "jsonwebtoken";
 import { checkPassword } from "../services/auth";
 import authConfig from "../config/auth";
-
 const mysql = require('../config/mysql').pool;
 
 class SessionController {
     async create(req, res) {
         try {
-            const { usuario, senha } = req.body;
+            const { email, senha } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM usuario WHERE Usr_Login = "${usuario}"`,
+                    `SELECT * FROM usuario WHERE Usr_Email = "${email}"`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         
                         if (JSON.stringify(result) === '[]') {
-                            return res.status(404).json({ error: "Usuário ou senha inválidos." });
+                            return res.status(404).json({ error: "Usuário ou senha inválidos" });
                         }
 
                         const usuarioSenha = JSON.stringify(result[0].Usr_Senha).slice(0, -1).slice(1 | 1);
@@ -30,7 +29,7 @@ class SessionController {
                         return res.json({
                             usuario: {
                                 id,
-                                usuario
+                                email
                             },
                             token: jwt.sign({ id }, authConfig.secret, {
                                 expiresIn: authConfig.expiresIn

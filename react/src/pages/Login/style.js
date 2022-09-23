@@ -16,7 +16,7 @@ export default StyleSheet.create({
     },
     inputL: {
         marginTop: 10,
-        color: '#fff',
+        color: '#FFF',
         padding: 4,
         width: 220,
         fontSize: 14,
@@ -31,7 +31,6 @@ export default StyleSheet.create({
         width: 220,
         backgroundColor: "#404040",
         borderRadius: 10,
-        alignItems: "center",
         padding: 4,
     },  
     inputSenhaL: {
