@@ -16,14 +16,10 @@ export default StyleSheet.create({
     },
     inputL: {
         marginTop: 10,
-        color: '#FFF',
-        padding: 4,
-        width: 220,
-        fontSize: 14,
-        fontWeight: 'bold',
+        width: '70%',
+        height: 40,
         borderRadius: 10,
         backgroundColor: '#404040',
-        textDecorationColor: "#ffff"
     },
     inputAreaSenhaL: {
         marginTop: 10,

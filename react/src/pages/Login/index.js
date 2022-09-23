@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, TextInput, View, Image, Alert } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert } from 'react-native'
+import { TextInput } from "react-native-paper";
 import { login } from  '../../contexts/auth';
 import style from './style'
 
@@ -32,29 +32,24 @@ const Login = ({ navigation, route }) => {
     <SafeAreaView style={ style.safeAreaL } >
       <TextInput
           style={ style.inputL }
-          placeholder="E-mail"
-          placeholderTextColor="#fff"
+          mode='outlined'
+          activeOutlineColor='#fff'
+          label="Email"
+          left={<TextInput.Icon name="email" />}
           value= {email}
           onChangeText={ (email) => setEmail(email) }
       />
-
-      <View style={ style.inputAreaSenhaL}>
       <TextInput
-          style={ style.inputSenhaL }
-          placeholder="Senha"
-          placeholderTextColor="#fff" 
+          style={ style.inputL }
+          mode='outlined'
+          activeOutlineColor='#fff'
+          label="Senha"
           secureTextEntry={hidePass}
-          value={senha}
-          onChangeText={ (texto) => setSenha(texto) }
-        /> 
-        <TouchableOpacity style={style.iconEye}  onPress={ () => setHidePass(!hidePass) }>
-          { hidePass ? 
-            <Ionicons name="eye" color="#FFF" size={25} />
-            :
-            <Ionicons name="eye-off" color="#FFF" size={25} />
-          }
-        </TouchableOpacity>
-      </View>
+          left={<TextInput.Icon name="lock" />}
+          right={<TextInput.Icon onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
+          value= {senha}
+          onChangeText={ (senha) => setSenha(senha) }
+      />
         
         <TouchableOpacity
         onPress={() => navigation.navigate('RedefinirSenha')}
