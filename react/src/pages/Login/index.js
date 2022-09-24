@@ -35,7 +35,9 @@ const Login = ({ navigation, route }) => {
           mode='outlined'
           activeOutlineColor='#fff'
           label="Email"
-          left={<TextInput.Icon name="email" />}
+          keyboardType='email-address'
+          theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+          left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="email" />}
           value= {email}
           onChangeText={ (email) => setEmail(email) }
       />
@@ -43,10 +45,11 @@ const Login = ({ navigation, route }) => {
           style={ style.inputL }
           mode='outlined'
           activeOutlineColor='#fff'
+          theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
           label="Senha"
           secureTextEntry={hidePass}
-          left={<TextInput.Icon name="lock" />}
-          right={<TextInput.Icon onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
+          left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
+          right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
           value= {senha}
           onChangeText={ (senha) => setSenha(senha) }
       />

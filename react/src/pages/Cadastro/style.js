@@ -11,20 +11,16 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     safeAreaCfinaliza: {
-        marginTop: 40,
+        marginTop: '25%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     inputC: {
-        marginTop: 20,
-        color: '#fff',
-        padding: 8,
-        width: 220,
-        fontSize: 14,
-        fontWeight: 'bold',
+        marginTop: 10,
+        width: '70%',
+        height: 40,
         borderRadius: 10,
         backgroundColor: '#404040',
-        textDecorationColor: "#ffff"
     },
     btnNext: {
         alignItems: 'center',

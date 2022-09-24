@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { SafeAreaView, TextInput, Text,  TouchableOpacity, View, Image, Alert } from 'react-native'
+import { SafeAreaView, Text,  TouchableOpacity, View, Image, Alert } from 'react-native'
+import { TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cpf as cpfValidator} from 'cpf-cnpj-validator'; 
 import { Ionicons } from "@expo/vector-icons";
@@ -43,22 +44,28 @@ const C01 = ({ navigation, route }) => {
   
     return (
     <View style={style.container} >
-      <Text style={{color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold',}} >Quem é você ?</Text>
+      <Text style={{color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold'}}>Quem é você ?</Text>
       <SafeAreaView style={style.safeAreaC }>
         <TextInput
-          style={ style.inputC}
-          placeholder="Nome"
-          placeholderTextColor="gray" 
+          style={ style.inputC }
+          mode='outlined'
+          activeOutlineColor='#fff'
+          label="Nome"
+          theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+          left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {nome}
           onChangeText={ (nome) => setNome(nome) }
-          />
+        />
         <TextInput
           style={ style.inputC }
-          placeholder="Sobrenome"
-          placeholderTextColor="gray" 
+          mode='outlined'
+          activeOutlineColor='#fff'
+          label="Sobrenome"
+          theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+          left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {snome}
           onChangeText={ (snome) => setSnome(snome) }
-          />
+        />
         <TouchableOpacity 
           onPress={validarC}
         >
@@ -70,7 +77,6 @@ const C01 = ({ navigation, route }) => {
       </SafeAreaView>
     </View>
     )
-  
 }
 
 const C02 = ({ navigation, route }) => {
@@ -114,29 +120,38 @@ const C02 = ({ navigation, route }) => {
 
   return (
   <View style={style.container} >
-    <Text style={{color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold',}} >Informações pessoais</Text>
+    <Text style={{color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold'}}>Informações pessoais</Text>
     <SafeAreaView style={style.safeAreaC}>
       <TextInput
-        keyboardType="email-address"
         style={ style.inputC }
-        placeholder="E-mail"
-        placeholderTextColor="gray"
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='email-address'
+        label="Email"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="email" />}
         value= {email}
         onChangeText={ (email) => setEmail(email) }
       />
       <TextInput
-        keyboardType="phone-pad"
         style={ style.inputC }
-        placeholder="Celular"
-        placeholderTextColor="gray" 
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='phone-pad'
+        label="Celular"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="phone" />}
         value= {ncelular}
         onChangeText={ (ncelular) => setNcelular(ncelular) }
       />
       <TextInput
-        keyboardType="numeric"
         style={ style.inputC }
-        placeholder="CPF"
-        placeholderTextColor="gray" 
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='numeric'
+        label="CPF"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
         value= {cpf}
         onChangeText={ (cpf) => setCpf(cpf) }
       />
@@ -154,19 +169,19 @@ const C02 = ({ navigation, route }) => {
 }
 
 const C03 = ({ navigation, route }) => {
-  const [input1, setInput1] = useState('');
+  const [senha, setSenha] = useState('');
   const [hidePass1, setHidePass1] = useState(true);
 
-  const [input2, setInput2] = useState('');
+  const [senhaConfirmed, setSenhaConfirmed] = useState('');
   const [hidePass2, setHidePass2] = useState(true);
     
   const validarC3 = () => {
-    if (input1.length < 6) {
+    if (senha.length < 6) {
       Alert.alert("Senha invalida", "Por favor, digite uma senha com no minímo 6 caracteres");
       return;
     }
 
-    if (input1 != input2) {
+    if (senha != senhaConfirmed) {
       Alert.alert("Senhas não coincidem", "Por favor, digite novamente");
       return;
     }
@@ -176,47 +191,37 @@ const C03 = ({ navigation, route }) => {
                               nome: route.params?.nome, 
                               snome: route.params?.snome, 
                               cpf: route.params?.cpf,
-                              senha: input1});
+                              senha: senha});
   }
 
   return (
   <View style={style.container} >
-    <Text style={{color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold',}} >Crie uma senha segura</Text>
+    <Text style={{color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold'}}>Crie uma senha segura</Text>
     <SafeAreaView  style={style.safeAreaC}>
-      <View style={ style.inputAreaSenhaC}>
-        <TextInput
-        style={ style.inputSenhaC }
-        placeholder="Senha"
-        placeholderTextColor="gray" 
+      <TextInput
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
+        label="Senha"
         secureTextEntry={hidePass1}
-        value={input1}
-        onChangeText={ (texto1) => setInput1(texto1) }
-        /> 
-        <TouchableOpacity style={style.iconEye}  onPress={ () => setHidePass1(!hidePass1) }>
-        { hidePass1 ? 
-            <Ionicons name="eye" color="#FFF" size={25} />
-            :
-            <Ionicons name="eye-off" color="#FFF" size={25} />
-        }
-        </TouchableOpacity>
-      </View>
-      <View style={ style.inputAreaSenhaC}>
-        <TextInput
-        style={ style.inputSenhaC }
-        placeholder="Confirmar Senha"
-        placeholderTextColor="gray" 
+        left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
+        right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass1(!hidePass1) } name={ hidePass1 ? "eye-off":"eye"}></TextInput.Icon>}
+        value= {senha}
+        onChangeText={ (senha) => setSenha(senha) }
+      />
+      <TextInput
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
+        label="Confirmar Senha"
         secureTextEntry={hidePass2}
-        value={input2}
-        onChangeText={ (texto2) => setInput2(texto2) }
-        /> 
-        <TouchableOpacity style={style.iconEye}  onPress={ () => setHidePass2(!hidePass2) }>
-        { hidePass2 ? 
-            <Ionicons name="eye" color="#FFF" size={25} />
-            :
-            <Ionicons name="eye-off" color="#FFF" size={25} />
-        }
-        </TouchableOpacity>
-      </View>
+        left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
+        right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass2(!hidePass2) } name={ hidePass2 ? "eye-off":"eye"}></TextInput.Icon>}
+        value= {senhaConfirmed}
+        onChangeText={ (senhaConfirmed) => setSenhaConfirmed(senhaConfirmed) }
+      />
       <TouchableOpacity
       onPress={validarC3}
       >
@@ -236,9 +241,9 @@ const C04 = ({ navigation, route }) => {
   const [email, setEmail] = useState(route.params?.email);
   const [ncelular, setNcelular] = useState(route.params?.ncelular);
   const [cpf, setCpf] = useState(route.params?.cpf);
-  const [input1, setInput1] = useState(route.params?.senha);
+  const [senha, setSenha] = useState(route.params?.senha);
   const [hidePass1, setHidePass1] = useState(true);
-  const [input2, setInput2] = useState(route.params?.senha);
+  const [senhaConfirmed, setSenhaConfirmed] = useState(route.params?.senha);
   const [hidePass2, setHidePass2] = useState(true);
     
   const CadastraUsuario = async() => {
@@ -310,79 +315,84 @@ const C04 = ({ navigation, route }) => {
   return (
   <View style={style.container}>
     <SafeAreaView  style={style.safeAreaCfinaliza}>
-    <Text style={{color: '#000', textAlign: 'center', fontSize: 27, fontWeight: 'bold',}} >Confirmar dados</Text>
-      <TextInput
-        style={ style.inputC}
-        placeholder="Nome"
-        placeholderTextColor="gray" 
-        value= {nome}
-        onChangeText={ (nome) => setNome(nome) }
-        />
+    <Text style={{color: '#fff', textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold'}} >Confirmar dados</Text>
       <TextInput
         style={ style.inputC }
-        placeholder="Sobrenome"
-        placeholderTextColor="gray" 
+        mode='outlined'
+        activeOutlineColor='#fff'
+        label="Nome"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
+        value= {nome}
+        onChangeText={ (nome) => setNome(nome) }
+      />
+      <TextInput
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        label="Sobrenome"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
         value= {snome}
         onChangeText={ (snome) => setSnome(snome) }
       />
       <TextInput
-          keyboardType="email-address"
-          style={ style.inputC }
-          placeholder="E-mail"
-          placeholderTextColor="gray"
-          value= {email}
-          onChangeText={ (email) => setEmail(email) }
-        />
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='email-address'
+        label="Email"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="email" />}
+        value= {email}
+        onChangeText={ (email) => setEmail(email) }
+      />
       <TextInput
-          keyboardType="phone-pad"
-          style={ style.inputC }
-          placeholder="Celular"
-          placeholderTextColor="gray" 
-          value= {ncelular}
-          onChangeText={ (ncelular) => setNcelular(ncelular) }
-        />
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='phone-pad'
+        label="Celular"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="phone" />}
+        value= {ncelular}
+        onChangeText={ (ncelular) => setNcelular(ncelular) }
+      />
       <TextInput
-          keyboardType="numeric"
-          style={ style.inputC }
-          placeholder="CPF"
-          placeholderTextColor="gray" 
-          value= {cpf}
-          onChangeText={ (cpf) => setCpf(cpf) }
-        />
-      <View style={ style.inputAreaSenhaC}>
-        <TextInput
-        style={ style.inputSenhaC }
-        placeholder="Senha"
-        placeholderTextColor="#fff" 
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        keyboardType='numeric'
+        label="CPF"
+        theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+        left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
+        value= {cpf}
+        onChangeText={ (cpf) => setCpf(cpf) }
+      />
+      <TextInput
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
+        label="Senha"
         secureTextEntry={hidePass1}
-        value={input1}
-        onChangeText={ (texto1) => setInput1(texto1) }
-        /> 
-        <TouchableOpacity style={style.iconEye}  onPress={ () => setHidePass1(!hidePass1) }>
-        { hidePass1 ? 
-            <Ionicons name="eye" color="#FFF" size={25} />
-            :
-            <Ionicons name="eye-off" color="#FFF" size={25} />
-        }
-        </TouchableOpacity>
-      </View>
-      <View style={ style.inputAreaSenhaC}>
-        <TextInput
-        style={ style.inputSenhaC }
-        placeholder="Confirmar Senha"
-        placeholderTextColor="#fff" 
+        left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
+        right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass1(!hidePass1) } name={ hidePass1 ? "eye-off":"eye"}></TextInput.Icon>}
+        value= {senha}
+        onChangeText={ (senha) => setSenha(senha) }
+      />
+      <TextInput
+        style={ style.inputC }
+        mode='outlined'
+        activeOutlineColor='#fff'
+        theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
+        label="Confirmar Senha"
         secureTextEntry={hidePass2}
-        value={input2}
-        onChangeText={ (texto2) => setInput2(texto2) }
-        /> 
-        <TouchableOpacity style={style.iconEye}  onPress={ () => setHidePass2(!hidePass2) }>
-        { hidePass2 ? 
-            <Ionicons name="eye" color="#FFF" size={25} />
-            :
-            <Ionicons name="eye-off" color="#FFF" size={25} />
-        }
-        </TouchableOpacity>
-      </View>
+        left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
+        right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass2(!hidePass2) } name={ hidePass2 ? "eye-off":"eye"}></TextInput.Icon>}
+        value= {senhaConfirmed}
+        onChangeText={ (senhaConfirmed) => setSenhaConfirmed(senhaConfirmed) }
+      />
       <TouchableOpacity 
       style={style.btnCadastrar}
       onPress={CadastraUsuario}
