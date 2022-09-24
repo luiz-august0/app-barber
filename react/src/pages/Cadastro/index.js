@@ -289,12 +289,12 @@ const C04 = ({ navigation, route }) => {
       return;
     }
 
-    if (input1.length < 6) {
+    if (senha.length < 6) {
       Alert.alert("Senha invalida", "Por favor, digite uma senha com no minímo 6 caracteres");
       return;
     }
 
-    if (input1 != input2) {
+    if (senha != senhaConfirmed) {
       Alert.alert("Senhas não coincidem", "Por favor, digite novamente");
       return;
     }
@@ -302,7 +302,7 @@ const C04 = ({ navigation, route }) => {
     try {
       let nomeCompleto = nome + ' ' + snome;
       let tipo = await AsyncStorage.getItem('TipoUsuario')
-      await createUsuario(email, nomeCompleto, input1, ncelular, cpf, tipo);
+      await createUsuario(email, nomeCompleto, senha, ncelular, cpf, tipo);
       Alert.alert('Usuário cadastrado com sucesso!');
       navigation.navigate('Login');
     } catch (error) {

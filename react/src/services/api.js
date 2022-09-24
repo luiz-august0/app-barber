@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://tk-vst.anonymous.react.exp.direct:5000'
+    baseURL: 'http://192.168.0.105:5000'
 });
 
 //Rota de sessão
