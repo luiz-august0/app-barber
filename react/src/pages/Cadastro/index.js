@@ -3,9 +3,9 @@ import { SafeAreaView, Text,  TouchableOpacity, View, Image, Alert } from 'react
 import { TextInput } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cpf as cpfValidator} from 'cpf-cnpj-validator'; 
-import { Ionicons } from "@expo/vector-icons";
 import style from './style'
 import { createUsuario } from '../../services/api';
+import imgChair from '../../img/chair.png';
 
 const validarEmail = (email) => {
   var re = /\S+@\S+\.\S+/;
@@ -19,6 +19,32 @@ const validaCPF = (cpf) => {
     return false;
   }
 };
+
+const C00 = ({ navigation, route }) => {
+  const onClickButton = async (tipoUsuario) => {
+      await AsyncStorage.setItem("TipoUsuario", tipoUsuario);
+      navigation.navigate('C01');
+  }
+
+  return (
+  <View style={[style.container, {alignItems: 'center'}]}>
+      <Image source={imgChair} style={style.image}/>
+      <Text style={style.text_title}>Barber</Text>
+      <TouchableOpacity
+      style={style.button1}
+      onPress={() => onClickButton('B')}
+      >
+          <Text style={style.text}>Sou Barbeiro</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+      style={style.button2}
+      onPress={() => onClickButton('C')}
+      >
+          <Text style={style.text}>Sou Cliente</Text>
+      </TouchableOpacity>
+  </View>
+  ) 
+}
 
 const C01 = ({ navigation, route }) => {
   const [nome, setNome] = useState('');
@@ -71,8 +97,9 @@ const C01 = ({ navigation, route }) => {
         >
           <Image
             source={require('../../img/next-button.png')}
-            style={ style.btnNext }
+            style={ style.btnCadastro }
           />
+          <Text style={{marginTop: '-5%'}}>Avançar</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </View>
@@ -160,8 +187,9 @@ const C02 = ({ navigation, route }) => {
       >
       <Image
         source={require('../../img/next-button.png')}
-        style={ style.btnNext }
+        style={ style.btnCadastro }
       />
+        <Text style={{marginTop: '-5%'}}>Avançar</Text>
       </TouchableOpacity>
     </SafeAreaView>
   </View>
@@ -227,8 +255,9 @@ const C03 = ({ navigation, route }) => {
       >
       <Image
         source={require('../../img/next-button.png')}
-        style={ style.btnNext }
+        style={ style.btnCadastro }
       />
+        <Text style={{marginTop: '-5%'}}>Avançar</Text>
       </TouchableOpacity>
     </SafeAreaView>
   </View>
@@ -393,12 +422,15 @@ const C04 = ({ navigation, route }) => {
         value= {senhaConfirmed}
         onChangeText={ (senhaConfirmed) => setSenhaConfirmed(senhaConfirmed) }
       />
-      <TouchableOpacity 
-      style={style.btnCadastrar}
+      <TouchableOpacity
       onPress={CadastraUsuario}
       >
-        <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16}}>Cadastrar</Text>
+      <Image
+        source={require('../../img/confirm.png')}
+        style={ style.btnCadastro }
+      />
       </TouchableOpacity>
+        <Text style={{marginTop: '-5%'}}>Confirmar dados</Text>
     </SafeAreaView>
   </View>
   )
@@ -434,4 +466,4 @@ const RedefinirSenha = ({ navigation, route }) => {
   )
 }
 
-export { C01, C02, C03, C04, RedefinirSenha };
+export { C00, C01, C02, C03, C04, RedefinirSenha };

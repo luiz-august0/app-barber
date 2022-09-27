@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native'
+import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FCA311'
+        backgroundColor: globalStyles.main_color
     }, 
-    barberImage: {
-        margin: "0%",
-        width: "100%",
-        height: "50%",
-    },
     safeAreaL: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    barberImage: {
+        marginTop: '15%',
+        height: 250,
+        width: 250
     },
     inputL: {
         marginTop: 10,
@@ -21,25 +22,6 @@ export default StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#404040',
     },
-    inputAreaSenhaL: {
-        marginTop: 10,
-        flexDirection: "row",
-        width: 220,
-        backgroundColor: "#404040",
-        borderRadius: 10,
-        padding: 4,
-    },  
-    inputSenhaL: {
-        width: "85%",
-        color: "#FFF",
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    iconEye: {
-        width: "15%",
-        justifyContent: "center",
-        alignItems: "center",
-    },  
     btnLogin: {
         alignItems: 'center',
         justifyContent: 'center',

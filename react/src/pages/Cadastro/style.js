@@ -5,13 +5,46 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#FCA311'
     },
+    image: {
+        marginTop: '25%',
+        height: 250,
+        width: 250
+    },
+    text_title: {
+        marginTop: '2%',
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 26,
+        color: '#ffff'
+    },
+    button1: {
+        marginTop: '11%',
+        marginBottom: 25,
+        width: '60%',
+        height: '7%',
+        borderRadius: 10,
+        backgroundColor: '#343434'
+    },
+    button2: {
+        width: '60%',
+        height: '7%',
+        borderRadius: 10,
+        backgroundColor: '#343434'
+    },
+    text: {
+        width: '100%',
+        fontSize: 18,
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'center',
+        color: '#ffff',
+        marginTop: 10
+    },
     safeAreaC: {
         marginTop: 90,
         justifyContent: 'center',
         alignItems: 'center',
     },
     safeAreaCfinaliza: {
-        marginTop: '25%',
+        marginTop: '20%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -22,7 +55,7 @@ export default StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#404040',
     },
-    btnNext: {
+    btnCadastro: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 25,
@@ -51,15 +84,6 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     }, 
-    btnCadastro: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 10,
-        width: 150,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#fa8a5a'
-    },
     btnRedefinir: {
         alignItems: 'center',
         justifyContent: 'center',
