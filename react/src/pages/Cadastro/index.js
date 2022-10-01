@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { SafeAreaView, Text,  TouchableOpacity, View, Image, Alert } from 'react-native'
-import { TextInput } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cpf as cpfValidator} from 'cpf-cnpj-validator'; 
 import style from './style'
-import { createUsuario } from '../../services/api';
+import { createUsuario, verifyUsuario } from '../../services/api';
 import imgChair from '../../img/chair.png';
 
 const validarEmail = (email) => {
@@ -47,24 +47,30 @@ const C00 = ({ navigation, route }) => {
 }
 
 const C01 = ({ navigation, route }) => {
+  const [ errorBoolean, setErrorBoolean ] = useState(false);  
+  const [ errMessage, setErrMessage ] = useState('');
   const [nome, setNome] = useState('');
   const [snome, setSnome] = useState('');
 
-  const validarC = () => {
-    if (nome == "" && snome == "") {
-      Alert.alert("Nome e Sobrenome inválidos", "Por favor, digite novamente");
-      return;
-    }
+  const errorMessage = (msg) => {
+    setErrMessage(msg)
+    setErrorBoolean(true);
+  }
 
+  const limpaErro = () => {
+    setErrMessage('');
+    setErrorBoolean(false);
+  }
+
+  const validarC = () => {
     if (nome == "") {
-      Alert.alert("Nome inválido", "Por favor, digite novamente");
-      return;
+      return errorMessage("Nome inválido", "Por favor, digite novamente");
     }
 
     if (snome == "") {
-      Alert.alert("Sobrenome inválido", "Por favor, digite novamente");
-      return;
-    }
+      return //("Sobrenome inválido", "Por favor, digite novamente");
+    } 
+
     navigation.navigate('C02', {nome: nome, snome: snome})
   }
   
@@ -77,21 +83,29 @@ const C01 = ({ navigation, route }) => {
           mode='outlined'
           activeOutlineColor='#fff'
           label="Nome"
+          error={nome}
           theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
           left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {nome}
           onChangeText={ (nome) => setNome(nome) }
         />
+        <HelperText type="error" visible={errorBoolean}>
+          {errMessage}
+        </HelperText>
         <TextInput
           style={ style.inputC }
           mode='outlined'
           activeOutlineColor='#fff'
           label="Sobrenome"
+          errorBoolean={errorBoolean}
           theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
           left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {snome}
           onChangeText={ (snome) => setSnome(snome) }
         />
+        <HelperText type="error" visible={errorBoolean}>
+          {errMessage}
+        </HelperText>
         <TouchableOpacity 
           onPress={validarC}
         >
@@ -140,6 +154,24 @@ const C02 = ({ navigation, route }) => {
     if (await AsyncStorage.getItem('TipoUsuario') === "C" && cpf !== '' && !validaCPF(cpf)) {
       Alert.alert("CPF inválido", "Por favor, digite novamente");
       return;
+    }
+
+    try {
+      if (cpf === "") {
+        await verifyUsuario(email, '');
+      } else {
+        await verifyUsuario(email, cpf);
+      }
+    } catch (error) {
+        if (error.message === "Request failed with status code 400") {
+          Alert.alert('Email já cadastrado', 'Informe outro email');
+          return;
+        }
+
+        if (error.message === "Request failed with status code 406") {
+          Alert.alert('CPF já cadastrado', 'Informe outro CPF');
+          return;
+        }
     }
     
     navigation.navigate('C03', {email: email, ncelular: ncelular, nome: nome, snome: snome, cpf: cpf});
@@ -335,8 +367,12 @@ const C04 = ({ navigation, route }) => {
       Alert.alert('Usuário cadastrado com sucesso!');
       navigation.navigate('Login');
     } catch (error) {
-      if (error.message === "Request failed with status code 401") {
+      if (error.message === "Request failed with status code 400") {
         Alert.alert('Email já cadastrado', 'Informe outro email');
+      }
+
+      if (error.message === "Request failed with status code 406") {
+        Alert.alert('CPF já cadastrado', 'Informe outro CPF');
       }
     }
   }

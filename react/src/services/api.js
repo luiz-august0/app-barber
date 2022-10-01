@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://192.168.0.110:5000'
+    baseURL: 'http://10.30.53.151:5000'
 });
 
 //Rota de sessão
@@ -13,6 +13,10 @@ export const createSession = async (email, senha) => {
 //Rota de usuários
 export const getUsuarios = async () => { 
     return api.get('/usuario');
+};
+
+export const verifyUsuario = async (email, cpf) => {
+    return api.post('/usuarioVerify', { email, cpf })
 };
 
 export const createUsuario = async (email, nome, senha, contato, cpf, tipo) => {

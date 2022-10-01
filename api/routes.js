@@ -6,6 +6,7 @@ import UsuarioController from "./routes/UsuarioController";
 const routes = new Router();
 
 routes.post('/usuario', UsuarioController.create);
+routes.post('/usuarioVerify', UsuarioController.verify);
 routes.put('/sessions', SessionController.create);
 routes.use(auth);
 
