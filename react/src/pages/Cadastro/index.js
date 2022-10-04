@@ -47,31 +47,27 @@ const C00 = ({ navigation, route }) => {
 }
 
 const C01 = ({ navigation, route }) => {
-  const [ errorBoolean, setErrorBoolean ] = useState(false);  
-  const [ errMessage, setErrMessage ] = useState('');
   const [nome, setNome] = useState('');
   const [snome, setSnome] = useState('');
-
-  const errorMessage = (msg) => {
-    setErrMessage(msg)
-    setErrorBoolean(true);
-  }
-
-  const limpaErro = () => {
-    setErrMessage('');
-    setErrorBoolean(false);
-  }
+  const [errorNome, SetErrorNome] = useState(false);
+  const [errorSnome, SetErrorSnome] = useState(false);
 
   const validarC = () => {
-    if (nome == "") {
-      return errorMessage("Nome inválido", "Por favor, digite novamente");
+    if (nome === "" && snome === "") {
+      return (SetErrorNome(true), SetErrorSnome(true));
     }
 
-    if (snome == "") {
-      return //("Sobrenome inválido", "Por favor, digite novamente");
-    } 
+    if (nome === "") {
+      return (SetErrorNome(true), SetErrorSnome(false));
+    }
+
+    if (snome === "") {
+      return (SetErrorSnome(true), SetErrorNome(false));
+    }
 
     navigation.navigate('C02', {nome: nome, snome: snome})
+    SetErrorNome(false);
+    SetErrorSnome(false);
   }
   
     return (
@@ -83,28 +79,30 @@ const C01 = ({ navigation, route }) => {
           mode='outlined'
           activeOutlineColor='#fff'
           label="Nome"
-          error={nome}
+          error={errorNome}
+          onFocus={() => SetErrorNome(false)}
           theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
           left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {nome}
           onChangeText={ (nome) => setNome(nome) }
         />
-        <HelperText type="error" visible={errorBoolean}>
-          {errMessage}
+        <HelperText type="error" visible={errorNome}>
+          Nome inválido
         </HelperText>
         <TextInput
           style={ style.inputC }
           mode='outlined'
           activeOutlineColor='#fff'
           label="Sobrenome"
-          errorBoolean={errorBoolean}
+          error={errorSnome}
+          onFocus={() => SetErrorSnome(false)}
           theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
           left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="account" />}
           value= {snome}
           onChangeText={ (snome) => setSnome(snome) }
         />
-        <HelperText type="error" visible={errorBoolean}>
-          {errMessage}
+        <HelperText type="error" visible={errorSnome}>
+          Sobrenome inválido
         </HelperText>
         <TouchableOpacity 
           onPress={validarC}
@@ -128,7 +126,7 @@ const C02 = ({ navigation, route }) => {
   let nome = route.params?.nome;
   let snome = route.params?.snome;
 
-  const validarC2  = async() => {
+  const validarC2 = async() => {
     if (validarEmail(email) === false) {
       Alert.alert("Email inválido", "Por favor, digite novamente");
       return;
