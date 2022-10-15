@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://10.30.53.151:5000'
+    baseURL: 'http://10.30.53.148:5000'
 });
 
 //Rota de sessão

@@ -10,12 +10,20 @@ export default StyleSheet.create({
     image: {
         marginTop: '40%'
     },
+    textTitle: {
+        width: '100%',
+        fontSize: 27,
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'center',
+        color: '#ffff',
+        marginTop: 10
+    },
     text: {
         width: '100%',
         fontSize: 18,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginTop: 10
     },
     button: {

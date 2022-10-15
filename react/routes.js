@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/pages/Login/index';
 import {C00, C01, C02, C03, C04, RedefinirSenha} from './src/pages/Cadastro/index';
 import Home from './src/pages/Home/index';
+import Perfil from './src/pages/Perfil';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,10 @@ const Routes = () => {
                 <Stack.Screen 
                 name="Home" 
                 component={Home} 
+                />
+                <Stack.Screen
+                name="Perfil"
+                component={Perfil}
                 />
             </Stack.Navigator>
         </NavigationContainer>

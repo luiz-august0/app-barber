@@ -27,15 +27,14 @@ export const login = async (email, senha) => {
     }
 };
 
-export const logout = async ({navigation}) => {
+export const logout = async () => {
         
     await AsyncStorage.removeItem("usuario");
     await AsyncStorage.removeItem("token");
     
     api.defaults.headers.Authorization = null;
     
-    setUsuario(null);
-    navigation.navigate('Login');
+    //setUsuario(null);
 };
 
 
