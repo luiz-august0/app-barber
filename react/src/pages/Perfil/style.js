@@ -7,31 +7,29 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: globalStyles.main_color
     }, 
-    image: {
-        marginTop: '40%'
-    },
     textTitle: {
         width: '100%',
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#ffff',
-        marginTop: 10
+        marginTop: '20%',
+        marginBottom: '5%'
     },
-    text: {
-        width: '100%',
-        fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
-        textAlign: 'center',
-        color: '#000',
-        marginTop: 10
+    inputC: {
+        marginTop: 10,
+        width: '70%',
+        height: 40,
+        borderRadius: 10,
+        backgroundColor: '#404040',
     },
     button: {
-        marginTop: '11%',
-        marginBottom: '-5%',
-        width: '60%',
-        height: '7%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        width: 150,
+        height: 40,
         borderRadius: 10,
-        backgroundColor: '#343434'
-    },
+        backgroundColor: '#0096FF'
+    }
 });
