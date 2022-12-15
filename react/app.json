@@ -21,9 +21,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "barbeio.expo.client"
     },
-    "web": {
-    }
+    "web": {}
   }
 }
