@@ -14,6 +14,7 @@ routes.use(auth);
 routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:id', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
+routes.put('/usuario_password/:id', UsuarioController.updatePassword);
 routes.delete('/usuario/:id', UsuarioController.destroy);
 
 export default routes;

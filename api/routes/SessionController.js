@@ -19,6 +19,7 @@ class SessionController {
                         }
 
                         const usuarioSenha = JSON.stringify(result[0].Usr_Senha).slice(0, -1).slice(1 | 1);
+                        const tipo = JSON.stringify(result[0].Usr_Tipo).slice(0, -1).slice(1 | 1);
 
                         if (!checkPassword(senha, usuarioSenha)) {
                             return res.status(401).json({ error: "Usuário ou senha inválidos." });
@@ -29,7 +30,8 @@ class SessionController {
                         return res.json({
                             usuario: {
                                 id,
-                                email
+                                email,
+                                tipo
                             },
                             token: jwt.sign({ id }, authConfig.secret, {
                                 expiresIn: authConfig.expiresIn

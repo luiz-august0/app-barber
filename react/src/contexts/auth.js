@@ -7,7 +7,6 @@ import { api, createSession } from "../services/api";
 export const AuthContext = createContext();
 
 export const login = async (email, senha) => {
-
     try {            
         const response = await createSession(email, senha);
 
@@ -16,19 +15,20 @@ export const login = async (email, senha) => {
 
         await AsyncStorage.setItem("usuario", JSON.stringify(usuarioLogado));
         await AsyncStorage.setItem("token", token);
+        await AsyncStorage.setItem("TipoUsuario", usuarioLogado.tipo);
 
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
         return {authenticated: true}
 
     } catch (error) {
+        console.log(error)
         Alert.alert('Email ou senha inválido');
         return {authenticated: false};
     }
 };
 
 export const logout = async () => {
-        
     await AsyncStorage.removeItem("usuario");
     await AsyncStorage.removeItem("token");
     

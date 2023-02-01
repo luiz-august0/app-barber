@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://api-barber-production.up.railway.app'
+    baseURL: 'http://192.168.0.105:5000'
 });
 
 //Rota de sessão
@@ -23,8 +23,12 @@ export const createUsuario = async (email, nome, senha, contato, cpf, tipo) => {
     return api.post('/usuario', { email, nome, senha, contato, cpf, tipo });
 };
 
-export const updateUsuario = async (email, nome, senha, contato, cpf, usuarioID) => {
-    return api.put(`/usuario/${usuarioID}`, { email, nome, senha, contato, cpf });
+export const updateUsuario = async (email, nome, contato, cpf, usuarioID) => {
+    return api.put(`/usuario/${usuarioID}`, { email, nome, contato, cpf });
+};
+
+export const updateUsuarioPassword = async (senhaAntiga, senhaNova, usuarioID) => {
+    return api.put(`/usuario_password/${usuarioID}`, { senhaAntiga, senhaNova });
 };
 
 export const deleteUsuario = async (usuarioID) => {

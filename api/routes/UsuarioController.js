@@ -1,4 +1,4 @@
-import { createPasswordHash } from '../services/auth';
+import { checkPassword, createPasswordHash } from '../services/auth';
 
 const mysql = require('../config/mysql').pool;
 
@@ -128,8 +128,7 @@ class UsuarioController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { email, nome, senha, contato, cpf } = req.body;
-            const encryptedPassword = await createPasswordHash(senha);
+            const { email, nome, contato, cpf } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
@@ -147,16 +146,27 @@ class UsuarioController {
                                     if (error) { return res.status(500).send({ error: error }) }
 
                                     if (JSON.stringify(result) != '[]') {
-                                        return res.status(401).json('Email ja cadastrado');
+                                        return res.status(400).json('Email ja cadastrado');
                                     } else {
                                         conn.query(
-                                            `UPDATE usuario SET Usr_Email = "${email}", Usr_Nome = "${nome}", Usr_Senha = "${encryptedPassword}", ` + 
-                                            `Usr_Contato = ${contato != ''?`"${contato}"`:'NULL'}, Usr_CPF = ${cpf != ''?`"${cpf}"`:'NULL'} ` + 
-                                            `WHERE Usr_Codigo = ${id}`,
+                                            `SELECT * FROM usuario WHERE Usr_CPF = "${cpf}" AND Usr_Codigo <> ${id}`,
                                             (error, result, fields) => {
-                                                if (error) { return res.status(500).send({ error: error }) };
+                                                if (error) { return res.status(500).send({ error: error }) }
 
-                                                return res.status(201).json(result);
+                                                if (JSON.stringify(result) != '[]') {
+                                                    return res.status(406).json('CPF ja cadastrado');
+                                                } else {
+                                                    conn.query(
+                                                        `UPDATE usuario SET Usr_Email = "${email}", Usr_Nome = "${nome}", ` + 
+                                                        `Usr_Contato = ${contato != ''?`"${contato}"`:'NULL'}, Usr_CPF = ${cpf != ''?`"${cpf}"`:'NULL'} ` + 
+                                                        `WHERE Usr_Codigo = ${id}`,
+                                                        (error, result, fields) => {
+                                                            if (error) { return res.status(500).send({ error: error }) };
+            
+                                                            return res.status(201).json(result);
+                                                        }
+                                                    )
+                                                }
                                             }
                                         )
                                     }
@@ -168,6 +178,47 @@ class UsuarioController {
                 conn.release();
             });
             
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async updatePassword(req, res) {
+        try {
+            const { id, senhaAntiga, senhaNova } = req.params;
+
+            const encryptedPassword = await createPasswordHash(senhaNova);
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM usuario WHERE Usr_Codigo = "${id}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+
+                        if (JSON.stringify(result) === '[]') {
+                            return res.status(404).json('Usuário não encontrado');
+                        } else {
+                            const usuarioSenha = JSON.stringify(result[0].Usr_Senha).slice(0, -1).slice(1 | 1);
+
+                            if (!checkPassword(senhaAntiga, usuarioSenha)) {
+                                return res.status(401).json({ error: "Senha inválida." });
+                            } else {
+                                conn.query(
+                                    `UPDATE usuario SET Usr_Senha = "${encryptedPassword}" WHERE Usr_Codigo = ${id}`,
+                                    (error, result, fields) => {
+                                        if (error) { return res.status(500).send({ error: error }) }
+
+                                        return res.status(201);
+                                    }
+                                )
+                            }
+                        }
+                    }
+                )
+                conn.release();
+            });
+
         } catch (err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." });
@@ -186,16 +237,15 @@ class UsuarioController {
 
                         if (JSON.stringify(result) === '[]') {
                             return res.status(404).json('Usuário não encontrado');
+                        } else {
+                            conn.query(
+                                `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
+                                (error, result, fields) => {
+                                    if (error) { return res.status(500).send({ error: error }) }
+                                    return res.status(201).json(result);
+                                }
+                            )
                         }
-                        
-                        conn.query(
-                            `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
-                        (error, result, fields) => {
-                            if (error) { return res.status(500).send({ error: error }) }
-                            return res.status(201).json(result);
-                        }
-                        )
-                       
                     }
                 )
                 conn.release();

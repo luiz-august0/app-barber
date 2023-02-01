@@ -55,7 +55,7 @@ const Login = ({ navigation, route }) => {
           />
             
             <TouchableOpacity
-            onPress={() => navigation.navigate('RedefinirSenha')}
+            onPress={() => Alert.alert('Enviada redefinição de senha no email cadastrado')}
             >
               <Text style={{ color: "#ffff", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
             </TouchableOpacity>

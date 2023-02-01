@@ -416,6 +416,7 @@ const C04 = ({ navigation, route }) => {
         await createUsuario(email, nomeCompleto, senha, ncelular, cpf, tipo);
         Alert.alert('Usuário cadastrado com sucesso!');
         navigation.navigate('Login');
+        await AsyncStorage.removeItem('TipoUsuario');
       } catch (error) {
         if (error.message === "Request failed with status code 400") {
           handleError('Email já cadastrado', 'email');

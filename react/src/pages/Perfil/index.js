@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
-import { getUsuario } from "../../services/api";
+import { getUsuario, updateUsuario } from "../../services/api";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -20,11 +20,12 @@ const validarEmail = (email) => {
 };
 
 const Perfil = ({ navigation, route }) => {
-    const [nome, setNome] = useState();
-    const [email, setEmail] = useState();
-    const [ncelular, setNcelular] = useState();
-    const [cpf, setCpf] = useState();
-    const [errors, setErrors] = useState({ 'nome': null, 'snome': null, 'email': null, 'ncelular': null, 'cpf': null });
+    const initialStateErrors = { 'nome': null, 'email': null, 'ncelular': null, 'cpf': null };
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [ncelular, setNcelular] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [errors, setErrors] = useState(initialStateErrors);
     const [onEditMode, setEditMode] = useState(false);
 
     const getUsuarioData = async () => {
@@ -32,8 +33,20 @@ const Perfil = ({ navigation, route }) => {
         const data = ((await response).data);
         setNome(data[0].Usr_Nome);
         setEmail(data[0].Usr_Email);
-        setNcelular(data[0].Usr_Contato);
-        setCpf(data[0].Usr_CPF)
+        if (data[0].Usr_Contato !== null) {
+            setNcelular(data[0].Usr_Contato);
+        }
+        if (data[0].Usr_CPF !== null) {
+            setCpf(data[0].Usr_CPF)
+        }
+    }
+
+    const limpaCampos = () => {
+        setNome('');
+        setEmail('');
+        setNcelular('');
+        setCpf('');
+        setErrors(initialStateErrors);
     }
 
     useEffect(() => {
@@ -44,7 +57,7 @@ const Perfil = ({ navigation, route }) => {
         setErrors(prevState => ({ ...prevState, [input]: error }));
     };
 
-    const AtualizaUsuario = async () => {
+    const AtualizaUsuario = async() => {
         let isValid = true;
 
         if (nome == "") {
@@ -81,11 +94,10 @@ const Perfil = ({ navigation, route }) => {
 
         if (isValid) {
             try {
-                let nomeCompleto = nome + ' ' + snome;
-                let tipo = await AsyncStorage.getItem('TipoUsuario')
-                await createUsuario(email, nomeCompleto, senha, ncelular, cpf, tipo);
-                Alert.alert('Usuário cadastrado com sucesso!');
-                navigation.navigate('Login');
+                await updateUsuario(email, nome, ncelular, cpf, JSON.parse(await AsyncStorage.getItem('usuario')).id);
+                Alert.alert('Usuário alterado com sucesso!');
+                getUsuarioData();
+                setEditMode(false);
             } catch (error) {
                 if (error.message === "Request failed with status code 400") {
                     handleError('Email já cadastrado', 'email');
@@ -168,16 +180,29 @@ const Perfil = ({ navigation, route }) => {
             <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
                 {errors.cpf}
             </HelperText>
-            <TouchableOpacity style={style.button} onPress={() => setEditMode(onEditMode?false:true)}>
+            <TouchableOpacity style={style.button} onPress={() => {setEditMode(onEditMode?false:true); getUsuarioData(); limpaCampos();}}>
                 <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>{onEditMode?'Cancelar Edição':'Editar Usuário'}</Text>
             </TouchableOpacity>
             {onEditMode?
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]}>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
                     <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                </TouchableOpacity>
+            :null}
+            {!onEditMode?
+                <TouchableOpacity style={[style.button, {backgroundColor: '#B81A01'}]} onPress={() => navigation.navigate('EditarSenha')}>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
                 </TouchableOpacity>
             :null}
         </View>
     )
 }
 
-export default Perfil;
+const EditarSenha = ({ navigation, route }) => {
+    return (
+        <View style={style.container}>
+            <Text style={style.textTitle}>Alterar senha do usuário</Text>
+        </View>
+    )
+}
+
+export { Perfil, EditarSenha };
