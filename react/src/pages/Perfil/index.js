@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, SafeAreaView, Text, TouchableOpacity, Alert } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
-import { getUsuario, updateUsuario } from "../../services/api";
+import { getUsuario, updateUsuario, updateUsuarioPassword } from "../../services/api";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -180,28 +180,130 @@ const Perfil = ({ navigation, route }) => {
             <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
                 {errors.cpf}
             </HelperText>
-            <TouchableOpacity style={style.button} onPress={() => {setEditMode(onEditMode?false:true); getUsuarioData(); limpaCampos();}}>
-                <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>{onEditMode?'Cancelar Edição':'Editar Usuário'}</Text>
-            </TouchableOpacity>
-            {onEditMode?
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+            <View style={{ marginTop: 35 }}>
+                <TouchableOpacity style={style.button} onPress={() => {setEditMode(onEditMode?false:true); {onEditMode?getUsuarioData():null}; {onEditMode?limpaCampos():null};}}>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>{onEditMode?'Cancelar Edição':'Editar Usuário'}</Text>
                 </TouchableOpacity>
-            :null}
-            {!onEditMode?
-                <TouchableOpacity style={[style.button, {backgroundColor: '#B81A01'}]} onPress={() => navigation.navigate('EditarSenha')}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
-                </TouchableOpacity>
-            :null}
+                {onEditMode?
+                    <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
+                        <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                    </TouchableOpacity>
+                :null}
+                {!onEditMode?
+                    <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => navigation.navigate('EditarSenha')}>
+                        <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
+                    </TouchableOpacity>
+                :null}
+            </View>
         </View>
     )
 }
 
 const EditarSenha = ({ navigation, route }) => {
+    const [senhaAntiga, setSenhaAntiga] = useState('');
+    const [hidePass, setHidePass] = useState(true);
+    const [senha, setSenha] = useState('');
+    const [hidePass1, setHidePass1] = useState(true);
+    const [senhaConfirmed, setSenhaConfirmed] = useState('');
+    const [hidePass2, setHidePass2] = useState(true);
+  
+    const [errors, setErrors] = React.useState({ 'senhaAntiga': null, 'senha': null, 'senhaConfirmed': null });
+  
+    const handleError = (error, input) => {
+      setErrors(prevState => ({ ...prevState, [input]: error }));
+    };
+  
+    const AtualizaSenha = async() => {
+      let isValid = true;
+  
+      if (senhaAntiga === ''){
+        handleError("Deve ser informada a senha antiga", "senhaAntiga");
+        isValid = false;
+      }
+
+      if (senha.length < 6) {
+        handleError("Senha invalida, digite uma senha com no minímo 6 caracteres", "senha");
+        isValid = false;
+      }
+  
+      if (senha != senhaConfirmed) {
+        handleError("Senhas não coincidem, digite novamente", "senhaConfirmed");
+        isValid = false;
+      }
+  
+      if (isValid) {
+        try {
+            await updateUsuarioPassword(senhaAntiga, senha, JSON.parse(await AsyncStorage.getItem('usuario')).id);
+            Alert.alert('Senha alterada com sucesso!');
+            navigation.navigate('Perfil');
+        } catch (error) {
+            if (error.message === "Request failed with status code 401") {
+                handleError('Senha antiga incorreta', 'senhaAntiga');
+            }
+        }
+      }
+    }
+
     return (
-        <View style={style.container}>
+        <View style={style.containerPassword} >
             <Text style={style.textTitle}>Alterar senha do usuário</Text>
-        </View>
+            <SafeAreaView style={style.safeAreaC}>
+                <TextInput
+                style={style.inputC}
+                mode='outlined'
+                activeOutlineColor='#fff'
+                theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                label="Senha Antiga"
+                error={errors.senhaAntiga !== null ? true : false}
+                onFocus={() => handleError(null, 'senhaAntiga')}
+                secureTextEntry={hidePass}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+                right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass(!hidePass)} name={hidePass ? "eye-off" : "eye"}></TextInput.Icon>}
+                value={senhaAntiga}
+                onChangeText={(senhaAntiga) => setSenhaAntiga(senhaAntiga)}
+                />
+                <HelperText HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaAntiga !== null ? true : false}>
+                    {errors.senhaAntiga}
+                </HelperText>
+                <TextInput
+                style={style.inputC}
+                mode='outlined'
+                activeOutlineColor='#fff'
+                theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                label="Nova Senha"
+                error={errors.senha !== null ? true : false}
+                onFocus={() => handleError(null, 'senha')}
+                secureTextEntry={hidePass1}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+                right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+                value={senha}
+                onChangeText={(senha) => setSenha(senha)}
+                />
+                <HelperText HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
+                    {errors.senha}
+                </HelperText>
+                <TextInput
+                style={style.inputC}
+                mode='outlined'
+                activeOutlineColor='#fff'
+                theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                label="Confirmar Senha"
+                error={errors.senhaConfirmed !== null ? true : false}
+                onFocus={() => handleError(null, 'senhaConfirmed')}
+                secureTextEntry={hidePass2}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+                right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+                value={senhaConfirmed}
+                onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
+                    {errors.senhaConfirmed}
+                </HelperText>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E', marginTop: 35}]} onPress={() => AtualizaSenha()}>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+          </View>
     )
 }
 

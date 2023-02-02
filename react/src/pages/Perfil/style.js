@@ -7,6 +7,10 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: globalStyles.main_color
     }, 
+    containerPassword: {
+        flex: 1,
+        backgroundColor: globalStyles.main_color
+    },
     textTitle: {
         width: '100%',
         fontSize: 27,
@@ -31,5 +35,10 @@ export default StyleSheet.create({
         height: 40,
         borderRadius: 10,
         backgroundColor: '#0096FF'
-    }
+    },
+    safeAreaC: {
+        marginTop: '20%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from "react-native";
 import style from "./style";
 import { logout } from  '../../contexts/auth';
-import img from '../../img/imgMenu.png';
+import Header from "../../components/Header";
 
 const Home = ({navigation, route}) => {
     const logoutEvent = () => {
@@ -12,17 +12,11 @@ const Home = ({navigation, route}) => {
 
     return (
     <View style={style.container}>
-        <Image source={img} style={style.image}/>
+        <Header navigation={navigation} route={route}/>
         <TouchableOpacity
         style={style.button}
         >
-            <Text style={style.text}>Agendamentos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-        style={style.button}
-        onPress={() => navigation.navigate('Perfil')}
-        >
-            <Text style={style.text}>Meu Perfil</Text>
+        <Text style={style.text}>Agendamentos</Text>
         </TouchableOpacity>
         <TouchableOpacity
         style={style.button}

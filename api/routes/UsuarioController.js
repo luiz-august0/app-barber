@@ -186,7 +186,8 @@ class UsuarioController {
 
     async updatePassword(req, res) {
         try {
-            const { id, senhaAntiga, senhaNova } = req.params;
+            const { id } = req.params;
+            const { senhaAntiga, senhaNova } = req.body;
 
             const encryptedPassword = await createPasswordHash(senhaNova);
 
@@ -200,6 +201,8 @@ class UsuarioController {
                             return res.status(404).json('Usuário não encontrado');
                         } else {
                             const usuarioSenha = JSON.stringify(result[0].Usr_Senha).slice(0, -1).slice(1 | 1);
+                            console.log(checkPassword(senhaAntiga, usuarioSenha))
+                            console.log(senhaAntiga)
 
                             if (!checkPassword(senhaAntiga, usuarioSenha)) {
                                 return res.status(401).json({ error: "Senha inválida." });
@@ -209,7 +212,7 @@ class UsuarioController {
                                     (error, result, fields) => {
                                         if (error) { return res.status(500).send({ error: error }) }
 
-                                        return res.status(201);
+                                        return res.status(201).json(result);
                                     }
                                 )
                             }
