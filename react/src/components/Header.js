@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Gravatar } from 'react-native-gravatar';
 import {
     StyleSheet,
     Text,
@@ -9,13 +8,19 @@ import {
     TouchableOpacity
 } from 'react-native';
 import icon from "../img/imgMenu.png";
+import perfil from "../img/perfil.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { api } from '../services/api';
 
 const Header = ({navigation, route}) => {
     const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('');
+    const [nomeArquivoFoto, setNomeArquivoFoto] = useState('');
 
     const getNome = async() => {
         setNome(JSON.parse(await AsyncStorage.getItem('usuario')).nome);
+        setEmail(JSON.parse(await AsyncStorage.getItem('usuario')).email);
+        setNomeArquivoFoto(JSON.parse(await AsyncStorage.getItem('usuario')).imagem)
     }
 
     useEffect(() => {
@@ -29,8 +34,9 @@ const Header = ({navigation, route}) => {
             </View>
             <TouchableOpacity style={styles.userContainer} onPress={() => navigation.navigate('Perfil')}>
                 <Text style={styles.user}>{nome}</Text>
-                <Gravatar options={{ email: 'luizmarques@rhedesistemas.com.br', secure: true }}
-                style={styles.avatar}/>
+                {nomeArquivoFoto!=='ul'?
+                <Image source={{uri: `${api.getUri()}/upload_files/${nomeArquivoFoto}`}} style={styles.avatar}/>
+                :<Image source={perfil} style={styles.avatar}/>}
             </TouchableOpacity>
         </View>
     )
@@ -38,7 +44,7 @@ const Header = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Platform.OS === 'ios' ? 20 : 0,
+        marginTop: Platform.OS === 'ios' ? 20 : 50,
         padding: 10,
         borderBottomWidth: 1,
         borderColor: '#BBB',

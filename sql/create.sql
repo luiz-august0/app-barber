@@ -5,7 +5,8 @@ CREATE TABLE usuario(
     Usr_Senha VARCHAR(255) NOT NULL,
     Usr_Contato VARCHAR(20),
     Usr_CPF VARCHAR(11),
-    Usr_Tipo CHAR(1) NOT NULL
+    Usr_Tipo CHAR(1) NOT NULL,
+    Usr_FotoPerfil VARCHAR(255)
 );
 
 CREATE TABLE barbearia(

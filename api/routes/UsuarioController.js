@@ -1,4 +1,6 @@
 import { checkPassword, createPasswordHash } from '../services/auth';
+import multer from "multer";
+import path from "path";
 
 const mysql = require('../config/mysql').pool;
 
@@ -201,8 +203,6 @@ class UsuarioController {
                             return res.status(404).json('Usuário não encontrado');
                         } else {
                             const usuarioSenha = JSON.stringify(result[0].Usr_Senha).slice(0, -1).slice(1 | 1);
-                            console.log(checkPassword(senhaAntiga, usuarioSenha))
-                            console.log(senhaAntiga)
 
                             if (!checkPassword(senhaAntiga, usuarioSenha)) {
                                 return res.status(401).json({ error: "Senha inválida." });
@@ -225,6 +225,20 @@ class UsuarioController {
         } catch (err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async updateFotoPerfil(id, filename) {
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `UPDATE usuario SET Usr_FotoPerfil = "${filename}" WHERE Usr_Codigo = "${id}"`,
+                )
+                conn.release();
+            });
+
+        } catch (err) {
+            console.error(err);
         }
     }
 
