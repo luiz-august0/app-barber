@@ -14,12 +14,10 @@ import { api } from '../services/api';
 
 const Header = ({navigation, route}) => {
     const [nome, setNome] = useState('')
-    const [email, setEmail] = useState('');
     const [nomeArquivoFoto, setNomeArquivoFoto] = useState('');
 
     const getNome = async() => {
         setNome(JSON.parse(await AsyncStorage.getItem('usuario')).nome);
-        setEmail(JSON.parse(await AsyncStorage.getItem('usuario')).email);
         setNomeArquivoFoto(JSON.parse(await AsyncStorage.getItem('usuario')).imagem)
     }
 
