@@ -4,6 +4,7 @@ import SessionController from "./routes/SessionController";
 import auth from "./middlewares/auth";
 import UsuarioController from "./routes/UsuarioController";
 import { storage } from './uploadFile';
+const uploadFile = require('./uploadFile');
 
 const upload = multer({ storage: storage });
 
@@ -20,9 +21,17 @@ routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:id', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
 routes.put('/usuario_password/:id', UsuarioController.updatePassword);
-routes.post('/usuario_perfil/:id', upload.single("file"), (req, res) => {
-	UsuarioController.updateFotoPerfil(req.params.id, req.file.filename);
-	return res.json(req.file.filename);
+routes.post('/usuario_perfil/:id', (req, res) => {
+	uploadFile(req.body.file)
+		.then((url) => {
+			try {
+				UsuarioController.updateFotoPerfil(req.params.id, url);
+				return res.status(201).json("Upload efetuado com sucesso");
+			} catch (err) {
+				res.status(500).json(err);
+			}
+		})
+		.catch((err) => res.status(500).json(err));
 });
 routes.delete('/usuario/:id', UsuarioController.destroy);
 

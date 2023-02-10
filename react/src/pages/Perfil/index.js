@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, Text, TouchableOpacity, Alert } from "react-native";
+import { ScrollView, View, SafeAreaView, Text, TouchableOpacity, Alert, Image } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { getUsuario, updateUsuario, updateUsuarioPassword } from "../../services/api";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';
+import globalStyles from "../../globalStyles";
 
 const validarEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
@@ -25,6 +27,7 @@ const Perfil = ({ navigation, route }) => {
     const [email, setEmail] = useState('');
     const [ncelular, setNcelular] = useState('');
     const [cpf, setCpf] = useState('');
+    const [image, setImage] = useState(null);
     const [errors, setErrors] = useState(initialStateErrors);
     const [onEditMode, setEditMode] = useState(false);
 
@@ -110,92 +113,114 @@ const Perfil = ({ navigation, route }) => {
         }
     }
 
+    const pickImage = async () => {
+        let res = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            base64: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+            console.log(res.assets);
+        if (!res.canceled) {
+            setImage({ uri: res.assets.uri , type: res.assets.type })
+        }
+    }
+
     return (
-        <View style={style.container}>
-            <Text style={style.textTitle}>Dados do Usuário</Text>
-            <TextInput
-                style={style.inputC}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Nome"
-                error={errors.nome !== null ? true : false}
-                onFocus={() => handleError(null, 'nome')}
-                theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={nome}
-                onChangeText={(nome) => setNome(nome)}
-                editable={onEditMode}
-            />
-            <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
-                {errors.nome}
-            </HelperText>
-            <TextInput
-                style={style.inputC}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                keyboardType='email-address'
-                label="Email"
-                error={errors.email !== null ? true : false}
-                onFocus={() => handleError(null, 'email')}
-                theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
-                value={email}
-                onChangeText={(email) => setEmail(email)}
-                editable={onEditMode}
-            />
-            <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
-                {errors.email}
-            </HelperText>
-            <TextInput
-                style={style.inputC}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                keyboardType='phone-pad'
-                label="Celular"
-                error={errors.ncelular !== null ? true : false}
-                onFocus={() => handleError(null, 'ncelular')}
-                theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
-                value={ncelular}
-                onChangeText={(ncelular) => setNcelular(ncelular)}
-                editable={onEditMode}
-            />
-            <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
-                {errors.ncelular}
-            </HelperText>
-            <TextInput
-                style={style.inputC}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                keyboardType='numeric'
-                label="CPF"
-                error={errors.cpf !== null ? true : false}
-                onFocus={() => handleError(null, 'cpf')}
-                theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={cpf}
-                onChangeText={(cpf) => setCpf(cpf)}
-                editable={onEditMode}
-            />
-            <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
-                {errors.cpf}
-            </HelperText>
-            <View style={{ marginTop: 35 }}>
-                <TouchableOpacity style={style.button} onPress={() => {setEditMode(onEditMode?false:true); {onEditMode?getUsuarioData():null}; {onEditMode?limpaCampos():null};}}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>{onEditMode?'Cancelar Edição':'Editar Usuário'}</Text>
-                </TouchableOpacity>
-                {onEditMode?
-                    <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
-                        <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+            <View style={style.container}>
+                <Text style={style.textTitle}>Dados do Usuário</Text>
+                <View style={style.imageContainer}>
+                    <TouchableOpacity onPress={() => pickImage()}>
+                        <Image source={image} style={style.image}/>
                     </TouchableOpacity>
-                :null}
-                {!onEditMode?
-                    <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => navigation.navigate('EditarSenha')}>
-                        <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
+                </View>
+                <TextInput
+                    style={style.inputC}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    label="Nome"
+                    error={errors.nome !== null ? true : false}
+                    onFocus={() => handleError(null, 'nome')}
+                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                    value={nome}
+                    onChangeText={(nome) => setNome(nome)}
+                    editable={onEditMode}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+                    {errors.nome}
+                </HelperText>
+                <TextInput
+                    style={style.inputC}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    keyboardType='email-address'
+                    label="Email"
+                    error={errors.email !== null ? true : false}
+                    onFocus={() => handleError(null, 'email')}
+                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+                    value={email}
+                    onChangeText={(email) => setEmail(email)}
+                    editable={onEditMode}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+                    {errors.email}
+                </HelperText>
+                <TextInput
+                    style={style.inputC}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    keyboardType='phone-pad'
+                    label="Celular"
+                    error={errors.ncelular !== null ? true : false}
+                    onFocus={() => handleError(null, 'ncelular')}
+                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
+                    value={ncelular}
+                    onChangeText={(ncelular) => setNcelular(ncelular)}
+                    editable={onEditMode}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
+                    {errors.ncelular}
+                </HelperText>
+                <TextInput
+                    style={style.inputC}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    keyboardType='numeric'
+                    label="CPF"
+                    error={errors.cpf !== null ? true : false}
+                    onFocus={() => handleError(null, 'cpf')}
+                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                    value={cpf}
+                    onChangeText={(cpf) => setCpf(cpf)}
+                    editable={onEditMode}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
+                    {errors.cpf}
+                </HelperText>
+                <View style={{ marginTop: 35 }}>
+                    <TouchableOpacity style={style.button} onPress={() => {setEditMode(onEditMode?false:true); {onEditMode?getUsuarioData():null}; {onEditMode?limpaCampos():null};}}>
+                        <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>{onEditMode?'Cancelar Edição':'Editar Usuário'}</Text>
                     </TouchableOpacity>
-                :null}
+                    {onEditMode?
+                        <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
+                            <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                        </TouchableOpacity>
+                    :null}
+                    {!onEditMode?
+                        <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => navigation.navigate('EditarSenha')}>
+                            <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
+                        </TouchableOpacity>
+                    :null}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://api-barber.vercel.app'
+    baseURL: 'http://192.168.0.105:5000'
 });
 
 //Rota de sessão

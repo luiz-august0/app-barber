@@ -10,7 +10,6 @@ import {
 import icon from "../img/imgMenu.png";
 import perfil from "../img/perfil.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { api } from '../services/api';
 
 const Header = ({navigation, route}) => {
     const [nome, setNome] = useState('')
@@ -33,7 +32,7 @@ const Header = ({navigation, route}) => {
             <TouchableOpacity style={styles.userContainer} onPress={() => navigation.navigate('Perfil')}>
                 <Text style={styles.user}>{nome}</Text>
                 {nomeArquivoFoto!=='ul'?
-                <Image source={{uri: `${api.getUri()}/upload_files/${nomeArquivoFoto}`}} style={styles.avatar}/>
+                <Image source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${nomeArquivoFoto}`}} style={styles.avatar}/>
                 :<Image source={perfil} style={styles.avatar}/>}
             </TouchableOpacity>
         </View>

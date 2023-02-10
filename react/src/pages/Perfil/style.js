@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
@@ -40,5 +40,17 @@ export default StyleSheet.create({
         marginTop: '20%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    imageContainer: {
+        width: '50%',
+        height: Dimensions.get('window').width / 2,
+        backgroundColor: '#EEE',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    image: {
+        width: '100%',
+        height: Dimensions.get('window').width / 2,
+        resizeMode: 'center'
     },
 });

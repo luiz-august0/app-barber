@@ -1,7 +1,32 @@
-import multer from "multer";
-import path from "path";
+var cloudinary = require("cloudinary").v2;
 
-export const storage = multer.diskStorage({
+cloudinary.config({
+	cloud_name: 'dvwxrpftt',
+	api_key: '418787596457926',
+	api_secret: '7pBTDOts5RjveG7jONsWEtqhf_Q',
+	
+})
+
+const opts = {
+	overwrite: true,
+	invalidate: true,
+	resource_type: "auto"
+}
+
+module.exports = (file) => {
+	return new Promise((resolve, reject) => {
+		cloudinary.uploader.upload(file, opts, (error, result) => {
+			if (result && result.secure_url) {
+				console.log('v' + result.version + '/' +  result.public_id + '.' + result.format)
+				return resolve('v' + result.version + '/' +  result.public_id + '.' + result.format);
+			}
+			console.log(error.message);
+			return reject({ message: error.message });
+		})
+	})
+}
+
+/*export const storage = multer.diskStorage({
 	destination: (req, file, callback) => {
 		callback(null, path.resolve("upload_files"));
 	},
@@ -10,4 +35,4 @@ export const storage = multer.diskStorage({
 
 		callback(null, `${time}_${file.originalname}`);
 	}
-})
+})*/
