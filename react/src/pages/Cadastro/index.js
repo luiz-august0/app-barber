@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView } from 'react-native'
 import { TextInput, HelperText } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import style from './style'
 import { createUsuario, verifyUsuario } from '../../services/api';
 import imgChair from '../../img/chair.png';
+import globalStyles from '../../globalStyles';
 
 const validarEmail = (email) => {
   var re = /\S+@\S+\.\S+/;
@@ -27,22 +28,24 @@ const C00 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[style.container, { alignItems: 'center' }]}>
-      <Image source={imgChair} style={style.image} />
-      <Text style={style.text_title}>Barber</Text>
-      <TouchableOpacity
-        style={style.button1}
-        onPress={() => onClickButton('B')}
-      >
-        <Text style={style.text}>Sou Barbeiro</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={style.button2}
-        onPress={() => onClickButton('C')}
-      >
-        <Text style={style.text}>Sou Cliente</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={[style.container, { alignItems: 'center' }]}>
+        <Image source={imgChair} style={style.image} />
+        <Text style={style.text_title}>Barber</Text>
+        <TouchableOpacity
+          style={style.button1}
+          onPress={() => onClickButton('B')}
+        >
+          <Text style={style.text}>Sou Barbeiro</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={style.button2}
+          onPress={() => onClickButton('C')}
+        >
+          <Text style={style.text}>Sou Cliente</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -74,50 +77,53 @@ const C01 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={style.container} >
-      <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Quem é você ?</Text>
-      <SafeAreaView style={style.safeAreaC}>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          label="Nome"
-          error={errors.nome !== null ? true : false}
-          onFocus={() => handleError(null, 'nome')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={nome}
-          onChangeText={(nome) => setNome(nome)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
-          {errors.nome}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          label="Sobrenome"
-          error={errors.snome !== null ? true : false}
-          onFocus={() => handleError(null, 'snome')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={snome}
-          onChangeText={(snome) => setSnome(snome)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.snome !== null ? true : false}>
-          {errors.snome}
-        </HelperText>
-        <TouchableOpacity
-          onPress={validarC}
-        >
-          <Image
-            source={require('../../img/next-button.png')}
-            style={style.btnCadastro}
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={style.container} >
+        <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Quem é você ?</Text>
+        <SafeAreaView style={style.safeAreaC}>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            label="Nome"
+            error={errors.nome !== null ? true : false}
+            onFocus={() => handleError(null, 'nome')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={nome}
+            onChangeText={(nome) => setNome(nome)}
           />
-          <Text style={{ marginTop: '-5%' }}>Avançar</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </View>
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+            {errors.nome}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            label="Sobrenome"
+            error={errors.snome !== null ? true : false}
+            onFocus={() => handleError(null, 'snome')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={snome}
+            onChangeText={(snome) => setSnome(snome)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.snome !== null ? true : false}>
+            {errors.snome}
+          </HelperText>
+          <TouchableOpacity
+            style={style.btnCadastro}
+            onPress={validarC}
+          >
+            <Image
+              source={require('../../img/next-button.png')}
+              style={style.imageCadastro}
+            />
+            <Text>Avançar</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -189,68 +195,71 @@ const C02 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={style.container} >
-      <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Informações pessoais</Text>
-      <SafeAreaView style={style.safeAreaC}>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='email-address'
-          label="Email"
-          error={errors.email !== null ? true : false}
-          onFocus={() => handleError(null, 'email')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
-          value={email}
-          onChangeText={(email) => setEmail(email)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
-          {errors.email}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='phone-pad'
-          label="Celular"
-          error={errors.ncelular !== null ? true : false}
-          onFocus={() => handleError(null, 'ncelular')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
-          value={ncelular}
-          onChangeText={(ncelular) => setNcelular(ncelular)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
-          {errors.ncelular}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='numeric'
-          label="CPF"
-          error={errors.cpf !== null ? true : false}
-          onFocus={() => handleError(null, 'cpf')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={cpf}
-          onChangeText={(cpf) => setCpf(cpf)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
-          {errors.cpf}
-        </HelperText>
-        <TouchableOpacity
-          onPress={validarC2}
-        >
-          <Image
-            source={require('../../img/next-button.png')}
-            style={style.btnCadastro}
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={style.container} >
+        <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Informações pessoais</Text>
+        <SafeAreaView style={style.safeAreaC}>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='email-address'
+            label="Email"
+            error={errors.email !== null ? true : false}
+            onFocus={() => handleError(null, 'email')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+            value={email}
+            onChangeText={(email) => setEmail(email)}
           />
-          <Text style={{ marginTop: '-5%' }}>Avançar</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </View>
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+            {errors.email}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='phone-pad'
+            label="Celular"
+            error={errors.ncelular !== null ? true : false}
+            onFocus={() => handleError(null, 'ncelular')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
+            value={ncelular}
+            onChangeText={(ncelular) => setNcelular(ncelular)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
+            {errors.ncelular}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='numeric'
+            label="CPF"
+            error={errors.cpf !== null ? true : false}
+            onFocus={() => handleError(null, 'cpf')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={cpf}
+            onChangeText={(cpf) => setCpf(cpf)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
+            {errors.cpf}
+          </HelperText>
+          <TouchableOpacity
+            style={style.btnCadastro}
+            onPress={validarC2}
+          >
+            <Image
+              source={require('../../img/next-button.png')}
+              style={style.imageCadastro}
+            />
+            <Text>Avançar</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -292,54 +301,57 @@ const C03 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={style.container} >
-      <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Crie uma senha segura</Text>
-      <SafeAreaView style={style.safeAreaC}>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
-          label="Senha"
-          error={errors.senha !== null ? true : false}
-          onFocus={() => handleError(null, 'senha')}
-          secureTextEntry={hidePass1}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-          right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
-          value={senha}
-          onChangeText={(senha) => setSenha(senha)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
-          {errors.senha}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
-          label="Confirmar Senha"
-          error={errors.senhaConfirmed !== null ? true : false}
-          onFocus={() => handleError(null, 'senhaConfirmed')}
-          secureTextEntry={hidePass2}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-          right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
-          value={senhaConfirmed}
-          onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
-          {errors.senhaConfirmed}
-        </HelperText>
-        <TouchableOpacity
-          onPress={validarC3}
-        >
-          <Image
-            source={require('../../img/next-button.png')}
-            style={style.btnCadastro}
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={style.container} >
+        <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Crie uma senha segura</Text>
+        <SafeAreaView style={style.safeAreaC}>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            label="Senha"
+            error={errors.senha !== null ? true : false}
+            onFocus={() => handleError(null, 'senha')}
+            secureTextEntry={hidePass1}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+            right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+            value={senha}
+            onChangeText={(senha) => setSenha(senha)}
           />
-          <Text style={{ marginTop: '-5%' }}>Avançar</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </View>
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
+            {errors.senha}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            label="Confirmar Senha"
+            error={errors.senhaConfirmed !== null ? true : false}
+            onFocus={() => handleError(null, 'senhaConfirmed')}
+            secureTextEntry={hidePass2}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+            right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+            value={senhaConfirmed}
+            onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
+            {errors.senhaConfirmed}
+          </HelperText>
+          <TouchableOpacity
+            style={style.btnCadastro}
+            onPress={validarC3}
+          >
+            <Image
+              source={require('../../img/next-button.png')}
+              style={style.imageCadastro}
+            />
+            <Text>Avançar</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -430,162 +442,187 @@ const C04 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={style.container}>
-      <SafeAreaView style={style.safeAreaCfinaliza}>
-        <Text style={{ color: '#fff', textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar dados</Text>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          label="Nome"
-          error={errors.nome !== null ? true : false}
-          onFocus={() => handleError(null, 'nome')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={nome}
-          onChangeText={(nome) => setNome(nome)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
-          {errors.nome}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          label="Sobrenome"
-          error={errors.snome !== null ? true : false}
-          onFocus={() => handleError(null, 'snome')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={snome}
-          onChangeText={(snome) => setSnome(snome)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.snome !== null ? true : false}>
-          {errors.snome}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='email-address'
-          label="Email"
-          error={errors.email !== null ? true : false}
-          onFocus={() => handleError(null, 'email')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
-          value={email}
-          onChangeText={(email) => setEmail(email)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
-          {errors.email}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='phone-pad'
-          label="Celular"
-          error={errors.ncelular !== null ? true : false}
-          onFocus={() => handleError(null, 'ncelular')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
-          value={ncelular}
-          onChangeText={(ncelular) => setNcelular(ncelular)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
-          {errors.ncelular}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          keyboardType='numeric'
-          label="CPF"
-          error={errors.cpf !== null ? true : false}
-          onFocus={() => handleError(null, 'cpf')}
-          theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-          value={cpf}
-          onChangeText={(cpf) => setCpf(cpf)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
-          {errors.cpf}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
-          label="Senha"
-          error={errors.senha !== null ? true : false}
-          onFocus={() => handleError(null, 'senha')}
-          secureTextEntry={hidePass1}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-          right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
-          value={senha}
-          onChangeText={(senha) => setSenha(senha)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
-          {errors.senha}
-        </HelperText>
-        <TextInput
-          style={style.inputC}
-          mode='outlined'
-          activeOutlineColor='#fff'
-          theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
-          label="Confirmar Senha"
-          error={errors.senhaConfirmed !== null ? true : false}
-          onFocus={() => handleError(null, 'senhaConfirmed')}
-          secureTextEntry={hidePass2}
-          left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-          right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
-          value={senhaConfirmed}
-          onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
-        />
-        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
-          {errors.senhaConfirmed}
-        </HelperText>
-        <TouchableOpacity
-          onPress={CadastraUsuario}
-        >
-          <Image
-            source={require('../../img/confirm.png')}
-            style={style.btnCadastro}
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={style.container}>
+        <SafeAreaView style={style.safeAreaCfinaliza}>
+          <Text style={{ color: '#fff', textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar dados</Text>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            label="Nome"
+            error={errors.nome !== null ? true : false}
+            onFocus={() => handleError(null, 'nome')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={nome}
+            onChangeText={(nome) => setNome(nome)}
           />
-        </TouchableOpacity>
-        <Text style={{ marginTop: '-5%' }}>Confirmar dados</Text>
-      </SafeAreaView>
-    </View>
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+            {errors.nome}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            label="Sobrenome"
+            error={errors.snome !== null ? true : false}
+            onFocus={() => handleError(null, 'snome')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={snome}
+            onChangeText={(snome) => setSnome(snome)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.snome !== null ? true : false}>
+            {errors.snome}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='email-address'
+            label="Email"
+            error={errors.email !== null ? true : false}
+            onFocus={() => handleError(null, 'email')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+            {errors.email}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='phone-pad'
+            label="Celular"
+            error={errors.ncelular !== null ? true : false}
+            onFocus={() => handleError(null, 'ncelular')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
+            value={ncelular}
+            onChangeText={(ncelular) => setNcelular(ncelular)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
+            {errors.ncelular}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='numeric'
+            label="CPF"
+            error={errors.cpf !== null ? true : false}
+            onFocus={() => handleError(null, 'cpf')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+            value={cpf}
+            onChangeText={(cpf) => setCpf(cpf)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
+            {errors.cpf}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            label="Senha"
+            error={errors.senha !== null ? true : false}
+            onFocus={() => handleError(null, 'senha')}
+            secureTextEntry={hidePass1}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+            right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+            value={senha}
+            onChangeText={(senha) => setSenha(senha)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
+            {errors.senha}
+          </HelperText>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            label="Confirmar Senha"
+            error={errors.senhaConfirmed !== null ? true : false}
+            onFocus={() => handleError(null, 'senhaConfirmed')}
+            secureTextEntry={hidePass2}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
+            right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+            value={senhaConfirmed}
+            onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
+            {errors.senhaConfirmed}
+          </HelperText>
+          <TouchableOpacity
+            style={style.btnCadastro}
+            onPress={CadastraUsuario}
+          >
+            <Image
+              source={require('../../img/next-button.png')}
+              style={style.imageCadastro}
+            />
+            <Text>Avançar</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   )
 }
 
 const RedefinirSenha = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
+  const [errors, setErrors] = React.useState({ 'email': null });
+
+  const handleError = (error, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: error }));
+  };
+
+  const enviaEmail = async() => {
+    let isValid = true;
+
+    if (validarEmail(email) === false) {
+      handleError("Email inválido", "email");
+      isValid = false;
+    }
+
+    if (isValid) {
+      Alert.alert('Email de redefinição de senha enviado com sucesso!');
+      navigation.navigate('Login');
+    }
+  }
 
   return (
-    <View style={style.container} >
-      <Text style={{ color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', }} >Redefinição de senha</Text>
-      <SafeAreaView style={style.safeAreaC}>
-        <TextInput
-          keyboardType="email-address"
-          style={style.inputC}
-          placeholder="Email"
-          placeholderTextColor="#fff"
-          value={email}
-          onChangeText={(email) => setEmail(email)}
-
-        />
-
-        <TouchableOpacity
-          style={style.btnRedefinir}
-          onPress={validarInputEmail}
-        >
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}>Redefinir</Text>
-        </TouchableOpacity>
-
-      </SafeAreaView>
-    </View>
-
+    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <View style={style.container} >
+        <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', }} >Redefinição de senha</Text>
+        <SafeAreaView style={style.safeAreaC}>
+          <TextInput
+            style={style.inputC}
+            mode='outlined'
+            activeOutlineColor='#fff'
+            keyboardType='email-address'
+            label="Email"
+            error={errors.email !== null ? true : false}
+            onFocus={() => handleError(null, 'email')}
+            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          />
+          <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+            {errors.email}
+          </HelperText>
+          <TouchableOpacity style={style.btnRedefinir} onPress={enviaEmail}>
+            <Text style={{ color: '#fff', fontWeight: 'bold'}}>Redefinir</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   )
 }
 

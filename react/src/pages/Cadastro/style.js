@@ -17,16 +17,18 @@ export default StyleSheet.create({
         color: '#ffff'
     },
     button1: {
+        justifyContent: 'center',
         marginTop: '11%',
         marginBottom: 25,
         width: '60%',
-        height: '7%',
+        height: '10%',
         borderRadius: 10,
         backgroundColor: '#343434'
     },
     button2: {
+        justifyContent: 'center',
         width: '60%',
-        height: '7%',
+        height: '10%',
         borderRadius: 10,
         backgroundColor: '#343434'
     },
@@ -36,7 +38,6 @@ export default StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#ffff',
-        marginTop: 10
     },
     safeAreaC: {
         marginTop: 90,
@@ -60,6 +61,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: 25,
         marginBottom: 25,
+    },
+    imageCadastro: {
         padding: "6%",
         width: "100%",
         height: 13
@@ -87,10 +90,10 @@ export default StyleSheet.create({
     btnRedefinir: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
+        marginTop: 20,
         width: 110,
         height: 40,
         borderRadius: 10,
-        backgroundColor: '#246fff'
+        backgroundColor: '#05A94E'
     }
 });

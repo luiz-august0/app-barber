@@ -16,13 +16,13 @@ export default StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#ffff',
-        marginTop: 10
     },
     button: {
+        justifyContent: 'center',
         marginTop: '11%',
         marginBottom: '-5%',
         width: '60%',
-        height: '7%',
+        height: '30%',
         borderRadius: 10,
         backgroundColor: '#343434'
     },

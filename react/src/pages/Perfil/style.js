@@ -39,7 +39,7 @@ export default StyleSheet.create({
     safeAreaC: {
         marginTop: '20%',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     imageContainer: {
         width: '50%',
