@@ -17,7 +17,7 @@ const Header = ({navigation, route}) => {
 
     const getNome = async() => {
         setNome(JSON.parse(await AsyncStorage.getItem('usuario')).nome);
-        setNomeArquivoFoto(JSON.parse(await AsyncStorage.getItem('usuario')).imagem)
+        setNomeArquivoFoto(JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem)
     }
 
     useEffect(() => {

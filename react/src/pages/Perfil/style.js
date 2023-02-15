@@ -20,6 +20,13 @@ export default StyleSheet.create({
         marginTop: '20%',
         marginBottom: '5%'
     },
+    text: {
+        width: '100%',
+        fontSize: 12,
+        textAlign: 'center',
+        color: '#ffff',
+        marginBottom: 30
+    },
     inputC: {
         marginTop: 10,
         width: '70%',
@@ -44,13 +51,22 @@ export default StyleSheet.create({
     imageContainer: {
         width: '50%',
         height: Dimensions.get('window').width / 2,
-        backgroundColor: '#EEE',
         marginTop: 10,
         marginBottom: 10
     },
     image: {
         width: '100%',
         height: Dimensions.get('window').width / 2,
-        resizeMode: 'center'
+        resizeMode: 'center',
+        borderRadius: 15
+    },
+    containerIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    horizontalIndicator: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
     },
 });

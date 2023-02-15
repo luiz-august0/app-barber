@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://api-barber.vercel.app'
+    baseURL: 'http://192.168.0.105:5000'
 });
 
 //Rota de sessão
@@ -33,6 +33,10 @@ export const updateUsuarioPassword = async (senhaAntiga, senhaNova, usuarioID) =
 
 export const deleteUsuario = async (usuarioID) => {
     return api.delete(`/usuario/${usuarioID}`);
+};
+
+export const updateUsuarioFoto = async (usuarioID, file) => {
+    return api.post(`/usuario_perfil/${usuarioID}`, { file });
 };
 
 export const getUsuario = async (usuarioID) => {

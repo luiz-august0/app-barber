@@ -26,7 +26,7 @@ routes.post('/usuario_perfil/:id', (req, res) => {
 		.then((url) => {
 			try {
 				UsuarioController.updateFotoPerfil(req.params.id, url);
-				return res.status(201).json("Upload efetuado com sucesso");
+				return res.status(201).json(url);
 			} catch (err) {
 				res.status(500).json(err);
 			}

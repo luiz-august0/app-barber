@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, SafeAreaView, Text, TouchableOpacity, Alert, Image } from "react-native";
+import { ScrollView, View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
-import { getUsuario, updateUsuario, updateUsuarioPassword } from "../../services/api";
+import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
+import perfil from "../../img/perfil.png";
 
 const validarEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
@@ -30,9 +31,17 @@ const Perfil = ({ navigation, route }) => {
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState(initialStateErrors);
     const [onEditMode, setEditMode] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const getUsuarioData = async () => {
         const response = getUsuario(JSON.parse(await AsyncStorage.getItem('usuario')).id);
+
+        if (JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem !== 'ul') {
+            setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem}`});
+        } else {
+            setImage(perfil);
+        }
+
         const data = ((await response).data);
         setNome(data[0].Usr_Nome);
         setEmail(data[0].Usr_Email);
@@ -120,23 +129,38 @@ const Perfil = ({ navigation, route }) => {
             base64: true,
             aspect: [4, 3],
             quality: 1,
-        });
+        })
+        
+        if (!res.cancelled) {
+            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
 
-            console.log(res.assets);
-        if (!res.canceled) {
-            setImage({ uri: res.assets.uri , type: res.assets.type })
+            try {
+                setLoading(true);
+                const responseImage = await updateUsuarioFoto(JSON.parse(await AsyncStorage.getItem('usuario')).id, file);
+                setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                setLoading(false);
+            } catch (error) {
+                Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
+            }
         }
+        
     }
 
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
                 <Text style={style.textTitle}>Dados do Usuário</Text>
+                {loading?
+                <View style={[style.containerIndicator, style.horizontalIndicator]}>
+                    <ActivityIndicator/>
+                </View>:
                 <View style={style.imageContainer}>
-                    <TouchableOpacity onPress={() => pickImage()}>
-                        <Image source={image} style={style.image}/>
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={pickImage}>
+                    <Image source={image} style={style.image}/>
+                </TouchableOpacity>
                 </View>
+                }
+                <Text style={style.text}>Clique na imagem para mudar a foto de perfil</Text>
                 <TextInput
                     style={style.inputC}
                     mode='outlined'

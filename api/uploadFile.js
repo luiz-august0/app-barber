@@ -14,13 +14,13 @@ const opts = {
 }
 
 module.exports = (file) => {
+	console.log(file);
 	return new Promise((resolve, reject) => {
 		cloudinary.uploader.upload(file, opts, (error, result) => {
 			if (result && result.secure_url) {
-				console.log('v' + result.version + '/' +  result.public_id + '.' + result.format)
 				return resolve('v' + result.version + '/' +  result.public_id + '.' + result.format);
 			}
-			console.log(error.message);
+			//console.log(error.message);
 			return reject({ message: error.message });
 		})
 	})
