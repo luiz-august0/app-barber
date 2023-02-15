@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView } from 'react-native'
 import { TextInput } from "react-native-paper";
+import { connect } from 'react-redux';
 import { login } from  '../../contexts/auth';
 import globalStyles from '../../globalStyles';
+import { usuarioLogado } from '../../store/actions/usuario';
 import style from './style'
 
-const Login = ({ navigation, route }) => {
+const Login = (props) => {
   const [senha, setSenha] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [email, setEmail] = useState('');
@@ -18,8 +20,10 @@ const Login = ({ navigation, route }) => {
     } 
 
     login(email, senha).then((resolve) => {
+      const data = resolve.dataUsuario;
       if (resolve.authenticated) {
-        navigation.navigate('Home');
+        props.onLogin(data);
+        props.navigation.navigate('Home');
       }
     });
   }
@@ -57,7 +61,7 @@ const Login = ({ navigation, route }) => {
             />
               
               <TouchableOpacity
-              onPress={() => navigation.navigate('RedefinirSenha')}
+              onPress={() => props.navigation.navigate('RedefinirSenha')}
               >
                 <Text style={{ color: "#ffff", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
               </TouchableOpacity>
@@ -72,7 +76,7 @@ const Login = ({ navigation, route }) => {
               <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }} >Não tem cadastro ?</Text>
 
               <TouchableOpacity 
-              onPress={() => navigation.navigate('C00')}
+              onPress={() => props.navigation.navigate('C00')}
               style={style.btnCadastro}
               >
               <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
@@ -83,4 +87,16 @@ const Login = ({ navigation, route }) => {
     ) 
 }
 
-export default Login;
+const mapStateToProps = ({ usuario }) => {
+  return {
+      usuario
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogin: usuario => dispatch(usuarioLogado(usuario))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

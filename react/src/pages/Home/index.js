@@ -4,17 +4,20 @@ import style from "./style";
 import { logout } from  '../../contexts/auth';
 import Header from "../../components/Header";
 import globalStyles from "../../globalStyles";
+import { connect } from "react-redux";
+import { usuarioLogado } from "../../store/actions/usuario";
 
-const Home = ({navigation, route}) => {
+const Home = (props) => {
     const logoutEvent = () => {
         logout();
-        navigation.navigate('Login');
+        props.onLogout();
+        props.navigation.navigate('Login');
     }
 
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-                <Header navigation={navigation} route={route}/>
+                <Header navigation={props.navigation} route={props.route}/>
                 <TouchableOpacity
                 style={style.button}
                 >
@@ -31,4 +34,10 @@ const Home = ({navigation, route}) => {
     )
 }
     
-export default Home;
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout:() => dispatch(usuarioLogado(null))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Home);

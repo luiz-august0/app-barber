@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
 import perfil from "../../img/perfil.png";
+import { connect } from "react-redux";
+import { usuarioLogado } from "../../store/actions/usuario";
 
 const validarEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
@@ -22,7 +24,7 @@ const validarEmail = (email) => {
     }
 };
 
-const Perfil = ({ navigation, route }) => {
+const Perfil = (props) => {
     const initialStateErrors = { 'nome': null, 'email': null, 'ncelular': null, 'cpf': null };
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -33,11 +35,25 @@ const Perfil = ({ navigation, route }) => {
     const [onEditMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const updateStoreUsuario = async() => {
+        const response = await getUsuario(props.usuario.state.id);
+        const data = response.data;
+        props.onEdit({
+            id: data[0].Usr_Codigo,
+            email: data[0].Usr_Email,
+            nome: data[0].Usr_Nome,
+            contato: data[0].Usr_Contato,
+            cpf: data[0].Usr_CPF,
+            tipo: data[0].Usr_Tipo,
+            urlImagem: data[0].Usr_FotoPerfil
+        })
+    }
+
     const getUsuarioData = async () => {
         const response = getUsuario(JSON.parse(await AsyncStorage.getItem('usuario')).id);
 
-        if (JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem !== 'ul') {
-            setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem}`});
+        if (props.usuario.state.urlImagem !== 'ul') {
+            setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`});
         } else {
             setImage(perfil);
         }
@@ -109,6 +125,7 @@ const Perfil = ({ navigation, route }) => {
                 await updateUsuario(email, nome, ncelular, cpf, JSON.parse(await AsyncStorage.getItem('usuario')).id);
                 Alert.alert('Usuário alterado com sucesso!');
                 getUsuarioData();
+                updateStoreUsuario();
                 setEditMode(false);
             } catch (error) {
                 if (error.message === "Request failed with status code 400") {
@@ -138,6 +155,7 @@ const Perfil = ({ navigation, route }) => {
                 setLoading(true);
                 const responseImage = await updateUsuarioFoto(JSON.parse(await AsyncStorage.getItem('usuario')).id, file);
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                updateStoreUsuario();
                 setLoading(false);
             } catch (error) {
                 Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
@@ -238,7 +256,7 @@ const Perfil = ({ navigation, route }) => {
                         </TouchableOpacity>
                     :null}
                     {!onEditMode?
-                        <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => navigation.navigate('EditarSenha')}>
+                        <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => props.navigation.navigate('EditarSenha')}>
                             <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
                         </TouchableOpacity>
                     :null}
@@ -248,7 +266,7 @@ const Perfil = ({ navigation, route }) => {
     )
 }
 
-const EditarSenha = ({ navigation, route }) => {
+const EditarSenha = (props) => {
     const [senhaAntiga, setSenhaAntiga] = useState('');
     const [hidePass, setHidePass] = useState(true);
     const [senha, setSenha] = useState('');
@@ -284,7 +302,7 @@ const EditarSenha = ({ navigation, route }) => {
         try {
             await updateUsuarioPassword(senhaAntiga, senha, JSON.parse(await AsyncStorage.getItem('usuario')).id);
             Alert.alert('Senha alterada com sucesso!');
-            navigation.navigate('Perfil');
+            props.navigation.navigate('Perfil');
         } catch (error) {
             if (error.message === "Request failed with status code 401") {
                 handleError('Senha antiga incorreta', 'senhaAntiga');
@@ -358,4 +376,17 @@ const EditarSenha = ({ navigation, route }) => {
     )
 }
 
-export { Perfil, EditarSenha };
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+        onEdit: usuario => dispatch(usuarioLogado(usuario))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Perfil);
+export { EditarSenha };

@@ -22,6 +22,8 @@ class SessionController {
                         const tipo = JSON.stringify(result[0].Usr_Tipo).slice(0, -1).slice(1 | 1);
                         const nome = JSON.stringify(result[0].Usr_Nome).slice(0, -1).slice(1 | 1);
                         const urlImagem = JSON.stringify(result[0].Usr_FotoPerfil).slice(0, -1).slice(1 | 1);
+                        const contato = JSON.stringify(result[0].Usr_Contato).slice(0, -1).slice(1 | 1);
+                        const cpf = JSON.stringify(result[0].Usr_CPF).slice(0, -1).slice(1 | 1);
 
                         if (!checkPassword(senha, usuarioSenha)) {
                             return res.status(401).json({ error: "Usuário ou senha inválidos." });
@@ -34,6 +36,8 @@ class SessionController {
                                 id,
                                 email,
                                 nome,
+                                contato,
+                                cpf,
                                 tipo,
                                 urlImagem
                             },

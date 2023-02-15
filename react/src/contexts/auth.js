@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
@@ -15,11 +15,14 @@ export const login = async (email, senha) => {
 
         await AsyncStorage.setItem("usuario", JSON.stringify(usuarioLogado));
         await AsyncStorage.setItem("token", token);
-        await AsyncStorage.setItem("TipoUsuario", usuarioLogado.tipo);
 
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
-        return {authenticated: true}
+        return {
+            authenticated: true,
+            token: token,
+            dataUsuario: usuarioLogado
+        }
 
     } catch (error) {
         console.log(error)

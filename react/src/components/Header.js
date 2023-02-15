@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
@@ -9,30 +9,18 @@ import {
 } from 'react-native';
 import icon from "../img/imgMenu.png";
 import perfil from "../img/perfil.png";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from 'react-redux';
 
-const Header = ({navigation, route}) => {
-    const [nome, setNome] = useState('')
-    const [nomeArquivoFoto, setNomeArquivoFoto] = useState('');
-
-    const getNome = async() => {
-        setNome(JSON.parse(await AsyncStorage.getItem('usuario')).nome);
-        setNomeArquivoFoto(JSON.parse(await AsyncStorage.getItem('usuario')).urlImagem)
-    }
-
-    useEffect(() => {
-        getNome();
-    }, []);
-    
+const Header = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.rowContainer}>
                 <Image source={icon} style={styles.image}/>
             </View>
-            <TouchableOpacity style={styles.userContainer} onPress={() => navigation.navigate('Perfil')}>
-                <Text style={styles.user}>{nome}</Text>
-                {nomeArquivoFoto!=='ul'?
-                <Image source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${nomeArquivoFoto}`}} style={styles.avatar}/>
+            <TouchableOpacity style={styles.userContainer} onPress={() => props.navigation.navigate('Perfil')}>
+                <Text style={styles.user}>{props.usuario.state.nome}</Text>
+                {props.usuario.state.urlImagem!=='ul'?
+                <Image source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`}} style={styles.avatar}/>
                 :<Image source={perfil} style={styles.avatar}/>}
             </TouchableOpacity>
         </View>
@@ -79,4 +67,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Header;
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(Header);
