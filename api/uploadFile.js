@@ -1,10 +1,10 @@
 var cloudinary = require("cloudinary").v2;
+require('dotenv').config();
 
 cloudinary.config({
-	cloud_name: 'dvwxrpftt',
-	api_key: '418787596457926',
-	api_secret: '7pBTDOts5RjveG7jONsWEtqhf_Q',
-	
+	cloud_name: process.env.CLOUD_NAME,
+	api_key: process.env.CLOUD_KEY,
+	api_secret: process.env.CLOUD_SECRET
 })
 
 const opts = {
@@ -20,19 +20,7 @@ module.exports = (file) => {
 			if (result && result.secure_url) {
 				return resolve('v' + result.version + '/' +  result.public_id + '.' + result.format);
 			}
-			//console.log(error.message);
 			return reject({ message: error.message });
 		})
 	})
 }
-
-/*export const storage = multer.diskStorage({
-	destination: (req, file, callback) => {
-		callback(null, path.resolve("upload_files"));
-	},
-	filename: (req, file, callback) => {
-		const time = new Date().getTime();
-
-		callback(null, `${time}_${file.originalname}`);
-	}
-})*/

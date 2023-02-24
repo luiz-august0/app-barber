@@ -4,7 +4,6 @@ import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
 import perfil from "../../img/perfil.png";
@@ -50,7 +49,7 @@ const Perfil = (props) => {
     }
 
     const getUsuarioData = async () => {
-        const response = getUsuario(JSON.parse(await AsyncStorage.getItem('usuario')).id);
+        const response = getUsuario(props.usuario.state.id);
 
         if (props.usuario.state.urlImagem !== 'ul') {
             setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`});
@@ -105,24 +104,24 @@ const Perfil = (props) => {
             }
         }
 
-        if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf === '') {
+        if (props.usuario.state.tipo === "B" && cpf === '') {
             handleError("CPF deve ser informado", "cpf");
             isValid = false;
         }
 
-        if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf !== '' && !validaCPF(cpf)) {
+        if (props.usuario.state.tipo === "B" && cpf !== '' && !validaCPF(cpf)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
 
-        if (await AsyncStorage.getItem('TipoUsuario') === "C" && cpf !== '' && !validaCPF(cpf)) {
+        if (props.usuario.state.tipo === "C" && cpf !== '' && !validaCPF(cpf)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
 
         if (isValid) {
             try {
-                await updateUsuario(email, nome, ncelular, cpf, JSON.parse(await AsyncStorage.getItem('usuario')).id);
+                await updateUsuario(email, nome, ncelular, cpf, props.usuario.state.id);
                 Alert.alert('Usuário alterado com sucesso!');
                 getUsuarioData();
                 updateStoreUsuario();
@@ -153,7 +152,7 @@ const Perfil = (props) => {
 
             try {
                 setLoading(true);
-                const responseImage = await updateUsuarioFoto(JSON.parse(await AsyncStorage.getItem('usuario')).id, file);
+                const responseImage = await updateUsuarioFoto(props.usuario.state.id, file);
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
                 updateStoreUsuario();
                 setLoading(false);
@@ -256,7 +255,7 @@ const Perfil = (props) => {
                         </TouchableOpacity>
                     :null}
                     {!onEditMode?
-                        <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => props.navigation.navigate('EditarSenha')}>
+                        <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E'}]} onPress={() => props.navigation.navigate('EditarSenha', { id: props.usuario.state.id })}>
                             <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Alterar Senha</Text>
                         </TouchableOpacity>
                     :null}
@@ -300,7 +299,7 @@ const EditarSenha = (props) => {
   
       if (isValid) {
         try {
-            await updateUsuarioPassword(senhaAntiga, senha, JSON.parse(await AsyncStorage.getItem('usuario')).id);
+            await updateUsuarioPassword(senhaAntiga, senha, props.route.params?.id);
             Alert.alert('Senha alterada com sucesso!');
             props.navigation.navigate('Perfil');
         } catch (error) {

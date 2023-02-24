@@ -15,22 +15,20 @@ const Home = (props) => {
     }
 
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-            <View style={style.container}>
-                <Header navigation={props.navigation} route={props.route}/>
-                <TouchableOpacity
-                style={style.button}
-                >
-                    <Text style={style.text}>Agendamentos</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                style={style.button}
-                onPress={() => logoutEvent()}
-                >
-                    <Text style={style.text}>Sair</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+        <View style={style.container}>
+            <Header navigation={props.navigation} route={props.route}/>
+            <TouchableOpacity
+            style={style.button}
+            >
+                <Text style={style.text}>Agendamentos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={style.button}
+            onPress={() => logoutEvent()}
+            >
+                <Text style={style.text}>Sair</Text>
+            </TouchableOpacity>
+        </View>
     )
 }
     

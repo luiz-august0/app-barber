@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView } from 'react-native'
 import { TextInput, HelperText } from "react-native-paper";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import style from './style'
 import { createUsuario, verifyUsuario } from '../../services/api';
@@ -23,29 +22,26 @@ const validaCPF = (cpf) => {
 
 const C00 = ({ navigation, route }) => {
   const onClickButton = async (tipoUsuario) => {
-    await AsyncStorage.setItem("TipoUsuario", tipoUsuario);
-    navigation.navigate('C01');
+    navigation.navigate('C01', { tipoUsuario: tipoUsuario});
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-      <View style={[style.container, { alignItems: 'center' }]}>
-        <Image source={imgChair} style={style.image} />
-        <Text style={style.text_title}>Barber</Text>
-        <TouchableOpacity
-          style={style.button1}
-          onPress={() => onClickButton('B')}
-        >
-          <Text style={style.text}>Sou Barbeiro</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={style.button2}
-          onPress={() => onClickButton('C')}
-        >
-          <Text style={style.text}>Sou Cliente</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <View style={[style.container, { alignItems: 'center' }]}>
+      <Image source={imgChair} style={style.image} />
+      <Text style={style.text_title}>Barber</Text>
+      <TouchableOpacity
+        style={style.button1}
+        onPress={() => onClickButton('B')}
+      >
+        <Text style={style.text}>Sou Barbeiro</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={style.button2}
+        onPress={() => onClickButton('C')}
+      >
+        <Text style={style.text}>Sou Cliente</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -72,7 +68,7 @@ const C01 = ({ navigation, route }) => {
     }
 
     if (isValid) {
-      navigation.navigate('C02', { nome: nome, snome: snome })
+      navigation.navigate('C02', { nome: nome, snome: snome, tipoUsuario: route.params?.tipoUsuario })
     }
   }
 
@@ -156,17 +152,17 @@ const C02 = ({ navigation, route }) => {
       }
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf === '') {
+    if (route.params?.tipoUsuario === "B" && cpf === '') {
       handleError("CPF deve ser informado", "cpf");
       isValid = false;
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf !== '' && !validaCPF(cpf)) {
+    if (route.params?.tipoUsuario === "B" && cpf !== '' && !validaCPF(cpf)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "C" && cpf !== '' && !validaCPF(cpf)) {
+    if (route.params?.tipoUsuario === "C" && cpf !== '' && !validaCPF(cpf)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
@@ -191,7 +187,7 @@ const C02 = ({ navigation, route }) => {
       }
     }
 
-    if (isValid && isAllowed) { navigation.navigate('C03', { email: email, ncelular: ncelular, nome: nome, snome: snome, cpf: cpf }) }
+    if (isValid && isAllowed) { navigation.navigate('C03', { email: email, ncelular: ncelular, nome: nome, snome: snome, cpf: cpf, tipoUsuario: route.params?.tipoUsuario }) }
   }
 
   return (
@@ -295,7 +291,8 @@ const C03 = ({ navigation, route }) => {
         nome: route.params?.nome,
         snome: route.params?.snome,
         cpf: route.params?.cpf,
-        senha: senha
+        senha: senha,
+        tipoUsuario: route.params?.tipoUsuario
       });
     }
   }
@@ -396,17 +393,17 @@ const C04 = ({ navigation, route }) => {
       }
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf === '') {
+    if (route.params?.tipoUsuario === "B" && cpf === '') {
       handleError("CPF deve ser informado", "cpf");
       isValid = false;
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "B" && cpf !== '' && !validaCPF(cpf)) {
+    if (route.params?.tipoUsuario === "B" && cpf !== '' && !validaCPF(cpf)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
 
-    if (await AsyncStorage.getItem('TipoUsuario') === "C" && cpf !== '' && !validaCPF(cpf)) {
+    if (route.params?.tipoUsuario === "C" && cpf !== '' && !validaCPF(cpf)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
@@ -424,11 +421,10 @@ const C04 = ({ navigation, route }) => {
     if (isValid) {
       try {
         let nomeCompleto = nome + ' ' + snome;
-        let tipo = await AsyncStorage.getItem('TipoUsuario')
+        let tipo = route.params?.tipoUsuario;
         await createUsuario(email, nomeCompleto, senha, ncelular, cpf, tipo);
         Alert.alert('Usuário cadastrado com sucesso!');
         navigation.navigate('Login');
-        await AsyncStorage.removeItem('TipoUsuario');
       } catch (error) {
         if (error.message === "Request failed with status code 400") {
           handleError('Email já cadastrado', 'email');

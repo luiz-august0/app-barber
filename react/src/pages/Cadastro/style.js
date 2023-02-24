@@ -20,15 +20,15 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: '11%',
         marginBottom: 25,
-        width: '60%',
-        height: '10%',
+        width: 200,
+        height: 50,
         borderRadius: 10,
         backgroundColor: '#343434'
     },
     button2: {
         justifyContent: 'center',
-        width: '60%',
-        height: '10%',
+        width: 200,
+        height: 50,
         borderRadius: 10,
         backgroundColor: '#343434'
     },

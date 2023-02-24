@@ -21,8 +21,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: '11%',
         marginBottom: '-5%',
-        width: '60%',
-        height: '30%',
+        width: 200,
+        height: 50,
         borderRadius: 10,
         backgroundColor: '#343434'
     },
