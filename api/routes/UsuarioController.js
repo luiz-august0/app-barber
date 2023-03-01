@@ -1,6 +1,4 @@
 import { checkPassword, createPasswordHash } from '../services/auth';
-import multer from "multer";
-import path from "path";
 
 const mysql = require('../config/mysql').pool;
 

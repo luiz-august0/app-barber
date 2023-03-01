@@ -14,21 +14,20 @@ CREATE TABLE barbearia(
     Barb_Nome VARCHAR(255) NOT NULL,
     Barb_RazaoSocial VARCHAR(255) NOT NULL,
     Barb_CNPJ VARCHAR(14) UNIQUE NOT NULL,
-    Barb_InscEst VARCHAR(9) NOT NULL
+    Barb_InscEst VARCHAR(9) NOT NULL,
+    Barb_Cidade VARCHAR(80) NOT NULL,
+    Barb_CEP VARCHAR(8) NOT NULL,
+    Barb_Rua VARCHAR(80) NOT NULL,
+    Barb_Numero INT NOT NULL,
+    Barb_Bairro VARCHAR(80) NOT NULL,
+    Barb_Complemento VARCHAR(50),
+    Barb_GeoLatitude FLOAT,
+    Barb_GeoLongitude FLOAT
 );
 
-CREATE TABLE barbearia_endereco(
-    BarbEnd_Codigo INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE barbearia_contatos(
     Barb_Codigo INT NOT NULL,
-    BarbEnd_Cidade VARCHAR(80) NOT NULL,
-    BarbEnd_CEP VARCHAR(8) NOT NULL,
-    BarbEnd_Rua VARCHAR(80) NOT NULL,
-    BarbEnd_Numero INT NOT NULL,
-    BarbEnd_Bairro VARCHAR(80) NOT NULL,
-    BarbEnd_Complemento VARCHAR(50),
-    BarbEnd_Contato1 VARCHAR(20) NOT NULL,
-    BarbEnd_Contato2 VARCHAR(20),
-    BarbEnd_Contato3 VARCHAR(20)
+    BarbC_Contato VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE barbearia_proprietarios(
@@ -39,7 +38,7 @@ CREATE TABLE barbearia_proprietarios(
 CREATE TABLE servico_categorias(
     ServCat_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Barb_Codigo INT NOT NULL,
-    Serv_Cat_Nome VARCHAR(55) NOT NULL
+    ServCat_Nome VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE servico(
@@ -49,11 +48,17 @@ CREATE TABLE servico(
     Serv_Valor FLOAT NOT NULL
 );
 
-ALTER TABLE barbearia_endereco ADD CONSTRAINT fk_endereco_barbeiro
+ALTER TABLE barbearia_contatos ADD CONSTRAINT fk_contatos_barbearia
 FOREIGN KEY(Barb_Codigo) REFERENCES barbearia(Barb_Codigo);
 
 ALTER TABLE barbearia_proprietarios ADD CONSTRAINT pk_barbearia_proprietario
 PRIMARY KEY(Barb_Codigo, Usr_Codigo);
+
+ALTER TABLE barbearia_proprietarios ADD CONSTRAINT fk_barbearia_proprietario_barbeiro
+FOREIGN KEY(Barb_Codigo) REFERENCES barbearia(Barb_Codigo);
+
+ALTER TABLE barbearia_proprietarios ADD CONSTRAINT fk_barbearia_proprietario_usuario
+FOREIGN KEY(Usr_Codigo) REFERENCES usuario(Usr_Codigo);
 
 ALTER TABLE servico_categorias ADD CONSTRAINT fk_categoria_barbearia
 FOREIGN KEY(Barb_Codigo) REFERENCES barbearia(Barb_Codigo);

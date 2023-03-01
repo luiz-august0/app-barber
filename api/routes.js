@@ -3,6 +3,7 @@ import multer from "multer";
 import SessionController from "./routes/SessionController";
 import auth from "./middlewares/auth";
 import UsuarioController from "./routes/UsuarioController";
+import BarbeariaController from "./routes/BarbeariaController";
 import { storage } from './uploadFile';
 const uploadFile = require('./uploadFile');
 
@@ -34,5 +35,18 @@ routes.post('/usuario_perfil/:id', (req, res) => {
 		.catch((err) => res.status(500).json(err));
 });
 routes.delete('/usuario/:id', UsuarioController.destroy);
+
+//Rotas barbearia
+routes.get('/barbearia', BarbeariaController.getBarbearias);
+routes.get('/barbearia/:id', BarbeariaController.getBarbeariasUsuario);
+routes.post('/barbearia', BarbeariaController.postBarbearia);
+routes.put('/barbearia/:id', BarbeariaController.updateBarbearia);
+routes.delete('/barbearia/:id', BarbeariaController.deleteBarbearia);
+routes.get('/barbearia_contatos/:id', BarbeariaController.getBarbeariaContatos);
+routes.post('/barbearia_contatos/:id', BarbeariaController.postBarbeariaContatos);
+routes.post('/barbearia_contatos_remove/:id', BarbeariaController.deleteBarbeariaContatos);
+routes.get('/barbearia_proprietarios/:id', BarbeariaController.getBarbeariaProprietarios);
+routes.post('/barbearia_proprietarios/:id', BarbeariaController.postBarbeariaProprietarios);
+routes.post('/barbearia_proprietarios_remove/:id', BarbeariaController.deleteBarbeariaProprietarios);
 
 export default routes;
