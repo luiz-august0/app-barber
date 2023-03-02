@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView } from 'react-native'
 import { TextInput } from "react-native-paper";
 import { connect } from 'react-redux';
-import { login } from  '../../contexts/auth';
 import globalStyles from '../../globalStyles';
 import { usuarioLogado } from '../../store/actions/usuario';
 import style from './style'
+import { Context } from '../../contexts/auth';
 
 const Login = (props) => {
   const [senha, setSenha] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [email, setEmail] = useState('');
+
+  const { login, loadUser } = useContext(Context);
+
+  useEffect(() => {
+    loadUser().then((resolve) => {
+      const data = resolve.dataUsuario;
+      if (resolve.authenticated) {
+        props.onLogin(data);
+        props.navigation.navigate('Home');
+      }
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

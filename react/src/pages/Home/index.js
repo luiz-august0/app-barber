@@ -1,13 +1,14 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import style from "./style";
-import { logout } from  '../../contexts/auth';
 import Header from "../../components/Header";
-import globalStyles from "../../globalStyles";
 import { connect } from "react-redux";
+import { Context } from "../../contexts/auth";
 import { usuarioLogado } from "../../store/actions/usuario";
 
 const Home = (props) => {
+    const { logout } = useContext(Context);
+
     const logoutEvent = () => {
         logout();
         props.onLogout();

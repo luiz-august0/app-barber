@@ -2,6 +2,7 @@ import React from 'react';
 import * as Font from 'expo-font';
 import Routes from './routes';
 import { Provider } from 'react-redux';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AppRegistry } from 'react-native';
 import {name as appName} from './app.json';
 import storeConfig from './src/store/storeConfig';
@@ -34,8 +35,11 @@ export default class Redux extends React.Component {
 
         return (
             <Provider store={store}>
-                <Routes/>
+                <SafeAreaProvider>
+                    <Routes/>
+                </SafeAreaProvider>
             </Provider>
+
         );
     }
 }
