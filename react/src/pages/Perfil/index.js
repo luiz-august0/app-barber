@@ -51,7 +51,7 @@ const Perfil = (props) => {
     const getUsuarioData = async () => {
         const response = getUsuario(props.usuario.state.id);
 
-        if (props.usuario.state.urlImagem !== 'ul') {
+        if ((props.usuario.state.urlImagem !== 'ul') && (props.usuario.state.urlImagem !== '')) {
             setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`});
         } else {
             setImage(perfil);
@@ -140,7 +140,7 @@ const Perfil = (props) => {
 
     const pickImage = async () => {
         let res = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             base64: true,
             aspect: [4, 3],
@@ -158,6 +158,7 @@ const Perfil = (props) => {
                 setLoading(false);
             } catch (error) {
                 Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
+                setLoading(false);
             }
         }
         

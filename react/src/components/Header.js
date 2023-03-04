@@ -19,7 +19,7 @@ const Header = (props) => {
             </View>
             <TouchableOpacity style={styles.userContainer} onPress={() => props.navigation.navigate('Perfil')}>
                 <Text style={styles.user}>{props.usuario.state.nome}</Text>
-                {props.usuario.state.urlImagem!=='ul'?
+                {((props.usuario.state.urlImagem !== 'ul') && (props.usuario.state.urlImagem !== ''))?
                 <Image source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`}} style={styles.avatar}/>
                 :<Image source={perfil} style={styles.avatar}/>}
             </TouchableOpacity>
