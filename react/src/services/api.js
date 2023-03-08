@@ -42,3 +42,8 @@ export const updateUsuarioFoto = async (usuarioID, file) => {
 export const getUsuario = async (usuarioID) => {
     return api.get(`/usuario/${usuarioID}`);
 };
+
+//Rotas barbearia
+export const getBarbeariasUsuario = async (usuarioID) => {
+    return api.get(`/barbearia_usuario/${usuarioID}`);
+};

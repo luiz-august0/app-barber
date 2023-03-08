@@ -6,6 +6,7 @@ import {C00, C01, C02, C03, C04, RedefinirSenha} from './src/pages/Cadastro/inde
 import Home from './src/pages/Home/index';
 import Perfil, {EditarSenha} from './src/pages/Perfil';
 import { AuthProvider } from './src/contexts/auth';
+import UsuarioBarbearias from './src/pages/UsuarioBarbearias';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,10 @@ const Routes = () => {
                 <Stack.Screen
                 name="EditarSenha"
                 component={EditarSenha}
+                />
+                <Stack.Screen
+                name="UsuarioBarbearias"
+                component={UsuarioBarbearias}
                 />
             </Stack.Navigator>
         </NavigationContainer>

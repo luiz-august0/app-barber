@@ -13,20 +13,23 @@ CREATE TABLE barbearia(
     Barb_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Barb_Nome VARCHAR(255) NOT NULL,
     Barb_RazaoSocial VARCHAR(255) NOT NULL,
-    Barb_CNPJ VARCHAR(14) UNIQUE NOT NULL,
-    Barb_InscEst VARCHAR(9) NOT NULL,
+    Barb_CNPJ VARCHAR(14) NOT NULL,
+    Barb_InscEst VARCHAR(20) NOT NULL,
     Barb_Cidade VARCHAR(80) NOT NULL,
     Barb_CEP VARCHAR(8) NOT NULL,
+    Barb_UF VARCHAR(12) NOT NULL,
     Barb_Rua VARCHAR(80) NOT NULL,
     Barb_Numero INT NOT NULL,
     Barb_Bairro VARCHAR(80) NOT NULL,
     Barb_Complemento VARCHAR(50),
     Barb_GeoLatitude FLOAT,
-    Barb_GeoLongitude FLOAT
+    Barb_GeoLongitude FLOAT,
+    Barb_LogoUrl VARCHAR(255)
 );
 
 CREATE TABLE barbearia_contatos(
     Barb_Codigo INT NOT NULL,
+    BarbC_Descricao VARCHAR(100) NOT NULL,
     BarbC_Contato VARCHAR(20) NOT NULL
 );
 

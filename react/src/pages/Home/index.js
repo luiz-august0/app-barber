@@ -15,14 +15,32 @@ const Home = (props) => {
         props.navigation.navigate('Login');
     }
 
+    const menuAvailable = () => {
+        if (props.usuario.state.tipo = "B") {
+            return (
+                <TouchableOpacity
+                style={style.button}
+                onPress={() => props.navigation.navigate('UsuarioBarbearias')}
+                >
+                    <Text style={style.text}>Minhas Barbearias</Text>
+                </TouchableOpacity>
+            )
+        } 
+        else if (props.usuario.state.tipo = "C") {
+            return (
+                <TouchableOpacity
+                style={style.button}
+                >
+                    <Text style={style.text}>Agendamentos</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
+
     return (
         <View style={style.container}>
             <Header navigation={props.navigation} route={props.route}/>
-            <TouchableOpacity
-            style={style.button}
-            >
-                <Text style={style.text}>Agendamentos</Text>
-            </TouchableOpacity>
+            {menuAvailable()}
             <TouchableOpacity
             style={style.button}
             onPress={() => logoutEvent()}
@@ -33,10 +51,16 @@ const Home = (props) => {
     )
 }
     
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onLogout:() => dispatch(usuarioLogado(null))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

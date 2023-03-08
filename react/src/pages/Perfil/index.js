@@ -380,7 +380,7 @@ const mapStateToProps = ({ usuario }) => {
     return {
         usuario
     }
-  }
+}
   
   const mapDispatchToProps = dispatch => {
     return {

@@ -9,7 +9,28 @@ class BarbeariaController {
                 conn.query(
                     `SELECT B.* FROM barbearia B ` + 
                     `INNER JOIN barbearia_proprietarios BP ` + 
-                    `WHERE BP.Usr_Codigo = ${id}`,
+                    `WHERE BP.Usr_Codigo = ${id} ` + 
+                    `GROUP BY B.Barb_Codigo`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
+    async getDadosBarbearia(req, res) {
+        const { id } = req.params;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM barbearia WHERE Barb_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);
@@ -61,7 +82,7 @@ class BarbeariaController {
     }
 
     async postBarbearia(req, res) {
-        const { nome, razao, cnpj, inscEstadual, cidade, cep, rua, numero, bairro, complemento, latitude, longitude } = req.body;
+        const { nome, razao, cnpj, inscEstadual, cidade, cep, uf, rua, numero, bairro, complemento, latitude, longitude } = req.body;
 
         let SQL = `INSERT INTO barbearia ` + 
                   `SET Barb_Nome = "${nome}", ` + 
@@ -70,6 +91,7 @@ class BarbeariaController {
                   `Barb_InscEst = "${inscEstadual}", ` + 
                   `Barb_Cidade = "${cidade}", ` + 
                   `Barb_CEP = "${cep}", ` + 
+                  `Barb_UF = "${uf}", ` + 
                   `Barb_Rua = "${rua}", ` + 
                   `Barb_Numero = ${numero}, ` + 
                   `Barb_Bairro = "${bairro}" `;
@@ -87,7 +109,6 @@ class BarbeariaController {
         }
 
         try {
-            const { email, cpf } = req.body;
             mysql.getConnection((error, conn) => {
                 conn.query(
                     `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${inscEstadual}"`,
@@ -116,7 +137,7 @@ class BarbeariaController {
 
 
     async updateBarbearia(req, res) {
-        const { nome, razao, cnpj, inscEstadual, cidade, cep, rua, numero, bairro, complemento, latitude, longitude } = req.body;
+        const { nome, razao, cnpj, inscEstadual, cidade, cep, uf, rua, numero, bairro, complemento, latitude, longitude } = req.body;
         const { id } = req.params;
 
         let SQL = `UPDATE barbearia ` + 
@@ -126,6 +147,7 @@ class BarbeariaController {
                   `Barb_InscEst = "${inscEstadual}", ` + 
                   `Barb_Cidade = "${cidade}", ` + 
                   `Barb_CEP = "${cep}", ` + 
+                  `Barb_UF = "${uf}", ` +
                   `Barb_Rua = "${rua}", ` + 
                   `Barb_Numero = ${numero}, ` + 
                   `Barb_Bairro = "${bairro}" `;
@@ -145,7 +167,6 @@ class BarbeariaController {
         SQL = SQL + ` WHERE Barb_Codigo = ${id}`;
 
         try {
-            const { email, cpf } = req.body;
             mysql.getConnection((error, conn) => {
                 conn.query(
                     `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${inscEstadual}" AND Barb_Codigo <> ${id}`,
@@ -225,13 +246,13 @@ class BarbeariaController {
     }
 
     async postBarbeariaContatos(req, res) {
-        const { contato } = req.body;
+        const { descricao, contato } = req.body;
         const { id } = req.params;
 
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO barbearia_contatos VALUES(${id}, "${contato}")`,
+                    `INSERT INTO barbearia_contatos VALUES(${id}, "${descricao}", "${contato}")`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);
@@ -337,6 +358,20 @@ class BarbeariaController {
         } catch(err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
+    async updateLogoBarbearia(id, filename) {
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `UPDATE barbearia SET Barb_LogoUrl = "${filename}" WHERE Barb_Codigo = "${id}"`,
+                )
+                conn.release();
+            });
+
+        } catch (err) {
+            console.error(err);
         }
     }
 

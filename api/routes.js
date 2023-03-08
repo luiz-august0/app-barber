@@ -38,7 +38,8 @@ routes.delete('/usuario/:id', UsuarioController.destroy);
 
 //Rotas barbearia
 routes.get('/barbearia', BarbeariaController.getBarbearias);
-routes.get('/barbearia/:id', BarbeariaController.getBarbeariasUsuario);
+routes.get('/barbearia/:id', BarbeariaController.getDadosBarbearia);
+routes.get('/barbearia_usuario/:id', BarbeariaController.getBarbeariasUsuario);
 routes.post('/barbearia', BarbeariaController.postBarbearia);
 routes.put('/barbearia/:id', BarbeariaController.updateBarbearia);
 routes.delete('/barbearia/:id', BarbeariaController.deleteBarbearia);
@@ -48,5 +49,17 @@ routes.post('/barbearia_contatos_remove/:id', BarbeariaController.deleteBarbeari
 routes.get('/barbearia_proprietarios/:id', BarbeariaController.getBarbeariaProprietarios);
 routes.post('/barbearia_proprietarios/:id', BarbeariaController.postBarbeariaProprietarios);
 routes.post('/barbearia_proprietarios_remove/:id', BarbeariaController.deleteBarbeariaProprietarios);
+routes.post('/barbearia_logo/:id', (req, res) => {
+	uploadFile(req.body.file)
+		.then((url) => {
+			try {
+				BarbeariaController.updateLogoBarbearia(req.params.id, url);
+				return res.status(201).json(url);
+			} catch (err) {
+				res.status(500).json(err);
+			}
+		})
+		.catch((err) => res.status(500).json(err));
+});
 
 export default routes;
