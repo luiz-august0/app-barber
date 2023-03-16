@@ -31,6 +31,7 @@ const UsuarioBarbearias = (props) => {
             <View style={style.container}>
                 <TouchableOpacity
                 style={style.button}
+                onPress={() => props.navigation.navigate('EdicaoBarbearia')}
                 >
                     <Text style={style.text}>Cadastrar Nova Barbearia</Text>
                 </TouchableOpacity>
@@ -53,7 +54,7 @@ const UsuarioBarbearias = (props) => {
                         </Card>
                         )
                     })}
-                </>:<ActivityIndicator/>}
+                </>:<ActivityIndicator style={{marginTop: 50}}/>}
             </View>
         </ScrollView>
     )

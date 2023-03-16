@@ -48,7 +48,7 @@ const C00 = ({ navigation, route }) => {
 const C01 = ({ navigation, route }) => {
   const [nome, setNome] = useState('');
   const [snome, setSnome] = useState('');
-  const [errors, setErrors] = React.useState({ 'nome': null, 'snome': null });
+  const [errors, setErrors] = useState({ 'nome': null, 'snome': null });
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -84,7 +84,7 @@ const C01 = ({ navigation, route }) => {
             label="Nome"
             error={errors.nome !== null ? true : false}
             onFocus={() => handleError(null, 'nome')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={nome}
             onChangeText={(nome) => setNome(nome)}
@@ -99,7 +99,7 @@ const C01 = ({ navigation, route }) => {
             label="Sobrenome"
             error={errors.snome !== null ? true : false}
             onFocus={() => handleError(null, 'snome')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${snome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={snome}
             onChangeText={(snome) => setSnome(snome)}
@@ -127,7 +127,7 @@ const C02 = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [ncelular, setNcelular] = useState('');
   const [cpf, setCpf] = useState('');
-  const [errors, setErrors] = React.useState({ 'email': null, 'ncelular': null, 'cpf': null });
+  const [errors, setErrors] = useState({ 'email': null, 'ncelular': null, 'cpf': null });
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -203,7 +203,7 @@ const C02 = ({ navigation, route }) => {
             label="Email"
             error={errors.email !== null ? true : false}
             onFocus={() => handleError(null, 'email')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
             value={email}
             onChangeText={(email) => setEmail(email)}
@@ -219,7 +219,7 @@ const C02 = ({ navigation, route }) => {
             label="Celular"
             error={errors.ncelular !== null ? true : false}
             onFocus={() => handleError(null, 'ncelular')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
             value={ncelular}
             onChangeText={(ncelular) => setNcelular(ncelular)}
@@ -235,7 +235,7 @@ const C02 = ({ navigation, route }) => {
             label="CPF"
             error={errors.cpf !== null ? true : false}
             onFocus={() => handleError(null, 'cpf')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={cpf}
             onChangeText={(cpf) => setCpf(cpf)}
@@ -265,7 +265,7 @@ const C03 = ({ navigation, route }) => {
   const [senhaConfirmed, setSenhaConfirmed] = useState('');
   const [hidePass2, setHidePass2] = useState(true);
 
-  const [errors, setErrors] = React.useState({ 'senha': null, 'senhaConfirmed': null });
+  const [errors, setErrors] = useState({ 'senha': null, 'senhaConfirmed': null });
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -306,7 +306,7 @@ const C03 = ({ navigation, route }) => {
             style={style.inputC}
             mode='outlined'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             label="Senha"
             error={errors.senha !== null ? true : false}
             onFocus={() => handleError(null, 'senha')}
@@ -323,7 +323,7 @@ const C03 = ({ navigation, route }) => {
             style={style.inputC}
             mode='outlined'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             label="Confirmar Senha"
             error={errors.senhaConfirmed !== null ? true : false}
             onFocus={() => handleError(null, 'senhaConfirmed')}
@@ -362,7 +362,7 @@ const C04 = ({ navigation, route }) => {
   const [hidePass1, setHidePass1] = useState(true);
   const [senhaConfirmed, setSenhaConfirmed] = useState(route.params?.senha);
   const [hidePass2, setHidePass2] = useState(true);
-  const [errors, setErrors] = React.useState({ 'nome': null, 'snome': null, 'email': null, 'ncelular': null, 'cpf': null, 'senha': null, 'senhaConfirmed': null });
+  const [errors, setErrors] = useState({ 'nome': null, 'snome': null, 'email': null, 'ncelular': null, 'cpf': null, 'senha': null, 'senhaConfirmed': null });
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -449,7 +449,7 @@ const C04 = ({ navigation, route }) => {
             label="Nome"
             error={errors.nome !== null ? true : false}
             onFocus={() => handleError(null, 'nome')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={nome}
             onChangeText={(nome) => setNome(nome)}
@@ -464,7 +464,7 @@ const C04 = ({ navigation, route }) => {
             label="Sobrenome"
             error={errors.snome !== null ? true : false}
             onFocus={() => handleError(null, 'snome')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${snome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={snome}
             onChangeText={(snome) => setSnome(snome)}
@@ -480,7 +480,7 @@ const C04 = ({ navigation, route }) => {
             label="Email"
             error={errors.email !== null ? true : false}
             onFocus={() => handleError(null, 'email')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
             value={email}
             onChangeText={(email) => setEmail(email)}
@@ -496,7 +496,7 @@ const C04 = ({ navigation, route }) => {
             label="Celular"
             error={errors.ncelular !== null ? true : false}
             onFocus={() => handleError(null, 'ncelular')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
             value={ncelular}
             onChangeText={(ncelular) => setNcelular(ncelular)}
@@ -512,7 +512,7 @@ const C04 = ({ navigation, route }) => {
             label="CPF"
             error={errors.cpf !== null ? true : false}
             onFocus={() => handleError(null, 'cpf')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
             value={cpf}
             onChangeText={(cpf) => setCpf(cpf)}
@@ -524,7 +524,7 @@ const C04 = ({ navigation, route }) => {
             style={style.inputC}
             mode='outlined'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             label="Senha"
             error={errors.senha !== null ? true : false}
             onFocus={() => handleError(null, 'senha')}
@@ -541,7 +541,7 @@ const C04 = ({ navigation, route }) => {
             style={style.inputC}
             mode='outlined'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             label="Confirmar Senha"
             error={errors.senhaConfirmed !== null ? true : false}
             onFocus={() => handleError(null, 'senhaConfirmed')}
@@ -572,7 +572,7 @@ const C04 = ({ navigation, route }) => {
 
 const RedefinirSenha = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
-  const [errors, setErrors] = React.useState({ 'email': null });
+  const [errors, setErrors] = useState({ 'email': null });
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -605,7 +605,7 @@ const RedefinirSenha = ({ navigation, route }) => {
             label="Email"
             error={errors.email !== null ? true : false}
             onFocus={() => handleError(null, 'email')}
-            theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
             left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
             value={email}
             onChangeText={(email) => setEmail(email)}

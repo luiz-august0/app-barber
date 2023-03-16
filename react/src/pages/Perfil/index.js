@@ -186,7 +186,7 @@ const Perfil = (props) => {
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
-                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                     value={nome}
                     onChangeText={(nome) => setNome(nome)}
@@ -203,7 +203,7 @@ const Perfil = (props) => {
                     label="Email"
                     error={errors.email !== null ? true : false}
                     onFocus={() => handleError(null, 'email')}
-                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
                     value={email}
                     onChangeText={(email) => setEmail(email)}
@@ -220,7 +220,7 @@ const Perfil = (props) => {
                     label="Celular"
                     error={errors.ncelular !== null ? true : false}
                     onFocus={() => handleError(null, 'ncelular')}
-                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
                     value={ncelular}
                     onChangeText={(ncelular) => setNcelular(ncelular)}
@@ -237,7 +237,7 @@ const Perfil = (props) => {
                     label="CPF"
                     error={errors.cpf !== null ? true : false}
                     onFocus={() => handleError(null, 'cpf')}
-                    theme={{ colors: { placeholder: 'white', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                     value={cpf}
                     onChangeText={(cpf) => setCpf(cpf)}
@@ -320,7 +320,7 @@ const EditarSenha = (props) => {
                     style={style.inputC}
                     mode='outlined'
                     activeOutlineColor='#fff'
-                    theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${senhaAntiga!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Senha Antiga"
                     error={errors.senhaAntiga !== null ? true : false}
                     onFocus={() => handleError(null, 'senhaAntiga')}
@@ -337,7 +337,7 @@ const EditarSenha = (props) => {
                     style={style.inputC}
                     mode='outlined'
                     activeOutlineColor='#fff'
-                    theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Nova Senha"
                     error={errors.senha !== null ? true : false}
                     onFocus={() => handleError(null, 'senha')}
@@ -354,7 +354,7 @@ const EditarSenha = (props) => {
                     style={style.inputC}
                     mode='outlined'
                     activeOutlineColor='#fff'
-                    theme={{ colors: { placeholder: '#fff', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Confirmar Senha"
                     error={errors.senhaConfirmed !== null ? true : false}
                     onFocus={() => handleError(null, 'senhaConfirmed')}

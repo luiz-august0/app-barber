@@ -60,7 +60,7 @@ const Login = (props) => {
               activeOutlineColor='#fff'
               label="Email"
               keyboardType='email-address'
-              theme={{colors: {placeholder: 'white', text: 'white', primary: 'white'}}}
+              theme={{colors: {placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
               left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="email" />}
               value= {email}
               onChangeText={ (email) => setEmail(email) }
@@ -69,7 +69,7 @@ const Login = (props) => {
               style={ style.inputL }
               mode='outlined'
               activeOutlineColor='#fff'
-              theme={{colors: {placeholder: '#fff', text: 'white', primary: 'white'}}}
+              theme={{colors: {placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
               label="Senha"
               secureTextEntry={hidePass}
               left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}

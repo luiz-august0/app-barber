@@ -1,5 +1,9 @@
 class GFunctions {
     formataCampo(campo, Mascara) { 
+        if (campo === null) {
+            return "";
+        }
+
         var boleanoMascara; 
     
         var exp = /\-|\.|\/|\(|\)| /g

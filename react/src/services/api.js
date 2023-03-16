@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://api-barber.vercel.app'
+    baseURL: 'http://10.47.1.87:5000'
 });
 
 //Rota de sessão
@@ -47,3 +47,11 @@ export const getUsuario = async (usuarioID) => {
 export const getBarbeariasUsuario = async (usuarioID) => {
     return api.get(`/barbearia_usuario/${usuarioID}`);
 };
+
+export const getDadosBarbearia = async (barbeariaID) => {
+    return api.get(`/barbearia/${barbeariaID}`);
+};
+
+export const getDadosCEP = async(cep) => {
+    return api.get(`https://viacep.com.br/ws/${cep}/json/`);
+}
