@@ -42,13 +42,12 @@ const UsuarioBarbearias = (props) => {
                     {barbearias.map((e) => {
                         const cep = globalFunction.formataCampo(e.Barb_CEP, "00.000-000");
                         const cnpj = globalFunction.formataCampo(e.Barb_CNPJ, "00.000.000/0000-00");
-                        const IE = globalFunction.formataCampo(e.Barb_InscEst, "00000000-00");
 
                         return (
                         <Card key={e.Barb_Codigo} onPress={() => Alert.alert('Teste')} style={{width: 300, marginBottom: 25}}>
                             <Card.Cover source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
                             <Card.Title title={e.Barb_Nome} 
-                                        subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${IE}`}
+                                        subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${e.Barb_InscEst}`}
                                         titleNumberOfLines={0} 
                                         subtitleNumberOfLines={0}/>
                         </Card>

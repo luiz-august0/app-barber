@@ -76,7 +76,7 @@ const EdicaoBarbearia = (props) => {
         
     }
 
-    const updateIDContato = () => {
+    const updateIDContato = (contatos) => {
         let newArrayContatos = [];
         let i = 0;
         contatos.map((e) => {
@@ -84,7 +84,6 @@ const EdicaoBarbearia = (props) => {
             i = i + 1;
         });
         setContatos(newArrayContatos);
-        console.log(newArrayContatos);
     }
 
     const handleDeleteContato = (id) => {
@@ -95,7 +94,7 @@ const EdicaoBarbearia = (props) => {
             }
         });
         setContatos(newArrayContatos);
-        updateIDContato();
+        updateIDContato(newArrayContatos);
     }
 
     const handleSubmitContato = () => {
@@ -140,19 +139,18 @@ const EdicaoBarbearia = (props) => {
             let newArrayContatos = [];
 
             if (contatoInEdit !== '') {
-                contatos.map((e) => {
-                    if ((e.idContato !== contatoInEdit)) {
-                        newArrayContatos.push({idContato: e.idContato, descricao: e.descricao, contato: e.contato});
-                    }
+                newArrayContatos = contatos.map(e => {
+                    if (e.idContato === contatoInEdit) return {idContato: contatoInEdit, descricao: state.descricao, contato: state.contato};
+                    return e;
                 });
+                setContatos(newArrayContatos);
             } else {
                 contatos.map((e) => {
                     newArrayContatos.push({idContato: e.idContato, descricao: e.descricao, contato: e.contato});
                 }); 
+                newArrayContatos.push({idContato: contatos.length + 1, descricao: state.descricao, contato: state.contato});
+                updateIDContato(newArrayContatos);
             }
-            newArrayContatos.push({idContato: contatos.length + 1, descricao: state.descricao, contato: state.contato});
-            setContatos(newArrayContatos);
-            //updateIDContato();
             
             setEditContatoMode(false);
             setInsertContatoMode(false); 
@@ -176,18 +174,47 @@ const EdicaoBarbearia = (props) => {
         let isValid = true;
     }
 
+    const onFocusCEP = () => {
+        setValueState('rua', null);
+        setValueState('complemento', null);
+        setValueState('bairro', null);
+        setValueState('cidade', null);
+        setValueState('uf', null);
+        handleError(null, 'cep');
+    }
+
     const consultaCEP = async() => {
         const cep = globalFunction.formataCampo(state.cep, "00000000");
 
+        if (cep.length !== 8) {
+            handleError("CEP inválido", "cep");
+            return;
+        }
+
         try {            
             const response = await getDadosCEP(cep);
-            setValueState('rua', response.data.logradouro);
-            setValueState('complemento', response.data.complemento);
-            setValueState('bairro', response.data.bairro);
-            setValueState('cidade', response.data.localidade);
-            setValueState('uf', response.data.uf);
+            if (response.data.logradouro !== "") {
+                setValueState('rua', response.data.logradouro);
+            }
+            if (response.data.complemento !== "") {
+                setValueState('complemento', response.data.complemento);
+            }
+            if (response.data.bairro !== "") {
+                setValueState('bairro', response.data.bairro);
+            }
+            if (response.data.localidade !== "") {
+                setValueState('cidade', response.data.localidade);
+            }
+            if (response.data.uf !== "") {
+                setValueState('uf', response.data.uf);
+            }
         } catch (error) {
             console.log(error);
+            setValueState('rua', null);
+            setValueState('complemento', null);
+            setValueState('bairro', null);
+            setValueState('cidade', null);
+            setValueState('uf', null);
         }
     }
 
@@ -311,8 +338,8 @@ const EdicaoBarbearia = (props) => {
                 onFocus={() => handleError(null, 'inscEstadual')}
                 theme={{ colors: { placeholder: `${state.inscEstadual!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={globalFunction.formataCampo(state.inscEstadual, "00000000-00")}
-                onChangeText={(inscEstadual) => setValueState('inscEstadual', globalFunction.formataCampo(inscEstadual, "00000000-00"))}
+                value={state.inscEstadual}
+                onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
                 />
                 <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.inscEstadual !== null ? true : false}>
                     {errors.inscEstadual}
@@ -324,8 +351,8 @@ const EdicaoBarbearia = (props) => {
                 label="CEP"
                 keyboardType="number-pad"
                 error={errors.cep !== null ? true : false}
-                onFocus={() => handleError(null, 'cep')}
-                onBlur={() => consultaCEP()}
+                onFocus={() => onFocusCEP()}
+                onEndEditing={() => consultaCEP()}
                 theme={{ colors: { placeholder: `${state.cep!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                 value={globalFunction.formataCampo(state.cep, "00.000-000")}
