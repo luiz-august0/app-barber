@@ -17,7 +17,7 @@ CREATE TABLE barbearia(
     Barb_InscEst VARCHAR(20) NOT NULL,
     Barb_Cidade VARCHAR(80) NOT NULL,
     Barb_CEP VARCHAR(8) NOT NULL,
-    Barb_UF VARCHAR(12) NOT NULL,
+    Barb_UF CHAR(2) NOT NULL,
     Barb_Rua VARCHAR(80) NOT NULL,
     Barb_Numero INT NOT NULL,
     Barb_Bairro VARCHAR(80) NOT NULL,

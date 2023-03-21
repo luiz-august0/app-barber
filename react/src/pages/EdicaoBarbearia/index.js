@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image } from "react-native";
 import { Card, TextInput, HelperText } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 import { connect } from "react-redux";
-import { getDadosBarbearia, getDadosCEP } from "../../services/api";
+import { getDadosBarbearia, getDadosCEP, postBarbearia, postContatosBarbearia, postProprietariosBarbearia } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
 import style from "./style";
 import perfil from "../../img/perfil.png";
+
+const validaCNPJ = (cpf) => {
+    if (cnpjValidator.isValid(cpf)) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 const EdicaoBarbearia = (props) => {
     const [image, setImage] = useState(null);
@@ -170,10 +179,6 @@ const EdicaoBarbearia = (props) => {
         }
     }, []);
 
-    const handleSubmit = () => {
-        let isValid = true;
-    }
-
     const onFocusCEP = () => {
         setValueState('rua', null);
         setValueState('complemento', null);
@@ -185,6 +190,11 @@ const EdicaoBarbearia = (props) => {
 
     const consultaCEP = async() => {
         const cep = globalFunction.formataCampo(state.cep, "00000000");
+
+        if (cep === '') {
+            handleError("CEP deve ser informado", "cep");
+            return;
+        }
 
         if (cep.length !== 8) {
             handleError("CEP inválido", "cep");
@@ -215,6 +225,101 @@ const EdicaoBarbearia = (props) => {
             setValueState('bairro', null);
             setValueState('cidade', null);
             setValueState('uf', null);
+        }
+    }
+
+    const handleSubmit = async() => {
+        let isValid = true;
+        const cnpj = globalFunction.formataCampo(state.cnpj, "00000000000000");
+        const cep = globalFunction.formataCampo(state.cep, "00000000");
+
+        if (state.nome === null || state.nome === '') {
+            handleError('Nome deve ser informado', 'nome');
+            isValid = false;
+        }
+
+        if (state.razao === null || state.razao === '') {
+            handleError('Razão social deve ser informada', 'razao');
+            isValid = false;
+        }
+
+        if (cnpj === null || cnpj === '') {
+            handleError('CNPJ deve ser informado', 'cnpj');
+            isValid = false;
+        }
+
+        if (cnpj !== null && cnpj !== '') {
+            if (!validaCNPJ(cnpj)) {
+                handleError('CNPJ informado não é valido', 'cnpj');
+                isValid = false;
+            }
+        }
+
+        if (cep === '') {
+            handleError("CEP deve ser informado", "cep");
+            isValid = false;
+        }
+
+        if (cep !== '') {
+            if (cep.length !== 8) {
+                handleError("CEP inválido", "cep");
+                isValid = false;
+            }
+        }
+
+        if (state.cidade === null || state.cidade === '') {
+            handleError('Cidade deve ser informada', 'cidade');
+            isValid = false;
+        }
+
+        if (state.uf === null || state.uf === '') {
+            handleError('UF deve ser informada', 'uf');
+            isValid = false;
+        }
+
+        if (state.uf !== null && state.uf !== '') {
+            if (state.uf.length !== 2) {
+                handleError('UF deve ter apenas 2 caracteres, por exemplo "PR"', 'uf');
+                isValid = false;
+            }
+        }
+
+        if (state.rua === null || state.rua === '') {
+            handleError('Rua deve ser informada', 'rua');
+            isValid = false;
+        }
+
+        if (state.numero === null || state.numero === '') {
+            handleError('Número do endereço deve ser informado', 'numero');
+            isValid = false;
+        }
+
+        if (state.bairro === null || state.bairro === '') {
+            handleError('Bairro deve ser informado', 'bairro');
+            isValid = false;
+        }
+
+        if (isValid) {
+            try {
+                const res = await postBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
+                                    state.rua, state.numero, state.bairro, state.complemento, state.latitude, state.longitude);
+                if (res.data.insertId > 0) {
+                    if (JSON.stringify(contatos) !== '[]') {
+                        contatos.map(async(e) => {
+                            await postContatosBarbearia(e.descricao, e.contato, res.data.insertId);
+                        })
+                    }
+                    await postProprietariosBarbearia(props.usuario.state.id, res.data.insertId);
+                }
+                Alert.alert('Barbearia cadastrada com sucesso!');
+                props.navigation.navigate('UsuarioBarbearias');
+            } catch (error) {
+                if (error.message === "Request failed with status code 401") {
+                    handleError('Verifique o CNPJ informado', 'cnpj');
+                    handleError('Verifique a IE informada', 'inscEstadual');
+                    Alert.alert('CNPJ e inscrição estadual informados já estão cadastrados, verifique')
+                }
+            }
         }
     }
 
@@ -289,7 +394,7 @@ const EdicaoBarbearia = (props) => {
                 label="Nome"
                 error={errors.nome !== null ? true : false}
                 onFocus={() => handleError(null, 'nome')}
-                theme={{ colors: { placeholder: `${state.nome!==null?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                 value={state.nome}
                 onChangeText={(nome) => setValueState('nome', nome)}
@@ -304,7 +409,7 @@ const EdicaoBarbearia = (props) => {
                 label="Razão Social"
                 error={errors.razao !== null ? true : false}
                 onFocus={() => handleError(null, 'razao')}
-                theme={{ colors: { placeholder: `${state.razao!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                 value={state.razao}
                 onChangeText={(razao) => setValueState('razao', razao)}
@@ -320,7 +425,7 @@ const EdicaoBarbearia = (props) => {
                 keyboardType="number-pad"
                 error={errors.cnpj !== null ? true : false}
                 onFocus={() => handleError(null, 'cnpj')}
-                theme={{ colors: { placeholder: `${state.cnpj!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                 value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
                 onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
@@ -335,8 +440,8 @@ const EdicaoBarbearia = (props) => {
                 label="IE"
                 keyboardType="number-pad"
                 error={errors.inscEstadual !== null ? true : false}
-                onFocus={() => handleError(null, 'inscEstadual')}
-                theme={{ colors: { placeholder: `${state.inscEstadual!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
+                theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
                 value={state.inscEstadual}
                 onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
@@ -353,8 +458,8 @@ const EdicaoBarbearia = (props) => {
                 error={errors.cep !== null ? true : false}
                 onFocus={() => onFocusCEP()}
                 onEndEditing={() => consultaCEP()}
-                theme={{ colors: { placeholder: `${state.cep!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={globalFunction.formataCampo(state.cep, "00.000-000")}
                 onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
                 />
@@ -368,8 +473,8 @@ const EdicaoBarbearia = (props) => {
                 label="Cidade"
                 error={errors.cidade !== null ? true : false}
                 onFocus={() => handleError(null, 'cidade')}
-                theme={{ colors: { placeholder: `${state.cidade!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={state.cidade}
                 onChangeText={(cidade) => setValueState('cidade', cidade)}
                 />
@@ -381,12 +486,14 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="UF"
+                keyboardType="default"
+                maxLength={2}
                 error={errors.uf !== null ? true : false}
                 onFocus={() => handleError(null, 'uf')}
-                theme={{ colors: { placeholder: `${state.uf!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={state.uf}
-                onChangeText={(uf) => setValueState('uf', uf)}
+                theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                value={state.uf!== null?state.uf.toUpperCase():null}
+                onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
                 />
                 <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.uf !== null ? true : false}>
                     {errors.uf}
@@ -398,8 +505,8 @@ const EdicaoBarbearia = (props) => {
                 label="Rua"
                 error={errors.rua !== null ? true : false}
                 onFocus={() => handleError(null, 'rua')}
-                theme={{ colors: { placeholder: `${state.rua!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={state.rua}
                 onChangeText={(rua) => setValueState('rua', rua)}
                 />
@@ -414,8 +521,8 @@ const EdicaoBarbearia = (props) => {
                 keyboardType="number-pad"
                 error={errors.numero !== null ? true : false}
                 onFocus={() => handleError(null, 'numero')}
-                theme={{ colors: { placeholder: `${state.numero!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={state.numero}
                 onChangeText={(numero) => setValueState('numero', numero)}
                 />
@@ -429,8 +536,8 @@ const EdicaoBarbearia = (props) => {
                 label="Bairro"
                 error={errors.bairro !== null ? true : false}
                 onFocus={() => handleError(null, 'bairro')}
-                theme={{ colors: { placeholder: `${state.bairro!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={state.bairro}
                 onChangeText={(bairro) => setValueState('bairro', bairro)}
                 />
@@ -444,8 +551,8 @@ const EdicaoBarbearia = (props) => {
                 label="Complemento"
                 error={errors.complemento !== null ? true : false}
                 onFocus={() => handleError(null, 'complemento')}
-                theme={{ colors: { placeholder: `${state.complemento!==null?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
                 value={state.complemento}
                 onChangeText={(complemento) => setValueState('complemento', complemento)}
                 />
@@ -497,7 +604,7 @@ const EdicaoBarbearia = (props) => {
                         </Card>
                     )
                 })}
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => AtualizaUsuario()}>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => handleSubmit()}>
                     <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
                 </TouchableOpacity>
             </View>

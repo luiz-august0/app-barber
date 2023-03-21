@@ -15,6 +15,7 @@ const UsuarioBarbearias = (props) => {
         setIsLoading(true);
         try {
             const response = await getBarbeariasUsuario(props.usuario.state.id);
+            console.log(props.usuario.state.id);
             setBarbearias(response.data);
         } catch (error) {
             Alert.alert("Ops!", "Ocorreu algum erro ao pesquisar as barbearias vinculadas ao seu usuário.");

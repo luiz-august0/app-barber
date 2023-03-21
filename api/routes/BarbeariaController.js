@@ -9,6 +9,7 @@ class BarbeariaController {
                 conn.query(
                     `SELECT B.* FROM barbearia B ` + 
                     `INNER JOIN barbearia_proprietarios BP ` + 
+                    `ON B.Barb_Codigo = BP.Barb_Codigo ` + 
                     `WHERE BP.Usr_Codigo = ${id} ` + 
                     `GROUP BY B.Barb_Codigo`,
                     (error, result, fields) => {
@@ -84,17 +85,24 @@ class BarbeariaController {
     async postBarbearia(req, res) {
         const { nome, razao, cnpj, inscEstadual, cidade, cep, uf, rua, numero, bairro, complemento, latitude, longitude } = req.body;
 
+        let ie = inscEstadual;
+
         let SQL = `INSERT INTO barbearia ` + 
                   `SET Barb_Nome = "${nome}", ` + 
                   `Barb_RazaoSocial = "${razao}", ` + 
                   `Barb_CNPJ = "${cnpj}", ` + 
-                  `Barb_InscEst = "${inscEstadual}", ` + 
                   `Barb_Cidade = "${cidade}", ` + 
                   `Barb_CEP = "${cep}", ` + 
                   `Barb_UF = "${uf}", ` + 
                   `Barb_Rua = "${rua}", ` + 
                   `Barb_Numero = ${numero}, ` + 
                   `Barb_Bairro = "${bairro}" `;
+
+        if ((inscEstadual === null) || (inscEstadual === '')) {
+            ie = "ISENTO";
+        } 
+
+        SQL = SQL + `, Barb_InscEst = "${ie}" `;
 
         if ((complemento !== null) && (complemento !== '')) {
             SQL = SQL + `, Barb_Complemento = "${complemento}" `;
@@ -111,7 +119,7 @@ class BarbeariaController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${inscEstadual}"`,
+                    `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${ie}"`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (JSON.stringify(result) != '[]') {
@@ -140,17 +148,24 @@ class BarbeariaController {
         const { nome, razao, cnpj, inscEstadual, cidade, cep, uf, rua, numero, bairro, complemento, latitude, longitude } = req.body;
         const { id } = req.params;
 
+        let ie = inscEstadual;
+
         let SQL = `UPDATE barbearia ` + 
                   `SET Barb_Nome = "${nome}", ` + 
                   `Barb_RazaoSocial = "${razao}", ` + 
-                  `Barb_CNPJ = "${cnpj}", ` + 
-                  `Barb_InscEst = "${inscEstadual}", ` + 
+                  `Barb_CNPJ = "${cnpj}", ` +  
                   `Barb_Cidade = "${cidade}", ` + 
                   `Barb_CEP = "${cep}", ` + 
                   `Barb_UF = "${uf}", ` +
                   `Barb_Rua = "${rua}", ` + 
                   `Barb_Numero = ${numero}, ` + 
                   `Barb_Bairro = "${bairro}" `;
+
+        if ((inscEstadual === null) || (inscEstadual === '')) {
+            ie = "ISENTO";
+        } 
+
+        SQL = SQL + `, Barb_InscEst = "${ie}" `;
 
         if ((complemento !== null) && (complemento !== '')) {
             SQL = SQL + `, Barb_Complemento = "${complemento}" `;
@@ -169,7 +184,7 @@ class BarbeariaController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${inscEstadual}" AND Barb_Codigo <> ${id}`,
+                    `SELECT * FROM barbearia WHERE Barb_CNPJ = "${cnpj}" AND Barb_InscEst = "${ie}" AND Barb_Codigo <> ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (JSON.stringify(result) != '[]') {
