@@ -271,6 +271,32 @@ class UsuarioController {
             return res.status(500).json({ error: "Internal server error." });
         }
     }
+
+    async getDataUsuarioBarbeiroWithEmail(req, res) {
+        try {
+            const { email } = req.body;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM usuario WHERE Usr_Email = "${email}" AND Usr_Tipo = "B"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (JSON.stringify(result) === '[]') {
+                            return res.status(404).json();
+                        } else {
+                            return res.status(201).json(result);
+                        }
+                    }
+                )
+                conn.release();
+            });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+    
 }
 
 export default new UsuarioController();

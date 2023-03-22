@@ -48,6 +48,10 @@ export const updateUsuarioFoto = async (usuarioID, file) => {
 export const getUsuario = async (usuarioID) => {
     return api.get(`/usuario/${usuarioID}`);
 };
+
+export const getUsuarioBarbeiroWithEmail = async(email) => {
+    return api.post('/usuariobarbeiro_email', { email });
+};
 /**************************************************************/
 
 //Rotas barbearia

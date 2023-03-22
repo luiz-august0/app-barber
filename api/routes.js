@@ -22,6 +22,7 @@ routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:id', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
 routes.put('/usuario_password/:id', UsuarioController.updatePassword);
+routes.post('/usuariobarbeiro_email', UsuarioController.getDataUsuarioBarbeiroWithEmail);
 routes.post('/usuario_perfil/:id', (req, res) => {
 	uploadFile(req.body.file)
 		.then((url) => {

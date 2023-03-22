@@ -4,7 +4,7 @@ import { Card, TextInput, HelperText } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 import { connect } from "react-redux";
-import { getDadosBarbearia, getDadosCEP, postBarbearia, postContatosBarbearia, postProprietariosBarbearia } from "../../services/api";
+import { getDadosBarbearia, getDadosCEP, getUsuarioBarbeiroWithEmail, postBarbearia, postContatosBarbearia, postProprietariosBarbearia } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
 import style from "./style";
@@ -18,22 +18,29 @@ const validaCNPJ = (cpf) => {
     }
 };
 
+const validarEmail = (email) => {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+};
+
 const EdicaoBarbearia = (props) => {
     const [image, setImage] = useState(null);
     const [state, setState] = useState({
         'nome': null, 'razao': null, 'cnpj': null, 'inscEstadual': null, 'cidade': null, 
         'cep': null, 'uf': null, 'rua': null, 'numero': null, 'bairro': null, 
         'complemento': null, 'latitude': null, 'longitude': null, 'descricao': null, 
-        'contato': null
+        'contato': null, 'email': null
     });
     const [errors, setErrors] = useState({ 
         'nome': null, 'razao': null, 'cnpj': null, 'inscEstadual': null, 'cidade': null, 
         'cep': null, 'uf': null, 'rua': null, 'numero': null, 'bairro': null, 
         'complemento': null, 'latitude': null, 'longitude': null, 'descricao': null, 
-        'contato': null 
+        'contato': null, 'email': null
     });
     const [contatos, setContatos] = useState([]);
+    const [proprietarios, setProprietarios] = useState([]);
     const [insertContatoMode, setInsertContatoMode] = useState(false);
+    const [insertProprietarioMode, setInsertProprietarioMode] = useState(false);
     const [editContatoMode, setEditContatoMode] = useState(false);
     const [contatoInEdit, setContatoInEdit] = useState('');
     const [loadingLogo, setLoadingLogo] = useState(false);
@@ -171,11 +178,77 @@ const EdicaoBarbearia = (props) => {
         }
     }
 
+    const handleDeleteProprietario = (id) => {
+        let newArrayProprietarios = [];
+        proprietarios.map((e) => {
+            if (e.idProprietario !== id) {
+                newArrayProprietarios.push({idProprietario: e.idProprietario, email: e.email, nome: e.nome, contato: e.contato, cpf: e.cpf}); 
+            }
+        }); 
+        setProprietarios(newArrayProprietarios);
+    }
+
+    const handleSubmitProprietario = async() => {
+        let isValid = true;
+
+        const validateID = (id) => {
+            proprietarios.map((e) => {
+                if (id === e.idProprietario) { 
+                    console.log('aq')
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+        }
+
+        if (state.email === null || state.email === '') {
+            handleError('Email deve ser informado', 'email');
+            isValid = false;
+        }
+
+        if (state.email !== null && state.email !== '') {
+            if (!validarEmail(state.email)) {
+                handleError('Email inválido', 'email');
+                isValid = false;
+            }
+        }
+
+        if(isValid) {
+            try {
+                const res = await getUsuarioBarbeiroWithEmail(state.email);
+                console.log(validateID(res.data[0].Usr_Codigo) === false)
+                if (validateID(res.data[0].Usr_Codigo) === true) {
+                    handleError('Email informado já é um proprietário', 'email');
+                    isValid = false;
+                }
+    
+                if (isValid) {
+                    let newArrayProprietarios = [];
+                    proprietarios.map((e) => {
+                        newArrayProprietarios.push({idProprietario: e.idProprietario, email: e.email, nome: e.nome, contato: e.contato, cpf: e.cpf});
+                    }); 
+                    newArrayProprietarios.push({idProprietario: res.data[0].Usr_Codigo, email: res.data[0].Usr_Email, nome: res.data[0].Usr_Nome, contato: res.data[0].Usr_Contato, cpf: res.data[0].Usr_CPF});
+                    setProprietarios(newArrayProprietarios);
+                }
+            } catch (error) {
+                console.log(error)
+                if (error.message === "Request failed with status code 404") {
+                    handleError('Email informado não existe cadastro', 'email');
+                    isValid = false;
+                }
+            }
+        }
+    }
+
     useEffect(() => {
         if(props.route.params?.barbeariaID != null) {
             getDataBarbearia(props.route.params?.barbeariaID);
         } else {
             setImage(perfil);
+            let newArrayProprietarios = [];
+            newArrayProprietarios.push({idProprietario: props.usuario.state.id, email: props.usuario.state.email, nome: props.usuario.state.nome, contato: props.usuario.state.contato==='ul'?null:props.usuario.state.contato, cpf: props.usuario.state.cpf==='ul'?null:props.usuario.state.cpf})
+            setProprietarios(newArrayProprietarios);
         }
     }, []);
 
@@ -366,6 +439,38 @@ const EdicaoBarbearia = (props) => {
                     setValueState('contato', '');
                     setValueState('descricao', '');
                     setContatoInEdit('');
+                    }}>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cancelar</Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    const addProprietario = () => {
+        return (
+            <>
+                <TextInput
+                    style={style.input}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    label="Email"
+                    keyboardType="email-address"
+                    error={errors.email !== null ? true : false}
+                    onFocus={() => handleError(null, 'email')}
+                    theme={{ colors: { placeholder: `${state.email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+                    value={state.email}
+                    onChangeText={(email) => setValueState('email', email)}
+                />
+                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+                    {errors.email}
+                </HelperText>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E', marginBottom: 10}]} onPress={() => handleSubmitProprietario()}>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E', marginTop: 0}]} onPress={() => {
+                    setInsertProprietarioMode(false); 
+                    setValueState('email', '');
                     }}>
                     <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cancelar</Text>
                 </TouchableOpacity>
@@ -604,8 +709,35 @@ const EdicaoBarbearia = (props) => {
                         </Card>
                     )
                 })}
+                <Text style={style.textTitle}>Proprietários</Text>    
+                <TouchableOpacity onPress={() => {
+                    setInsertProprietarioMode(false); 
+                    setValueState('email', '');
+                    handleError(null, 'email');
+                    setInsertProprietarioMode(true);
+                    }}>
+                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                </TouchableOpacity>
+                {insertProprietarioMode?addProprietario():null}
+                {proprietarios.map((e) => {
+                    return (
+                        <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFB337'}}>
+                        <Card.Title subtitle={
+                            `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
+                        }
+                        subtitleNumberOfLines={0}
+                        />
+                        {e.idProprietario !== props.usuario.state.id?
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
+                            <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                        </TouchableOpacity>
+                        </View>:null}
+                        </Card>
+                    )
+                })}
                 <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => handleSubmit()}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar Dados</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
