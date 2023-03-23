@@ -191,17 +191,6 @@ const EdicaoBarbearia = (props) => {
     const handleSubmitProprietario = async() => {
         let isValid = true;
 
-        const validateID = (id) => {
-            proprietarios.map((e) => {
-                if (id === e.idProprietario) { 
-                    console.log('aq')
-                    return false;
-                } else {
-                    return true;
-                }
-            })
-        }
-
         if (state.email === null || state.email === '') {
             handleError('Email deve ser informado', 'email');
             isValid = false;
@@ -217,11 +206,12 @@ const EdicaoBarbearia = (props) => {
         if(isValid) {
             try {
                 const res = await getUsuarioBarbeiroWithEmail(state.email);
-                console.log(validateID(res.data[0].Usr_Codigo) === false)
-                if (validateID(res.data[0].Usr_Codigo) === true) {
-                    handleError('Email informado já é um proprietário', 'email');
-                    isValid = false;
-                }
+                proprietarios.map((e) => {
+                    if (res.data[0].Usr_Codigo == e.idProprietario) { 
+                        handleError('Email informado já é um proprietário', 'email');
+                        isValid = false;
+                    }
+                })
     
                 if (isValid) {
                     let newArrayProprietarios = [];
@@ -230,6 +220,10 @@ const EdicaoBarbearia = (props) => {
                     }); 
                     newArrayProprietarios.push({idProprietario: res.data[0].Usr_Codigo, email: res.data[0].Usr_Email, nome: res.data[0].Usr_Nome, contato: res.data[0].Usr_Contato, cpf: res.data[0].Usr_CPF});
                     setProprietarios(newArrayProprietarios);
+
+                    setInsertProprietarioMode(false);
+                    setValueState('email', '');
+                    handleError(null, 'email');
                 }
             } catch (error) {
                 console.log(error)

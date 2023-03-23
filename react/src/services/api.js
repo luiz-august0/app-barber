@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://10.47.0.137:5000'
+    baseURL: 'http://192.168.0.106:5000'
 });
 
 //Rotas de apis externas
