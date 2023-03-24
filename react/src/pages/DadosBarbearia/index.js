@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image, Linking, Dimensions } from "react-native";
 import { Card, TextInput, HelperText } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 import { connect } from "react-redux";
-import { getDadosBarbearia, getDadosCEP, getUsuarioBarbeiroWithEmail, postBarbearia, postContatosBarbearia, postProprietariosBarbearia } from "../../services/api";
+import { 
+    getDadosBarbearia, 
+    getDadosCEP, 
+    getUsuarioBarbeiroWithEmail, 
+    postBarbearia, 
+    postBarbeariaLogo, 
+    postContatosBarbearia, 
+    postProprietariosBarbearia,
+    getGeocoding
+} from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
 import style from "./style";
@@ -23,18 +32,18 @@ const validarEmail = (email) => {
     return re.test(email);
 };
 
-const EdicaoBarbearia = (props) => {
+const DadosBarbearia = (props) => {
     const [image, setImage] = useState(null);
     const [state, setState] = useState({
         'nome': null, 'razao': null, 'cnpj': null, 'inscEstadual': null, 'cidade': null, 
         'cep': null, 'uf': null, 'rua': null, 'numero': null, 'bairro': null, 
-        'complemento': null, 'latitude': null, 'longitude': null, 'descricao': null, 
+        'complemento': null, 'descricao': null, 
         'contato': null, 'email': null
     });
     const [errors, setErrors] = useState({ 
         'nome': null, 'razao': null, 'cnpj': null, 'inscEstadual': null, 'cidade': null, 
         'cep': null, 'uf': null, 'rua': null, 'numero': null, 'bairro': null, 
-        'complemento': null, 'latitude': null, 'longitude': null, 'descricao': null, 
+        'complemento': null, 'descricao': null, 
         'contato': null, 'email': null
     });
     const [contatos, setContatos] = useState([]);
@@ -44,6 +53,8 @@ const EdicaoBarbearia = (props) => {
     const [editContatoMode, setEditContatoMode] = useState(false);
     const [contatoInEdit, setContatoInEdit] = useState('');
     const [loadingLogo, setLoadingLogo] = useState(false);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const [loadingCEP, setLoadingCEP] = useState(false);
 
     const setValueState = (input, value) => {
         setState(prevState => ({ ...prevState, [input]: value }));
@@ -56,7 +67,7 @@ const EdicaoBarbearia = (props) => {
     const getDataBarbearia = async(id) => {
         try {
             const response = await getDadosBarbearia(id);
-            if (response.data[0].Barb_LogoUrl !== '') {
+            if (response.data[0].Barb_LogoUrl !== '' && response.data[0].Barb_LogoUrl !== null) {
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${response.data[0].Barb_LogoUrl}`})
             } else {
                 setImage(perfil);
@@ -79,14 +90,15 @@ const EdicaoBarbearia = (props) => {
             const file = `data:${res.type}/jpeg;base64,${res.base64}`;
 
             try {
-                setLoading(true);
-                const responseImage = await updateUsuarioFoto(props.usuario.state.id, file);
+                setLoadingLogo(true);
+                /*const responseImage = await updateUsuarioFoto(props.usuario.state.id, file);
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
-                updateStoreUsuario();
-                setLoading(false);
+                updateStoreUsuario();*/
+                setImage({uri: res.uri, base64: res.base64, type: res.type});
+                setLoadingLogo(false);
             } catch (error) {
                 Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
-                setLoading(false);
+                setLoadingLogo(false);
             }
         }
         
@@ -258,6 +270,14 @@ const EdicaoBarbearia = (props) => {
     const consultaCEP = async() => {
         const cep = globalFunction.formataCampo(state.cep, "00000000");
 
+        const cleanFields = () => {
+            setValueState('rua', null);
+            setValueState('complemento', null);
+            setValueState('bairro', null);
+            setValueState('cidade', null);
+            setValueState('uf', null);
+        }
+
         if (cep === '') {
             handleError("CEP deve ser informado", "cep");
             return;
@@ -268,31 +288,39 @@ const EdicaoBarbearia = (props) => {
             return;
         }
 
+        setLoadingCEP(true);
         try {            
             const response = await getDadosCEP(cep);
-            if (response.data.logradouro !== "") {
-                setValueState('rua', response.data.logradouro);
-            }
-            if (response.data.complemento !== "") {
-                setValueState('complemento', response.data.complemento);
-            }
-            if (response.data.bairro !== "") {
-                setValueState('bairro', response.data.bairro);
-            }
-            if (response.data.localidade !== "") {
-                setValueState('cidade', response.data.localidade);
-            }
-            if (response.data.uf !== "") {
-                setValueState('uf', response.data.uf);
+            if (!response.data.erro) {
+                if (response.data.logradouro !== "") {
+                    setValueState('rua', response.data.logradouro);
+                    handleError(null, 'rua');
+                }
+                if (response.data.complemento !== "") {
+                    setValueState('complemento', response.data.complemento);
+                    handleError(null, 'complemento');
+                }
+                if (response.data.bairro !== "") {
+                    setValueState('bairro', response.data.bairro);
+                    handleError(null, 'bairro');
+                }
+                if (response.data.localidade !== "") {
+                    setValueState('cidade', response.data.localidade);
+                    handleError(null, 'cidade');
+                }
+                if (response.data.uf !== "") {
+                    setValueState('uf', response.data.uf);
+                    handleError(null, 'uf');
+                }
+            } else {
+                handleError("CEP inválido", "cep");
+                cleanFields();
             }
         } catch (error) {
             console.log(error);
-            setValueState('rua', null);
-            setValueState('complemento', null);
-            setValueState('bairro', null);
-            setValueState('cidade', null);
-            setValueState('uf', null);
+            cleanFields();
         }
+        setLoadingCEP(false);
     }
 
     const handleSubmit = async() => {
@@ -366,27 +394,43 @@ const EdicaoBarbearia = (props) => {
             isValid = false;
         }
 
+        const responseGeo = await getGeocoding(state.rua, state.numero, state.bairro, state.cidade, state.uf, cep);
+        if (responseGeo.data.status == 'ZERO_RESULTS') {
+            Alert.alert('Não foi possível localizar a geolocalização do endereço informado, verifique');
+            isValid = false;
+        }
+
         if (isValid) {
+            setLoadingSubmit(true);
             try {
                 const res = await postBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
-                                    state.rua, state.numero, state.bairro, state.complemento, state.latitude, state.longitude);
+                                    state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
+                                    responseGeo.data.results[0].geometry.location.lng);
                 if (res.data.insertId > 0) {
                     if (JSON.stringify(contatos) !== '[]') {
                         contatos.map(async(e) => {
                             await postContatosBarbearia(e.descricao, e.contato, res.data.insertId);
                         })
                     }
-                    await postProprietariosBarbearia(props.usuario.state.id, res.data.insertId);
+                    proprietarios.map(async(e) => {
+                        await postProprietariosBarbearia(e.idProprietario, res.data.insertId);
+                    })
+                }
+                if (image.base64 !== undefined) {
+                    const file = `data:${image.type}/jpeg;base64,${image.base64}`;
+                    await postBarbeariaLogo(res.data.insertId, file);
                 }
                 Alert.alert('Barbearia cadastrada com sucesso!');
-                props.navigation.navigate('UsuarioBarbearias');
+                props.navigation.navigate('UsuarioBarbearias');                
             } catch (error) {
                 if (error.message === "Request failed with status code 401") {
                     handleError('Verifique o CNPJ informado', 'cnpj');
                     handleError('Verifique a IE informada', 'inscEstadual');
                     Alert.alert('CNPJ e inscrição estadual informados já estão cadastrados, verifique')
                 }
+                console.log(error);
             }
+            setLoadingSubmit(false);
         }
     }
 
@@ -475,17 +519,18 @@ const EdicaoBarbearia = (props) => {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-            {loadingLogo?
-                <View style={[style.containerIndicator, style.horizontalIndicator]}>
-                    <ActivityIndicator/>
-                </View>:
-                <View style={style.imageContainer}>
-                <TouchableOpacity onPress={pickImage}>
-                    <Image source={image} style={style.image}/>
-                </TouchableOpacity>
-                </View>
-            }
-            <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
+                {loadingLogo?
+                    <View style={[style.containerIndicator, style.horizontalIndicator]}>
+                        <ActivityIndicator/>
+                    </View>
+                    :
+                    <View style={style.imageContainer}>
+                        <TouchableOpacity onPress={pickImage}>
+                            <Image source={image} style={style.image}/>
+                        </TouchableOpacity>
+                    </View>
+                }
+                <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
                 <TextInput
                 style={style.input}
                 mode='outlined'
@@ -548,28 +593,38 @@ const EdicaoBarbearia = (props) => {
                 <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.inscEstadual !== null ? true : false}>
                     {errors.inscEstadual}
                 </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="CEP"
-                keyboardType="number-pad"
-                error={errors.cep !== null ? true : false}
-                onFocus={() => onFocusCEP()}
-                onEndEditing={() => consultaCEP()}
-                theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={globalFunction.formataCampo(state.cep, "00.000-000")}
-                onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cep !== null ? true : false}>
-                    {errors.cep}
-                </HelperText>
+                {loadingCEP?
+                <View style={style.viewCEP} >
+                    <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
+                    <ActivityIndicator/>
+                </View>
+                :
+                <>
+                    <TextInput
+                    style={style.input}
+                    mode='outlined'
+                    activeOutlineColor='#fff'
+                    label="CEP"
+                    keyboardType="number-pad"
+                    error={errors.cep !== null ? true : false}
+                    onFocus={() => onFocusCEP()}
+                    onEndEditing={() => consultaCEP()}
+                    theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                    value={globalFunction.formataCampo(state.cep, "00.000-000")}
+                    onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
+                    />
+                    <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cep !== null ? true : false}>
+                        {errors.cep}
+                    </HelperText>
+                </>
+                }
                 <TextInput
                 style={style.input}
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="Cidade"
+                editable={!loadingCEP}
                 error={errors.cidade !== null ? true : false}
                 onFocus={() => handleError(null, 'cidade')}
                 theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
@@ -585,6 +640,7 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="UF"
+                editable={!loadingCEP}
                 keyboardType="default"
                 maxLength={2}
                 error={errors.uf !== null ? true : false}
@@ -602,6 +658,7 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="Rua"
+                editable={!loadingCEP}
                 error={errors.rua !== null ? true : false}
                 onFocus={() => handleError(null, 'rua')}
                 theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
@@ -617,6 +674,7 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="Número"
+                editable={!loadingCEP}
                 keyboardType="number-pad"
                 error={errors.numero !== null ? true : false}
                 onFocus={() => handleError(null, 'numero')}
@@ -633,6 +691,7 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="Bairro"
+                editable={!loadingCEP}
                 error={errors.bairro !== null ? true : false}
                 onFocus={() => handleError(null, 'bairro')}
                 theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
@@ -648,6 +707,7 @@ const EdicaoBarbearia = (props) => {
                 mode='outlined'
                 activeOutlineColor='#fff'
                 label="Complemento"
+                editable={!loadingCEP}
                 error={errors.complemento !== null ? true : false}
                 onFocus={() => handleError(null, 'complemento')}
                 theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
@@ -730,8 +790,8 @@ const EdicaoBarbearia = (props) => {
                         </Card>
                     )
                 })}
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E'}]} onPress={() => handleSubmit()}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar Dados</Text>
+                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                    {loadingSubmit?<ActivityIndicator/>:<Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar Dados</Text>}
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -744,4 +804,4 @@ const mapStateToProps = ({ usuario }) => {
     }
 }
 
-export default connect(mapStateToProps, null)(EdicaoBarbearia);
+export default connect(mapStateToProps, null)(DadosBarbearia);

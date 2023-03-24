@@ -56,8 +56,8 @@ export default StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: Dimensions.get('window').width / 2,
-        resizeMode: 'center',
+        height: '100%',
+        resizeMode: 'contain',
         borderRadius: 15
     },
     containerIndicator: {

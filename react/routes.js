@@ -7,7 +7,8 @@ import {C00, C01, C02, C03, C04, RedefinirSenha} from './src/pages/Cadastro/inde
 import Home from './src/pages/Home/index';
 import Perfil, {EditarSenha} from './src/pages/Perfil';
 import UsuarioBarbearias from './src/pages/UsuarioBarbearias';
-import EdicaoBarbearia from './src/pages/EdicaoBarbearia';
+import DadosBarbearia from './src/pages/DadosBarbearia';
+import MenuBarbearia from './src/pages/MenuBarbearia';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,8 +66,12 @@ const Routes = () => {
                 component={UsuarioBarbearias}
                 />
                 <Stack.Screen
-                name="EdicaoBarbearia"
-                component={EdicaoBarbearia}
+                name="DadosBarbearia"
+                component={DadosBarbearia}
+                />
+                <Stack.Screen
+                name="MenuBarbearia"
+                component={MenuBarbearia}
                 />
             </Stack.Navigator>
         </NavigationContainer>

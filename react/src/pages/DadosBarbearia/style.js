@@ -5,6 +5,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        marginTop: 50,
         backgroundColor: globalStyles.main_color
     }, 
     text: {
@@ -62,8 +63,16 @@ export default StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: Dimensions.get('window').width / 2,
-        resizeMode: 'center',
+        height: '100%',
+        resizeMode: 'contain',
         borderRadius: 15
     },
+    viewCEP: {
+        justifyContent: "center", 
+        backgroundColor: '#FFB337', 
+        borderRadius: 10, 
+        width: '70%', 
+        height: 50, 
+        marginTop: 10 
+    }
 });

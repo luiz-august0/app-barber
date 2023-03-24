@@ -99,7 +99,12 @@ export const deleteBarbearia = async(barbeariaID) => {
     return api.delete(`/barbearia/${barbeariaID}`)
 };
 
-export const postBarbeariaFoto = async (barbeariaID, file) => {
+export const postBarbeariaLogo = async (barbeariaID, file) => {
     return api.post(`/barbearia_logo/${barbeariaID}`, { file });
 };
 /**************************************************************/
+
+/*GoogleMaps*/
+export const getGeocoding = async (rua, numero, bairro, cidade, uf, cep) => {
+    return api.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${rua},+${numero}+-+${bairro},+${cidade}+-+${uf},+${cep}&key=AIzaSyBT0jZewq5y_2BhvvRVhOmScU_xN8O9E94`);
+};

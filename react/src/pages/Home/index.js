@@ -16,7 +16,6 @@ const Home = (props) => {
     }
 
     const menuAvailable = () => {
-        console.log(props.usuario.state.tipo)
         if (props.usuario.state.tipo === "B") {
             return (
                 <TouchableOpacity
