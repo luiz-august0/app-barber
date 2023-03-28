@@ -12,7 +12,10 @@ import {
     postBarbeariaLogo, 
     postContatosBarbearia, 
     postProprietariosBarbearia,
-    getGeocoding
+    getGeocoding,
+    getContatosBarbearia,
+    getProprietariosBarbearia,
+    getUsuario
 } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
@@ -67,13 +70,56 @@ const DadosBarbearia = (props) => {
     const getDataBarbearia = async(id) => {
         try {
             const response = await getDadosBarbearia(id);
+            setValueState('nome', response.data[0].Barb_Nome);
+            setValueState('razao', response.data[0].Barb_RazaoSocial);
+            setValueState('cnpj', globalFunction.formataCampo(response.data[0].Barb_CNPJ, "00.000.000/0000-00"));
+
+            if (response.data[0].Barb_InscEst !== 'ISENTO') {
+                setValueState('inscEstadual', response.data[0].Barb_InscEst);
+            }
+
+            setValueState('cidade', response.data[0].Barb_Cidade);
+            setValueState('cep', globalFunction.formataCampo(response.data[0].Barb_CEP, "00.000-000"));
+            setValueState('uf', response.data[0].Barb_UF);
+            setValueState('rua', response.data[0].Barb_Rua);
+            setValueState('numero', response.data[0].Barb_Numero.toString());
+            setValueState('bairro', response.data[0].Barb_Bairro);
+
+            if (response.data[0].Barb_Complemento !== null && response.data[0].Barb_Complemento !== '') {
+                setValueState('complemento', response.data[0].Barb_Complemento);
+            }
+
             if (response.data[0].Barb_LogoUrl !== '' && response.data[0].Barb_LogoUrl !== null) {
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${response.data[0].Barb_LogoUrl}`})
             } else {
                 setImage(perfil);
             }
+
+            const responseContatos = await getContatosBarbearia(id);
+            if (JSON.stringify(responseContatos.data) !== '[]') {
+                let newArrayContatos = [];
+                let i = 0;
+                responseContatos.data.map((e) => {
+                    newArrayContatos.push({idContato: i, descricao: e.BarbC_Descricao, contato: e.BarbC_Contato});
+                    i = i + 1;
+                });
+                setContatos(newArrayContatos);
+            }
+
+            const responseProprietarios = await getProprietariosBarbearia(id);
+            if (JSON.stringify(responseProprietarios.data) !== '[]') {
+                let newArrayProprietarios = [];
+                responseProprietarios.data.map(async(e) => {
+                    const resUsuario = await getUsuario(e.Usr_Codigo);
+                    await newArrayProprietarios.push({idProprietario: resUsuario.data[0].Usr_Codigo, email: resUsuario.data[0].Usr_Email, nome: resUsuario.data[0].Usr_Nome, contato: resUsuario.data[0].Usr_Contato, cpf: resUsuario.data[0].Usr_CPF});
+                    //newArrayProprietarios.push({idProprietario: 1});
+                });
+                console.log(newArrayProprietarios);
+                //setProprietarios(newArrayProprietarios);
+            }
+
         } catch (error) {
-            
+            console.log(error);
         }
     }
 

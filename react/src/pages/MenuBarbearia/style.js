@@ -15,7 +15,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#ffff',
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 40
     },
     text: {
         width: '100%',
@@ -29,7 +29,7 @@ export default StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'center',
         width: 250,
-        height: 100,
+        height: 60,
         borderRadius: 10,
         backgroundColor: '#343434'
     },

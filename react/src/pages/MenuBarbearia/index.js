@@ -10,8 +10,8 @@ import { getDadosBarbearia } from "../../services/api";
 
 const MenuBarbearia = (props) => {
 	const isFocused = useIsFocused();
-	const [state, setState] = useState({'nome': null, 'rua': null, 'numero': null, 'bairro': null, 'cidade': null, 
-										'uf': null, 'cep': null, 'lat': null, 'lng': null});
+	const [state, setState] = useState({'nome': '', 'rua': '', 'numero': '', 'bairro': '', 'cidade': '', 
+										'uf': '', 'cep': '', 'lat': '', 'lng': ''});
 	const [image, setImage] = useState(null);
 
 	const setValueState = (input, value) => {
@@ -55,6 +55,15 @@ const MenuBarbearia = (props) => {
 				<Text style={style.textTitle}>{state.nome}</Text>
                 <TouchableOpacity
                 style={style.button}
+                onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
+                >
+                    <Text style={style.text}>
+						{`Dados de cadastro `}
+						<MIcon name="office-building" size={25} color={'#ffff'}></MIcon>
+					</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                style={[style.button, {height: 100}]}
                 onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
                 >
                     <Text style={style.text}>
