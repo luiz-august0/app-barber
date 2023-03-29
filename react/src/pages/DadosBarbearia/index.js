@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image, Linking, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image } from "react-native";
 import { Card, TextInput, HelperText } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
@@ -15,7 +15,9 @@ import {
     getGeocoding,
     getContatosBarbearia,
     getProprietariosBarbearia,
-    getUsuario
+    updateBarbearia,
+    deleteContatosBarbearia,
+    deleteProprietariosBarbearia
 } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
@@ -58,6 +60,7 @@ const DadosBarbearia = (props) => {
     const [loadingLogo, setLoadingLogo] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [loadingCEP, setLoadingCEP] = useState(false);
+    const [loadingData, setLoadingData] = useState(false);
 
     const setValueState = (input, value) => {
         setState(prevState => ({ ...prevState, [input]: value }));
@@ -68,6 +71,7 @@ const DadosBarbearia = (props) => {
     };
 
     const getDataBarbearia = async(id) => {
+        setLoadingData(true);
         try {
             const response = await getDadosBarbearia(id);
             setValueState('nome', response.data[0].Barb_Nome);
@@ -110,17 +114,14 @@ const DadosBarbearia = (props) => {
             if (JSON.stringify(responseProprietarios.data) !== '[]') {
                 let newArrayProprietarios = [];
                 responseProprietarios.data.map(async(e) => {
-                    const resUsuario = await getUsuario(e.Usr_Codigo);
-                    await newArrayProprietarios.push({idProprietario: resUsuario.data[0].Usr_Codigo, email: resUsuario.data[0].Usr_Email, nome: resUsuario.data[0].Usr_Nome, contato: resUsuario.data[0].Usr_Contato, cpf: resUsuario.data[0].Usr_CPF});
-                    //newArrayProprietarios.push({idProprietario: 1});
+                    newArrayProprietarios.push({idProprietario: e.Usr_Codigo, email: e.Usr_Email, nome: e.Usr_Nome, contato: e.Usr_Contato, cpf: e.Usr_CPF});
                 });
-                console.log(newArrayProprietarios);
-                //setProprietarios(newArrayProprietarios);
+                setProprietarios(newArrayProprietarios);
             }
-
         } catch (error) {
             console.log(error);
         }
+        setLoadingData(false);
     }
 
     const pickImage = async () => {
@@ -134,18 +135,19 @@ const DadosBarbearia = (props) => {
         
         if (!res.cancelled) {
             const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+            setLoadingLogo(true);
 
             try {
-                setLoadingLogo(true);
-                /*const responseImage = await updateUsuarioFoto(props.usuario.state.id, file);
-                setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
-                updateStoreUsuario();*/
-                setImage({uri: res.uri, base64: res.base64, type: res.type});
-                setLoadingLogo(false);
+                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '') {
+                    const responseImage = await postBarbeariaLogo(props.route.params?.barbeariaID, file);
+                    setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                } else {
+                    setImage({uri: res.uri, base64: res.base64, type: res.type});
+                }
             } catch (error) {
-                Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
-                setLoadingLogo(false);
+                Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao realizar o upload da imagem.' );
             }
+            setLoadingLogo(false);
         }
         
     }
@@ -161,14 +163,24 @@ const DadosBarbearia = (props) => {
     }
 
     const handleDeleteContato = (id) => {
-        let newArrayContatos = [];
-        contatos.map((e) => {
-            if (e.idContato !== id) {
-                newArrayContatos.push({idContato: e.idContato, descricao: e.descricao, contato: e.contato});
-            }
-        });
-        setContatos(newArrayContatos);
-        updateIDContato(newArrayContatos);
+        const deleteContato = () => {
+            let newArrayContatos = [];
+            contatos.map((e) => {
+                if (e.idContato !== id) {
+                    newArrayContatos.push({idContato: e.idContato, descricao: e.descricao, contato: e.contato});
+                }
+            });
+            setContatos(newArrayContatos);
+            updateIDContato(newArrayContatos);
+        }
+
+        Alert.alert('Confirmação', 'Deseja realmente excluir ?',
+            [
+              {text: 'Sim', onPress: () => deleteContato()},
+              {text: 'Não', style: 'cancel'},
+            ],
+            { cancelable: true }
+        );
     }
 
     const handleSubmitContato = () => {
@@ -237,13 +249,23 @@ const DadosBarbearia = (props) => {
     }
 
     const handleDeleteProprietario = (id) => {
-        let newArrayProprietarios = [];
-        proprietarios.map((e) => {
-            if (e.idProprietario !== id) {
-                newArrayProprietarios.push({idProprietario: e.idProprietario, email: e.email, nome: e.nome, contato: e.contato, cpf: e.cpf}); 
-            }
-        }); 
-        setProprietarios(newArrayProprietarios);
+        const deleteProprietario = () => {
+            let newArrayProprietarios = [];
+            proprietarios.map((e) => {
+                if (e.idProprietario !== id) {
+                    newArrayProprietarios.push({idProprietario: e.idProprietario, email: e.email, nome: e.nome, contato: e.contato, cpf: e.cpf}); 
+                }
+            }); 
+            setProprietarios(newArrayProprietarios);
+        }
+
+        Alert.alert('Confirmação', 'Deseja realmente excluir ?',
+            [
+              {text: 'Sim', onPress: () => deleteProprietario()},
+              {text: 'Não', style: 'cancel'},
+            ],
+            { cancelable: true }
+        );
     }
 
     const handleSubmitProprietario = async() => {
@@ -442,37 +464,55 @@ const DadosBarbearia = (props) => {
 
         const responseGeo = await getGeocoding(state.rua, state.numero, state.bairro, state.cidade, state.uf, cep);
         if (responseGeo.data.status == 'ZERO_RESULTS') {
-            Alert.alert('Não foi possível localizar a geolocalização do endereço informado, verifique');
+            Alert.alert('Atenção', 'Não foi possível localizar a geolocalização do endereço informado, verifique');
             isValid = false;
         }
 
         if (isValid) {
             setLoadingSubmit(true);
             try {
-                const res = await postBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
-                                    state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
-                                    responseGeo.data.results[0].geometry.location.lng);
-                if (res.data.insertId > 0) {
+                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '') {
+                    const res = await updateBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
+                        state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
+                        responseGeo.data.results[0].geometry.location.lng, props.route.params?.barbeariaID);
+
+                    await deleteContatosBarbearia(null, props.route.params?.barbeariaID);
                     if (JSON.stringify(contatos) !== '[]') {
                         contatos.map(async(e) => {
-                            await postContatosBarbearia(e.descricao, e.contato, res.data.insertId);
+                            await postContatosBarbearia(e.descricao, e.contato, props.route.params?.barbeariaID);
                         })
                     }
+                    await deleteProprietariosBarbearia(null, props.route.params?.barbeariaID);
                     proprietarios.map(async(e) => {
-                        await postProprietariosBarbearia(e.idProprietario, res.data.insertId);
+                        await postProprietariosBarbearia(e.idProprietario, props.route.params?.barbeariaID);
                     })
+                    Alert.alert('Atenção', 'Dados da barbearia atualizados com sucesso!');
+                } else {
+                    const res = await postBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
+                        state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
+                        responseGeo.data.results[0].geometry.location.lng);
+                    if (res.data.insertId > 0) {
+                        if (JSON.stringify(contatos) !== '[]') {
+                            contatos.map(async(e) => {
+                                await postContatosBarbearia(e.descricao, e.contato, res.data.insertId);
+                            })
+                        }
+                        proprietarios.map(async(e) => {
+                            await postProprietariosBarbearia(e.idProprietario, res.data.insertId);
+                        })
+                    }
+                    if (image.base64 !== undefined) {
+                        const file = `data:${image.type}/jpeg;base64,${image.base64}`;
+                        await postBarbeariaLogo(res.data.insertId, file);
+                    }
+                    Alert.alert('Atenção', 'Barbearia cadastrada com sucesso!');
                 }
-                if (image.base64 !== undefined) {
-                    const file = `data:${image.type}/jpeg;base64,${image.base64}`;
-                    await postBarbeariaLogo(res.data.insertId, file);
-                }
-                Alert.alert('Barbearia cadastrada com sucesso!');
-                props.navigation.navigate('UsuarioBarbearias');                
+                props.navigation.navigate('MenuBarbearia', { barbeariaID: props.route.params?.barbeariaID });                
             } catch (error) {
                 if (error.message === "Request failed with status code 401") {
                     handleError('Verifique o CNPJ informado', 'cnpj');
                     handleError('Verifique a IE informada', 'inscEstadual');
-                    Alert.alert('CNPJ e inscrição estadual informados já estão cadastrados, verifique')
+                    Alert.alert('Atenção', 'CNPJ e inscrição estadual informados já estão cadastrados, verifique')
                 }
                 console.log(error);
             }
@@ -565,280 +605,284 @@ const DadosBarbearia = (props) => {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-                {loadingLogo?
-                    <View style={[style.containerIndicator, style.horizontalIndicator]}>
-                        <ActivityIndicator/>
-                    </View>
-                    :
-                    <View style={style.imageContainer}>
-                        <TouchableOpacity onPress={pickImage}>
-                            <Image source={image} style={style.image}/>
-                        </TouchableOpacity>
-                    </View>
-                }
-                <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Nome"
-                error={errors.nome !== null ? true : false}
-                onFocus={() => handleError(null, 'nome')}
-                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={state.nome}
-                onChangeText={(nome) => setValueState('nome', nome)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
-                    {errors.nome}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Razão Social"
-                error={errors.razao !== null ? true : false}
-                onFocus={() => handleError(null, 'razao')}
-                theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={state.razao}
-                onChangeText={(razao) => setValueState('razao', razao)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.razao !== null ? true : false}>
-                    {errors.razao}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="CNPJ"
-                keyboardType="number-pad"
-                error={errors.cnpj !== null ? true : false}
-                onFocus={() => handleError(null, 'cnpj')}
-                theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
-                onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cnpj !== null ? true : false}>
-                    {errors.cnpj}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="IE"
-                keyboardType="number-pad"
-                error={errors.inscEstadual !== null ? true : false}
-                onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
-                theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                value={state.inscEstadual}
-                onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.inscEstadual !== null ? true : false}>
-                    {errors.inscEstadual}
-                </HelperText>
-                {loadingCEP?
-                <View style={style.viewCEP} >
-                    <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
-                    <ActivityIndicator/>
-                </View>
-                :
-                <>
-                    <TextInput
-                    style={style.input}
-                    mode='outlined'
-                    activeOutlineColor='#fff'
-                    label="CEP"
-                    keyboardType="number-pad"
-                    error={errors.cep !== null ? true : false}
-                    onFocus={() => onFocusCEP()}
-                    onEndEditing={() => consultaCEP()}
-                    theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                    value={globalFunction.formataCampo(state.cep, "00.000-000")}
-                    onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
-                    />
-                    <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cep !== null ? true : false}>
-                        {errors.cep}
-                    </HelperText>
-                </>
-                }
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Cidade"
-                editable={!loadingCEP}
-                error={errors.cidade !== null ? true : false}
-                onFocus={() => handleError(null, 'cidade')}
-                theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.cidade}
-                onChangeText={(cidade) => setValueState('cidade', cidade)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cidade !== null ? true : false}>
-                    {errors.cidade}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="UF"
-                editable={!loadingCEP}
-                keyboardType="default"
-                maxLength={2}
-                error={errors.uf !== null ? true : false}
-                onFocus={() => handleError(null, 'uf')}
-                theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.uf!== null?state.uf.toUpperCase():null}
-                onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.uf !== null ? true : false}>
-                    {errors.uf}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Rua"
-                editable={!loadingCEP}
-                error={errors.rua !== null ? true : false}
-                onFocus={() => handleError(null, 'rua')}
-                theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.rua}
-                onChangeText={(rua) => setValueState('rua', rua)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.rua !== null ? true : false}>
-                    {errors.rua}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Número"
-                editable={!loadingCEP}
-                keyboardType="number-pad"
-                error={errors.numero !== null ? true : false}
-                onFocus={() => handleError(null, 'numero')}
-                theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.numero}
-                onChangeText={(numero) => setValueState('numero', numero)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.numero !== null ? true : false}>
-                    {errors.numero}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Bairro"
-                editable={!loadingCEP}
-                error={errors.bairro !== null ? true : false}
-                onFocus={() => handleError(null, 'bairro')}
-                theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.bairro}
-                onChangeText={(bairro) => setValueState('bairro', bairro)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.bairro !== null ? true : false}>
-                    {errors.bairro}
-                </HelperText>
-                <TextInput
-                style={style.input}
-                mode='outlined'
-                activeOutlineColor='#fff'
-                label="Complemento"
-                editable={!loadingCEP}
-                error={errors.complemento !== null ? true : false}
-                onFocus={() => handleError(null, 'complemento')}
-                theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
-                value={state.complemento}
-                onChangeText={(complemento) => setValueState('complemento', complemento)}
-                />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.complemento !== null ? true : false}>
-                    {errors.complemento}
-                </HelperText>
-                <Text style={style.textTitle}>Contatos</Text>    
-                <TouchableOpacity onPress={() => {
-                    setEditContatoMode(false); 
-                    setInsertContatoMode(false); 
-                    setContatoInEdit('');
-                    setValueState('contato', '');
-                    setValueState('descricao', '');
-                    handleError(null, 'contato');
-                    handleError(null, 'descricao');
-                    setInsertContatoMode(true);
-                    }}>
-                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
-                </TouchableOpacity>
-                {insertContatoMode?addEditContato():null}
-                {contatos.map((e) => {
-                    return (
-                        <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#FFB337'}}>
-                        <Card.Title title={`${e.descricao}: ${e.contato}`}
-                                    titleNumberOfLines={0}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                            <TouchableOpacity onPress={() => handleDeleteContato(e.idContato)}>
-                                <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                setEditContatoMode(false); 
-                                setInsertContatoMode(false); 
-                                setContatoInEdit('');
-                                setValueState('contato', e.contato);
-                                setValueState('descricao', e.descricao);
-                                handleError(null, 'contato');
-                                handleError(null, 'descricao');
-                                setEditContatoMode(true); 
-                                setContatoInEdit(e.idContato);
-                                }}>
-                                <Text style={[style.textButtom, { color: "#e65c00", textAlign: 'center', marginLeft: 10}]}>Editar</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {(editContatoMode) && (contatoInEdit === e.idContato)?
-                            <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                                {addEditContato()}
+                {loadingData?
+                <ActivityIndicator/>:
+                    <>
+                        {loadingLogo?
+                            <View style={[style.containerIndicator, style.horizontalIndicator]}>
+                                <ActivityIndicator/>
                             </View>
-                        :null}
-                        </Card>
-                    )
-                })}
-                <Text style={style.textTitle}>Proprietários</Text>    
-                <TouchableOpacity onPress={() => {
-                    setInsertProprietarioMode(false); 
-                    setValueState('email', '');
-                    handleError(null, 'email');
-                    setInsertProprietarioMode(true);
-                    }}>
-                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
-                </TouchableOpacity>
-                {insertProprietarioMode?addProprietario():null}
-                {proprietarios.map((e) => {
-                    return (
-                        <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFB337'}}>
-                        <Card.Title subtitle={
-                            `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
+                            :
+                            <View style={style.imageContainer}>
+                                <TouchableOpacity onPress={pickImage}>
+                                    <Image source={image} style={style.image}/>
+                                </TouchableOpacity>
+                            </View>
                         }
-                        subtitleNumberOfLines={0}
+                        <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Nome"
+                        error={errors.nome !== null ? true : false}
+                        onFocus={() => handleError(null, 'nome')}
+                        theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                        value={state.nome}
+                        onChangeText={(nome) => setValueState('nome', nome)}
                         />
-                        {e.idProprietario !== props.usuario.state.id?
-                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
-                            <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+                            {errors.nome}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Razão Social"
+                        error={errors.razao !== null ? true : false}
+                        onFocus={() => handleError(null, 'razao')}
+                        theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                        value={state.razao}
+                        onChangeText={(razao) => setValueState('razao', razao)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.razao !== null ? true : false}>
+                            {errors.razao}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="CNPJ"
+                        keyboardType="number-pad"
+                        error={errors.cnpj !== null ? true : false}
+                        onFocus={() => handleError(null, 'cnpj')}
+                        theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                        value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
+                        onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cnpj !== null ? true : false}>
+                            {errors.cnpj}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="IE"
+                        keyboardType="number-pad"
+                        error={errors.inscEstadual !== null ? true : false}
+                        onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Atenção', 'Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
+                        theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                        value={state.inscEstadual}
+                        onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.inscEstadual !== null ? true : false}>
+                            {errors.inscEstadual}
+                        </HelperText>
+                        {loadingCEP?
+                        <View style={style.viewCEP} >
+                            <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
+                            <ActivityIndicator/>
+                        </View>
+                        :
+                        <>
+                            <TextInput
+                            style={style.input}
+                            mode='outlined'
+                            activeOutlineColor='#fff'
+                            label="CEP"
+                            keyboardType="number-pad"
+                            error={errors.cep !== null ? true : false}
+                            onFocus={() => onFocusCEP()}
+                            onEndEditing={() => consultaCEP()}
+                            theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                            left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                            value={globalFunction.formataCampo(state.cep, "00.000-000")}
+                            onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
+                            />
+                            <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cep !== null ? true : false}>
+                                {errors.cep}
+                            </HelperText>
+                        </>
+                        }
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Cidade"
+                        editable={!loadingCEP}
+                        error={errors.cidade !== null ? true : false}
+                        onFocus={() => handleError(null, 'cidade')}
+                        theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.cidade}
+                        onChangeText={(cidade) => setValueState('cidade', cidade)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cidade !== null ? true : false}>
+                            {errors.cidade}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="UF"
+                        editable={!loadingCEP}
+                        keyboardType="default"
+                        maxLength={2}
+                        error={errors.uf !== null ? true : false}
+                        onFocus={() => handleError(null, 'uf')}
+                        theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.uf!== null?state.uf.toUpperCase():null}
+                        onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.uf !== null ? true : false}>
+                            {errors.uf}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Rua"
+                        editable={!loadingCEP}
+                        error={errors.rua !== null ? true : false}
+                        onFocus={() => handleError(null, 'rua')}
+                        theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.rua}
+                        onChangeText={(rua) => setValueState('rua', rua)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.rua !== null ? true : false}>
+                            {errors.rua}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Número"
+                        editable={!loadingCEP}
+                        keyboardType="number-pad"
+                        error={errors.numero !== null ? true : false}
+                        onFocus={() => handleError(null, 'numero')}
+                        theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.numero}
+                        onChangeText={(numero) => setValueState('numero', numero)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.numero !== null ? true : false}>
+                            {errors.numero}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Bairro"
+                        editable={!loadingCEP}
+                        error={errors.bairro !== null ? true : false}
+                        onFocus={() => handleError(null, 'bairro')}
+                        theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.bairro}
+                        onChangeText={(bairro) => setValueState('bairro', bairro)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.bairro !== null ? true : false}>
+                            {errors.bairro}
+                        </HelperText>
+                        <TextInput
+                        style={style.input}
+                        mode='outlined'
+                        activeOutlineColor='#fff'
+                        label="Complemento"
+                        editable={!loadingCEP}
+                        error={errors.complemento !== null ? true : false}
+                        onFocus={() => handleError(null, 'complemento')}
+                        theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="home-city" />}
+                        value={state.complemento}
+                        onChangeText={(complemento) => setValueState('complemento', complemento)}
+                        />
+                        <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.complemento !== null ? true : false}>
+                            {errors.complemento}
+                        </HelperText>
+                        <Text style={style.textTitle}>Contatos</Text>    
+                        <TouchableOpacity onPress={() => {
+                            setEditContatoMode(false); 
+                            setInsertContatoMode(false); 
+                            setContatoInEdit('');
+                            setValueState('contato', '');
+                            setValueState('descricao', '');
+                            handleError(null, 'contato');
+                            handleError(null, 'descricao');
+                            setInsertContatoMode(true);
+                            }}>
+                            <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
                         </TouchableOpacity>
-                        </View>:null}
-                        </Card>
-                    )
-                })}
-                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    {loadingSubmit?<ActivityIndicator/>:<Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar Dados</Text>}
-                </TouchableOpacity>
+                        {insertContatoMode?addEditContato():null}
+                        {contatos.map((e) => {
+                            return (
+                                <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#FFB337'}}>
+                                <Card.Title title={`${e.descricao}: ${e.contato}`}
+                                            titleNumberOfLines={0}/>
+                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                    <TouchableOpacity onPress={() => handleDeleteContato(e.idContato)}>
+                                        <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => {
+                                        setEditContatoMode(false); 
+                                        setInsertContatoMode(false); 
+                                        setContatoInEdit('');
+                                        setValueState('contato', e.contato);
+                                        setValueState('descricao', e.descricao);
+                                        handleError(null, 'contato');
+                                        handleError(null, 'descricao');
+                                        setEditContatoMode(true); 
+                                        setContatoInEdit(e.idContato);
+                                        }}>
+                                        <Text style={[style.textButtom, { color: "#e65c00", textAlign: 'center', marginLeft: 10}]}>Editar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                {(editContatoMode) && (contatoInEdit === e.idContato)?
+                                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                                        {addEditContato()}
+                                    </View>
+                                :null}
+                                </Card>
+                            )
+                        })}
+                        <Text style={style.textTitle}>Proprietários</Text>    
+                        <TouchableOpacity onPress={() => {
+                            setInsertProprietarioMode(false); 
+                            setValueState('email', '');
+                            handleError(null, 'email');
+                            setInsertProprietarioMode(true);
+                            }}>
+                            <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                        </TouchableOpacity>
+                        {insertProprietarioMode?addProprietario():null}
+                        {proprietarios.map((e) => {
+                            return (
+                                <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFB337'}}>
+                                <Card.Title subtitle={
+                                    `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
+                                }
+                                subtitleNumberOfLines={0}
+                                />
+                                {e.idProprietario != props.usuario.state.id?
+                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
+                                    <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                                </TouchableOpacity>
+                                </View>:null}
+                                </Card>
+                            )
+                        })}
+                        <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                            {loadingSubmit?<ActivityIndicator/>:<Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar dados</Text>}
+                        </TouchableOpacity>
+                    </>}
             </View>
         </ScrollView>
     )

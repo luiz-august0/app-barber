@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator } from "react-native";
 import { useIsFocused  } from '@react-navigation/native';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { getBarbeariasUsuario } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
@@ -19,7 +19,7 @@ const UsuarioBarbearias = (props) => {
             const response = await getBarbeariasUsuario(props.usuario.state.id);
             setBarbearias(response.data);
         } catch (error) {
-            Alert.alert("Ops!", "Ocorreu algum erro ao pesquisar as barbearias vinculadas ao seu usuário.");
+            Alert.alert('Atenção', "Ops!, Ocorreu algum erro ao pesquisar as barbearias vinculadas ao seu usuário.");
         }
         setIsLoading(false);
     }

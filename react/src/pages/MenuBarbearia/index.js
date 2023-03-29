@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, SafeAreaView, Text, TouchableOpacity, Alert, Image, Linking } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useIsFocused } from "@react-navigation/native";
 import globalStyles from "../../globalStyles";

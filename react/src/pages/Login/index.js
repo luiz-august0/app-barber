@@ -30,7 +30,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === '' && senha === '') {
-      Alert.alert('Email e senha deve ser informado');
+      Alert.alert('Atenção', 'Email e senha deve ser informado');
       return;
     } 
 

@@ -122,7 +122,7 @@ const Perfil = (props) => {
         if (isValid) {
             try {
                 await updateUsuario(email, nome, ncelular, cpf, props.usuario.state.id);
-                Alert.alert('Usuário alterado com sucesso!');
+                Alert.alert('Atenção', 'Usuário alterado com sucesso!');
                 getUsuarioData();
                 updateStoreUsuario();
                 setEditMode(false);
@@ -157,7 +157,7 @@ const Perfil = (props) => {
                 updateStoreUsuario();
                 setLoading(false);
             } catch (error) {
-                Alert.alert('Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
+                Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
                 setLoading(false);
             }
         }
@@ -301,7 +301,7 @@ const EditarSenha = (props) => {
       if (isValid) {
         try {
             await updateUsuarioPassword(senhaAntiga, senha, props.route.params?.id);
-            Alert.alert('Senha alterada com sucesso!');
+            Alert.alert('Atenção', 'Senha alterada com sucesso!');
             props.navigation.navigate('Perfil');
         } catch (error) {
             if (error.message === "Request failed with status code 401") {

@@ -423,7 +423,7 @@ const C04 = ({ navigation, route }) => {
         let nomeCompleto = nome + ' ' + snome;
         let tipo = route.params?.tipoUsuario;
         await createUsuario(email, nomeCompleto, senha, ncelular, cpf, tipo);
-        Alert.alert('Usuário cadastrado com sucesso!');
+        Alert.alert('Atenção', 'Usuário cadastrado com sucesso!');
         navigation.navigate('Login');
       } catch (error) {
         if (error.message === "Request failed with status code 400") {
@@ -587,7 +587,7 @@ const RedefinirSenha = ({ navigation, route }) => {
     }
 
     if (isValid) {
-      Alert.alert('Email de redefinição de senha enviado com sucesso!');
+      Alert.alert('Atenção', 'Email de redefinição de senha enviado com sucesso!');
       navigation.navigate('Login');
     }
   }

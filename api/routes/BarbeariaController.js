@@ -314,7 +314,12 @@ class BarbeariaController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM barbearia_proprietarios WHERE Barb_Codigo = ${id}`,
+                    `SELECT U.Usr_Codigo, U.Usr_Email, U.Usr_Nome,
+                     U.Usr_Contato, U.Usr_CPF
+                     FROM barbearia_proprietarios BP
+                     INNER JOIN usuario U
+                     ON BP.Usr_Codigo = U.Usr_Codigo 
+                     WHERE BP.Barb_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);

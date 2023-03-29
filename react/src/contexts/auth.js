@@ -33,7 +33,7 @@ const login = (dispatch) => {
 
         } catch (error) {
             console.log(error)
-            Alert.alert('Email ou senha inválido');
+            Alert.alert('Atenção', 'Email ou senha inválido');
             return {authenticated: false};
         }
     }
