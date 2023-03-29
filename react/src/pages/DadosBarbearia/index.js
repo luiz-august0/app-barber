@@ -61,6 +61,7 @@ const DadosBarbearia = (props) => {
     const [loadingLogo, setLoadingLogo] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [loadingCEP, setLoadingCEP] = useState(false);
+    const [loadingProprietario, setLoadingProprietario] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
 
     const setValueState = (input, value) => {
@@ -139,7 +140,7 @@ const DadosBarbearia = (props) => {
             setLoadingLogo(true);
 
             try {
-                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '') {
+                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '' && props.route.params?.barbeariaID !== undefined) {
                     const responseImage = await postBarbeariaLogo(props.route.params?.barbeariaID, file);
                     setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
                 } else {
@@ -177,8 +178,8 @@ const DadosBarbearia = (props) => {
 
         Alert.alert('Confirmação', 'Deseja realmente excluir ?',
             [
-              {text: 'Sim', onPress: () => deleteContato()},
-              {text: 'Não', style: 'cancel'},
+                {text: 'Não', style: 'cancel'},
+                {text: 'Sim', onPress: () => deleteContato()},
             ],
             { cancelable: true }
         );
@@ -188,24 +189,24 @@ const DadosBarbearia = (props) => {
         const validFields = () => {
             let isValid = true;
 
+            if (state.contato === '' || state.contato === null) {
+                isValid = false;
+                handleError("Número de contato deve ser informado", "contato");
+            }
+
+            if (state.descricao === '') {
+                isValid = false;
+                handleError("Descrição do contato deve ser informada", "descricao"); 
+            }
+
+            if (state.contato !== '' && state.contato !== null) {
+                if (state.contato.trim().length < 11 || state.contato.trim().length > 11) {
+                    isValid = false;
+                    handleError("Número de contato inválido", "contato");
+                }
+            }
+
             contatos.map((e) => {
-                if (state.contato === '' || state.contato === null) {
-                    isValid = false;
-                    handleError("Número de contato deve ser informado", "contato");
-                }
-
-                if (state.descricao === '') {
-                    isValid = false;
-                    handleError("Descrição do contato deve ser informada", "descricao"); 
-                }
-
-                if (state.contato !== '' && state.contato !== null) {
-                    if (state.contato.length < 11 || state.contato.length > 11) {
-                        isValid = false;
-                        handleError("Número de contato inválido", "contato");
-                    }
-                }
-    
                 if (contatoInEdit !== '') {
                     if ((e.contato === state.contato) && (e.idContato !== contatoInEdit)) {
                         isValid = false;
@@ -262,8 +263,8 @@ const DadosBarbearia = (props) => {
 
         Alert.alert('Confirmação', 'Deseja realmente excluir ?',
             [
-              {text: 'Sim', onPress: () => deleteProprietario()},
-              {text: 'Não', style: 'cancel'},
+                {text: 'Não', style: 'cancel'},
+                {text: 'Sim', onPress: () => deleteProprietario()},
             ],
             { cancelable: true }
         );
@@ -285,6 +286,7 @@ const DadosBarbearia = (props) => {
         }
 
         if(isValid) {
+            setLoadingProprietario(true);
             try {
                 const res = await getUsuarioBarbeiroWithEmail(state.email);
                 proprietarios.map((e) => {
@@ -313,11 +315,12 @@ const DadosBarbearia = (props) => {
                     isValid = false;
                 }
             }
+            setLoadingProprietario(false);
         }
     }
 
     useEffect(() => {
-        if(props.route.params?.barbeariaID != null) {
+        if(props.route.params?.barbeariaID != null && props.route.params?.barbeariaID !== '' && props.route.params?.barbeariaID !== undefined) {
             getDataBarbearia(props.route.params?.barbeariaID);
         } else {
             setImage(perfil);
@@ -472,7 +475,7 @@ const DadosBarbearia = (props) => {
         if (isValid) {
             setLoadingSubmit(true);
             try {
-                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '') {
+                if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '' && props.route.params?.barbeariaID !== undefined) {
                     await updateBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
                         state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
                         responseGeo.data.results[0].geometry.location.lng, props.route.params?.barbeariaID);
@@ -487,6 +490,7 @@ const DadosBarbearia = (props) => {
                     proprietarios.map(async(e) => {
                         await postProprietariosBarbearia(e.idProprietario, props.route.params?.barbeariaID);
                     })
+                    props.navigation.navigate('MenuBarbearia', { barbeariaID: props.route.params?.barbeariaID });
                     Alert.alert('Atenção', 'Dados da barbearia atualizados com sucesso!');
                 } else {
                     const res = await postBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
@@ -506,9 +510,9 @@ const DadosBarbearia = (props) => {
                         const file = `data:${image.type}/jpeg;base64,${image.base64}`;
                         await postBarbeariaLogo(res.data.insertId, file);
                     }
+                    props.navigation.navigate('MenuBarbearia', { barbeariaID: res.data.insertId });
                     Alert.alert('Atenção', 'Barbearia cadastrada com sucesso!');
-                }
-                props.navigation.navigate('MenuBarbearia', { barbeariaID: props.route.params?.barbeariaID });                
+                }                
             } catch (error) {
                 if (error.message === "Request failed with status code 401") {
                     handleError('Verifique o CNPJ informado', 'cnpj');
@@ -581,6 +585,7 @@ const DadosBarbearia = (props) => {
                     label="Email"
                     keyboardType="email-address"
                     error={errors.email !== null ? true : false}
+                    editable={!loadingProprietario}
                     onFocus={() => handleError(null, 'email')}
                     theme={{ colors: { placeholder: `${state.email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
@@ -590,15 +595,18 @@ const DadosBarbearia = (props) => {
                 <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
                     {errors.email}
                 </HelperText>
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E', marginBottom: 10}]} onPress={() => handleSubmitProprietario()}>
+                <TouchableOpacity style={[style.button, {backgroundColor: !loadingProprietario?'#05A94E':'gray', marginBottom: 10}]} onPress={() => handleSubmitProprietario()}>
+                    {!loadingProprietario?
                     <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                    :<ActivityIndicator/>}
                 </TouchableOpacity>
+                {!loadingProprietario?
                 <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E', marginTop: 0}]} onPress={() => {
                     setInsertProprietarioMode(false); 
                     setValueState('email', '');
                     }}>
                     <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cancelar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>:null}
             </>
         )
     }

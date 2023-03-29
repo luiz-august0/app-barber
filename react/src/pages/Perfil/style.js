@@ -17,8 +17,8 @@ export default StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#ffff',
-        marginTop: '20%',
-        marginBottom: '5%'
+        marginTop: 100,
+        marginBottom: 10
     },
     text: {
         width: '100%',

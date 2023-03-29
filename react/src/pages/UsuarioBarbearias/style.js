@@ -26,8 +26,7 @@ export default StyleSheet.create({
     },
     button: {
         justifyContent: 'center',
-        marginTop: '11%',
-        marginBottom: '-5%',
+        marginTop: 55,
         width: 300,
         height: 50,
         borderRadius: 10,
