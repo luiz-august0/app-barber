@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView, ActivityIndicator, Dimensions, BackHandler } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ActivityIndicator, Dimensions, BackHandler } from 'react-native'
 import { TextInput } from "react-native-paper";
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +8,7 @@ import globalStyles from '../../globalStyles';
 import { usuarioLogado } from '../../store/actions/usuario';
 import style from './style'
 import { Context } from '../../contexts/auth';
+import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 
 const Login = (props) => {
   const isFocused = useIsFocused();
@@ -18,16 +19,15 @@ const Login = (props) => {
 
   const { login, loadUser } = useContext(Context);
 
-  const doLogin = () => {
+  const doLogin = async() => {
     setIsLoading(true);
-    login(email, senha).then((resolve) => {
+    await login(email, senha).then((resolve) => {
       const data = resolve.dataUsuario;
       if (resolve.authenticated) {
         props.onLogin(data);
         props.navigation.navigate('Home');
       }
     });
-    setIsLoading(false);
   }
 
   const handleSubmit = (e) => {
@@ -47,7 +47,7 @@ const Login = (props) => {
   
       if (usuario && token) {
         setIsLoading(true);
-        loadUser().then((resolve) => {
+        await loadUser().then((resolve) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
@@ -83,7 +83,7 @@ const Login = (props) => {
   }, [props, isFocused]);
 
     return (
-      <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+      <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
         {!isLoading?
         <View style={ style.container }>
         <SafeAreaView style={ style.safeAreaL } >
@@ -114,7 +114,6 @@ const Login = (props) => {
               value= {senha}
               onChangeText={ (senha) => setSenha(senha) }
           />
-            
             <TouchableOpacity
             onPress={() => props.navigation.navigate('RedefinirSenha')}
             >
@@ -139,7 +138,7 @@ const Login = (props) => {
         </SafeAreaView>
         </View>
         :<ActivityIndicator style={{marginTop: Dimensions.get('window').height / 2}}/>}
-      </ScrollView>
+      </KeyboardAvoidingWrapper>
     ) 
 }
 

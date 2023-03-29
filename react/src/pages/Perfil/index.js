@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
+import { View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
@@ -10,6 +10,7 @@ import globalFunction from "../../globalFunction";
 import perfil from "../../img/perfil.png";
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
+import KeyboardAvoidingWrapper from "../../components/KeyboardAvoidingWrapper";
 
 const validarEmail = (email) => {
     var re = /\S+@\S+\.\S+/;
@@ -167,7 +168,7 @@ const Perfil = (props) => {
     }
 
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+        <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
                 <Text style={style.textTitle}>Dados do Usuário</Text>
                 {loading?
@@ -264,7 +265,7 @@ const Perfil = (props) => {
                     :null}
                 </View>
             </View>
-        </ScrollView>
+        </KeyboardAvoidingWrapper>
     )
 }
 
@@ -314,7 +315,7 @@ const EditarSenha = (props) => {
     }
 
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+        <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.containerPassword} >
                 <Text style={style.textTitle}>Alterar senha do usuário</Text>
                 <SafeAreaView style={style.safeAreaC}>
@@ -374,7 +375,7 @@ const EditarSenha = (props) => {
                     </TouchableOpacity>
                 </SafeAreaView>
             </View>
-        </ScrollView>
+        </KeyboardAvoidingWrapper>
     )
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Image } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator, Image } from "react-native";
 import { Card, TextInput, HelperText } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { cnpj as cnpjValidator } from 'cpf-cnpj-validator';
@@ -23,6 +23,7 @@ import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
 import style from "./style";
 import perfil from "../../img/perfil.png";
+import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 
 const validaCNPJ = (cpf) => {
     if (cnpjValidator.isValid(cpf)) {
@@ -603,7 +604,7 @@ const DadosBarbearia = (props) => {
     }
 
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+        <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
                 {loadingData?
                 <ActivityIndicator/>:
@@ -884,7 +885,7 @@ const DadosBarbearia = (props) => {
                         </TouchableOpacity>
                     </>}
             </View>
-        </ScrollView>
+        </KeyboardAvoidingWrapper>
     )
 }
     

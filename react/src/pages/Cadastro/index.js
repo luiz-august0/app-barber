@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView, ActivityIndicator, Dimensions } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ActivityIndicator, Dimensions } from 'react-native'
 import { TextInput, HelperText } from "react-native-paper";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import style from './style'
@@ -10,6 +10,7 @@ import globalFunction from '../../globalFunction';
 import { connect } from 'react-redux';
 import { Context } from '../../contexts/auth';
 import { usuarioLogado } from '../../store/actions/usuario';
+import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 
 const validarEmail = (email) => {
   var re = /\S+@\S+\.\S+/;
@@ -77,7 +78,7 @@ const C01 = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+    <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
         <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Quem é você ?</Text>
         <SafeAreaView style={style.safeAreaC}>
@@ -123,7 +124,7 @@ const C01 = ({ navigation, route }) => {
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-    </ScrollView>
+    </KeyboardAvoidingWrapper>
   )
 }
 
@@ -196,7 +197,7 @@ const C02 = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+    <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
         <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Informações pessoais</Text>
         <SafeAreaView style={style.safeAreaC}>
@@ -260,7 +261,7 @@ const C02 = ({ navigation, route }) => {
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-    </ScrollView>
+    </KeyboardAvoidingWrapper>
   )
 }
 
@@ -303,7 +304,7 @@ const C03 = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+    <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
         <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Crie uma senha segura</Text>
         <SafeAreaView style={style.safeAreaC}>
@@ -353,7 +354,7 @@ const C03 = ({ navigation, route }) => {
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-    </ScrollView>
+    </KeyboardAvoidingWrapper>
   )
 }
 
@@ -433,7 +434,7 @@ const C04 = (props) => {
         let nomeCompleto = nome + ' ' + snome;
         let tipo = props.route.params?.tipoUsuario;
         await createUsuario(email, nomeCompleto, senha, ncelular, cpfNoMask, tipo);
-        login(email, senha).then((resolve) => {
+        await login(email, senha).then((resolve) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
@@ -455,7 +456,7 @@ const C04 = (props) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+    <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container}>
         {!loading?
           <SafeAreaView style={style.safeAreaCfinaliza}>
@@ -585,7 +586,7 @@ const C04 = (props) => {
           </SafeAreaView>
         :<ActivityIndicator style={{marginTop: Dimensions.get('window').height / 2}}/>}
       </View>
-    </ScrollView>
+    </KeyboardAvoidingWrapper>
   )
 }
 
@@ -612,7 +613,7 @@ const RedefinirSenha = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
+    <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
         <Text style={{ color: '#fff', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', }} >Redefinição de senha</Text>
         <SafeAreaView style={style.safeAreaC}>
@@ -637,7 +638,7 @@ const RedefinirSenha = ({ navigation, route }) => {
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-    </ScrollView>
+    </KeyboardAvoidingWrapper>
   )
 }
 
