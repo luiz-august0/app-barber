@@ -3,12 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider } from './src/contexts/auth';
 import Login from './src/pages/Login/index';
-import {C00, C01, C02, C03, C04, RedefinirSenha} from './src/pages/Cadastro/index';
+import C04, { C00, C01, C02, C03, RedefinirSenha } from './src/pages/Cadastro/index';
 import Home from './src/pages/Home/index';
 import Perfil, {EditarSenha} from './src/pages/Perfil';
 import UsuarioBarbearias from './src/pages/UsuarioBarbearias';
 import DadosBarbearia from './src/pages/DadosBarbearia';
 import MenuBarbearia from './src/pages/MenuBarbearia';
+import globalStyles from './src/globalStyles';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,12 +19,18 @@ const Routes = () => {
         <NavigationContainer>
             <Stack.Navigator
             screenOptions={{
-            headerShown: false
+            headerShown: true,
+            headerBackTitleVisible: false,
+            headerTitle: '',
+            headerStyle: { backgroundColor: globalStyles.main_color },
+            headerTintColor: '#000',
+            headerTransparent: true
             }}
             >
                 <Stack.Screen
                 name="Login"
                 component={Login}
+                options={{ headerShown: false }}
                 />
                 <Stack.Screen
                 name="C00"
@@ -52,6 +59,7 @@ const Routes = () => {
                 <Stack.Screen 
                 name="Home" 
                 component={Home} 
+                options={{ headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
                 name="Perfil"

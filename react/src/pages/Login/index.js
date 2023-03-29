@@ -1,13 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView, ActivityIndicator, Dimensions } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ScrollView, ActivityIndicator, Dimensions, BackHandler } from 'react-native'
 import { TextInput } from "react-native-paper";
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused  } from '@react-navigation/native';
 import globalStyles from '../../globalStyles';
 import { usuarioLogado } from '../../store/actions/usuario';
 import style from './style'
 import { Context } from '../../contexts/auth';
 
 const Login = (props) => {
+  const isFocused = useIsFocused();
   const [senha, setSenha] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [email, setEmail] = useState('');
@@ -15,25 +18,7 @@ const Login = (props) => {
 
   const { login, loadUser } = useContext(Context);
 
-  useEffect(() => {
-    setIsLoading(true);
-    loadUser().then((resolve) => {
-      const data = resolve.dataUsuario;
-      if (resolve.authenticated) {
-        props.onLogin(data);
-        props.navigation.navigate('Home');
-      }
-    });
-    setIsLoading(false);
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email === '' && senha === '') {
-      Alert.alert('Atenção', 'Email e senha deve ser informado');
-      return;
-    } 
-
+  const doLogin = () => {
     setIsLoading(true);
     login(email, senha).then((resolve) => {
       const data = resolve.dataUsuario;
@@ -44,6 +29,58 @@ const Login = (props) => {
     });
     setIsLoading(false);
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === '' && senha === '') {
+      Alert.alert('Atenção', 'Email e senha deve ser informado');
+      return;
+    } 
+
+    doLogin();
+  }
+
+  useEffect(() => {
+    const onCreate = async() => {
+      const usuario = await AsyncStorage.getItem("usuario");
+      const token = await AsyncStorage.getItem("token");
+  
+      if (usuario && token) {
+        setIsLoading(true);
+        loadUser().then((resolve) => {
+          const data = resolve.dataUsuario;
+          if (resolve.authenticated) {
+            props.onLogin(data);
+            props.navigation.navigate('Home');
+          }
+        });
+        setIsLoading(false);
+      } 
+    }
+
+    if (isFocused) {
+      onCreate();
+    }
+
+    const backAction = () => {
+      Alert.alert('Atenção', 'Deseja realmente sair do aplicativo?', [
+        {
+          text: 'Cancelar',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'Sim', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    backAction,
+    );
+
+  return () => backHandler.remove();
+  }, [props, isFocused]);
 
     return (
       <ScrollView style={{ backgroundColor: globalStyles.main_color }}>

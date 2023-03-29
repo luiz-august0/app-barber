@@ -472,7 +472,7 @@ const DadosBarbearia = (props) => {
             setLoadingSubmit(true);
             try {
                 if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '') {
-                    const res = await updateBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
+                    await updateBarbearia(state.nome, state.razao, cnpj, state.inscEstadual, state.cidade, cep, state.uf, 
                         state.rua, state.numero, state.bairro, state.complemento, responseGeo.data.results[0].geometry.location.lat, 
                         responseGeo.data.results[0].geometry.location.lng, props.route.params?.barbeariaID);
 

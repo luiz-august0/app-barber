@@ -6,6 +6,7 @@ import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } f
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
+import globalFunction from "../../globalFunction";
 import perfil from "../../img/perfil.png";
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
@@ -51,7 +52,7 @@ const Perfil = (props) => {
     const getUsuarioData = async () => {
         const response = getUsuario(props.usuario.state.id);
 
-        if ((props.usuario.state.urlImagem !== 'ul') && (props.usuario.state.urlImagem !== '')) {
+        if ((props.usuario.state.urlImagem !== 'ul') && (props.usuario.state.urlImagem !== '') && (props.usuario.state.urlImagem !== null)) {
             setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${props.usuario.state.urlImagem}`});
         } else {
             setImage(perfil);
@@ -86,6 +87,7 @@ const Perfil = (props) => {
 
     const AtualizaUsuario = async() => {
         let isValid = true;
+        const cpfNoMask = globalFunction.formataCampo(cpf, '00000000000');
 
         if (nome == "") {
             handleError("Nome inválido", "nome");
@@ -104,24 +106,24 @@ const Perfil = (props) => {
             }
         }
 
-        if (props.usuario.state.tipo === "B" && cpf === '') {
+        if (props.usuario.state.tipo === "B" && cpfNoMask === '') {
             handleError("CPF deve ser informado", "cpf");
             isValid = false;
         }
 
-        if (props.usuario.state.tipo === "B" && cpf !== '' && !validaCPF(cpf)) {
+        if (props.usuario.state.tipo === "B" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
 
-        if (props.usuario.state.tipo === "C" && cpf !== '' && !validaCPF(cpf)) {
+        if (props.usuario.state.tipo === "C" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
 
         if (isValid) {
             try {
-                await updateUsuario(email, nome, ncelular, cpf, props.usuario.state.id);
+                await updateUsuario(email, nome, ncelular, cpfNoMask, props.usuario.state.id);
                 Alert.alert('Atenção', 'Usuário alterado com sucesso!');
                 getUsuarioData();
                 updateStoreUsuario();
@@ -239,8 +241,8 @@ const Perfil = (props) => {
                     onFocus={() => handleError(null, 'cpf')}
                     theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
-                    value={cpf}
-                    onChangeText={(cpf) => setCpf(cpf)}
+                    value={globalFunction.formataCPF(cpf)}
+                    onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
                     editable={onEditMode}
                 />
                 <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>

@@ -25,9 +25,17 @@ class GFunctions {
             }else { 
                 NovoValorCampo += campoSoNumeros.charAt(posicaoCampo); 
                 posicaoCampo++; 
-            }              
+            }          
         }      
         return NovoValorCampo;
+    }
+
+    formataCPF = (value) => {
+        if (value === null) {
+            return "";
+        }
+
+        return value.replace(/^(\d{3})\D*(\d{3})\D*(\d{3})\D*(\d{2})$/g,'$1.$2.$3-$4');
     }
 }
 

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { View, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
 import style from "./style";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
@@ -15,6 +15,26 @@ const Home = (props) => {
         props.navigation.navigate('Login');
     }
 
+    useEffect(() =>{
+        const backAction = () => {
+            Alert.alert('Atenção', 'Deseja realmente sair do aplicativo?', [
+                {
+                    text: 'Cancelar',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                {text: 'Sim', onPress: () => BackHandler.exitApp()},
+            ]);
+            return true;
+        };
+      
+        const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+        );
+      
+        return () => backHandler.remove();
+    }, []);
     const menuAvailable = () => {
         if (props.usuario.state.tipo === "B") {
             return (
