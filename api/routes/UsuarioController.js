@@ -1,5 +1,5 @@
 import { checkPassword, createPasswordHash } from '../services/auth';
-import sendEmail from '../sendEmailPasword';
+import sendEmail from '../sendEmail';
 
 const mysql = require('../config/mysql').pool;
 
@@ -312,13 +312,11 @@ class UsuarioController {
                         } else {
                             const email = JSON.stringify(result[0].Usr_Email).slice(0, -1).slice(1 | 1);
                             const key = JSON.stringify(result[0].Email).slice(0, -1).slice(1 | 1);
-                            const link = `http://localhost:3000/${key}`
+                            const link = `https://app-barber.vercel.app/${key}`
                             const send = async() => {
-                                try {
-                                    await sendEmail(email, link);
+                                if (await sendEmail(email, link, 'RECUPERACAO')) {
                                     return res.status(201).json();
-                                } catch (error) {
-                                    console.log(error)
+                                } else {
                                     return res.status(400).json();
                                 }
                             }

@@ -5,5 +5,5 @@ export const api = axios.create({
 });
 
 export const updatePassword = async(key, senha) => {
-    api.post('/usuario_recuperacao', { key, senha })
+    return api.post('/usuario_recuperacao', { key, senha })
 };

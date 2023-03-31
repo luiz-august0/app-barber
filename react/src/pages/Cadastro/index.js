@@ -593,6 +593,7 @@ const C04 = (props) => {
 const RedefinirSenha = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({ 'email': null });
+  const [loading, setLoading] = useState(false);
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -607,6 +608,7 @@ const RedefinirSenha = ({ navigation, route }) => {
     }
 
     if (isValid) {
+      setLoading(true);
       try {
         await postEnviaEmailRecuperacaoSenha(email);
         Alert.alert('Atenção', 'Email de redefinição de senha enviado com sucesso!');
@@ -620,6 +622,7 @@ const RedefinirSenha = ({ navigation, route }) => {
           Alert.alert('Erro', 'Não foi possível enviar o e-mail');
         }
       }
+      setLoading(false);
     }
   }
 
@@ -644,8 +647,9 @@ const RedefinirSenha = ({ navigation, route }) => {
           <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
             {errors.email}
           </HelperText>
-          <TouchableOpacity style={style.btnRedefinir} onPress={enviaEmail}>
-            <Text style={{ color: '#fff', fontWeight: 'bold'}}>Enviar</Text>
+          <TouchableOpacity style={[style.btnRedefinir, { backgroundColor: !loading?'#05A94E':'gray' }]} onPress={() => {!loading?enviaEmail():null}}>
+            {!loading?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Enviar</Text>
+            :<ActivityIndicator/>}
           </TouchableOpacity>
         </SafeAreaView>
       </View>
