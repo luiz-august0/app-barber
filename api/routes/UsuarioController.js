@@ -1,4 +1,5 @@
 import { checkPassword, createPasswordHash } from '../services/auth';
+import sendEmail from '../sendEmailPasword';
 
 const mysql = require('../config/mysql').pool;
 
@@ -285,6 +286,78 @@ class UsuarioController {
                             return res.status(404).json();
                         } else {
                             return res.status(201).json(result);
+                        }
+                    }
+                )
+                conn.release();
+            });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async postEnviaEmailRecuperacaoSenha(req, res) {
+        try {
+            const { email } = req.body;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT *, MD5(Usr_Senha) AS Email FROM usuario WHERE Usr_Email = "${email}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (JSON.stringify(result) === '[]') {
+                            return res.status(404).json();
+                        } else {
+                            const email = JSON.stringify(result[0].Usr_Email).slice(0, -1).slice(1 | 1);
+                            const key = JSON.stringify(result[0].Email).slice(0, -1).slice(1 | 1);
+                            const link = `http://localhost:3000/${key}`
+                            const send = async() => {
+                                try {
+                                    await sendEmail(email, link);
+                                    return res.status(201).json();
+                                } catch (error) {
+                                    console.log(error)
+                                    return res.status(400).json();
+                                }
+                            }
+
+                            send();
+                        }
+                    }
+                )
+                conn.release();
+            });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async postRecuperacaoSenha(req, res) {
+        try {
+            const { key, senha } = req.body;
+
+            const encryptedPassword = await createPasswordHash(senha);
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM usuario WHERE MD5(Usr_Senha) = "${key}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (JSON.stringify(result) === '[]') {
+                            return res.status(404).json();
+                        } else {
+                            const id = JSON.stringify(result[0].Usr_Codigo);
+                            conn.query(
+                                `UPDATE usuario SET Usr_Senha = "${encryptedPassword}" WHERE Usr_Codigo = ${id}`,
+                                (error, result, fields) => {
+                                    if (error) { return res.status(500).send({ error: error }) }
+                                    return res.status(201).json(result);
+                                }
+                            )
                         }
                     }
                 )

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://10.47.0.254:5000'
+    baseURL: 'http://192.168.0.108:5000'
 });
 
 //Rotas de apis externas
@@ -51,6 +51,10 @@ export const getUsuario = async (usuarioID) => {
 
 export const getUsuarioBarbeiroWithEmail = async(email) => {
     return api.post('/usuariobarbeiro_email', { email });
+};
+
+export const postEnviaEmailRecuperacaoSenha = async(email) => {
+    return api.post('/usuario_emailrecuperacao', { email });
 };
 /**************************************************************/
 

@@ -28,6 +28,7 @@ const Login = (props) => {
         props.navigation.navigate('Home');
       }
     });
+    setIsLoading(false);
   }
 
   const handleSubmit = (e) => {

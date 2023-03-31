@@ -14,6 +14,8 @@ const routes = new Router();
 routes.use('/upload_files', Static("upload_files"));
 routes.post('/usuario', UsuarioController.create);
 routes.post('/usuarioVerify', UsuarioController.verify);
+routes.post('/usuario_emailrecuperacao', UsuarioController.postEnviaEmailRecuperacaoSenha);
+routes.post('/usuario_recuperacao', UsuarioController.postRecuperacaoSenha);
 routes.put('/sessions', SessionController.create);
 routes.use(auth);
 

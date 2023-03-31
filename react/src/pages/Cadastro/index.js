@@ -3,7 +3,7 @@ import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ActivityIndic
 import { TextInput, HelperText } from "react-native-paper";
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import style from './style'
-import { createUsuario, verifyUsuario } from '../../services/api';
+import { createUsuario, postEnviaEmailRecuperacaoSenha, verifyUsuario } from '../../services/api';
 import imgChair from '../../img/chair.png';
 import globalStyles from '../../globalStyles';
 import globalFunction from '../../globalFunction';
@@ -607,8 +607,19 @@ const RedefinirSenha = ({ navigation, route }) => {
     }
 
     if (isValid) {
-      Alert.alert('Atenção', 'Email de redefinição de senha enviado com sucesso!');
-      navigation.navigate('Login');
+      try {
+        await postEnviaEmailRecuperacaoSenha(email);
+        Alert.alert('Atenção', 'Email de redefinição de senha enviado com sucesso!');
+        navigation.navigate('Login');
+      } catch (error) {
+        console.log(error)
+        if (error.message === "Request failed with status code 404") {
+          handleError("Email informado não existe cadastro", "email");
+        }
+        if (error.message === "Request failed with status code 400") {
+          Alert.alert('Erro', 'Não foi possível enviar o e-mail');
+        }
+      }
     }
   }
 
@@ -634,7 +645,7 @@ const RedefinirSenha = ({ navigation, route }) => {
             {errors.email}
           </HelperText>
           <TouchableOpacity style={style.btnRedefinir} onPress={enviaEmail}>
-            <Text style={{ color: '#fff', fontWeight: 'bold'}}>Redefinir</Text>
+            <Text style={{ color: '#fff', fontWeight: 'bold'}}>Enviar</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </View>
