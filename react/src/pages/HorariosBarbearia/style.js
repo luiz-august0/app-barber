@@ -41,25 +41,4 @@ export default StyleSheet.create({
         fontFamily: 'Montserrat-Bold', 
         marginBottom: 35
     },
-    buttonItem: {
-        alignContent: "center", 
-        alignItems: "center", 
-        justifyContent: "center", 
-        paddingHorizontal: 15, 
-        marginTop: '15%'
-    },
-    viewItem: {
-        flexDirection: 'row',
-    	alignItems: 'center',
-    	backgroundColor: '#404040',
-    	height: 40,
-    	width: 100,
-    	paddingHorizontal: 10,
-		borderRadius: 10
-    },
-    viewItemText: {
-        flex: 1,
-        textAlign: 'center',
-        color: '#ffff'
-    }
 });

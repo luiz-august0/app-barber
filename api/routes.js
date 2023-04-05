@@ -66,5 +66,8 @@ routes.post('/barbearia_logo/:id', (req, res) => {
 });
 routes.get('/barbearia_horarios', BarbeariaController.getHorarios);
 routes.post('/barbearia_horarios_dia/:id', BarbeariaController.getBarbeariaHorariosDia);
+routes.post('/barbearia_horariodia_post/:id', BarbeariaController.postBarbeariaHorarioDia);
+routes.post('/barbearia_horariodia_update/:id', BarbeariaController.updateBarbeariaHorarioDia);
+routes.delete('/barbearia_horariodia_delete/:id', BarbeariaController.deleteBarbeariaHorarioDia);
 
 export default routes;

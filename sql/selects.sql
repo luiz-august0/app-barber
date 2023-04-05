@@ -25,4 +25,5 @@ AND Horario IN (
 SELECT H.Horario FROM horarios H, barbearia_horarios BH
 WHERE H.Horario >= BH.BarbH_HoraInicio
 AND H.Horario <= BH.BarbH_HoraFim
-AND BH.BarbH_Dia = "SEG");
+AND BH.BarbH_Dia = "SEG")
+GROUP BY Id;

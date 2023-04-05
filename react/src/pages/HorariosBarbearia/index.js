@@ -44,9 +44,6 @@ const HorariosBarbearia = (props) => {
 					<View style={style.item} key={e.id}>
 						<Text style={style.textItem}>{e.label}</Text>
 						<BarbeariaHorariosData barbeariaID={props.route.params?.barbeariaID} id={e.id}/>
-						<TouchableOpacity style={{marginTop: 10}}>
-							<MIcon name="add-circle" size={25} color={'#05A94E'}></MIcon>	
-						</TouchableOpacity>
 					</View>
 				))}
 			</View>

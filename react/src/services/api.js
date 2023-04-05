@@ -112,7 +112,19 @@ export const getHorarios = async () => {
 };
 
 export const getBarbeariaHorariosDia = async (barbeariaID, dia) => {
-    return api.post(`/barbearia_horarios_dia/${barbeariaID}`, { dia: dia });
+    return api.post(`/barbearia_horarios_dia/${barbeariaID}`, { dia });
+};
+
+export const postBarbeariaHorarioDia = async (barbeariaID, dia, hrInicial, hrFinal) => {
+    return api.post(`/barbearia_horariodia_post/${barbeariaID}`, { dia, hrInicial, hrFinal });
+};
+
+export const updateBarbeariaHorarioDia = async (idSeq, hrInicial, hrFinal, ) => {
+    return api.post(`/barbearia_horariodia_update/${idSeq}`, { hrInicial, hrFinal });
+};
+
+export const deleteBarbeariaHorarioDia = async (idSeq) => {
+    return api.delete(`/barbearia_horariodia_delete/${idSeq}`);
 };
 /**************************************************************/
 
