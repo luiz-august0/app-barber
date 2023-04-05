@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image, Linking, ActivityIndicator, Dimensions } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Linking, ActivityIndicator } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useIsFocused } from "@react-navigation/native";
 import globalStyles from "../../globalStyles";
@@ -65,6 +65,15 @@ const MenuBarbearia = (props) => {
 						<Text style={style.text}>
 							{`Dados de cadastro `}
 							<MIcon name="office-building" size={25} color={'#ffff'}></MIcon>
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+					style={style.button}
+					onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
+					>
+						<Text style={style.text}>
+							{`Horários de funcionamento `}
+							<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity

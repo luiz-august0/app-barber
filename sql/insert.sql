@@ -1,3 +1,11 @@
+INSERT INTO horarios (id, horario) VALUES (NULL, '05:00');
+INSERT INTO horarios (id, horario) VALUES (NULL, '05:15');
+INSERT INTO horarios (id, horario) VALUES (NULL, '05:30');
+INSERT INTO horarios (id, horario) VALUES (NULL, '05:45');
+INSERT INTO horarios (id, horario) VALUES (NULL, '06:00');
+INSERT INTO horarios (id, horario) VALUES (NULL, '06:15');
+INSERT INTO horarios (id, horario) VALUES (NULL, '06:30');
+INSERT INTO horarios (id, horario) VALUES (NULL, '06:45');
 INSERT INTO horarios (id, horario) VALUES (NULL, '07:00');
 INSERT INTO horarios (id, horario) VALUES (NULL, '07:15');
 INSERT INTO horarios (id, horario) VALUES (NULL, '07:30');
@@ -66,3 +74,4 @@ INSERT INTO horarios (id, horario) VALUES (NULL, '23:00');
 INSERT INTO horarios (id, horario) VALUES (NULL, '23:15');
 INSERT INTO horarios (id, horario) VALUES (NULL, '23:30');
 INSERT INTO horarios (id, horario) VALUES (NULL, '23:45');
+INSERT INTO horarios (id, horario) VALUES (NULL, '00:00');
