@@ -64,5 +64,7 @@ routes.post('/barbearia_logo/:id', (req, res) => {
 		})
 		.catch((err) => res.status(500).json(err));
 });
+routes.get('/barbearia_horarios', BarbeariaController.getHorarios);
+routes.post('/barbearia_horarios_dia/:id', BarbeariaController.getBarbeariaHorariosDia);
 
 export default routes;

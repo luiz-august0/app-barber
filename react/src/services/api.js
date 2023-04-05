@@ -106,6 +106,14 @@ export const deleteBarbearia = async(barbeariaID) => {
 export const postBarbeariaLogo = async (barbeariaID, file) => {
     return api.post(`/barbearia_logo/${barbeariaID}`, { file });
 };
+
+export const getHorarios = async () => {
+    return api.get('/barbearia_horarios');
+};
+
+export const getBarbeariaHorariosDia = async (barbeariaID, dia) => {
+    return api.post(`/barbearia_horarios_dia/${barbeariaID}`, { dia: dia });
+};
 /**************************************************************/
 
 /*GoogleMaps*/

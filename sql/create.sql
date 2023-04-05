@@ -58,6 +58,7 @@ CREATE TABLE servico_imagens(
 );
 
 CREATE TABLE barbearia_horarios(
+    BarbH_Seq INT PRIMARY KEY AUTO_INCREMENT, 
     Barb_Codigo INT NOT NULL,
     BarbH_Dia CHAR(3) NOT NULL,
     BarbH_HoraInicio TIME NOT NULL,

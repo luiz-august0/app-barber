@@ -1,63 +1,56 @@
-import React, { createRef, useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useIsFocused } from "@react-navigation/native";
+import React from "react";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import globalStyles from "../../globalStyles";
 import style from "./style";
-import { getDadosBarbearia } from "../../services/api";
-import { Picker, PickerIOS } from "@react-native-picker/picker";
-import Dropdown from "../../components/DropDown";
+import BarbeariaHorariosData from "../../components/BarbeariaHorariosData";
 
-const HorariosBarbearia = (props, ref) => {
-	const isFocused = useIsFocused();
-	const [horarioInicial, setHorarioInicial] = useState();
-	const [horarioFinal, setHorarioFinal] = useState();
-	const [loading, setLoading] = useState(false);
+const HorariosBarbearia = (props) => {
 	const data = [
 		{
-		  	label: 'DOM',
-		  	text: 'Domingo',
+		  	id: 'DOM',
+		  	label: 'Domingo',
 		},
 		{
-			label: 'SEG',
-		  	text: 'Segunda',
+			id: 'SEG',
+			label: 'Segunda',
 		},
 		{
-			label: 'TER',
-		  	text: 'Terça'
+			id: 'TER',
+			label: 'Terça'
+		},
+		{
+			id: 'QUA',
+			label: 'Quarta'
+		},
+		{
+			id: 'QUI',
+			label: 'Quinta'
+		},
+		{
+			id: 'SEX',
+			label: 'Sexta'
+		},
+		{
+			id: 'SAB',
+			label: 'Sábado'
 		}
 	];
 
-	const setValueState = (input, value) => {
-        setState(prevState => ({ ...prevState, [input]: value }));
-    }
-
-	const refreshData = async(id) => {
-		setLoading(true);
-        
-		setLoading(false);
-    }
-
-	useEffect(() => {
-        if(isFocused) { 
-            refreshData(props.route.params?.barbeariaID);
-        }
-    }, [props, isFocused]);
-
 	return (
-		<View style={style.container}>
-			{!loading?
-			<FlatList
-				style={{backgroundColor: globalStyles.main_color}}
-				data={data}
-				renderItem={({item}) => (
-				<View style={style.item}>
-					<Text style={{fontSize: 18, fontFamily: 'Montserrat-Bold'}}>{item.text}</Text>
-      				<Dropdown label="Horário" data={data} onSelect={setHorarioInicial} dropdownWidth={150}/>
-				</View>
-				)}
-		  	/>:<ActivityIndicator/>}
-		</View>
+		<ScrollView style={{backgroundColor: globalStyles.main_color}}>
+			<View style={style.container}>
+				{data.map((e) => (
+					<View style={style.item} key={e.id}>
+						<Text style={style.textItem}>{e.label}</Text>
+						<BarbeariaHorariosData barbeariaID={props.route.params?.barbeariaID} id={e.id}/>
+						<TouchableOpacity style={{marginTop: 10}}>
+							<MIcon name="add-circle" size={25} color={'#05A94E'}></MIcon>	
+						</TouchableOpacity>
+					</View>
+				))}
+			</View>
+		</ScrollView>
 	)
 }
 

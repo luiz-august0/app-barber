@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { FlatList, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const Dropdown = ({ label, data, onSelect, dropdownWidth }) => {
+const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 	const [selected, setSelected] = useState(undefined);
   	const [visible, setVisible] = useState(false);
 	const DropdownButton = useRef();
@@ -11,18 +11,30 @@ const Dropdown = ({ label, data, onSelect, dropdownWidth }) => {
 	const [dropdownLeft, setDropdownLeft] = useState(0);
 	const [dropdownRight, setDropdownRight] = useState(0);
 
+	useEffect(() => {
+		if (initialValue !== null && initialValue !== undefined && initialValue !== '') {
+			setSelected(initialValue);
+		}
+	},[])
+
 	const toggleDropdown = () => {
 		visible ? setVisible(false) : openDropdown();
 	};
 	
 	const openDropdown = () => {
-		DropdownButton.current.measure((_fx, _fy, _w, h, _px, py) => {			
-			setDropdownTop(py + h);
+		DropdownButton.current.measure((_fx, _fy, _w, h, _px, py) => {	
+			if (Platform.OS !== 'ios') {
+				py = py - 24;
+			}
+			setDropdownTop(py);
 			setDropdownTopButton(py);
 			setDropdownLeft(_px);
 			setDropdownRight(_fx);
+
+			if ((py + h) > 0) {
+				setVisible(true);
+			}
 		});
-		setVisible(true);
 	};
 
 	const renderItem = ({ item }) => (
@@ -41,11 +53,11 @@ const Dropdown = ({ label, data, onSelect, dropdownWidth }) => {
 		return (
 			<Modal visible={visible} transparent animationType="none">
 				<TouchableOpacity
-					style={[styles.button, { top: dropdownTopButton, left: dropdownLeft, right: dropdownRight }]}
+					style={[styles.button, { top: dropdownTopButton, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}
 					onPress={toggleDropdown}
 				>			
 				</TouchableOpacity>
-				<View style={[styles.dropdown, { top: dropdownTop, left: dropdownLeft, right: dropdownRight }]}>
+				<View style={[styles.dropdown, { top: dropdownTop, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}>
 					<FlatList
 						data={data}
 						renderItem={renderItem}
@@ -57,7 +69,7 @@ const Dropdown = ({ label, data, onSelect, dropdownWidth }) => {
   	};
 
 	return (
-		<View ref={DropdownButton}>
+		<View ref={DropdownButton} collapsable={false}>
 			<TouchableOpacity
 				style={[styles.button, { width: dropdownWidth }]}
 				onPress={toggleDropdown}
@@ -66,7 +78,7 @@ const Dropdown = ({ label, data, onSelect, dropdownWidth }) => {
 				<Text style={[styles.buttonText, { color: (selected && '#ffff') || 'gray' }]}>
 					{(selected && selected.label) || label}
 				</Text>
-				<Icon type='font-awesome' name='chevron-down' color={'gray'}/>
+				<Icon type='font-awesome' name='angle-down' color={'gray'}/>
 			</TouchableOpacity>
 		</View>
   	);
@@ -88,9 +100,9 @@ const styles = StyleSheet.create({
 		color: '#ffff'
   	},
 	dropdown: {
-		position: 'absolute',
 		backgroundColor: '#404040',
 		width: 150,
+		maxHeight: 250,
 		shadowColor: '#000000',
 		shadowRadius: 4,
 		shadowOffset: { height: 4, width: 0 },

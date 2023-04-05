@@ -395,6 +395,44 @@ class BarbeariaController {
         }
     }
 
+    async getHorarios(req, res) {
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT Horario AS label, Horario AS text FROM horarios`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
+    async getBarbeariaHorariosDia(req, res) {
+        const { id } = req.params;
+        const { dia } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM barbearia_horarios WHERE Barb_Codigo = ${id} AND BarbH_Dia = "${dia}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
 
 }
 
