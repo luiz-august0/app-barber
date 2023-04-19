@@ -47,10 +47,21 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO servico_categorias SET Barb_Codigo = ${idBarbearia}, ServCat_Nome = "${nome}"`,
+                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}"`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
-                        return res.status(201).json(result);
+
+                        if (JSON.stringify(result) == "[]") {
+                            conn.query(
+                                `INSERT INTO servico_categorias SET Barb_Codigo = ${idBarbearia}, ServCat_Nome = "${nome}"`,
+                                (error, result, fields) => {
+                                    if (error) { return res.status(500).send({ error: error }) }
+                                    return res.status(201).json(result);
+                                }
+                            )
+                        } else {
+                            return res.status(401).json();
+                        }
                     }
                 )
                 conn.release();
@@ -68,10 +79,19 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `UPDATE servico_categorias SET ServCat_Nome = "${nome}" WHERE ServCat_Codigo = ${id}`,
+                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}" AND ServCat_Codigo <> ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
-                        return res.status(201).json(result);
+                        
+                        if (JSON.stringify(result) == "[]") {
+                            conn.query(
+                                `UPDATE servico_categorias SET ServCat_Nome = "${nome}" WHERE ServCat_Codigo = ${id}`,
+                                (error, result, fields) => {
+                                    if (error) { return res.status(500).send({ error: error }) }
+                                    return res.status(201).json(result);
+                                }
+                            )
+                        }
                     }
                 )
                 conn.release();
@@ -92,6 +112,7 @@ class BarbeariaServicosController {
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
 
+                        console.log(JSON.stringify(result))
                         if (JSON.stringify(result) == "[]") {
                             conn.query(
                                 `DELETE FROM servico_categorias WHERE ServCat_Codigo = ${id}`,
@@ -176,13 +197,12 @@ class BarbeariaServicosController {
 
     async updateBarbeariaServico(req, res) {
         const { id } = req.params;
-        const { nome, idCategoria, valor, duracao } = req.body;
+        const { nome, valor, duracao } = req.body;
 
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `UPDATE servico SET Serv_Nome = "${nome}", ServCat_Codigo = ${idCategoria}, 
-                    Serv_Valor = ${valor}, Serv_Duracao = "${duracao}"
+                    `UPDATE servico SET Serv_Nome = "${nome}", Serv_Valor = ${valor}, Serv_Duracao = "${duracao}"
                     WHERE Serv_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }

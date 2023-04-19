@@ -14,7 +14,6 @@ const opts = {
 }
 
 module.exports = (file) => {
-	console.log(file);
 	return new Promise((resolve, reject) => {
 		cloudinary.uploader.upload(file, opts, (error, result) => {
 			if (result && result.secure_url) {
