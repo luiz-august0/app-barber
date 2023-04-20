@@ -92,7 +92,6 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 
 		try {
 			if (seqInEdit !== '' && editMode) {
-				console.log(horarioFinal.text.toString());
 				await updateBarbeariaHorarioDia(seqInEdit, horarioInicial.text.toString(), horarioFinal.text.toString());
 				Alert.alert('Atenção', 'Horário atualizado com sucesso');
 			} else {

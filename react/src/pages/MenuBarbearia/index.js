@@ -71,9 +71,18 @@ const MenuBarbearia = (props) => {
 					style={style.button}
 					onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
 					>
-						<Text style={style.text}>
+						<Text style={[style.text, { fontSize: 15 }]}>
 							{`Horários de funcionamento `}
 							<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+					style={style.button}
+					onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
+					>
+						<Text style={style.text}>
+							{`Serviços `}
+							<MIcon name="scissors-cutting" size={25} color={'#ffff'}></MIcon>
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
