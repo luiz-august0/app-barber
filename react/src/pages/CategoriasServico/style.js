@@ -15,6 +15,27 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#ffff',
     },
+    textCategoria: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'left',
+        color: '#ffff',
+    },
+    textCategoriaButton: {
+        fontSize: 14,
+        fontFamily: 'Montserrat-Regular',
+        textAlign: 'center',
+        color: '#ffff',
+    },
+    textTitle: {
+        width: '100%',
+        fontSize: 27,
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'center',
+        color: '#ffff',
+        marginTop: '20%',
+        marginBottom: '5%'
+    },
     button: {
         justifyContent: 'center',
         marginTop: 55,
@@ -22,6 +43,28 @@ export default StyleSheet.create({
         height: 50,
         borderRadius: 10,
         backgroundColor: '#343434'
+    },
+    categoriaComponent: {
+        justifyContent: 'center',
+        padding: 9,
+        marginTop: 20,
+        width: "90%",
+        borderRadius: 10,
+        backgroundColor: '#343434'
+    },
+    categoriaView: {
+        flexDirection: "row", 
+        alignItems: "center", 
+        justifyContent: "space-between"
+    },
+    categoriaViewButtons: { 
+        flexDirection: 'column',
+    },
+    buttonCategoriaComponent:{
+        flexDirection: 'row',
+        justifyContent: "center", 
+        alignItems: "center",
+        paddingVertical: 15
     },
     buttonConfirma: {
         alignItems: 'center',
@@ -34,7 +77,7 @@ export default StyleSheet.create({
     },
     input: {
         marginTop: 10,
-        width: '70%',
+        width: '100%',
         height: 40,
         borderRadius: 10,
         backgroundColor: '#404040',

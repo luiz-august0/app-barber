@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://10.47.7.248:5000'
+    baseURL: 'http://192.168.0.101:5000'
 });
 
 //Rotas de apis externas
@@ -129,7 +129,19 @@ export const deleteBarbeariaHorarioDia = async (idSeq) => {
 
 export const postBarbeariaCategoria = async(idBarbearia, nome) => {
     return api.post('/barbearia_categoria', { idBarbearia, nome })
-}
+};
+
+export const updateBarbeariaCategoria = async(id, idBarbearia, nome) => {
+    return api.put(`/barbearia_categoria/${id}`, { idBarbearia, nome });
+};
+
+export const getBarbeariaCategorias = async(idBarbearia) => {
+    return api.get(`/barbearia_categoria/${idBarbearia}`);
+};
+
+export const deleteBarbeariaCategoria = async(id) => {
+    return api.delete(`/barbearia_categoria/${id}`);
+};
 /**************************************************************/
 
 /*GoogleMaps*/

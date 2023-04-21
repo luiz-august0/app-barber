@@ -47,7 +47,7 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}"`,
+                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}" AND Barb_Codigo = ${idBarbearia}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
 
@@ -74,12 +74,14 @@ class BarbeariaServicosController {
 
     async updateBarbeariaCategoria(req, res) {
         const { id } = req.params;
-        const { nome } = req.body;
+        const { idBarbearia, nome } = req.body;
 
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}" AND ServCat_Codigo <> ${id}`,
+                    `SELECT * FROM servico_categorias WHERE ServCat_Nome = "${nome}" 
+                    AND ServCat_Codigo <> ${id} 
+                    AND Barb_Codigo = ${idBarbearia}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         
@@ -91,6 +93,8 @@ class BarbeariaServicosController {
                                     return res.status(201).json(result);
                                 }
                             )
+                        } else {
+                            return res.status(401).json();
                         }
                     }
                 )
@@ -111,8 +115,7 @@ class BarbeariaServicosController {
                     `SELECT * FROM servico WHERE ServCat_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
-
-                        console.log(JSON.stringify(result))
+                        
                         if (JSON.stringify(result) == "[]") {
                             conn.query(
                                 `DELETE FROM servico_categorias WHERE ServCat_Codigo = ${id}`,

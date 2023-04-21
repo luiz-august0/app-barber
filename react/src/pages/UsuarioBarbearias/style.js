@@ -20,7 +20,7 @@ export default StyleSheet.create({
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginTop: '20%',
         marginBottom: '5%'
     },
