@@ -29,7 +29,7 @@ export default StyleSheet.create({
         marginTop: 55,
         width: 300,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
 });

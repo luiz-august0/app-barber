@@ -23,7 +23,7 @@ export default StyleSheet.create({
         marginBottom: '-5%',
         width: 200,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
 });

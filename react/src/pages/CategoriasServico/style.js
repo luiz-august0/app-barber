@@ -32,7 +32,7 @@ export default StyleSheet.create({
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginTop: '20%',
         marginBottom: '5%'
     },
@@ -41,7 +41,7 @@ export default StyleSheet.create({
         marginTop: 55,
         width: 300,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
     categoriaComponent: {
@@ -78,8 +78,7 @@ export default StyleSheet.create({
     input: {
         marginTop: 10,
         width: '100%',
-        height: 40,
-        borderRadius: 10,
+        height: 55,
         backgroundColor: '#404040',
     },
 });

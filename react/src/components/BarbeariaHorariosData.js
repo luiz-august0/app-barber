@@ -135,7 +135,7 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 
 	const viewInsert = () => {
 		return (
-			<View style={{flexDirection: "row", marginBottom: 10}}>
+			<View style={{flexDirection: "row", marginBottom: 10, flexWrap: "wrap"}}>
 				<View>
 					<Text style={{fontSize: 14}}>Horário inicial</Text>
 					<Dropdown label="Horário" data={horarios} onSelect={setHorarioInicial} dropdownWidth={100}/>
@@ -172,7 +172,7 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 		return (
 			<>
 			{dataHorariosDia.map((e) => (
-				<View style={{flexDirection: "row", marginBottom: 10}} key={e.BarbH_Seq}>
+				<View style={{flexDirection: "row", marginBottom: 10, flexWrap: "wrap"}} key={e.BarbH_Seq}>
 					<View>
 						<Text style={{fontSize: 14}}>Horário inicial</Text>
 						{(editMode)&&(e.BarbH_Seq == seqInEdit)?

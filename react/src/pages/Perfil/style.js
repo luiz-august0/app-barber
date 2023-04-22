@@ -16,7 +16,7 @@ export default StyleSheet.create({
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginTop: 100,
         marginBottom: 10
     },
@@ -24,14 +24,13 @@ export default StyleSheet.create({
         width: '100%',
         fontSize: 12,
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginBottom: 30
     },
     inputC: {
         marginTop: 10,
         width: '70%',
-        height: 40,
-        borderRadius: 10,
+        height: 55,
         backgroundColor: '#404040',
     },
     button: {

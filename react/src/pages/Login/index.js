@@ -94,47 +94,47 @@ const Login = (props) => {
           />
           <TextInput
               style={ style.inputL }
-              mode='outlined'
+              mode='flat'
               activeOutlineColor='#fff'
               label="Email"
               keyboardType='email-address'
               theme={{colors: {placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
-              left={<TextInput.Icon color="white"  style={{marginTop: '50%'}} name="email" />}
+              left={<TextInput.Icon color="white" name="email" />}
               value= {email}
               onChangeText={ (email) => setEmail(email) }
           />
           <TextInput
               style={ style.inputL }
-              mode='outlined'
+              mode='flat'
               activeOutlineColor='#fff'
               theme={{colors: {placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
               label="Senha"
               secureTextEntry={hidePass}
-              left={<TextInput.Icon color="white" style={{marginTop: '50%'}} name="lock"/>}
-              right={<TextInput.Icon color="white" style={{marginTop: '50%'}} onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
+              left={<TextInput.Icon color="white" name="lock"/>}
+              right={<TextInput.Icon color="white" onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
               value= {senha}
               onChangeText={ (senha) => setSenha(senha) }
           />
             <TouchableOpacity
             onPress={() => props.navigation.navigate('RedefinirSenha')}
             >
-              <Text style={{ color: "#ffff", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
+              <Text style={{ color: "#000", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
             onPress={handleSubmit}
             style={ style.btnLogin }
             >
-            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login</Text>
+            <Text style={{ color: '#000', fontWeight: 'bold' }}>Login</Text>
             </TouchableOpacity>
 
-            <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }} >Não tem cadastro ?</Text>
+            <Text style={{ color: "#000", fontSize: 14, fontWeight: 'bold' }} >Não tem cadastro ?</Text>
 
             <TouchableOpacity 
             onPress={() => props.navigation.navigate('C00')}
             style={style.btnCadastro}
             >
-            <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
+            <Text style={{ color: "#000", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
             </TouchableOpacity>
         </SafeAreaView>
         </View>

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     user: {
         fontSize: 10,
-        color: '#ffff'
+        color: '#000'
     },
     avatar: {
         width: 30,

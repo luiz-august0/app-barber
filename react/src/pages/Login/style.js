@@ -18,8 +18,7 @@ export default StyleSheet.create({
     inputL: {
         marginTop: 10,
         width: '70%',
-        height: 40,
-        borderRadius: 10,
+        height: 55,
         backgroundColor: '#404040',
     },
     btnLogin: {

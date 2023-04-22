@@ -106,20 +106,20 @@ const CategoriasServico = (props) => {
                 >
                     <Text style={style.text}>Cadastrar Nova Categoria</Text>
                 </TouchableOpacity>
-                <AbsoluteModal modalVisible={modalVisible} width={350}>
+                <AbsoluteModal modalVisible={modalVisible} width={'90%'}>
                     <TextInput
                     style={style.input}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
                     theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                    left={<TextInput.Icon color="white" name="account" />}
                     value={nome}
                     onChangeText={(nome) => setNome(nome)}
                     />
-                    <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+                    <HelperText type="error" visible={errors.nome !== null ? true : false}>
                         {errors.nome}
                     </HelperText>
                     <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>

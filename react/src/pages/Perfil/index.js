@@ -184,69 +184,69 @@ const Perfil = (props) => {
                 <Text style={style.text}>Clique na imagem para mudar a foto de perfil</Text>
                 <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
                     theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                    left={<TextInput.Icon color="white" name="account" />}
                     value={nome}
                     onChangeText={(nome) => setNome(nome)}
                     editable={onEditMode}
                 />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.nome !== null ? true : false}>
+                <HelperText type="error" visible={errors.nome !== null ? true : false}>
                     {errors.nome}
                 </HelperText>
                 <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     keyboardType='email-address'
                     label="Email"
                     error={errors.email !== null ? true : false}
                     onFocus={() => handleError(null, 'email')}
                     theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="email" />}
+                    left={<TextInput.Icon color="white" name="email" />}
                     value={email}
                     onChangeText={(email) => setEmail(email)}
                     editable={onEditMode}
                 />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.email !== null ? true : false}>
+                <HelperText type="error" visible={errors.email !== null ? true : false}>
                     {errors.email}
                 </HelperText>
                 <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     keyboardType='phone-pad'
                     label="Celular"
                     error={errors.ncelular !== null ? true : false}
                     onFocus={() => handleError(null, 'ncelular')}
                     theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="phone" />}
+                    left={<TextInput.Icon color="white" name="phone" />}
                     value={ncelular}
                     onChangeText={(ncelular) => setNcelular(ncelular)}
                     editable={onEditMode}
                 />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.ncelular !== null ? true : false}>
+                <HelperText type="error" visible={errors.ncelular !== null ? true : false}>
                     {errors.ncelular}
                 </HelperText>
                 <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     keyboardType='numeric'
                     label="CPF"
                     error={errors.cpf !== null ? true : false}
                     onFocus={() => handleError(null, 'cpf')}
                     theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="account" />}
+                    left={<TextInput.Icon color="white" name="account" />}
                     value={globalFunction.formataCPF(cpf)}
                     onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
                     editable={onEditMode}
                 />
-                <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.cpf !== null ? true : false}>
+                <HelperText type="error" visible={errors.cpf !== null ? true : false}>
                     {errors.cpf}
                 </HelperText>
                 <View style={{ marginTop: 35, marginBottom: 60 }}>
@@ -321,53 +321,53 @@ const EditarSenha = (props) => {
                 <SafeAreaView style={style.safeAreaC}>
                     <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     theme={{ colors: { placeholder: `${senhaAntiga!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Senha Antiga"
                     error={errors.senhaAntiga !== null ? true : false}
                     onFocus={() => handleError(null, 'senhaAntiga')}
                     secureTextEntry={hidePass}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-                    right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass(!hidePass)} name={hidePass ? "eye-off" : "eye"}></TextInput.Icon>}
+                    left={<TextInput.Icon color="white" name="lock" />}
+                    right={<TextInput.Icon color="white" onPress={() => setHidePass(!hidePass)} name={hidePass ? "eye-off" : "eye"}></TextInput.Icon>}
                     value={senhaAntiga}
                     onChangeText={(senhaAntiga) => setSenhaAntiga(senhaAntiga)}
                     />
-                    <HelperText HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaAntiga !== null ? true : false}>
+                    <HelperText HelperText type="error" visible={errors.senhaAntiga !== null ? true : false}>
                         {errors.senhaAntiga}
                     </HelperText>
                     <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Nova Senha"
                     error={errors.senha !== null ? true : false}
                     onFocus={() => handleError(null, 'senha')}
                     secureTextEntry={hidePass1}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-                    right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+                    left={<TextInput.Icon color="white" name="lock" />}
+                    right={<TextInput.Icon color="white" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
                     value={senha}
                     onChangeText={(senha) => setSenha(senha)}
                     />
-                    <HelperText HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senha !== null ? true : false}>
+                    <HelperText HelperText type="error" visible={errors.senha !== null ? true : false}>
                         {errors.senha}
                     </HelperText>
                     <TextInput
                     style={style.inputC}
-                    mode='outlined'
+                    mode='flat'
                     activeOutlineColor='#fff'
                     theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                     label="Confirmar Senha"
                     error={errors.senhaConfirmed !== null ? true : false}
                     onFocus={() => handleError(null, 'senhaConfirmed')}
                     secureTextEntry={hidePass2}
-                    left={<TextInput.Icon color="white" style={{ marginTop: '50%' }} name="lock" />}
-                    right={<TextInput.Icon color="white" style={{ marginTop: '50%' }} onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+                    left={<TextInput.Icon color="white" name="lock" />}
+                    right={<TextInput.Icon color="white" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
                     value={senhaConfirmed}
                     onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
                     />
-                    <HelperText style={{ marginBottom: '-4%' }} type="error" visible={errors.senhaConfirmed !== null ? true : false}>
+                    <HelperText type="error" visible={errors.senhaConfirmed !== null ? true : false}>
                         {errors.senhaConfirmed}
                     </HelperText>
                     <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E', marginTop: 35}]} onPress={() => AtualizaSenha()}>

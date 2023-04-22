@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native'
+import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FCA311'
+        backgroundColor: globalStyles.main_color
     },
     image: {
-        marginTop: '25%',
+        marginTop: '30%',
         height: 250,
         width: 250
     },
@@ -14,7 +15,7 @@ export default StyleSheet.create({
         marginTop: '2%',
         fontFamily: 'Montserrat-Bold',
         fontSize: 26,
-        color: '#ffff'
+        color: '#000'
     },
     button1: {
         justifyContent: 'center',
@@ -22,14 +23,14 @@ export default StyleSheet.create({
         marginBottom: 25,
         width: 200,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
     button2: {
         justifyContent: 'center',
         width: 200,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
     text: {
@@ -45,15 +46,14 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     safeAreaCfinaliza: {
-        marginTop: '20%',
+        marginTop: '30%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     inputC: {
         marginTop: 10,
         width: '70%',
-        height: 40,
-        borderRadius: 10,
+        height: 55,
         backgroundColor: '#404040',
     },
     btnCadastro: {

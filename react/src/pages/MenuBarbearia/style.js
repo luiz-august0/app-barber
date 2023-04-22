@@ -13,7 +13,7 @@ export default StyleSheet.create({
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
         marginTop: 10,
         marginBottom: 40
     },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         width: 250,
         height: 60,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#343434'
     },
     imageContainer: {
