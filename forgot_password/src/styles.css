@@ -5,14 +5,14 @@
     justify-content: center;
     min-height: 100vh;
     padding: 0 2rem;
-    background-color: #FCA311;
+    background-color: #f0e2d5;
 }
 #app .p {
     font-weight: bold;
 }
 
 #app .form{
-    background-color: #FFB337;
+    background-color: #fff;
     width: 100%;
     max-width: 480px;
     padding: 4rem;
@@ -30,7 +30,7 @@
 
 #app .field label {
     display: block;
-    color:#707070;
+    color:#000;
     font-size: 20px;
     text-align: left;
 }
