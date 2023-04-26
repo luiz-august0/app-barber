@@ -12,6 +12,7 @@ import MenuBarbearia from './src/pages/MenuBarbearia';
 import globalStyles from './src/globalStyles';
 import HorariosBarbearia from './src/pages/HorariosBarbearia';
 import CategoriasServico from './src/pages/CategoriasServico';
+import Servicos from './src/pages/Servicos';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +91,10 @@ const Routes = () => {
                 <Stack.Screen
                 name="CategoriasServico"
                 component={CategoriasServico}
+                />
+                <Stack.Screen
+                name="Servicos"
+                component={Servicos}
                 />
             </Stack.Navigator>
         </NavigationContainer>

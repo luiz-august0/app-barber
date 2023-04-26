@@ -162,7 +162,7 @@ const CategoriasServico = (props) => {
                                                 <Text style={style.textCategoriaButton}>Excluir</Text>
                                                 <MIcon name="delete" size={25} color={'red'}></MIcon>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={style.buttonCategoriaComponent}>
+                                            <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => props.navigation.navigate('Servicos', { categoriaID:  e.ServCat_Codigo})}>
                                                 <Text style={style.textCategoriaButton}>Ver Serviços</Text>
                                                 <MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
                                             </TouchableOpacity>

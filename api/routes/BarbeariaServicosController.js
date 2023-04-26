@@ -143,7 +143,7 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM servico WHERE ServCat_Codigo = ${id}`,
+                    `SELECT *, MINUTE(Serv_Duracao) AS Minutos FROM servico WHERE ServCat_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);

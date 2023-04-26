@@ -125,7 +125,7 @@ const Login = (props) => {
             onPress={handleSubmit}
             style={ style.btnLogin }
             >
-            <Text style={{ color: '#000', fontWeight: 'bold' }}>Login</Text>
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login</Text>
             </TouchableOpacity>
 
             <Text style={{ color: "#000", fontSize: 14, fontWeight: 'bold' }} >Não tem cadastro ?</Text>
@@ -134,7 +134,7 @@ const Login = (props) => {
             onPress={() => props.navigation.navigate('C00')}
             style={style.btnCadastro}
             >
-            <Text style={{ color: "#000", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
+            <Text style={{ color: "#fff", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
             </TouchableOpacity>
         </SafeAreaView>
         </View>

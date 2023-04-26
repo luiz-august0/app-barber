@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://192.168.0.102:5000'
+    baseURL: 'http://10.47.3.51:5000'
 });
 
 //Rotas de apis externas
@@ -141,6 +141,14 @@ export const getBarbeariaCategorias = async(idBarbearia) => {
 
 export const deleteBarbeariaCategoria = async(id) => {
     return api.delete(`/barbearia_categoria/${id}`);
+};
+
+export const getBarbeariaCategoriaServicos = async(id) => {
+    return api.get(`/barbearia_servicoscategoria/${id}`);  
+};
+
+export const getImagensServico = async(id) => {
+    return api.get(`/barbearia_servicoimagens/${id}`); 
 };
 /**************************************************************/
 
