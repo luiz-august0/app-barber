@@ -31,10 +31,5 @@ export default StyleSheet.create({
         height: 50,
         borderRadius: 20,
         backgroundColor: '#343434'
-    },
-    itemImage: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'stretch'
-    },
+    }
 });
