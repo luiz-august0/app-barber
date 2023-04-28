@@ -28,12 +28,16 @@ const Servicos = (props) => {
         }
     }, [props, isFocused]);
 
+    const handlePress = () => {
+        Alert.alert("teste")
+    }
+
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
                 <TouchableOpacity
                 style={style.button}
-                onPress={() => {}}
+                onPress={() => props.navigation.navigate("DadosServico")}
                 >
                     <Text style={style.text}>Cadastrar Novo Serviço</Text>
                 </TouchableOpacity>
@@ -44,7 +48,13 @@ const Servicos = (props) => {
                     {servicos.map((e) => {
                         return (
                             <View key={e.Serv_Codigo}>
-                                <ServicoComponent nome={e.Serv_Nome} valor={e.Serv_Valor} tempo={e.Minutos} id={e.Serv_Codigo}/>
+                                <ServicoComponent 
+                                nome={e.Serv_Nome} 
+                                valor={e.Serv_Valor} 
+                                tempo={e.Minutos} 
+                                id={e.Serv_Codigo} 
+                                handlePress={handlePress}
+                                />
                             </View>
                         )
                     })}

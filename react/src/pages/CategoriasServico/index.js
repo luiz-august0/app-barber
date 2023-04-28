@@ -97,6 +97,13 @@ const CategoriasServico = (props) => {
         }
     }, [props, isFocused]);
 
+    const handlePressOut = () => {
+        setIdInEdit(null);
+        setNome('');
+        setModalVisible(false);
+        handleError(null, 'nome');
+    }
+
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -106,7 +113,7 @@ const CategoriasServico = (props) => {
                 >
                     <Text style={style.text}>Cadastrar Nova Categoria</Text>
                 </TouchableOpacity>
-                <AbsoluteModal modalVisible={modalVisible} width={'90%'}>
+                <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
                     <TextInput
                     style={style.input}
                     mode='flat'
@@ -115,7 +122,7 @@ const CategoriasServico = (props) => {
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
                     theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
+                    left={<TextInput.Icon color="white" name="content-cut" />}
                     value={nome}
                     onChangeText={(nome) => setNome(nome)}
                     />
@@ -126,16 +133,6 @@ const CategoriasServico = (props) => {
                         {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
                         :<ActivityIndicator/>}
                         </TouchableOpacity>
-                        {!loadingResponse?
-                        <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: '#E82E2E' }]} onPress={() => {
-                            setIdInEdit(null);
-                            setNome('');
-                            setModalVisible(false);
-                            handleError(null, 'nome');
-                        }}>
-                        {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Cancelar</Text>
-                        :<ActivityIndicator/>}
-                    </TouchableOpacity>:null}
                 </AbsoluteModal>
                 {JSON.stringify(categorias) !== "[]"?
                 <>

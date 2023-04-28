@@ -1,7 +1,8 @@
 import React from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import OIcon from 'react-native-vector-icons/Octicons';
 
-const AbsoluteModal = ({children, modalVisible, width}) => {
+const AbsoluteModal = ({children, modalVisible, width, handlePressOut}) => {
     return (
         <Modal
         animationType="slide"
@@ -10,6 +11,14 @@ const AbsoluteModal = ({children, modalVisible, width}) => {
         >
             <View style={style.centeredView}>
                 <View style={[style.modalView, { width: width }]}>
+                <TouchableOpacity style={{position: "absolute", right: "110%", padding: 10}} onPress={() => handlePressOut()}>
+                    <OIcon 
+                    name="x" 
+                    size={30} 
+                    color={'gray'}
+                    />
+                </TouchableOpacity>
+                    <View style={{marginBottom: 30}} />
                     {children}
                 </View>
             </View>

@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, TouchableOpacity, Alert, Image, TouchableNativeFeedback, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, TouchableNativeFeedback, StyleSheet } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { Card } from "react-native-paper";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { getImagensServico } from "../services/api";
+import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
 
-const ServicoComponent = ({nome, valor, tempo ,id}) => {
+const ServicoComponent = ({nome, valor, tempo ,id, handlePress}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
+    const [modalVisible, setModalVisible] = useState(false);
 	
-
     const getImages = async() => {
         let array = [];
         const res = await getImagensServico(id);
@@ -31,9 +32,13 @@ const ServicoComponent = ({nome, valor, tempo ,id}) => {
         getImages();
     }, []);
 
+    const handlePressOut = () => {
+        setModalVisible(false);
+    }
+
     const renderItem = ({ item }) => {
         return (
-            <TouchableNativeFeedback onPress={() => Alert.alert('clicou')} >
+            <TouchableNativeFeedback onPress={() => setModalVisible(true)} >
                 <Image style={style.itemImage} source={{ uri: item.Img_Url  }} />
             </TouchableNativeFeedback>
         )
@@ -72,7 +77,7 @@ const ServicoComponent = ({nome, valor, tempo ,id}) => {
                             subtitleStyle={{textAlign: "center"}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress()}>
                     <MIcon 
                     style={{textAlign: "right", padding: 10}}
                     name="arrow-forward" 
@@ -80,6 +85,9 @@ const ServicoComponent = ({nome, valor, tempo ,id}) => {
                     color={'#05A94E'}/>
                 </TouchableOpacity>
             </Card>
+            <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
+                <PreviewImage arrayImages={images}/>
+            </AbsoluteModal>
         </View>
     )
 }
