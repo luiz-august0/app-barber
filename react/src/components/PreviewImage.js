@@ -51,7 +51,7 @@ const style = StyleSheet.create({
 	itemImage: {
         width: '100%',
         height: '100%',
-        resizeMode: 'stretch'
+        resizeMode: 'contain'
     }
 })
 

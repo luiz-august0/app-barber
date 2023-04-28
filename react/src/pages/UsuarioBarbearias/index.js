@@ -49,7 +49,7 @@ const UsuarioBarbearias = (props) => {
 
                         return (
                         <Card key={e.Barb_Codigo} onPress={() => props.navigation.navigate('MenuBarbearia', { barbeariaID: e.Barb_Codigo })} style={{width: 300, marginBottom: 25}}>
-                            <Card.Cover style={{resizeMode: 'contain'}} source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
+                            <Card.Cover resizeMode="stretch" source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
                             <Card.Title title={e.Barb_Nome} 
                                         subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${e.Barb_InscEst}`}
                                         titleNumberOfLines={0} 
