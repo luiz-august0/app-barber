@@ -28,10 +28,6 @@ const Servicos = (props) => {
         }
     }, [props, isFocused]);
 
-    const handlePress = () => {
-        Alert.alert("teste")
-    }
-
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -49,11 +45,12 @@ const Servicos = (props) => {
                         return (
                             <View key={e.Serv_Codigo}>
                                 <ServicoComponent 
+                                props={props}
                                 nome={e.Serv_Nome} 
                                 valor={e.Serv_Valor} 
                                 tempo={e.Minutos} 
                                 id={e.Serv_Codigo} 
-                                handlePress={handlePress}
+                                screenNavigation={'DadosServico'}
                                 />
                             </View>
                         )

@@ -7,7 +7,7 @@ import { getImagensServico } from "../services/api";
 import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
 
-const ServicoComponent = ({nome, valor, tempo ,id, handlePress}) => {
+const ServicoComponent = ({props, nome, valor, tempo ,id, screenNavigation}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
@@ -77,7 +77,7 @@ const ServicoComponent = ({nome, valor, tempo ,id, handlePress}) => {
                             subtitleStyle={{textAlign: "center"}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
-                <TouchableOpacity onPress={() => handlePress()}>
+                <TouchableOpacity onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id })}>
                     <MIcon 
                     style={{textAlign: "right", padding: 10}}
                     name="arrow-forward" 
