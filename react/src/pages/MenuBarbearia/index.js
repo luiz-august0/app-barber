@@ -71,8 +71,8 @@ const MenuBarbearia = (props) => {
 					style={style.button}
 					onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
 					>
-						<Text style={[style.text, { fontSize: 15 }]}>
-							{`Horários de funcionamento `}
+						<Text style={[style.text]}>
+							{`Horários `}
 							<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
 						</Text>
 					</TouchableOpacity>

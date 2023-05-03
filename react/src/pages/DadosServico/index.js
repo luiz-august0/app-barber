@@ -173,16 +173,22 @@ const DadosServico = (props) => {
                     props.navigation.navigate('Servicos', { categoriaID:  props.route.params?.categoriaID});
                 } else {
                     const res = await postBarbeariaServico(state.nome, props.route.params?.categoriaID, globalFunction.commaPerPoint(state.valor), globalFunction.minsToHHMMSS(state.duracao));
-                    if (JSON.stringify(images) !== "[]") {
-                        images.map(async(e) => {
-                            await postImagemServico(res.data.insertId, `data:${e.type}/jpeg;base64,${e.base64}`); 
-                        })
+                    
+                    const postImages = async() => {
+                        if (JSON.stringify(images) !== "[]") {
+                            for (const e of images) {
+                                await postImagemServico(res.data.insertId, `data:${e.type}/jpeg;base64,${e.base64}`); 
+                            }
+                        }
                     }
+                    
+                    await postImages();
                     Alert.alert('Atenção', 'Serviço cadastrado com sucesso');
                     props.navigation.navigate('Servicos', { categoriaID:  props.route.params?.categoriaID});
                 }
             } catch (error) {
                 Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao confirmar. Contate o suporte');
+                console.log(error)
             }
 
             setLoadingSubmit(false);
