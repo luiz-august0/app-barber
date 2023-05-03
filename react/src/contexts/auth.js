@@ -75,6 +75,7 @@ const loadUser = (dispatch) => {
                 }
             } catch (error) {
                 console.log(error);
+                return {authenticated: false}
             }
 
         } else {

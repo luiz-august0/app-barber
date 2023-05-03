@@ -6,8 +6,9 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import { getImagensServico } from "../services/api";
 import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
+import globalFunction from "../globalFunction";
 
-const ServicoComponent = ({props, nome, valor, tempo ,id, screenNavigation}) => {
+const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
@@ -72,12 +73,12 @@ const ServicoComponent = ({props, nome, valor, tempo ,id, screenNavigation}) => 
             />
             <Card>
                 <Card.Title title={nome} 
-                            subtitle={`Valor: R$${valor}\nTempo: ${tempo}min`}
+                            subtitle={`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${tempo}min`}
                             titleStyle={{textAlign: "center"}}
                             subtitleStyle={{textAlign: "center"}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
-                <TouchableOpacity onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id })}>
+                <TouchableOpacity onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria })}>
                     <MIcon 
                     style={{textAlign: "right", padding: 10}}
                     name="arrow-forward" 

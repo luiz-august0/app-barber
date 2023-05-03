@@ -143,7 +143,7 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT *, MINUTE(Serv_Duracao) AS Minutos FROM servico WHERE ServCat_Codigo = ${id}`,
+                    `SELECT *, FORMAT(TIME_TO_SEC(Serv_Duracao) / 60,0) AS Minutos FROM servico WHERE ServCat_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);
@@ -163,7 +163,7 @@ class BarbeariaServicosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM servico WHERE Serv_Codigo = ${id}`,
+                    `SELECT *, FORMAT(TIME_TO_SEC(Serv_Duracao) / 60,0) AS Minutos FROM servico WHERE Serv_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);

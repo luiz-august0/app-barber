@@ -33,7 +33,7 @@ const Servicos = (props) => {
             <View style={style.container}>
                 <TouchableOpacity
                 style={style.button}
-                onPress={() => props.navigation.navigate("DadosServico")}
+                onPress={() => props.navigation.navigate("DadosServico", { categoriaID: props.route.params?.categoriaID })}
                 >
                     <Text style={style.text}>Cadastrar Novo Serviço</Text>
                 </TouchableOpacity>
@@ -50,6 +50,7 @@ const Servicos = (props) => {
                                 valor={e.Serv_Valor} 
                                 tempo={e.Minutos} 
                                 id={e.Serv_Codigo} 
+                                idCategoria={e.ServCat_Codigo}
                                 screenNavigation={'DadosServico'}
                                 />
                             </View>

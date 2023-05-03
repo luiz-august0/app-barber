@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://192.168.0.107:5000'
+    baseURL: 'http://10.47.5.79:5000'
 });
 
 //Rotas de apis externas
@@ -145,6 +145,31 @@ export const deleteBarbeariaCategoria = async(id) => {
 
 export const getBarbeariaCategoriaServicos = async(id) => {
     return api.get(`/barbearia_servicoscategoria/${id}`);  
+};
+
+export const showBarbeariaServico = async(id) => {
+    return api.get(`/barbearia_servico/${id}`)
+}
+
+export const postBarbeariaServico = async(nome, idCategoria, valor, duracao) => {
+    return api.post('/barbearia_servico', { nome, idCategoria, valor, duracao });
+};
+
+export const updateBarbeariaServico = async(id, nome, valor, duracao) => {
+    return api.put(`/barbearia_servico/${id}`, { nome, valor, duracao });
+};
+
+export const deleteBarbeariaServico = async(id) => {
+    return api.delete(`/barbearia_servico/${id}`);
+};
+
+export const postImagemServico = async(id, file) => {
+    return api.post(`/barbearia_servicoimagem/${id}`, { file });
+};
+
+export const deleteImagemServico = async(id, imgUrl) => {
+    console.log(imgUrl)
+    return api.post(`/barbearia_servicoimagem_remove/${id}`, { imgUrl });
 };
 
 export const getImagensServico = async(id) => {
