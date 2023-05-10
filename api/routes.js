@@ -5,6 +5,7 @@ import UsuarioController from "./routes/UsuarioController";
 import BarbeariaController from "./routes/BarbeariaController";
 import BarbeariaHorariosController from "./routes/BarbeariaHorariosController";
 import BarbeariaServicosController from "./routes/BarbeariaServicosController";
+import BarbeariaBarbeirosController from "./routes/BarbeariaBarbeirosController";
 const uploadFile = require('./uploadFile');
 
 const routes = new Router();
@@ -90,5 +91,10 @@ routes.post('/barbearia_servicoimagem/:id', (req, res) => {
 		.catch((err) => res.status(500).json(err));
 });
 routes.post('/barbearia_servicoimagem_remove/:id', BarbeariaServicosController.deleteImagemServico);
+routes.post('/barbearia_barbeiro', BarbeariaBarbeirosController.postBarbeiro);
+routes.post('/barbearia_barbeiro_atualiza', BarbeariaBarbeirosController.updateBarbeiro);
+routes.post('/barbearia_barbeiro_remove', BarbeariaBarbeirosController.deleteBarbeiro);
+routes.get('/barbearia_barbeirosByBarbearia/:id', BarbeariaBarbeirosController.getBarbeirosByBarbearia);
+routes.get('/barbearia_barbeariasByBarbeiro/:id', BarbeariaBarbeirosController.getBarbeariasByBarbeiro);
 
 export default routes;
