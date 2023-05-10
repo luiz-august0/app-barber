@@ -176,9 +176,9 @@ const C02 = ({ navigation, route }) => {
     if (isValid) {
       try {
         if (cpfNoMask === "") {
-          await verifyUsuario(email, '');
+          await verifyUsuario(email.trim(), '');
         } else {
-          await verifyUsuario(email, cpfNoMask);
+          await verifyUsuario(email.trim(), cpfNoMask);
         }
       } catch (error) {
         if (error.message === "Request failed with status code 400") {
@@ -193,7 +193,7 @@ const C02 = ({ navigation, route }) => {
       }
     }
 
-    if (isValid && isAllowed) { navigation.navigate('C03', { email: email, ncelular: ncelular, nome: nome, snome: snome, cpf: cpf, tipoUsuario: route.params?.tipoUsuario }) }
+    if (isValid && isAllowed) { navigation.navigate('C03', { email: email.trim(), ncelular: ncelular, nome: nome, snome: snome, cpf: cpf, tipoUsuario: route.params?.tipoUsuario }) }
   }
 
   return (
@@ -280,8 +280,8 @@ const C03 = ({ navigation, route }) => {
   const validarC3 = () => {
     let isValid = true;
 
-    if (senha.length < 6) {
-      handleError("Senha invalida, digite uma senha com no minímo 6 caracteres", "senha");
+    if (globalFunction.validaSenha(senha).erro) {
+      handleError(globalFunction.validaSenha(senha).mensagem, "senha");
       isValid = false;
     }
 
@@ -292,7 +292,7 @@ const C03 = ({ navigation, route }) => {
 
     if (isValid) {
       navigation.navigate('C04', {
-        email: route.params?.email,
+        email: route.params?.email.trim(),
         ncelular: route.params?.ncelular,
         nome: route.params?.nome,
         snome: route.params?.snome,
@@ -361,7 +361,7 @@ const C03 = ({ navigation, route }) => {
 const C04 = (props) => {
   const [nome, setNome] = useState(props.route.params?.nome);
   const [snome, setSnome] = useState(props.route.params?.snome);
-  const [email, setEmail] = useState(props.route.params?.email);
+  const [email, setEmail] = useState(props.route.params?.email.trim());
   const [ncelular, setNcelular] = useState(props.route.params?.ncelular);
   const [cpf, setCpf] = useState(props.route.params?.cpf);
   const [senha, setSenha] = useState(props.route.params?.senha);
@@ -418,8 +418,8 @@ const C04 = (props) => {
       isValid = false;
     }
 
-    if (senha.length < 6) {
-      handleError("Senha invalida, digite uma senha com no minímo 6 caracteres", "senha");
+    if (globalFunction.validaSenha(senha).erro) {
+      handleError(globalFunction.validaSenha(senha).mensagem, "senha");
       isValid = false;
     }
 
@@ -433,8 +433,8 @@ const C04 = (props) => {
       try {
         let nomeCompleto = nome + ' ' + snome;
         let tipo = props.route.params?.tipoUsuario;
-        await createUsuario(email, nomeCompleto, senha, ncelular, cpfNoMask, tipo);
-        await login(email, senha).then((resolve) => {
+        await createUsuario(email.trim(), nomeCompleto, senha, ncelular, cpfNoMask, tipo);
+        await login(email.trim(), senha).then((resolve) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
@@ -610,7 +610,7 @@ const RedefinirSenha = ({ navigation, route }) => {
     if (isValid) {
       setLoading(true);
       try {
-        await postEnviaEmailRecuperacaoSenha(email);
+        await postEnviaEmailRecuperacaoSenha(email.trim());
         Alert.alert('Atenção', 'Email de redefinição de senha enviado com sucesso!');
         navigation.navigate('Login');
       } catch (error) {

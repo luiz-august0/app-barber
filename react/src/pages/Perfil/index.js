@@ -124,7 +124,7 @@ const Perfil = (props) => {
 
         if (isValid) {
             try {
-                await updateUsuario(email, nome, ncelular, cpfNoMask, props.usuario.state.id);
+                await updateUsuario(email.trim(), nome, ncelular, cpfNoMask, props.usuario.state.id);
                 Alert.alert('Atenção', 'Usuário alterado com sucesso!');
                 getUsuarioData();
                 updateStoreUsuario();
@@ -291,8 +291,8 @@ const EditarSenha = (props) => {
         isValid = false;
       }
 
-      if (senha.length < 6) {
-        handleError("Senha invalida, digite uma senha com no minímo 6 caracteres", "senha");
+      if (globalFunction.validaSenha(senha).erro) {
+        handleError(globalFunction.validaSenha(senha).mensagem, "senha");
         isValid = false;
       }
   

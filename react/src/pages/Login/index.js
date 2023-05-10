@@ -21,7 +21,7 @@ const Login = (props) => {
 
   const doLogin = async() => {
     setIsLoading(true);
-    await login(email, senha).then((resolve) => {
+    await login(email.trim(), senha).then((resolve) => {
       const data = resolve.dataUsuario;
       if (resolve.authenticated) {
         props.onLogin(data);

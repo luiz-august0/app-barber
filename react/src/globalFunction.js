@@ -51,11 +51,59 @@ class GFunctions {
     }
 
     commaPerPoint = (value) => {
-        return value.replaceAll(',', '.');
+        if (value !== '' && value !== null && value !== undefined) {
+            return value.replace(',', '.');
+        } else {
+            return '';
+        }
     }
 
     PointPerComma = (value) => {
-        return value.replaceAll('.', ',');
+        if (value !== '' && value !== null && value !== undefined) {
+            return value.replace('.', ',');
+        } else {
+            return '';
+        }
+    }
+
+    validaSenha = (value) => {
+        let letrasMaiusculas = /[A-Z]/;
+        let letrasMinusculas = /[a-z]/; 
+        let numeros = /[0-9]/;
+        let caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/;
+
+        if(!letrasMaiusculas.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos uma letra maiúscula'
+            }
+        }
+
+        if(!letrasMinusculas.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos uma letra minúscula'
+            }
+        }
+
+        if(!numeros.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos um número'
+            }
+        }
+
+        if(!caracteresEspeciais.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos um caractere especial, como !, @, #, $, %, ^, &, *, (, ), -, ou _'
+            }
+        }
+
+        return {
+            erro: false,
+            mensagem: ''
+        }
     }
 }
 

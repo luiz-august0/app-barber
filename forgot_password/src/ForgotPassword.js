@@ -12,6 +12,46 @@ const ForgotPassword = () => {
     const [senhaConfirm, setSenhaConfirm] = useState(""); 
     const [confirmed, setConfirmed] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const validaSenha = (value) => {
+        let letrasMaiusculas = /[A-Z]/;
+        let letrasMinusculas = /[a-z]/; 
+        let numeros = /[0-9]/;
+        let caracteresEspeciais = /[!|@|#|$|%|^|&|*|(|)|-|_]/;
+
+        if(!letrasMaiusculas.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos uma letra maiúscula'
+            }
+        }
+
+        if(!letrasMinusculas.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos uma letra minúscula'
+            }
+        }
+
+        if(!numeros.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos um número'
+            }
+        }
+
+        if(!caracteresEspeciais.test(value)){
+            return {
+                erro: true,
+                mensagem: 'A senha deve conter pelo menos um caractere especial, como !, @, #, $, %, ^, &, *, (, ), -, ou _'
+            }
+        }
+
+        return {
+            erro: false,
+            mensagem: ''
+        }
+    }
     
     const MySwal = withReactContent(Swal);
 
@@ -34,9 +74,9 @@ const ForgotPassword = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if (senha.length < 6) {
+        if (validaSenha(senha).erro) {
             MySwal.fire({
-            html: <i>Senha invalida, digite uma senha com no minímo 6 caracteres</i>,
+            html: <i>{validaSenha(senha).mensagem}</i>,
             icon: 'warning'
             })
             return;
