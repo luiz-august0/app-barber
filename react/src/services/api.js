@@ -175,6 +175,27 @@ export const deleteImagemServico = async(id, imgUrl) => {
 export const getImagensServico = async(id) => {
     return api.get(`/barbearia_servicoimagens/${id}`); 
 };
+
+//Rotas Barbeiro
+export const postBarbeiro = async(barbeariaID, usuarioID, especialidade) => {
+    return api.post('/barbearia_barbeiro', { barbeariaID, usuarioID, especialidade });
+};
+
+export const updateBarbeiro = async(barbeariaID, usuarioID, especialidade) => {
+    return api.post('/barbearia_barbeiro_atualiza', { barbeariaID, usuarioID, especialidade });
+};
+
+export const deleteBarbeiro = async(barbeariaID, usuarioID) => {
+    return api.post('/barbearia_barbeiro_remove', { barbeariaID, usuarioID });
+};
+
+export const getBarbeirosByBarbearia = async(id) => {
+    return api.get(`/barbearia_barbeirosByBarbearia/${id}`);
+};
+
+export const getBarbeariasByBarbeiro = async(id) => {
+    return api.get(`/barbearia_barbeariasByBarbeiro/${id}`);
+};
 /**************************************************************/
 
 /*GoogleMaps*/
