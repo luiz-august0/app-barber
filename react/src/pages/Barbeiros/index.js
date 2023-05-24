@@ -119,7 +119,7 @@ const Barbeiros = (props) => {
                                             <Text style={style.textDetails}>{`Telefone: ${e.Usr_Contato}`}</Text>:null}
                                             {e.BarbB_Especialidade !== null && e.BarbB_Especialidade !== undefined && e.BarbB_Especialidade !== ""?
                                             <Text style={style.textDetails}>{`Especialidade: ${e.BarbB_Especialidade}`}</Text>:null}
-                                        </>:<Text style={style.textDetails}>Eu</Text>}
+                                        </>:<Text style={[style.textDetails, {width: '100%'}]}>Eu</Text>}
                                     </View>
                                 </View>
                                 <View style={style.buttonComponent}>
@@ -127,7 +127,7 @@ const Barbeiros = (props) => {
                                         <Text style={[style.text, {fontSize: 14}]}>Excluir</Text>
                                         <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'red'}></MIcon>
                                     </TouchableOpacity>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: e.Usr_Codigo})}>
                                         <Text style={[style.text, {fontSize: 14}]}>Abrir</Text>
                                         <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#05A94E'}></MIcon>
                                     </TouchableOpacity>

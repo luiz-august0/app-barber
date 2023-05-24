@@ -16,6 +16,7 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     textDetails: {
+        width: '60%',
         fontSize: 14,
         fontFamily: 'Montserrat-Regular',
         color: '#ffff',

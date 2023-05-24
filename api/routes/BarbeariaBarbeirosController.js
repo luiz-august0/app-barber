@@ -120,6 +120,31 @@ class BarbeariaBarbeirosController {
             return res.status(500).json({ error: "Internal server error." })
         }
     }
+
+    async getDataBarbeiro(req, res) {
+        const { barbeariaID, usuarioID } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+					`SELECT U.Usr_Codigo, U.Usr_Email, U.Usr_Nome, U.Usr_Contato, U.Usr_CPF, U.Usr_Tipo, U.Usr_FotoPerfil, B.BarbB_Especialidade 
+                     FROM usuario U 
+                     INNER JOIN barbearia_barbeiros B
+                     ON B.Usr_Codigo = U.Usr_Codigo
+					 WHERE B.Barb_Codigo = ${barbeariaID}
+                     AND B.Usr_Codigo = ${usuarioID}`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
 }
 
 export default new BarbeariaBarbeirosController();

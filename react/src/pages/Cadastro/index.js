@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ActivityIndicator, Dimensions } from 'react-native'
 import { TextInput, HelperText } from "react-native-paper";
-import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import style from './style'
 import { createUsuario, postEnviaEmailRecuperacaoSenha, verifyUsuario } from '../../services/api';
 import imgChair from '../../img/chair.png';
@@ -11,19 +10,6 @@ import { connect } from 'react-redux';
 import { Context } from '../../contexts/auth';
 import { usuarioLogado } from '../../store/actions/usuario';
 import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-
-const validarEmail = (email) => {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(email);
-};
-
-const validaCPF = (cpf) => {
-  if (cpfValidator.isValid(cpf)) {
-    return true;
-  } else {
-    return false;
-  }
-};
 
 const C00 = ({ navigation, route }) => {
   const onClickButton = async (tipoUsuario) => {
@@ -146,7 +132,7 @@ const C02 = ({ navigation, route }) => {
     let isAllowed = true;
     const cpfNoMask = globalFunction.formataCampo(cpf, '00000000000');
 
-    if (validarEmail(email) === false) {
+    if (globalFunction.validarEmail(email) === false) {
       handleError("Email inválido", "email");
       isValid = false;
     }
@@ -163,12 +149,12 @@ const C02 = ({ navigation, route }) => {
       isValid = false;
     }
 
-    if (route.params?.tipoUsuario === "B" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+    if (route.params?.tipoUsuario === "B" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
 
-    if (route.params?.tipoUsuario === "C" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+    if (route.params?.tipoUsuario === "C" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
@@ -391,7 +377,7 @@ const C04 = (props) => {
       isValid = false;
     }
 
-    if (validarEmail(email) === false) {
+    if (globalFunction.validarEmail(email) === false) {
       handleError("Email inválido", "email");
       isValid = false;
     }
@@ -408,12 +394,12 @@ const C04 = (props) => {
       isValid = false;
     }
 
-    if (props.route.params?.tipoUsuario === "B" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+    if (props.route.params?.tipoUsuario === "B" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
 
-    if (props.route.params?.tipoUsuario === "C" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+    if (props.route.params?.tipoUsuario === "C" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
       handleError("CPF inválido", "cpf");
       isValid = false;
     }
@@ -602,7 +588,7 @@ const RedefinirSenha = ({ navigation, route }) => {
   const enviaEmail = async() => {
     let isValid = true;
 
-    if (validarEmail(email) === false) {
+    if (globalFunction.validarEmail(email) === false) {
       handleError("Email inválido", "email");
       isValid = false;
     }

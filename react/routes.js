@@ -15,6 +15,8 @@ import CategoriasServico from './src/pages/CategoriasServico';
 import Servicos from './src/pages/Servicos';
 import DadosServico from './src/pages/DadosServico';
 import Barbeiros from './src/pages/Barbeiros';
+import DadosBarbeiro from './src/pages/DadosBarbeiro';
+import MenuBarbeiro from './src/pages/MenuBarbeiro';
 
 const Stack = createNativeStackNavigator();
 
@@ -105,6 +107,14 @@ const Routes = () => {
                 <Stack.Screen
                 name="Barbeiros"
                 component={Barbeiros}
+                />
+                <Stack.Screen
+                name="MenuBarbeiro"
+                component={MenuBarbeiro}
+                />
+                <Stack.Screen
+                name="DadosBarbeiro"
+                component={DadosBarbeiro}
                 />
             </Stack.Navigator>
         </NavigationContainer>

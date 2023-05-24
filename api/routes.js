@@ -96,5 +96,6 @@ routes.post('/barbearia_barbeiro_atualiza', BarbeariaBarbeirosController.updateB
 routes.post('/barbearia_barbeiro_remove', BarbeariaBarbeirosController.deleteBarbeiro);
 routes.get('/barbearia_barbeirosByBarbearia/:id', BarbeariaBarbeirosController.getBarbeirosByBarbearia);
 routes.get('/barbearia_barbeariasByBarbeiro/:id', BarbeariaBarbeirosController.getBarbeariasByBarbeiro);
+routes.post('/barbearia_barbeiroData', BarbeariaBarbeirosController.getDataBarbeiro);
 
 export default routes;

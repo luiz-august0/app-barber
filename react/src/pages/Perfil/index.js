@@ -3,7 +3,6 @@ import { View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndic
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
-import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
 import globalFunction from "../../globalFunction";
@@ -11,19 +10,6 @@ import perfil from "../../img/perfil.png";
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
 import KeyboardAvoidingWrapper from "../../components/KeyboardAvoidingWrapper";
-
-const validarEmail = (email) => {
-    var re = /\S+@\S+\.\S+/;
-    return re.test(email);
-};
-  
-  const validaCPF = (cpf) => {
-    if (cpfValidator.isValid(cpf)) {
-        return true;
-    } else {
-        return false;
-    }
-};
 
 const Perfil = (props) => {
     const initialStateErrors = { 'nome': null, 'email': null, 'ncelular': null, 'cpf': null };
@@ -95,7 +81,7 @@ const Perfil = (props) => {
             isValid = false;
         }
 
-        if (validarEmail(email) === false) {
+        if (globalFunction.validarEmail(email) === false) {
             handleError("Email inválido", "email");
             isValid = false;
         }
@@ -112,12 +98,12 @@ const Perfil = (props) => {
             isValid = false;
         }
 
-        if (props.usuario.state.tipo === "B" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+        if (props.usuario.state.tipo === "B" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
 
-        if (props.usuario.state.tipo === "C" && cpfNoMask !== '' && !validaCPF(cpfNoMask)) {
+        if (props.usuario.state.tipo === "C" && cpfNoMask !== '' && !globalFunction.validaCPF(cpfNoMask)) {
             handleError("CPF inválido", "cpf");
             isValid = false;
         }
@@ -160,7 +146,7 @@ const Perfil = (props) => {
                 updateStoreUsuario();
                 setLoading(false);
             } catch (error) {
-                Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao realizar o upload da imagem.' )
+                Alert.alert('Atenção', 'Ops, ocorreu algum erro ao realizar o upload da imagem' )
                 setLoading(false);
             }
         }
@@ -176,9 +162,9 @@ const Perfil = (props) => {
                     <ActivityIndicator/>
                 </View>:
                 <View style={style.imageContainer}>
-                <TouchableOpacity onPress={pickImage}>
-                    <Image source={image} style={style.image}/>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={pickImage}>
+                        <Image source={image} style={style.image}/>
+                    </TouchableOpacity>
                 </View>
                 }
                 <Text style={style.text}>Clique na imagem para mudar a foto de perfil</Text>

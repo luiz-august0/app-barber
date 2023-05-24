@@ -1,3 +1,4 @@
+import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 class GFunctions {
     formataCampo(campo, Mascara) { 
         if (campo === null) {
@@ -105,6 +106,19 @@ class GFunctions {
             mensagem: ''
         }
     }
+
+    validaCPF = (cpf) => {
+        if (cpfValidator.isValid(cpf)) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    validarEmail = (email) => {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    };
 }
 
 export default new GFunctions();

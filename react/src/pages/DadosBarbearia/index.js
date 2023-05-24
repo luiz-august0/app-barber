@@ -33,11 +33,6 @@ const validaCNPJ = (cpf) => {
     }
 };
 
-const validarEmail = (email) => {
-    var re = /\S+@\S+\.\S+/;
-    return re.test(email);
-};
-
 const DadosBarbearia = (props) => {
     const [image, setImage] = useState(null);
     const [state, setState] = useState({
@@ -279,7 +274,7 @@ const DadosBarbearia = (props) => {
         }
 
         if (state.email !== null && state.email !== '') {
-            if (!validarEmail(state.email)) {
+            if (!globalFunction.validarEmail(state.email)) {
                 handleError('Email inválido', 'email');
                 isValid = false;
             }
