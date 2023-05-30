@@ -5,6 +5,7 @@ import globalStyles from "../../globalStyles";
 import { getBarbeariaCategoriaServicos } from "../../services/api";
 import { useIsFocused } from "@react-navigation/native";
 import ServicoComponent from "../../components/ServicoComponent";
+import Loading from "../../components/Loading";
 
 const Servicos = (props) => {
     const isFocused = useIsFocused();
@@ -39,25 +40,23 @@ const Servicos = (props) => {
                 </TouchableOpacity>
                 {JSON.stringify(servicos) !== "[]"?
                 <Text style={style.textTitle}>Serviços</Text>:null}
-                {!loading?
-                <>
-                    {servicos.map((e) => {
-                        return (
-                            <View key={e.Serv_Codigo}>
-                                <ServicoComponent 
-                                props={props}
-                                nome={e.Serv_Nome} 
-                                valor={e.Serv_Valor} 
-                                tempo={e.Minutos} 
-                                id={e.Serv_Codigo} 
-                                idCategoria={e.ServCat_Codigo}
-                                screenNavigation={'DadosServico'}
-                                />
-                            </View>
-                        )
-                    })}
-                </>:<ActivityIndicator style={{marginTop: '20%'}}/>}
+                {servicos.map((e) => {
+                    return (
+                        <View key={e.Serv_Codigo}>
+                            <ServicoComponent 
+                            props={props}
+                            nome={e.Serv_Nome} 
+                            valor={e.Serv_Valor} 
+                            tempo={e.Minutos} 
+                            id={e.Serv_Codigo} 
+                            idCategoria={e.ServCat_Codigo}
+                            screenNavigation={'DadosServico'}
+                            />
+                        </View>
+                    )
+                })}
             </View>
+            {loading?<Loading/>:null}
         </ScrollView>
     )
 }

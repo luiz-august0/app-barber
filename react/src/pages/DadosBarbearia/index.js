@@ -24,6 +24,7 @@ import globalStyles from "../../globalStyles";
 import style from "./style";
 import perfil from "../../img/perfil.png";
 import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
+import Loading from "../../components/Loading";
 
 const validaCNPJ = (cpf) => {
     if (cnpjValidator.isValid(cpf)) {
@@ -611,284 +612,281 @@ const DadosBarbearia = (props) => {
     return (
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-                {loadingData?
-                <ActivityIndicator/>:
-                    <>
-                        {loadingLogo?
-                            <View style={[style.containerIndicator, style.horizontalIndicator]}>
-                                <ActivityIndicator/>
-                            </View>
-                            :
-                            <View style={style.imageContainer}>
-                                <TouchableOpacity onPress={pickImage}>
-                                    <Image source={image} style={style.image}/>
-                                </TouchableOpacity>
-                            </View>
-                        }
-                        <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Nome"
-                        error={errors.nome !== null ? true : false}
-                        onFocus={() => handleError(null, 'nome')}
-                        theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="account" />}
-                        value={state.nome}
-                        onChangeText={(nome) => setValueState('nome', nome)}
-                        />
-                        <HelperText type="error" visible={errors.nome !== null ? true : false}>
-                            {errors.nome}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Razão Social"
-                        error={errors.razao !== null ? true : false}
-                        onFocus={() => handleError(null, 'razao')}
-                        theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="account" />}
-                        value={state.razao}
-                        onChangeText={(razao) => setValueState('razao', razao)}
-                        />
-                        <HelperText type="error" visible={errors.razao !== null ? true : false}>
-                            {errors.razao}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="CNPJ"
-                        keyboardType="number-pad"
-                        error={errors.cnpj !== null ? true : false}
-                        onFocus={() => handleError(null, 'cnpj')}
-                        theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="account" />}
-                        value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
-                        onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
-                        />
-                        <HelperText type="error" visible={errors.cnpj !== null ? true : false}>
-                            {errors.cnpj}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="IE"
-                        keyboardType="number-pad"
-                        error={errors.inscEstadual !== null ? true : false}
-                        onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Atenção', 'Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
-                        theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="account" />}
-                        value={state.inscEstadual}
-                        onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
-                        />
-                        <HelperText type="error" visible={errors.inscEstadual !== null ? true : false}>
-                            {errors.inscEstadual}
-                        </HelperText>
-                        {loadingCEP?
-                        <View style={style.viewCEP} >
-                            <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
-                            <ActivityIndicator/>
+                {loadingData?<Loading/>:null}
+                {loadingLogo?
+                    <View style={[style.containerIndicator, style.horizontalIndicator]}>
+                        <ActivityIndicator/>
+                    </View>
+                    :
+                    <View style={style.imageContainer}>
+                        <TouchableOpacity onPress={pickImage}>
+                            <Image source={image} style={style.image}/>
+                        </TouchableOpacity>
+                    </View>
+                }
+                <Text style={style.textSubtitle}>Clique na imagem para mudar a logo da barbearia</Text>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Nome"
+                error={errors.nome !== null ? true : false}
+                onFocus={() => handleError(null, 'nome')}
+                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="account" />}
+                value={state.nome}
+                onChangeText={(nome) => setValueState('nome', nome)}
+                />
+                <HelperText type="error" visible={errors.nome !== null ? true : false}>
+                    {errors.nome}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Razão Social"
+                error={errors.razao !== null ? true : false}
+                onFocus={() => handleError(null, 'razao')}
+                theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="account" />}
+                value={state.razao}
+                onChangeText={(razao) => setValueState('razao', razao)}
+                />
+                <HelperText type="error" visible={errors.razao !== null ? true : false}>
+                    {errors.razao}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="CNPJ"
+                keyboardType="number-pad"
+                error={errors.cnpj !== null ? true : false}
+                onFocus={() => handleError(null, 'cnpj')}
+                theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="account" />}
+                value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
+                onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
+                />
+                <HelperText type="error" visible={errors.cnpj !== null ? true : false}>
+                    {errors.cnpj}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="IE"
+                keyboardType="number-pad"
+                error={errors.inscEstadual !== null ? true : false}
+                onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Atenção', 'Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
+                theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="account" />}
+                value={state.inscEstadual}
+                onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
+                />
+                <HelperText type="error" visible={errors.inscEstadual !== null ? true : false}>
+                    {errors.inscEstadual}
+                </HelperText>
+                {loadingCEP?
+                <View style={style.viewCEP} >
+                    <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
+                    <ActivityIndicator/>
+                </View>
+                :
+                <>
+                    <TextInput
+                    style={style.input}
+                    mode='flat'
+                    activeOutlineColor='#fff'
+                    label="CEP"
+                    keyboardType="number-pad"
+                    error={errors.cep !== null ? true : false}
+                    onFocus={() => onFocusCEP()}
+                    onEndEditing={() => consultaCEP()}
+                    theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" name="home-city" />}
+                    value={globalFunction.formataCampo(state.cep, "00.000-000")}
+                    onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
+                    />
+                    <HelperText type="error" visible={errors.cep !== null ? true : false}>
+                        {errors.cep}
+                    </HelperText>
+                </>
+                }
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Cidade"
+                editable={!loadingCEP}
+                error={errors.cidade !== null ? true : false}
+                onFocus={() => handleError(null, 'cidade')}
+                theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.cidade}
+                onChangeText={(cidade) => setValueState('cidade', cidade)}
+                />
+                <HelperText type="error" visible={errors.cidade !== null ? true : false}>
+                    {errors.cidade}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="UF"
+                editable={!loadingCEP}
+                keyboardType="default"
+                maxLength={2}
+                error={errors.uf !== null ? true : false}
+                onFocus={() => handleError(null, 'uf')}
+                theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.uf!== null?state.uf.toUpperCase():null}
+                onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
+                />
+                <HelperText type="error" visible={errors.uf !== null ? true : false}>
+                    {errors.uf}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Rua"
+                editable={!loadingCEP}
+                error={errors.rua !== null ? true : false}
+                onFocus={() => handleError(null, 'rua')}
+                theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.rua}
+                onChangeText={(rua) => setValueState('rua', rua)}
+                />
+                <HelperText type="error" visible={errors.rua !== null ? true : false}>
+                    {errors.rua}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Número"
+                editable={!loadingCEP}
+                keyboardType="number-pad"
+                error={errors.numero !== null ? true : false}
+                onFocus={() => handleError(null, 'numero')}
+                theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.numero}
+                onChangeText={(numero) => setValueState('numero', numero)}
+                />
+                <HelperText type="error" visible={errors.numero !== null ? true : false}>
+                    {errors.numero}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Bairro"
+                editable={!loadingCEP}
+                error={errors.bairro !== null ? true : false}
+                onFocus={() => handleError(null, 'bairro')}
+                theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.bairro}
+                onChangeText={(bairro) => setValueState('bairro', bairro)}
+                />
+                <HelperText type="error" visible={errors.bairro !== null ? true : false}>
+                    {errors.bairro}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Complemento"
+                editable={!loadingCEP}
+                error={errors.complemento !== null ? true : false}
+                onFocus={() => handleError(null, 'complemento')}
+                theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="home-city" />}
+                value={state.complemento}
+                onChangeText={(complemento) => setValueState('complemento', complemento)}
+                />
+                <HelperText type="error" visible={errors.complemento !== null ? true : false}>
+                    {errors.complemento}
+                </HelperText>
+                <Text style={style.textTitle}>Contatos</Text>    
+                <TouchableOpacity onPress={() => {
+                    setEditContatoMode(false); 
+                    setInsertContatoMode(false); 
+                    setContatoInEdit('');
+                    setValueState('contato', '');
+                    setValueState('descricao', '');
+                    handleError(null, 'contato');
+                    handleError(null, 'descricao');
+                    setInsertContatoMode(true);
+                    }}>
+                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                </TouchableOpacity>
+                {insertContatoMode?addEditContato():null}
+                {contatos.map((e) => {
+                    return (
+                        <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
+                        <Card.Title title={`${e.descricao}: ${e.contato}`}
+                                    titleNumberOfLines={0}/>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                            <TouchableOpacity onPress={() => handleDeleteContato(e.idContato)}>
+                                <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                setEditContatoMode(false); 
+                                setInsertContatoMode(false); 
+                                setContatoInEdit('');
+                                setValueState('contato', e.contato);
+                                setValueState('descricao', e.descricao);
+                                handleError(null, 'contato');
+                                handleError(null, 'descricao');
+                                setEditContatoMode(true); 
+                                setContatoInEdit(e.idContato);
+                                }}>
+                                <Text style={[style.textButtom, { color: "#e65c00", textAlign: 'center', marginLeft: 10}]}>Editar</Text>
+                            </TouchableOpacity>
                         </View>
-                        :
-                        <>
-                            <TextInput
-                            style={style.input}
-                            mode='flat'
-                            activeOutlineColor='#fff'
-                            label="CEP"
-                            keyboardType="number-pad"
-                            error={errors.cep !== null ? true : false}
-                            onFocus={() => onFocusCEP()}
-                            onEndEditing={() => consultaCEP()}
-                            theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="home-city" />}
-                            value={globalFunction.formataCampo(state.cep, "00.000-000")}
-                            onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
-                            />
-                            <HelperText type="error" visible={errors.cep !== null ? true : false}>
-                                {errors.cep}
-                            </HelperText>
-                        </>
+                        {(editContatoMode) && (contatoInEdit === e.idContato)?
+                            <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                                {addEditContato()}
+                            </View>
+                        :null}
+                        </Card>
+                    )
+                })}
+                <Text style={style.textTitle}>Proprietários</Text>    
+                <TouchableOpacity onPress={() => {
+                    setInsertProprietarioMode(false); 
+                    setValueState('email', '');
+                    handleError(null, 'email');
+                    setInsertProprietarioMode(true);
+                    }}>
+                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                </TouchableOpacity>
+                {insertProprietarioMode?addProprietario():null}
+                {proprietarios.map((e) => {
+                    return (
+                        <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
+                        <Card.Title subtitle={
+                            `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
                         }
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Cidade"
-                        editable={!loadingCEP}
-                        error={errors.cidade !== null ? true : false}
-                        onFocus={() => handleError(null, 'cidade')}
-                        theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.cidade}
-                        onChangeText={(cidade) => setValueState('cidade', cidade)}
+                        subtitleNumberOfLines={0}
                         />
-                        <HelperText type="error" visible={errors.cidade !== null ? true : false}>
-                            {errors.cidade}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="UF"
-                        editable={!loadingCEP}
-                        keyboardType="default"
-                        maxLength={2}
-                        error={errors.uf !== null ? true : false}
-                        onFocus={() => handleError(null, 'uf')}
-                        theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.uf!== null?state.uf.toUpperCase():null}
-                        onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
-                        />
-                        <HelperText type="error" visible={errors.uf !== null ? true : false}>
-                            {errors.uf}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Rua"
-                        editable={!loadingCEP}
-                        error={errors.rua !== null ? true : false}
-                        onFocus={() => handleError(null, 'rua')}
-                        theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.rua}
-                        onChangeText={(rua) => setValueState('rua', rua)}
-                        />
-                        <HelperText type="error" visible={errors.rua !== null ? true : false}>
-                            {errors.rua}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Número"
-                        editable={!loadingCEP}
-                        keyboardType="number-pad"
-                        error={errors.numero !== null ? true : false}
-                        onFocus={() => handleError(null, 'numero')}
-                        theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.numero}
-                        onChangeText={(numero) => setValueState('numero', numero)}
-                        />
-                        <HelperText type="error" visible={errors.numero !== null ? true : false}>
-                            {errors.numero}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Bairro"
-                        editable={!loadingCEP}
-                        error={errors.bairro !== null ? true : false}
-                        onFocus={() => handleError(null, 'bairro')}
-                        theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.bairro}
-                        onChangeText={(bairro) => setValueState('bairro', bairro)}
-                        />
-                        <HelperText type="error" visible={errors.bairro !== null ? true : false}>
-                            {errors.bairro}
-                        </HelperText>
-                        <TextInput
-                        style={style.input}
-                        mode='flat'
-                        activeOutlineColor='#fff'
-                        label="Complemento"
-                        editable={!loadingCEP}
-                        error={errors.complemento !== null ? true : false}
-                        onFocus={() => handleError(null, 'complemento')}
-                        theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="home-city" />}
-                        value={state.complemento}
-                        onChangeText={(complemento) => setValueState('complemento', complemento)}
-                        />
-                        <HelperText type="error" visible={errors.complemento !== null ? true : false}>
-                            {errors.complemento}
-                        </HelperText>
-                        <Text style={style.textTitle}>Contatos</Text>    
-                        <TouchableOpacity onPress={() => {
-                            setEditContatoMode(false); 
-                            setInsertContatoMode(false); 
-                            setContatoInEdit('');
-                            setValueState('contato', '');
-                            setValueState('descricao', '');
-                            handleError(null, 'contato');
-                            handleError(null, 'descricao');
-                            setInsertContatoMode(true);
-                            }}>
-                            <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                        {e.idProprietario != props.usuario.state.id?
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
+                            <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
                         </TouchableOpacity>
-                        {insertContatoMode?addEditContato():null}
-                        {contatos.map((e) => {
-                            return (
-                                <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
-                                <Card.Title title={`${e.descricao}: ${e.contato}`}
-                                            titleNumberOfLines={0}/>
-                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                    <TouchableOpacity onPress={() => handleDeleteContato(e.idContato)}>
-                                        <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => {
-                                        setEditContatoMode(false); 
-                                        setInsertContatoMode(false); 
-                                        setContatoInEdit('');
-                                        setValueState('contato', e.contato);
-                                        setValueState('descricao', e.descricao);
-                                        handleError(null, 'contato');
-                                        handleError(null, 'descricao');
-                                        setEditContatoMode(true); 
-                                        setContatoInEdit(e.idContato);
-                                        }}>
-                                        <Text style={[style.textButtom, { color: "#e65c00", textAlign: 'center', marginLeft: 10}]}>Editar</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                {(editContatoMode) && (contatoInEdit === e.idContato)?
-                                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                                        {addEditContato()}
-                                    </View>
-                                :null}
-                                </Card>
-                            )
-                        })}
-                        <Text style={style.textTitle}>Proprietários</Text>    
-                        <TouchableOpacity onPress={() => {
-                            setInsertProprietarioMode(false); 
-                            setValueState('email', '');
-                            handleError(null, 'email');
-                            setInsertProprietarioMode(true);
-                            }}>
-                            <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
-                        </TouchableOpacity>
-                        {insertProprietarioMode?addProprietario():null}
-                        {proprietarios.map((e) => {
-                            return (
-                                <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
-                                <Card.Title subtitle={
-                                    `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
-                                }
-                                subtitleNumberOfLines={0}
-                                />
-                                {e.idProprietario != props.usuario.state.id?
-                                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
-                                    <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
-                                </TouchableOpacity>
-                                </View>:null}
-                                </Card>
-                            )
-                        })}
-                        <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                            {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Confirmar dados</Text>}
-                        </TouchableOpacity>
-                    </>}
+                        </View>:null}
+                        </Card>
+                    )
+                })}
+                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                    {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Confirmar dados</Text>}
+                </TouchableOpacity>
             </View>
         </KeyboardAvoidingWrapper>
     )

@@ -7,6 +7,7 @@ import globalFunction from "../../globalFunction";
 import globalStyles from "../../globalStyles";
 import style from "./style";
 import { connect } from "react-redux";
+import Loading from "../../components/Loading";
 
 const UsuarioBarbearias = (props) => {
     const isFocused = useIsFocused();
@@ -41,24 +42,22 @@ const UsuarioBarbearias = (props) => {
                 </TouchableOpacity>
                 {JSON.stringify(barbearias) != "[]"?
                 <Text style={style.textTitle}>Minhas Barbearias</Text>:null}
-                {!isLoading?
-                <>
-                    {barbearias.map((e) => {
-                        const cep = globalFunction.formataCampo(e.Barb_CEP, "00.000-000");
-                        const cnpj = globalFunction.formataCampo(e.Barb_CNPJ, "00.000.000/0000-00");
+                {barbearias.map((e) => {
+                    const cep = globalFunction.formataCampo(e.Barb_CEP, "00.000-000");
+                    const cnpj = globalFunction.formataCampo(e.Barb_CNPJ, "00.000.000/0000-00");
 
-                        return (
-                        <Card key={e.Barb_Codigo} onPress={() => props.navigation.navigate('MenuBarbearia', { barbeariaID: e.Barb_Codigo })} style={{width: 300, marginBottom: 25}}>
-                            <Card.Cover resizeMode="cover" source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
-                            <Card.Title title={e.Barb_Nome} 
-                                        subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${e.Barb_InscEst}`}
-                                        titleNumberOfLines={0} 
-                                        subtitleNumberOfLines={0}/>
-                        </Card>
-                        )
-                    })}
-                </>:<ActivityIndicator style={{marginTop: 50}}/>}
+                    return (
+                    <Card key={e.Barb_Codigo} onPress={() => props.navigation.navigate('MenuBarbearia', { barbeariaID: e.Barb_Codigo })} style={{width: 300, marginBottom: 25}}>
+                        <Card.Cover resizeMode="cover" source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
+                        <Card.Title title={e.Barb_Nome} 
+                                    subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${e.Barb_InscEst}`}
+                                    titleNumberOfLines={0} 
+                                    subtitleNumberOfLines={0}/>
+                    </Card>
+                    )
+                })}
             </View>
+            {isLoading?<Loading/>:null}
         </ScrollView>
     )
 }

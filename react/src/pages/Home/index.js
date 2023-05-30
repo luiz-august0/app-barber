@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { View, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
 import style from "./style";
 import Header from "../../components/Header";
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
 import { Context } from "../../contexts/auth";
 import { usuarioLogado } from "../../store/actions/usuario";
@@ -35,6 +36,7 @@ const Home = (props) => {
       
         return () => backHandler.remove();
     }, []);
+
     const menuAvailable = () => {
         if (props.usuario.state.tipo === "B") {
             return (
@@ -42,6 +44,7 @@ const Home = (props) => {
                 style={style.button}
                 onPress={() => props.navigation.navigate('UsuarioBarbearias')}
                 >
+                    <MIcon name="office-building" size={80} color={'#ffff'}></MIcon>
                     <Text style={style.text}>Minhas Barbearias</Text>
                 </TouchableOpacity>
             )
@@ -51,6 +54,7 @@ const Home = (props) => {
                 <TouchableOpacity
                 style={style.button}
                 >
+                    <MIcon name="calendar-week" size={80} color={'#ffff'}></MIcon>
                     <Text style={style.text}>Agendamentos</Text>
                 </TouchableOpacity>
             )
@@ -60,13 +64,15 @@ const Home = (props) => {
     return (
         <View style={style.container}>
             <Header navigation={props.navigation} route={props.route}/>
-            {menuAvailable()}
-            <TouchableOpacity
-            style={style.button}
-            onPress={() => logoutEvent()}
-            >
-                <Text style={style.text}>Sair</Text>
-            </TouchableOpacity>
+            <View style={style.viewButtons}>
+                {menuAvailable()}
+                <TouchableOpacity
+                style={style.button}
+                onPress={() => logoutEvent()}
+                >
+                    <Text style={style.text}>Sair</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

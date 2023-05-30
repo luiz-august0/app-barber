@@ -7,6 +7,7 @@ import { HelperText, TextInput } from "react-native-paper";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import { deleteBarbeariaCategoria, getBarbeariaCategorias, postBarbeariaCategoria, updateBarbeariaCategoria } from "../../services/api";
 import { useIsFocused } from "@react-navigation/native";
+import Loading from "../../components/Loading";
 
 const CategoriasServico = (props) => {
     const isFocused = useIsFocused();
@@ -132,47 +133,44 @@ const CategoriasServico = (props) => {
                     <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
                         {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
                         :<ActivityIndicator/>}
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </AbsoluteModal>
                 {JSON.stringify(categorias) !== "[]"?
                 <>
-                    {!loading?
-                    <>
-                        <Text style={style.textTitle}>Categorias</Text>
-                        {categorias.map((e) => {
-                            return (
-                                <View key={e.ServCat_Codigo} style={style.categoriaComponent}>
-                                    <View style={style.categoriaView}>
-                                        <View style={{width: '60%'}}>
-                                            <Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
-                                        </View>
-                                        <View style={style.categoriaViewButtons}>
-                                            <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => {
-                                                setIdInEdit(e.ServCat_Codigo);
-                                                setNome(e.ServCat_Nome);
-                                                setModalVisible(true);
-                                            }}>
-                                                <Text style={style.textCategoriaButton}>Editar</Text>
-                                                <MIcon name="edit" size={25} color={'#e65c00'}></MIcon>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleDeleteCategoria(e.ServCat_Codigo)}>
-                                                <Text style={style.textCategoriaButton}>Excluir</Text>
-                                                <MIcon name="delete" size={25} color={'red'}></MIcon>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => props.navigation.navigate('Servicos', { categoriaID:  e.ServCat_Codigo})}>
-                                                <Text style={style.textCategoriaButton}>Ver Serviços</Text>
-                                                <MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
-                                            </TouchableOpacity>
-                                        </View>
+                    <Text style={style.textTitle}>Categorias</Text>
+                    {categorias.map((e) => {
+                        return (
+                            <View key={e.ServCat_Codigo} style={style.categoriaComponent}>
+                                <View style={style.categoriaView}>
+                                    <View style={{width: '60%'}}>
+                                        <Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
+                                    </View>
+                                    <View style={style.categoriaViewButtons}>
+                                        <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => {
+                                            setIdInEdit(e.ServCat_Codigo);
+                                            setNome(e.ServCat_Nome);
+                                            setModalVisible(true);
+                                        }}>
+                                            <Text style={style.textCategoriaButton}>Editar</Text>
+                                            <MIcon name="edit" size={25} color={'#e65c00'}></MIcon>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleDeleteCategoria(e.ServCat_Codigo)}>
+                                            <Text style={style.textCategoriaButton}>Excluir</Text>
+                                            <MIcon name="delete" size={25} color={'red'}></MIcon>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => props.navigation.navigate('Servicos', { categoriaID:  e.ServCat_Codigo})}>
+                                            <Text style={style.textCategoriaButton}>Ver Serviços</Text>
+                                            <MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            )
-                        })}
-                    </>
-                    :<ActivityIndicator style={{marginTop: '20%'}}/>}
+                            </View>
+                        )
+                    })}
                 </>
                 :null}
             </View>
+            {loading?<Loading/>:null}
         </ScrollView>
     )
 }

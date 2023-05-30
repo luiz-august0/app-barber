@@ -10,6 +10,7 @@ import perfil from "../../img/perfil.png";
 import globalFunction from "../../globalFunction";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import { TextInput } from "react-native-paper";
+import Loading from "../../components/Loading";
 
 const Barbeiros = (props) => {
     const isFocused = useIsFocused();
@@ -99,43 +100,40 @@ const Barbeiros = (props) => {
                 </TouchableOpacity>:null}
                 {JSON.stringify(barbeiros) !== "[]"?
                 <Text style={style.textTitle}>Barbeiros</Text>:null}
-                {!loading?
-                <>
-                    {barbeiros.map((e) => {
-                        return (
-                            <View style={style.viewComponentBarbeiro} key={e.Usr_Codigo}>
-                                <View style={{flexDirection: "row"}}>
-                                    <Image 
-                                    style={style.image}
-                                    source={e.Usr_FotoPerfil !== null && e.Usr_FotoPerfil !== undefined && e.Usr_FotoPerfil !== ""?
-                                    {uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Usr_FotoPerfil}`}:perfil}/>
-                                    <View style={{padding: 10}}>
-                                        {e.Usr_Codigo !== props.usuario.state.id?
-                                        <>
-                                            <Text style={style.textDetails}>{`Nome: ${e.Usr_Nome}`}</Text>
-                                            <Text style={style.textDetails}>{`Email: ${e.Usr_Email}`}</Text>
-                                            <Text style={style.textDetails}>{`CPF: ${globalFunction.formataCPF(e.Usr_CPF)}`}</Text>
-                                            {e.Usr_Contato !== null && e.Usr_Contato !== undefined && e.Usr_Contato !== ""?
-                                            <Text style={style.textDetails}>{`Telefone: ${e.Usr_Contato}`}</Text>:null}
-                                            {e.BarbB_Especialidade !== null && e.BarbB_Especialidade !== undefined && e.BarbB_Especialidade !== ""?
-                                            <Text style={style.textDetails}>{`Especialidade: ${e.BarbB_Especialidade}`}</Text>:null}
-                                        </>:<Text style={[style.textDetails, {width: '100%'}]}>Eu</Text>}
-                                    </View>
-                                </View>
-                                <View style={style.buttonComponent}>
-                                    <TouchableOpacity onPress={() => handleDeleteBarbeiro(e.Usr_Codigo, e.Usr_Tipo)}>
-                                        <Text style={[style.text, {fontSize: 14}]}>Excluir</Text>
-                                        <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'red'}></MIcon>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: e.Usr_Codigo})}>
-                                        <Text style={[style.text, {fontSize: 14}]}>Abrir</Text>
-                                        <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#05A94E'}></MIcon>
-                                    </TouchableOpacity>
+                {barbeiros.map((e) => {
+                    return (
+                        <View style={style.viewComponentBarbeiro} key={e.Usr_Codigo}>
+                            <View style={{flexDirection: "row"}}>
+                                <Image 
+                                style={style.image}
+                                source={e.Usr_FotoPerfil !== null && e.Usr_FotoPerfil !== undefined && e.Usr_FotoPerfil !== ""?
+                                {uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Usr_FotoPerfil}`}:perfil}/>
+                                <View style={style.viewBarbeiro}>
+                                    {e.Usr_Codigo !== props.usuario.state.id?
+                                    <>
+                                        <Text style={style.textDetails}>{`Nome: ${e.Usr_Nome}`}</Text>
+                                        <Text style={style.textDetails}>{`Email: ${e.Usr_Email}`}</Text>
+                                        <Text style={style.textDetails}>{`CPF: ${globalFunction.formataCPF(e.Usr_CPF)}`}</Text>
+                                        {e.Usr_Contato !== null && e.Usr_Contato !== undefined && e.Usr_Contato !== ""?
+                                        <Text style={style.textDetails}>{`Telefone: ${e.Usr_Contato}`}</Text>:null}
+                                        {e.BarbB_Especialidade !== null && e.BarbB_Especialidade !== undefined && e.BarbB_Especialidade !== ""?
+                                        <Text style={style.textDetails}>{`Especialidade: ${e.BarbB_Especialidade}`}</Text>:null}
+                                    </>:<Text style={[style.textDetails, {width: '100%'}]}>Eu</Text>}
                                 </View>
                             </View>
-                        )
-                    })}
-                </>:<ActivityIndicator style={{marginTop: '20%'}}/>}
+                            <View style={style.buttonComponent}>
+                                <TouchableOpacity onPress={() => handleDeleteBarbeiro(e.Usr_Codigo, e.Usr_Tipo)}>
+                                    <Text style={[style.text, {fontSize: 14}]}>Excluir</Text>
+                                    <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'red'}></MIcon>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: e.Usr_Codigo})}>
+                                    <Text style={[style.text, {fontSize: 14}]}>Abrir</Text>
+                                    <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#05A94E'}></MIcon>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )
+                })}
             </View>
             <AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'90%'}>
                 <TextInput
@@ -153,6 +151,7 @@ const Barbeiros = (props) => {
                     :<ActivityIndicator/>}
                 </TouchableOpacity>
             </AbsoluteModal>
+            {loading?<Loading/>:null}
         </ScrollView>
     )
 }

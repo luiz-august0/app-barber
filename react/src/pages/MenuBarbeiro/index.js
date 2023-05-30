@@ -6,6 +6,7 @@ import globalStyles from "../../globalStyles";
 import style from "./style";
 import perfil from "../../img/perfil.png";
 import { getDataBarbeiro } from "../../services/api";
+import Loading from "../../components/Loading";
 
 const MenuBarbeiro = (props) => {
 	const isFocused = useIsFocused();
@@ -43,24 +44,22 @@ const MenuBarbeiro = (props) => {
 	return (
 		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
 			<View style={style.container}>
-				{!loading?
-				<>
-					<View style={style.imageContainer}>
-						<Image source={image} style={style.image}/>
-					</View>
-					<Text style={style.textTitleName}>{state.nome}</Text>
-					<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text>
-					<TouchableOpacity
-					style={style.button}
-					onPress={() => props.navigation.navigate('DadosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
-					>
-						<Text style={style.text}>
-							{`Dados de cadastro `}
-							<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
-						</Text>
-					</TouchableOpacity>
-				</>:<ActivityIndicator/>}
+				<View style={style.imageContainer}>
+					<Image source={image} style={style.image}/>
+				</View>
+				<Text style={style.textTitleName}>{state.nome}</Text>
+				<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text>
+				<TouchableOpacity
+				style={style.button}
+				onPress={() => props.navigation.navigate('DadosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
+				>
+					<Text style={style.text}>
+						{`Dados de cadastro `}
+						<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
+					</Text>
+				</TouchableOpacity>
 			</View>
+			{loading?<Loading/>:null}
 		</ScrollView>
 	)
 }

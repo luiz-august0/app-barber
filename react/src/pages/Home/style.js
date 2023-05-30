@@ -1,10 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         backgroundColor: globalStyles.main_color
     }, 
     image: {
@@ -18,12 +17,17 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     button: {
+        alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '11%',
-        marginBottom: '-5%',
-        width: 200,
-        height: 50,
+        width: Dimensions.get('window').width / 2.2,
+        height: 150,
         borderRadius: 20,
         backgroundColor: '#343434'
     },
+    viewButtons: {
+        flex: 1, 
+        flexDirection: "row", 
+        justifyContent: "space-evenly", 
+        marginTop: 50
+    }
 });

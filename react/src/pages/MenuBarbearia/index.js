@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image, Linking, ActivityIndicator } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import { useIsFocused } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import globalFunction from "../../globalFunction";
 import style from "./style";
 import perfil from "../../img/perfil.png";
 import { getDadosBarbearia } from "../../services/api";
+import Loading from "../../components/Loading";
 
 const MenuBarbearia = (props) => {
 	const isFocused = useIsFocused();
@@ -53,60 +54,58 @@ const MenuBarbearia = (props) => {
 	return (
 		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
 			<View style={style.container}>
-				{!loading?
-				<>
-					<View style={style.imageContainer}>
-						<Image source={image} style={style.image}/>
-					</View>
-					<Text style={style.textTitle}>{state.nome}</Text>
-					<TouchableOpacity
-					style={style.button}
-					onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
-					>
-						<Text style={style.text}>
-							{`Dados de cadastro `}
-							<MIcon name="office-building" size={25} color={'#ffff'}></MIcon>
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-					style={style.button}
-					onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
-					>
-						<Text style={[style.text]}>
-							{`Horários `}
-							<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-					style={style.button}
-					onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
-					>
-						<Text style={style.text}>
-							{`Barbeiros `}
-							<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-					style={style.button}
-					onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
-					>
-						<Text style={style.text}>
-							{`Serviços `}
-							<MIcon name="scissors-cutting" size={25} color={'#ffff'}></MIcon>
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-					style={[style.button, {height: 100}]}
-					onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
-					>
-						<Text style={style.text}>
-							{`Visualizar no mapa `}
-							<MIcon name="google-maps" size={25} color={'#ffff'}></MIcon>
-						</Text>
-						<Text style={[style.text, { fontSize: 12, fontFamily: 'Montserrat-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
-					</TouchableOpacity>
-				</>:<ActivityIndicator/>}
+				<View style={style.imageContainer}>
+					<Image source={image} style={style.image}/>
+				</View>
+				<Text style={style.textTitle}>{state.nome}</Text>
+				<TouchableOpacity
+				style={style.button}
+				onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
+				>
+					<Text style={style.text}>
+						{`Dados de cadastro `}
+						<MIcon name="office-building" size={25} color={'#ffff'}></MIcon>
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+				style={style.button}
+				onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
+				>
+					<Text style={[style.text]}>
+						{`Horários `}
+						<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+				style={style.button}
+				onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
+				>
+					<Text style={style.text}>
+						{`Barbeiros `}
+						<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+				style={style.button}
+				onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
+				>
+					<Text style={style.text}>
+						{`Serviços `}
+						<MIcon name="scissors-cutting" size={25} color={'#ffff'}></MIcon>
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+				style={[style.button, {height: 100}]}
+				onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
+				>
+					<Text style={style.text}>
+						{`Visualizar no mapa `}
+						<MIcon name="google-maps" size={25} color={'#ffff'}></MIcon>
+					</Text>
+					<Text style={[style.text, { fontSize: 12, fontFamily: 'Montserrat-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
+				</TouchableOpacity>
 			</View>
+			{loading?<Loading/>:null}
 		</ScrollView>
 	)
 }

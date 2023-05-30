@@ -15,8 +15,11 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#ffff',
     },
+    viewBarbeiro: {
+        flex: 1, 
+        padding: 10
+    },
     textDetails: {
-        width: '60%',
         fontSize: 14,
         fontFamily: 'Montserrat-Regular',
         color: '#ffff',
