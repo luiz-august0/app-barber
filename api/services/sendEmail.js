@@ -27,18 +27,13 @@ export default async function sendEmail(email, link, tipo) {
             },
         });
       
-        try {
-            await transporter.sendMail({
-                from: "Suporte Barbeiro App",
-                to: email,
-                subject: subjectEmail,
-                html: htmlEmail
-            });   
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        
+        await transporter.sendMail({
+            from: "Suporte Barbeiro App",
+            to: email,
+            subject: subjectEmail,
+            html: htmlEmail
+        });   
     }
 
     return await send();

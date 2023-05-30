@@ -1,5 +1,5 @@
+import Queue from '../lib/Queue';
 import { checkPassword, createPasswordHash } from '../services/auth';
-import sendEmail from '../sendEmail';
 
 const mysql = require('../config/mysql').pool;
 
@@ -312,16 +312,21 @@ class UsuarioController {
                         } else {
                             const email = JSON.stringify(result[0].Usr_Email).slice(0, -1).slice(1 | 1);
                             const key = JSON.stringify(result[0].Email).slice(0, -1).slice(1 | 1);
-                            const link = `https://app-barber.vercel.app/${key}`
-                            const send = async() => {
-                                if (await sendEmail(email, link, 'RECUPERACAO')) {
-                                    return res.status(201).json();
-                                } else {
-                                    return res.status(400).json();
-                                }
-                            }
+                            const link = `https://app-barber.vercel.app/${key}`;
 
+                            const data = {
+                                email,
+                                link,
+                                tipo: 'RECUPERACAO'
+                            };
+
+                            const send = async() => {
+                                await Queue.add('SenderMail', data);
+                                await Queue.add('Teste', data);
+                            }
                             send();
+
+                            return res.status(201).json();
                         }
                     }
                 )

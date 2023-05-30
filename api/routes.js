@@ -1,4 +1,4 @@
-import { Router, static as Static } from "express";
+import { Router } from "express";
 import SessionController from "./routes/SessionController";
 import auth from "./middlewares/auth";
 import UsuarioController from "./routes/UsuarioController";
@@ -6,10 +6,23 @@ import BarbeariaController from "./routes/BarbeariaController";
 import BarbeariaHorariosController from "./routes/BarbeariaHorariosController";
 import BarbeariaServicosController from "./routes/BarbeariaServicosController";
 import BarbeariaBarbeirosController from "./routes/BarbeariaBarbeirosController";
-const uploadFile = require('./uploadFile');
+import Queue from "./lib/Queue";
+const { createBullBoard } = require('@bull-board/api');
+const { BullAdapter } = require('@bull-board/api/bullAdapter');
+const { ExpressAdapter } = require('@bull-board/express');
+const uploadFile = require('./services/uploadFile');
+
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath('/admin/queues');
+
+createBullBoard({	
+	queues: Queue.queues.map(queue => new BullAdapter(queue.bull)),
+  	serverAdapter 
+})
 
 const routes = new Router();
 
+routes.use('/admin/queues', serverAdapter.getRouter());
 routes.post('/usuario', UsuarioController.create);
 routes.post('/usuarioVerify', UsuarioController.verify);
 routes.post('/usuario_emailrecuperacao', UsuarioController.postEnviaEmailRecuperacaoSenha);
