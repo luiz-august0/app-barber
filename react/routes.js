@@ -29,7 +29,6 @@ const Routes = () => {
             headerShown: true,
             headerBackTitleVisible: false,
             headerTitle: '',
-            headerStyle: { backgroundColor: globalStyles.main_color },
             headerTintColor: '#000',
             headerTransparent: true
             }}

@@ -27,9 +27,8 @@ const MenuBarbearia = (props) => {
             const response = await getDadosBarbearia(id);
             if (response.data[0].Barb_LogoUrl !== '' && response.data[0].Barb_LogoUrl !== null) {
                 setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${response.data[0].Barb_LogoUrl}`})
-            } else {
-                setImage(perfil);
             }
+
 			setValueState('nome', response.data[0].Barb_Nome);
 			setValueState('rua', response.data[0].Barb_Rua);
 			setValueState('numero', response.data[0].Barb_Numero);
@@ -54,56 +53,56 @@ const MenuBarbearia = (props) => {
 	return (
 		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
 			<View style={style.container}>
+				{image!==null?				
 				<View style={style.imageContainer}>
 					<Image source={image} style={style.image}/>
 				</View>
+				:null}
 				<Text style={style.textTitle}>{state.nome}</Text>
-				<TouchableOpacity
-				style={style.button}
-				onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
-				>
-					<Text style={style.text}>
-						{`Dados de cadastro `}
-						<MIcon name="office-building" size={25} color={'#ffff'}></MIcon>
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-				style={style.button}
-				onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
-				>
-					<Text style={[style.text]}>
-						{`Horários `}
-						<MIcon name="timetable" size={25} color={'#ffff'}></MIcon>
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-				style={style.button}
-				onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
-				>
-					<Text style={style.text}>
-						{`Barbeiros `}
-						<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-				style={style.button}
-				onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
-				>
-					<Text style={style.text}>
-						{`Serviços `}
-						<MIcon name="scissors-cutting" size={25} color={'#ffff'}></MIcon>
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-				style={[style.button, {height: 100}]}
-				onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
-				>
-					<Text style={style.text}>
-						{`Visualizar no mapa `}
-						<MIcon name="google-maps" size={25} color={'#ffff'}></MIcon>
-					</Text>
-					<Text style={[style.text, { fontSize: 12, fontFamily: 'Montserrat-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
-				</TouchableOpacity>
+				<View style={{flex: 1}}>
+					<View style={style.viewButtons}>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
+						>
+							<MIcon name="office-building" size={80} color={'#ffff'}></MIcon>
+							<Text style={style.text}>Dados de cadastro</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
+						>
+							<MIcon name="timetable" size={80} color={'#ffff'}></MIcon>
+							<Text style={style.text}>Horários</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={style.viewButtons}>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
+						>
+							<MAIcon name="person" size={80} color={'#ffff'}></MAIcon>
+							<Text style={style.text}>Barbeiros</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
+						>
+							<MIcon name="scissors-cutting" size={80} color={'#ffff'}></MIcon>
+							<Text style={style.text}>Serviços</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={[style.viewButtons, { flexDirection: "column" }]}>
+						<TouchableOpacity
+						style={[style.button, { height: 200 }]}
+						onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
+						>
+							<MIcon name="google-maps" size={70} color={'#ffff'}></MIcon>
+							<Text style={style.text}>Visualizar no mapa</Text>
+							<Text style={[style.text, { fontSize: 12, fontFamily: 'Montserrat-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</View>
 			{loading?<Loading/>:null}
 		</ScrollView>
