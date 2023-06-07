@@ -5,10 +5,12 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        marginTop: 50,
         backgroundColor: globalStyles.main_color
     }, 
     containerPassword: {
         flex: 1,
+        marginTop: '50%',
         backgroundColor: globalStyles.main_color
     },
     textTitle: {
@@ -17,7 +19,6 @@ export default StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#000',
-        marginTop: 100,
         marginBottom: 10
     },
     text: {
@@ -43,7 +44,6 @@ export default StyleSheet.create({
         backgroundColor: '#0096FF'
     },
     safeAreaC: {
-        marginTop: '20%',
         justifyContent: 'center',
         alignItems: 'center'
     },

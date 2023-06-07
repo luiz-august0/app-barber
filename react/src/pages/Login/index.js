@@ -25,7 +25,7 @@ const Login = (props) => {
       const data = resolve.dataUsuario;
       if (resolve.authenticated) {
         props.onLogin(data);
-        props.navigation.navigate('Home');
+        props.navigation.navigate('HomeNav');
       }
     });
     setIsLoading(false);
@@ -52,7 +52,7 @@ const Login = (props) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
-            props.navigation.navigate('Home');
+            props.navigation.navigate('HomeNav');
           }
         });
         setIsLoading(false);

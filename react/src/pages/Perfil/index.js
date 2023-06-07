@@ -156,7 +156,6 @@ const Perfil = (props) => {
     return (
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-                <Text style={style.textTitle}>Dados do Usuário</Text>
                 {loading?
                 <View style={[style.containerIndicator, style.horizontalIndicator]}>
                     <ActivityIndicator/>
@@ -303,7 +302,6 @@ const EditarSenha = (props) => {
     return (
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.containerPassword} >
-                <Text style={style.textTitle}>Alterar senha do usuário</Text>
                 <SafeAreaView style={style.safeAreaC}>
                     <TextInput
                     style={style.inputC}

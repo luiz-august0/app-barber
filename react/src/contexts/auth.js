@@ -32,8 +32,11 @@ const login = (dispatch) => {
             }
 
         } catch (error) {
-            console.log(error)
-            Alert.alert('Atenção', 'Email ou senha inválido');
+            if (error.message === "Request failed with status code 401") {
+                Alert.alert('Atenção', 'Email ou senha inválido');
+            } else {
+                Alert.alert('Atenção', 'Ops, ocorreu algum erro ao realizar o login, contate o suporte');
+            }
             return {authenticated: false};
         }
     }

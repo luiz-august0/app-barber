@@ -45,11 +45,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    safeAreaCfinaliza: {
-        marginTop: '30%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     inputC: {
         marginTop: 10,
         width: '70%',
@@ -95,5 +90,13 @@ export default StyleSheet.create({
         height: 40,
         borderRadius: 10,
         backgroundColor: '#05A94E'
+    },
+    textHeader: {
+        color: '#000', 
+        marginTop: 120, 
+        textAlign: 'center', 
+        fontSize: 27, 
+        fontWeight: 'bold', 
+        fontFamily: 'Montserrat-Bold'
     }
 });

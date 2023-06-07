@@ -63,7 +63,6 @@ const Home = (props) => {
 
     return (
         <View style={style.container}>
-            <Header navigation={props.navigation} route={props.route}/>
             <View style={style.viewButtons}>
                 {menuAvailable()}
                 <TouchableOpacity

@@ -66,7 +66,7 @@ const C01 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={{ color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Quem é você ?</Text>
+        <Text style={style.textHeader}>Quem é você ?</Text>
         <SafeAreaView style={style.safeAreaC}>
           <TextInput
             style={style.inputC}
@@ -185,7 +185,7 @@ const C02 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={{ color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Informações pessoais</Text>
+        <Text style={style.textHeader}>Informações pessoais</Text>
         <SafeAreaView style={style.safeAreaC}>
           <TextInput
             style={style.inputC}
@@ -292,7 +292,7 @@ const C03 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={{ color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }}>Crie uma senha segura</Text>
+        <Text style={style.textHeader}>Crie uma senha segura</Text>
         <SafeAreaView style={style.safeAreaC}>
           <TextInput
             style={style.inputC}
@@ -424,7 +424,7 @@ const C04 = (props) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
-            props.navigation.navigate('Home');
+            props.navigation.navigate('HomeNav');
           }
         });
         Alert.alert('Atenção', 'Usuário cadastrado com sucesso!');
@@ -444,9 +444,9 @@ const C04 = (props) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container}>
+        {!loading?<Text style={{ color: '#000', textAlign: 'center', marginTop: 120, fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar dados</Text>:null}
         {!loading?
-          <SafeAreaView style={style.safeAreaCfinaliza}>
-            <Text style={{ color: '#000', textAlign: 'center', fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar dados</Text>
+          <SafeAreaView style={style.safeAreaC}>
             <TextInput
               style={style.inputC}
               mode='flat'
@@ -614,8 +614,7 @@ const RedefinirSenha = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
-      <View style={style.container} >
-        <Text style={{ color: '#000', marginTop: 120, textAlign: 'center', fontSize: 27, fontWeight: 'bold', }} >Redefinição de senha</Text>
+      <View style={[style.container, { marginTop: '50%' }]} >
         <SafeAreaView style={style.safeAreaC}>
           <TextInput
             style={style.inputC}

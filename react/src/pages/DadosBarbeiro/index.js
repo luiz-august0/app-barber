@@ -189,7 +189,6 @@ const DadosBarbeiro = (props) => {
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
                 {loadingData?<Loading/>:null}
-                <Text style={style.textTitle}>Dados do Barbeiro</Text>
                 {loading?
                 <View style={[style.containerIndicator, style.horizontalIndicator]}>
                     <ActivityIndicator/>
