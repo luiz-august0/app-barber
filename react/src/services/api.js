@@ -169,7 +169,6 @@ export const postImagemServico = async(id, file) => {
 };
 
 export const deleteImagemServico = async(id, imgUrl) => {
-    console.log(imgUrl)
     return api.post(`/barbearia_servicoimagem_remove/${id}`, { imgUrl });
 };
 

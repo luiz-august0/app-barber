@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image, ActivityIndicator, Alert } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useIsFocused } from "@react-navigation/native";
 import globalStyles from "../../globalStyles";
 import style from "./style";
@@ -49,15 +50,24 @@ const MenuBarbeiro = (props) => {
 				</View>
 				<Text style={style.textTitleName}>{state.nome}</Text>
 				<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text>
-				<TouchableOpacity
-				style={style.button}
-				onPress={() => props.navigation.navigate('DadosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
-				>
-					<Text style={style.text}>
-						{`Dados de cadastro `}
-						<MAIcon name="person" size={25} color={'#ffff'}></MAIcon>
-					</Text>
-				</TouchableOpacity>
+				<View style={{flex: 1}}>
+					<View style={style.viewButtons}>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('DadosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
+						>
+							<MAIcon name="person" size={80} color={'#ffff'}></MAIcon>
+							<Text style={style.text}>Dados de cadastro</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+						style={style.button}
+						onPress={() => props.navigation.navigate('ServicosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
+						>
+							<MIcon name="scissors-cutting" size={80} color={'#ffff'}></MIcon>
+							<Text style={style.text}>Serviços vinculados</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</View>
 			{loading?<Loading/>:null}
 		</ScrollView>

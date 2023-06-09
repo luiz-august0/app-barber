@@ -3,11 +3,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Platform,
     Image,
-    TouchableOpacity
 } from 'react-native';
-import icon from "../img/imgMenu.png";
 import perfil from "../img/perfil.png";
 import { connect } from 'react-redux';
 

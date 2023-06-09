@@ -1,21 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
 import style from "./style";
-import Header from "../../components/Header";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
-import { Context } from "../../contexts/auth";
 import { usuarioLogado } from "../../store/actions/usuario";
 
 const Home = (props) => {
-    const { logout } = useContext(Context);
-
-    const logoutEvent = () => {
-        logout();
-        props.onLogout();
-        props.navigation.navigate('Login');
-    }
-
     useEffect(() =>{
         const backAction = () => {
             Alert.alert('Atenção', 'Deseja realmente sair do aplicativo?', [
@@ -65,12 +55,6 @@ const Home = (props) => {
         <View style={style.container}>
             <View style={style.viewButtons}>
                 {menuAvailable()}
-                <TouchableOpacity
-                style={style.button}
-                onPress={() => logoutEvent()}
-                >
-                    <Text style={style.text}>Sair</Text>
-                </TouchableOpacity>
             </View>
         </View>
     )

@@ -25,6 +25,7 @@ import Barbeiros from './src/pages/Barbeiros';
 import DadosBarbeiro from './src/pages/DadosBarbeiro';
 import MenuBarbeiro from './src/pages/MenuBarbeiro';
 import Header from './src/components/Header';
+import ServicosBarbeiro from './src/pages/ServicosBarbeiro';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -199,6 +200,11 @@ const Routes = () => {
                     name="DadosBarbeiro"
                     component={DadosBarbeiro}
                     options={{ headerTitle: "Dados do Barbeiro" }}
+                    />
+                    <Stack.Screen
+                    name="ServicosBarbeiro"
+                    component={ServicosBarbeiro}
+                    options={{ headerTitle: "Serviços vinculados" }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

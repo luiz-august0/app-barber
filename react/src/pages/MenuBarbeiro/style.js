@@ -4,8 +4,8 @@ import globalStyles from '../../globalStyles';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         marginTop: 100,
+        alignItems: 'center',
         backgroundColor: globalStyles.main_color
     }, 
     textTitleName: {
@@ -33,12 +33,12 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     button: {
-        marginTop: 10,
-        marginBottom: 10,
+        alignItems: 'center',
         justifyContent: 'center',
-        width: 250,
-        height: 60,
+        width: Dimensions.get('window').width / 2.2,
+        height: 150,
         borderRadius: 20,
+        marginHorizontal: 5,
         backgroundColor: '#343434'
     },
     imageContainer: {
@@ -50,6 +50,12 @@ export default StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
-        borderRadius: 15
+        borderRadius: 50
     },
+    viewButtons: { 
+        flexDirection: "row", 
+        justifyContent: "space-evenly", 
+        alignItems: 'center',
+        marginTop: 10,
+    }
 });
