@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, Fla
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
 import style from "./style";
-import { getBarbeariaCategoriaServicos, getBarbeariaCategorias } from "../../services/api";
+import { deleteServicoBarbeiro, getBarbeariaCategorias, getServicosBarbeiro, postServicoBarbeiro } from "../../services/api";
 import Loading from "../../components/Loading";
 import globalStyles from "../../globalStyles";
 import AbsoluteModal from "../../components/AbsoluteModal";
@@ -32,8 +32,8 @@ const ServicosBarbeiro = (props) => {
 		setLoadingServicos(true);
         try {
 			let array = [];
-            const response = await getBarbeariaCategoriaServicos(id);
-			response.data.map((e) => array.push({Serv_Codigo: e.Serv_Codigo, Serv_Nome: e.Serv_Nome, ServCat_Codigo: e.ServCat_Codigo, Serv_Valor: e.Serv_Valor, Minutos: e.Minutos, Vinculado: false}));
+            const response = await getServicosBarbeiro(props.route.params?.barbeiroID, props.route.params?.barbeariaID, id);
+			response.data.map((e) => array.push({Serv_Codigo: e.Serv_Codigo, Serv_Nome: e.Serv_Nome, ServCat_Codigo: e.ServCat_Codigo, Serv_Valor: e.Serv_Valor, Minutos: e.Minutos, Vinculado: e.Vinculo==1?true:false}));
 			setServicos(array);
         } catch (error) {
 			Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao carregar os serviços da categoria selecionada, contate o suporte');
@@ -82,61 +82,75 @@ const ServicosBarbeiro = (props) => {
     }
 
 	const handleSubmit = async() => {
-
+		setLoadingSubmit(true);
+		let arrayVinculos = servicos.filter(e => e.Vinculado == true);
+		
+		try {
+			await deleteServicoBarbeiro(props.route.params?.barbeiroID, props.route.params?.barbeariaID);
+			for (let i = 0; i < arrayVinculos.length; i++) {
+				const e = arrayVinculos[i];
+				await postServicoBarbeiro(props.route.params?.barbeiroID, props.route.params?.barbeariaID, e.Serv_Codigo);
+			}
+			Alert.alert('Atenção', 'Serviços vinculados com sucesso');
+		} catch (error) {
+			Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao carregar os serviços da categoria selecionada, contate o suporte');
+		}
+		setLoadingSubmit(false);
+		setModalVisible(false);
+		setServicos([]);
 	}
 
+	if (loadingCategorias) {
+		return <Loading/>
+	} else {
 	return (
 		<ScrollView style={{backgroundColor: globalStyles.main_color}}>
 			<View style={style.container}>	
-				{!loadingCategorias?
+				{JSON.stringify(categorias) !== "[]"?
 				<>
-					{JSON.stringify(categorias) !== "[]"?
-					<>
-						<Text style={style.textTitle}>Categorias</Text>
-						{categorias.map((e) => {
-							return (
-								<View key={e.ServCat_Codigo} style={style.categoriaComponent}>
-									<View style={style.categoriaView}>
-										<View style={{width: '60%'}}>
-											<Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
-										</View>
-										<View style={style.categoriaViewButtons}>
-											<TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
-												<Text style={style.textCategoriaButton}>Selecionar</Text>
-												<MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
-											</TouchableOpacity>
-										</View>
+					<Text style={style.textTitle}>Categorias</Text>
+					{categorias.map((e) => {
+						return (
+							<View key={e.ServCat_Codigo} style={style.categoriaComponent}>
+								<View style={style.categoriaView}>
+									<View style={{width: '60%'}}>
+										<Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
+									</View>
+									<View style={style.categoriaViewButtons}>
+										<TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
+											<Text style={style.textCategoriaButton}>Selecionar</Text>
+											<MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
+										</TouchableOpacity>
 									</View>
 								</View>
-							)
-						})}
-						<AbsoluteModal width={'100%'} handlePressOut={handlePressOut} modalVisible={modalVisible}>
-							{!loadingServicos?
+							</View>
+						)
+					})}
+					<AbsoluteModal width={'100%'} handlePressOut={handlePressOut} modalVisible={modalVisible}>
+						{!loadingServicos?
+						<>
+							{JSON.stringify(servicos) !== "[]"?
 							<>
-								{JSON.stringify(servicos) !== "[]"?
-								<>
-									<Text style={[style.textTitle, {fontSize: 18, marginTop: 0}]}>Selecione os serviços que serão vinculados ao barbeiro</Text>
-									<FlatList
-										style={{width: '110%'}}
-										data={servicos}
-										renderItem={({item}) => <RenderItem id={item.Serv_Codigo} nome={item.Serv_Nome} valor={item.Serv_Valor} duracao={item.Minutos} vinculado={item.Vinculado}/>}
-										keyExtractor={item => item.Serv_Codigo}
-									/>
-									<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.confirmButton, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    					{loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
-                					</TouchableOpacity>
-								</>
-								:<Text style={[style.text, {fontSize: 14, color: '#000'}]}>Não há serviços cadastrados para a categoria selecionada</Text>}
+								<Text style={[style.textTitle, {fontSize: 18, marginTop: 0}]}>Selecione os serviços que serão vinculados ao barbeiro</Text>
+								<FlatList
+									style={{width: '110%'}}
+									data={servicos}
+									renderItem={({item}) => <RenderItem id={item.Serv_Codigo} nome={item.Serv_Nome} valor={item.Serv_Valor} duracao={item.Minutos} vinculado={item.Vinculado}/>}
+									keyExtractor={item => item.Serv_Codigo}
+								/>
+								<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.confirmButton, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+									{loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
+								</TouchableOpacity>
 							</>
-							:<ActivityIndicator/>}
-						</AbsoluteModal>
-					</>
-					:<Text style={[style.textTitle, {fontSize: 18}]}>Não há categorias de serviço cadastradas</Text>}
+							:<Text style={[style.text, {fontSize: 14, color: '#000'}]}>Não há serviços cadastrados para a categoria selecionada</Text>}
+						</>
+						:<ActivityIndicator/>}
+					</AbsoluteModal>
 				</>
-				:<Loading/>}
+				:<Text style={[style.textTitle, {fontSize: 18}]}>Não há categorias de serviço cadastradas</Text>}
 			</View>
 		</ScrollView>
-	)
+	)}
 }
 
 export default ServicosBarbeiro;

@@ -444,7 +444,7 @@ const C04 = (props) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container}>
-        {!loading?<Text style={{ color: '#000', textAlign: 'center', marginTop: 120, fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar dados</Text>:null}
+        {!loading?<Text style={{ color: '#000', textAlign: 'center', marginTop: 120, fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar</Text>:null}
         {!loading?
           <SafeAreaView style={style.safeAreaC}>
             <TextInput

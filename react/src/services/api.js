@@ -200,6 +200,18 @@ export const getBarbeariasByBarbeiro = async(id) => {
 export const getDataBarbeiro = async(barbeariaID, usuarioID) => {
     return api.post('/barbearia_barbeiroData', { barbeariaID, usuarioID });
 };
+
+export const getServicosBarbeiro = async(usuarioID, barbeariaID, categoriaID) => {
+    return api.post('/barbeiro_servico_get', { usuarioID, barbeariaID, categoriaID });
+};
+
+export const postServicoBarbeiro = async(usuarioID, barbeariaID, servicoID) => {
+    return api.post('/barbeiro_servico_post', { usuarioID, barbeariaID, servicoID });
+};
+
+export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
+    return api.post('/barbeiro_servico_remove', { usuarioID, barbeariaID });
+};
 /**************************************************************/
 
 /*GoogleMaps*/

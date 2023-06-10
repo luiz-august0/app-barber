@@ -32,6 +32,9 @@ const UsuarioBarbearias = (props) => {
         }
     }, [props, isFocused]);
 
+    if (isLoading) {
+        return <Loading/>
+    } else {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -60,9 +63,8 @@ const UsuarioBarbearias = (props) => {
                     )
                 })}
             </View>
-            {isLoading?<Loading/>:null}
         </ScrollView>
-    )
+    )}
 }
     
 const mapStateToProps = ({ usuario }) => {

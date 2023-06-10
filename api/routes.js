@@ -110,5 +110,8 @@ routes.post('/barbearia_barbeiro_remove', BarbeariaBarbeirosController.deleteBar
 routes.get('/barbearia_barbeirosByBarbearia/:id', BarbeariaBarbeirosController.getBarbeirosByBarbearia);
 routes.get('/barbearia_barbeariasByBarbeiro/:id', BarbeariaBarbeirosController.getBarbeariasByBarbeiro);
 routes.post('/barbearia_barbeiroData', BarbeariaBarbeirosController.getDataBarbeiro);
+routes.post('/barbeiro_servico_get', BarbeariaBarbeirosController.getServicosBarbeiro);
+routes.post('/barbeiro_servico_post', BarbeariaBarbeirosController.postServicoBarbeiro);
+routes.post('/barbeiro_servico_remove', BarbeariaBarbeirosController.deleteServicoBarbeiro);
 
 export default routes;

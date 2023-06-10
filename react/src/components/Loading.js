@@ -1,20 +1,18 @@
 import React from "react";
-import { ActivityIndicator, Modal, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import globalStyles from "../globalStyles";
 
 const Loading = () => {
     return (
-        <Modal
-        transparent={true}
-        >
-            <View style={style.loading}>
-                <ActivityIndicator animating={true}/>
-            </View>
-        </Modal>
+        <View style={style.loading}>
+            <ActivityIndicator animating={true}/>
+        </View>
     )
 }
 
 const style = StyleSheet.create({
     loading: {
+        backgroundColor: globalStyles.main_color,
         position: 'absolute',
         left: 0,
         right: 0,

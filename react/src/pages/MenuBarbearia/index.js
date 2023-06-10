@@ -50,6 +50,9 @@ const MenuBarbearia = (props) => {
         }
     }, [props, isFocused]);
 
+	if (loading) {
+		return <Loading/>
+	} else {
 	return (
 		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
 			<View style={style.container}>
@@ -104,9 +107,8 @@ const MenuBarbearia = (props) => {
 					</View>
 				</View>
 			</View>
-			{loading?<Loading/>:null}
 		</ScrollView>
-	)
+	)}
 }
 
 export default MenuBarbearia;

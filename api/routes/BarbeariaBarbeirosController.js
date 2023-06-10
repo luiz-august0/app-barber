@@ -145,6 +145,73 @@ class BarbeariaBarbeirosController {
             return res.status(500).json({ error: "Internal server error." })
         }
     }
+
+    async postServicoBarbeiro(req, res) {
+        const { usuarioID, barbeariaID, servicoID } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+					`INSERT INTO barbeiro_servicos VALUES(${usuarioID}, ${barbeariaID}, ${servicoID})`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
+    async deleteServicoBarbeiro(req, res) {
+        const { usuarioID, barbeariaID } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+					`DELETE FROM barbeiro_servicos WHERE Usr_Codigo = ${usuarioID} AND Barb_Codigo = ${barbeariaID}`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
+    async getServicosBarbeiro(req, res) {
+        const { usuarioID, barbeariaID, categoriaID } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT SV.*, FORMAT(TIME_TO_SEC(SV.Serv_Duracao) / 60,0) AS Minutos,
+                     IF(BSV.Usr_Codigo IS NULL, FALSE, TRUE) AS Vinculo
+                     FROM servico SV 
+                     LEFT JOIN barbeiro_servicos BSV
+                     ON SV.Serv_Codigo = BSV.Serv_Codigo
+                     AND BSV.Usr_Codigo = ${usuarioID}
+                     AND BSV.Barb_Codigo = ${barbeariaID}
+                     WHERE SV.ServCat_Codigo = ${categoriaID}`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
 }
 
 export default new BarbeariaBarbeirosController();

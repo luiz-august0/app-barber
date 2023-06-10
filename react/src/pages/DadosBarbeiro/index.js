@@ -185,10 +185,12 @@ const DadosBarbeiro = (props) => {
         
     }
 
+    if (loadingData) {
+        return <Loading/>
+    } else {
     return (
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
-                {loadingData?<Loading/>:null}
                 {loading?
                 <View style={[style.containerIndicator, style.horizontalIndicator]}>
                     <ActivityIndicator/>
@@ -323,7 +325,7 @@ const DadosBarbeiro = (props) => {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingWrapper>
-    )
+    )}
 }
 
 const mapStateToProps = ({ usuario }) => {

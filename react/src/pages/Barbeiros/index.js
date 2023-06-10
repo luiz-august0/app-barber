@@ -84,6 +84,9 @@ const Barbeiros = (props) => {
         }
     }, [props, isFocused]);
 
+    if (loading) {
+        return <Loading/>
+    } else {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -151,9 +154,8 @@ const Barbeiros = (props) => {
                     :<ActivityIndicator/>}
                 </TouchableOpacity>
             </AbsoluteModal>
-            {loading?<Loading/>:null}
         </ScrollView>
-    )
+    )}
 }
 
 const mapStateToProps = ({ usuario }) => {
