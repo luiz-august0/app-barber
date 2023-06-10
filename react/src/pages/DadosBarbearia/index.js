@@ -887,7 +887,7 @@ const DadosBarbearia = (props) => {
                     )
                 })}
                 <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Confirmar dados</Text>}
+                    {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingWrapper>
