@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image, Alert } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Alert, SafeAreaView, RefreshControl } from "react-native";
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useIsFocused } from "@react-navigation/native";
@@ -13,14 +13,14 @@ const MenuBarbeiro = (props) => {
 	const isFocused = useIsFocused();
 	const [state, setState] = useState({'nome': '', 'espec': ''});
 	const [image, setImage] = useState(null);
-	const [loading, setLoading] = useState(false);
+	const [refresh, setRefresh] = useState(false);
 
 	const setValueState = (input, value) => {
         setState(prevState => ({ ...prevState, [input]: value }));
     }
 
 	const getData= async() => {
-		setLoading(true);
+		setRefresh(true);
         try {
             const response = await getDataBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID);
             if (response.data[0].Usr_FotoPerfil !== '' && response.data[0].Usr_FotoPerfil !== null) {
@@ -33,7 +33,7 @@ const MenuBarbeiro = (props) => {
         } catch (error) {
 			Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao carregar os dados do barbeiro, contate o suporte' );
         }
-		setLoading(false);
+		setRefresh(false);
     }
 
 	useEffect(() => {
@@ -42,12 +42,12 @@ const MenuBarbeiro = (props) => {
         }
     }, [props, isFocused]);
 
-	if (loading) {
-		return <Loading/>
-	} else {
 	return (
-		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-			<View style={style.container}>
+		<SafeAreaView style={style.container}>
+			<ScrollView 
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getData()}/> }	
+			>
 				<View style={style.imageContainer}>
 					<Image source={image} style={style.image}/>
 				</View>
@@ -71,9 +71,9 @@ const MenuBarbeiro = (props) => {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
-		</ScrollView>
-	)}
+			</ScrollView>
+		</SafeAreaView>
+	)
 }
 
 export default MenuBarbeiro;

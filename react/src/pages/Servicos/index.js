@@ -29,6 +29,9 @@ const Servicos = (props) => {
         }
     }, [props, isFocused]);
 
+    if (loading) { 
+        return <Loading/>
+    } else {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -56,9 +59,8 @@ const Servicos = (props) => {
                     )
                 })}
             </View>
-            {loading?<Loading/>:null}
         </ScrollView>
-    )
+    )}
 }
     
 export default Servicos;

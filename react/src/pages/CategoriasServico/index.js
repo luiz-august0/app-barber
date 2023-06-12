@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, SafeAreaView, RefreshControl } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import style from "./style";
 import globalStyles from "../../globalStyles";
@@ -106,35 +106,17 @@ const CategoriasServico = (props) => {
     }
 
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-            <View style={style.container}>
+        <SafeAreaView style={style.container}>
+            <ScrollView
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={loading} onRefresh={() => getCategorias()}/> }
+            >
                 <TouchableOpacity
                 style={style.button}
                 onPress={() => setModalVisible(true)}
                 >
                     <Text style={style.text}>Cadastrar Nova Categoria</Text>
                 </TouchableOpacity>
-                <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
-                    <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#fff'
-                    label="Nome"
-                    error={errors.nome !== null ? true : false}
-                    onFocus={() => handleError(null, 'nome')}
-                    theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="content-cut" />}
-                    value={nome}
-                    onChangeText={(nome) => setNome(nome)}
-                    />
-                    <HelperText type="error" visible={errors.nome !== null ? true : false}>
-                        {errors.nome}
-                    </HelperText>
-                    <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
-                        {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
-                        :<ActivityIndicator/>}
-                    </TouchableOpacity>
-                </AbsoluteModal>
                 {JSON.stringify(categorias) !== "[]"?
                 <>
                     <Text style={style.textTitle}>Categorias</Text>
@@ -142,7 +124,7 @@ const CategoriasServico = (props) => {
                         return (
                             <View key={e.ServCat_Codigo} style={style.categoriaComponent}>
                                 <View style={style.categoriaView}>
-                                    <View style={{width: '60%'}}>
+                                    <View style={{flex: 1}}>
                                         <Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
                                     </View>
                                     <View style={style.categoriaViewButtons}>
@@ -169,9 +151,29 @@ const CategoriasServico = (props) => {
                     })}
                 </>
                 :null}
-            </View>
-            {loading?<Loading/>:null}
-        </ScrollView>
+                <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
+                    <TextInput
+                    style={style.input}
+                    mode='flat'
+                    activeOutlineColor='#fff'
+                    label="Nome"
+                    error={errors.nome !== null ? true : false}
+                    onFocus={() => handleError(null, 'nome')}
+                    theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+                    left={<TextInput.Icon color="white" name="content-cut" />}
+                    value={nome}
+                    onChangeText={(nome) => setNome(nome)}
+                    />
+                    <HelperText type="error" visible={errors.nome !== null ? true : false}>
+                        {errors.nome}
+                    </HelperText>
+                    <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
+                        {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
+                        :<ActivityIndicator/>}
+                    </TouchableOpacity>
+                </AbsoluteModal>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
     

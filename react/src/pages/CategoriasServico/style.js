@@ -5,11 +5,9 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 45,
         backgroundColor: globalStyles.main_color
     }, 
     text: {
-        width: '100%',
         fontSize: 18,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
@@ -28,7 +26,6 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     textTitle: {
-        width: '100%',
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
@@ -48,7 +45,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         padding: 9,
         marginTop: 20,
-        width: "90%",
         borderRadius: 10,
         backgroundColor: '#343434'
     },

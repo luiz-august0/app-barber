@@ -5,7 +5,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 45,
+        justifyContent: 'center',
         backgroundColor: globalStyles.main_color
     }, 
     text: {
@@ -49,15 +49,16 @@ export default StyleSheet.create({
         backgroundColor: '#343434'
     },
     buttonAdd: {
+        justifyContent: 'center',
         alignItems: "center", 
-        justifyContent: "center", 
+        width: 300,
         marginTop: 50
     },
     viewComponentBarbeiro: {
         backgroundColor: '#343434',
-        width: '90%', 
+        width: '100%', 
         borderRadius: 20, 
-        marginBottom: 20
+        marginVertical: 10
     },
     image: {
         alignItems: "flex-start", 

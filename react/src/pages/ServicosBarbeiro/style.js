@@ -15,12 +15,11 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     textTitle: {
-        width: '100%',
         fontSize: 27,
         fontFamily: 'Montserrat-Bold',
         textAlign: 'center',
         color: '#000',
-        marginTop: 150,
+        marginTop: 50,
         marginBottom: '5%'
     },
     textButton: {
@@ -59,7 +58,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         padding: 9,
         marginTop: 20,
-        width: "90%",
         borderRadius: 10,
         backgroundColor: '#343434'
     },

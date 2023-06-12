@@ -237,15 +237,17 @@ class BarbeariaServicosController {
                                     if (error) { return res.status(500).send({ error: error }) }
                                     conn.query(
                                         `DELETE FROM servico_imagens WHERE Serv_Codigo = ${id}`,
+                                        (error, result, fields) => {if (error) { return res.status(500).send({ error: error }) }}
+                                    )
+                                    conn.query(
+                                        `DELETE FROM barbeiro_servicos WHERE Serv_Codigo = ${id}`,
+                                        (error, result, fields) => {if (error) { return res.status(500).send({ error: error }) }}
+                                    )
+                                    conn.query(
+                                        `DELETE FROM servico WHERE Serv_Codigo = ${id}`,
                                         (error, result, fields) => {
-                                            if (error) { return res.status(500).send({ error: error }) }
-                                            conn.query(
-                                                `DELETE FROM servico WHERE Serv_Codigo = ${id}`,
-                                                (error, result, fields) => {
-                                                    if (error) { return res.status(500).send({ error: error }) } 
-                                                    return res.status(201).json(result);
-                                                }
-                                            )
+                                            if (error) { return res.status(500).send({ error: error }) } 
+                                            return res.status(201).json(result);
                                         }
                                     )
                                 }

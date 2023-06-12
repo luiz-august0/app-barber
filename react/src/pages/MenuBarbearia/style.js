@@ -4,7 +4,6 @@ import globalStyles from '../../globalStyles';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 100,
         alignItems: 'center',
         backgroundColor: globalStyles.main_color
     }, 
@@ -34,12 +33,13 @@ export default StyleSheet.create({
         backgroundColor: '#343434'
     },
     imageContainer: {
-        width: '50%',
-        height: Dimensions.get('window').width / 2
+        flex: 1,
+        alignItems: 'center',
+        marginTop: 10,
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width: 200,
+        height: 200,
         resizeMode: 'contain',
         borderRadius: 15
     },

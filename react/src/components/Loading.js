@@ -5,7 +5,7 @@ import globalStyles from "../globalStyles";
 const Loading = () => {
     return (
         <View style={style.loading}>
-            <ActivityIndicator animating={true}/>
+            <ActivityIndicator size={"large"} animating={true}/>
         </View>
     )
 }

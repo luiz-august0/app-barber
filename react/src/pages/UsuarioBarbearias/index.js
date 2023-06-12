@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ScrollView, RefreshControl } from "react-native";
+import { Text, TouchableOpacity, Alert, ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import { Card } from 'react-native-paper';
 import { getBarbeariasUsuario } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import style from "./style";
 import { connect } from "react-redux";
-import Loading from "../../components/Loading";
+import { useIsFocused } from "@react-navigation/native";
 
 const UsuarioBarbearias = (props) => {
+    const isFocused = useIsFocused();
     const [refresh, setRefresh] = useState(false);
     const [barbearias, setBarbearias] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
 
     const getUsuarioBarbearias = async() => {
-        setIsLoading(true);
+        setRefresh(true);
         try {
             const response = await getBarbeariasUsuario(props.usuario.state.id);
             setBarbearias(response.data);
         } catch (error) {
             Alert.alert('Atenção', "Ops!, Ocorreu algum erro ao pesquisar as barbearias vinculadas ao seu usuário.");
         }
-        setIsLoading(false);
+        setRefresh(false);
     }
 
     useEffect(() => {
-        getUsuarioBarbearias();
-    }, []);
+        if (isFocused) { getUsuarioBarbearias(); }
+    }, [props, isFocused]);
 
-    if (isLoading) {
-        return <Loading/>
-    } else {
     return (
-        <View style={style.container}>
+        <SafeAreaView style={style.container}>
             <ScrollView 
+                showsVerticalScrollIndicator={false}
                 refreshControl={
                     <RefreshControl refreshing={refresh} onRefresh={() => getUsuarioBarbearias()}/>
                 }>
@@ -61,8 +59,8 @@ const UsuarioBarbearias = (props) => {
                     )
                 })}
             </ScrollView>
-        </View>
-    )}
+        </SafeAreaView>
+    )
 }
     
 const mapStateToProps = ({ usuario }) => {

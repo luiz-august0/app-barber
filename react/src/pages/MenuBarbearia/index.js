@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Image, Linking } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Image, Linking, RefreshControl, SafeAreaView } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import { useIsFocused } from "@react-navigation/native";
@@ -15,14 +15,14 @@ const MenuBarbearia = (props) => {
 	const [state, setState] = useState({'nome': '', 'rua': '', 'numero': '', 'bairro': '', 'cidade': '', 
 										'uf': '', 'cep': '', 'lat': '', 'lng': ''});
 	const [image, setImage] = useState(null);
-	const [loading, setLoading] = useState(false);
+	const [refresh, setRefresh] = useState(false);
 
 	const setValueState = (input, value) => {
         setState(prevState => ({ ...prevState, [input]: value }));
     }
 
 	const getDataBarbearia = async(id) => {
-		setLoading(true);
+		setRefresh(true);
         try {
             const response = await getDadosBarbearia(id);
             if (response.data[0].Barb_LogoUrl !== '' && response.data[0].Barb_LogoUrl !== null) {
@@ -41,7 +41,7 @@ const MenuBarbearia = (props) => {
         } catch (error) {
             console.log(error)
         }
-		setLoading(false);
+		setRefresh(false);
     }
 
 	useEffect(() => {
@@ -50,17 +50,15 @@ const MenuBarbearia = (props) => {
         }
     }, [props, isFocused]);
 
-	if (loading) {
-		return <Loading/>
-	} else {
 	return (
-		<ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-			<View style={style.container}>
-				{image!==null?				
+		<SafeAreaView style={style.container}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getDataBarbearia(props.route.params?.barbeariaID)}/> }
+			>
 				<View style={style.imageContainer}>
-					<Image source={image} style={style.image}/>
+					{image!==null?<Image source={image} style={style.image}/>:null}
 				</View>
-				:null}
 				<Text style={style.textTitle}>{state.nome}</Text>
 				<View style={{flex: 1}}>
 					<View style={style.viewButtons}>
@@ -106,9 +104,9 @@ const MenuBarbearia = (props) => {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
-		</ScrollView>
-	)}
+			</ScrollView>
+		</SafeAreaView>
+	)
 }
 
 export default MenuBarbearia;

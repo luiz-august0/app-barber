@@ -257,138 +257,138 @@ const DadosServico = (props) => {
         )
     }
 
+    if (loading) {
+        return <Loading/>
+    } else {
     return (
         <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-            {loading?<Loading/>:
-            <>
-                <View style={style.container}>
-                    {!loadingImage?
-                    <FlatList
-                        data={images}
-                        horizontal={true}
-                        renderItem={({item}) => <RenderItem url={item.Img_Url} urlImg={item.urlImg}/>}
-                        keyExtractor={item => item.Img_Url}
-                    />:<ActivityIndicator/>}
-                    <TouchableOpacity style={[style.buttonPickImage, { marginTop: 30 }]} onPress={pickImage}>
-                        <MIcon
-                        name="photo-library" 
-                        size={20} 
-                        color={'#fff'}/>
-                        <Text style={[ style.text, { color: "#fff", marginLeft: 10 }]}>
-                            Selecionar imagem
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[style.buttonPickImage, { marginTop: 20,marginBottom: 60 }]} onPress={pickCamera}>
-                        <MIcon
-                        name="add-a-photo" 
-                        size={20} 
-                        color={'#fff'}/>
-                        <Text style={[ style.text, { color: "#fff", marginLeft: 10 }]}>
-                            Acessar câmera
-                        </Text>
-                    </TouchableOpacity>
-                    <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#fff'
-                    label="Nome"
-                    error={errors.nome !== null ? true : false}
-                    onFocus={() => handleError(null, 'nome')}
-                    theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="content-cut" />}
-                    value={state.nome}
-                    onChangeText={(nome) => setValueState('nome', nome)}
-                    />
-                    <HelperText type="error" visible={errors.nome !== null ? true : false}>
-                        {errors.nome}
-                    </HelperText>
-                    <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#fff'
-                    label="Valor"
-                    keyboardType="decimal-pad"
-                    error={errors.valor !== null ? true : false}
-                    onFocus={() => handleError(null, 'valor')}
-                    theme={{ colors: { placeholder: `${state.valor!==null&&state.valor!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="currency-brl" />}
-                    value={state.valor}
-                    onChangeText={(valor) => setValueState('valor', valor)}
-                    />
-                    <HelperText type="error" visible={errors.valor !== null ? true : false}>
-                        {errors.valor}
-                    </HelperText>
-                    <View style={{flexDirection: "row", width: "70%"}}>
-                        <View style={{flexDirection: "row"}} >
-                            <TextInput
-                            style={[style.input, { width: "88%" }]}
-                            mode='flat'
-                            activeOutlineColor='#fff'
-                            label="Duração"
-                            editable={false}
-                            keyboardType="decimal-pad"
-                            error={errors.duracao !== null ? true : false}
-                            onFocus={() => handleError(null, 'duracao')}
-                            theme={{ colors: { placeholder: `${state.duracao!==null&&state.duracao!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="clock-outline" />}
-                            value={state.duracao}
-                            onChangeText={(duracao) => setValueState('duracao', duracao)}
-                            />
-                        </View>
-                        <View style={{justifyContent: "center", right: "35%"}}>
-                            <Text style={style.text}>Minutos</Text>
-                        </View>
+            <View style={style.container}>
+                {!loadingImage?
+                <FlatList
+                    data={images}
+                    horizontal={true}
+                    renderItem={({item}) => <RenderItem url={item.Img_Url} urlImg={item.urlImg}/>}
+                    keyExtractor={item => item.Img_Url}
+                />:<ActivityIndicator/>}
+                <TouchableOpacity style={[style.buttonPickImage, { marginTop: 30 }]} onPress={pickImage}>
+                    <MIcon
+                    name="photo-library" 
+                    size={20} 
+                    color={'#fff'}/>
+                    <Text style={[ style.text, { color: "#fff", marginLeft: 10 }]}>
+                        Selecionar imagem
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.buttonPickImage, { marginTop: 20,marginBottom: 60 }]} onPress={pickCamera}>
+                    <MIcon
+                    name="add-a-photo" 
+                    size={20} 
+                    color={'#fff'}/>
+                    <Text style={[ style.text, { color: "#fff", marginLeft: 10 }]}>
+                        Acessar câmera
+                    </Text>
+                </TouchableOpacity>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Nome"
+                error={errors.nome !== null ? true : false}
+                onFocus={() => handleError(null, 'nome')}
+                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="content-cut" />}
+                value={state.nome}
+                onChangeText={(nome) => setValueState('nome', nome)}
+                />
+                <HelperText type="error" visible={errors.nome !== null ? true : false}>
+                    {errors.nome}
+                </HelperText>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#fff'
+                label="Valor"
+                keyboardType="decimal-pad"
+                error={errors.valor !== null ? true : false}
+                onFocus={() => handleError(null, 'valor')}
+                theme={{ colors: { placeholder: `${state.valor!==null&&state.valor!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                left={<TextInput.Icon color="white" name="currency-brl" />}
+                value={state.valor}
+                onChangeText={(valor) => setValueState('valor', valor)}
+                />
+                <HelperText type="error" visible={errors.valor !== null ? true : false}>
+                    {errors.valor}
+                </HelperText>
+                <View style={{flexDirection: "row", width: "70%"}}>
+                    <View style={{flexDirection: "row"}} >
+                        <TextInput
+                        style={[style.input, { width: "88%" }]}
+                        mode='flat'
+                        activeOutlineColor='#fff'
+                        label="Duração"
+                        editable={false}
+                        keyboardType="decimal-pad"
+                        error={errors.duracao !== null ? true : false}
+                        onFocus={() => handleError(null, 'duracao')}
+                        theme={{ colors: { placeholder: `${state.duracao!==null&&state.duracao!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                        left={<TextInput.Icon color="white" name="clock-outline" />}
+                        value={state.duracao}
+                        onChangeText={(duracao) => setValueState('duracao', duracao)}
+                        />
                     </View>
-                    <HelperText type="error" visible={errors.duracao !== null ? true : false}>
-                        {errors.duracao}
-                    </HelperText>
-                    <View style={{flexDirection: "row", marginTop: 10}}>
-                        <View>
-                            <TouchableOpacity style={style.buttonMinusAdd} onPress={() => setValueState('duracao', (parseInt(state.duracao) - 15).toString())}>
-                                <FIcon
-                                name="minus-circle" 
-                                size={20} 
-                                color={'#fff'}/>
-                                <Text style={[ style.text, { color: "#fff" }]}>
-                                    15min
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{marginLeft: 10}}>
-                            <TouchableOpacity style={style.buttonMinusAdd} onPress={() => setValueState('duracao', (parseInt(state.duracao) + 15).toString())}>
-                                <FIcon
-                                name="plus-circle" 
-                                size={20} 
-                                color={'#fff'}/>
-                                <Text style={[ style.text, { color: "#fff" }]}>
-                                    15min
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={{justifyContent: "center", right: "35%"}}>
+                        <Text style={style.text}>Minutos</Text>
                     </View>
-                    {(props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined)?
-                    <View style={style.viewSubmit}>
-                        <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                            {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{alignItems: "center", justifyContent: 'center'}} onPress={() => handleDeleteServico()}>
-                            <MIcon name="delete" size={35} color={'red'}></MIcon>
-                            <Text style={style.text}>Excluir</Text>
-                        </TouchableOpacity>
-                    </View>
-                    :
-                    <TouchableOpacity 
-                    activeOpacity={loadingSubmit ? 1 : 0.7} 
-                    style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E', marginTop: 100, marginBottom: 50}]} 
-                    onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    {loadingSubmit?
-                    <ActivityIndicator/>
-                    :<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
-                    </TouchableOpacity>}
                 </View>
-            </>}
+                <HelperText type="error" visible={errors.duracao !== null ? true : false}>
+                    {errors.duracao}
+                </HelperText>
+                <View style={{flexDirection: "row", marginTop: 10}}>
+                    <View>
+                        <TouchableOpacity style={style.buttonMinusAdd} onPress={() => setValueState('duracao', (parseInt(state.duracao) - 15).toString())}>
+                            <FIcon
+                            name="minus-circle" 
+                            size={20} 
+                            color={'#fff'}/>
+                            <Text style={[ style.text, { color: "#fff" }]}>
+                                15min
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                        <TouchableOpacity style={style.buttonMinusAdd} onPress={() => setValueState('duracao', (parseInt(state.duracao) + 15).toString())}>
+                            <FIcon
+                            name="plus-circle" 
+                            size={20} 
+                            color={'#fff'}/>
+                            <Text style={[ style.text, { color: "#fff" }]}>
+                                15min
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                {(props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined)?
+                <View style={style.viewSubmit}>
+                    <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                        {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{alignItems: "center", justifyContent: 'center'}} onPress={() => handleDeleteServico()}>
+                        <MIcon name="delete" size={35} color={'red'}></MIcon>
+                        <Text style={style.text}>Excluir</Text>
+                    </TouchableOpacity>
+                </View>
+                :
+                <TouchableOpacity 
+                activeOpacity={loadingSubmit ? 1 : 0.7} 
+                style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E', marginTop: 100, marginBottom: 50}]} 
+                onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                {loadingSubmit?
+                <ActivityIndicator/>
+                :<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
+                </TouchableOpacity>}
+            </View>
         </ScrollView>
-    )
+    )}
 }
 
 export default DadosServico;

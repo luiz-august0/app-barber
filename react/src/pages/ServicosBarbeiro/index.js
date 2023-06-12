@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ScrollView, ActivityIndicator, FlatList, SafeAreaView, RefreshControl } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
 import style from "./style";
 import { deleteServicoBarbeiro, getBarbeariaCategorias, getServicosBarbeiro, postServicoBarbeiro } from "../../services/api";
-import Loading from "../../components/Loading";
-import globalStyles from "../../globalStyles";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import globalFunction from "../../globalFunction";
 
@@ -100,12 +98,12 @@ const ServicosBarbeiro = (props) => {
 		setServicos([]);
 	}
 
-	if (loadingCategorias) {
-		return <Loading/>
-	} else {
 	return (
-		<ScrollView style={{backgroundColor: globalStyles.main_color}}>
-			<View style={style.container}>	
+		<SafeAreaView style={style.container}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={loadingCategorias} onRefresh={() => getDataCategorias()}/> }
+			>	
 				{JSON.stringify(categorias) !== "[]"?
 				<>
 					<Text style={style.textTitle}>Categorias</Text>
@@ -148,9 +146,9 @@ const ServicosBarbeiro = (props) => {
 					</AbsoluteModal>
 				</>
 				:<Text style={[style.textTitle, {fontSize: 18}]}>Não há categorias de serviço cadastradas</Text>}
-			</View>
-		</ScrollView>
-	)}
+			</ScrollView>
+		</SafeAreaView>
+	)
 }
 
 export default ServicosBarbeiro;

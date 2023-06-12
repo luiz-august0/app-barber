@@ -102,7 +102,7 @@ const style = StyleSheet.create({
     itemServico: {
         width: 300, 
         height: 350, 
-        marginBottom: 25
+        marginBottom: 25,
     }
 })
 

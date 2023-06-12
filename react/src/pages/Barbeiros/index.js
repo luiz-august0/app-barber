@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, Image, SafeAreaView, RefreshControl } from "react-native";
 import style from "./style";
-import globalStyles from "../../globalStyles";
 import { deleteBarbeiro, deleteUsuario, getBarbeirosByBarbearia, postBarbeiro } from "../../services/api";
 import { useIsFocused } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -10,25 +9,24 @@ import perfil from "../../img/perfil.png";
 import globalFunction from "../../globalFunction";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import { TextInput } from "react-native-paper";
-import Loading from "../../components/Loading";
 
 const Barbeiros = (props) => {
     const isFocused = useIsFocused();
     const [ barbeiros, setBarbeiros ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
     const [ especialidade, setEspecialidade ] = useState('');
     const [ modalVisible, setModalVisible ] = useState(false);
     const [ loadingResponse, setLoadingResponse ] = useState(false);
+    const [ refresh, setRefresh ] = useState(false);
  
     const getBarbeiros = async() => {
-        setLoading(true);
+        setRefresh(true);
         try {            
             const res = await getBarbeirosByBarbearia(props.route.params?.barbeariaID);
             setBarbeiros(res.data);
         } catch (error) {
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os barbeiros, contate o suporte");
         }
-        setLoading(false);
+        setRefresh(false);
     }
 
     const filterBarbeiroWithMyUser = () => {
@@ -84,15 +82,15 @@ const Barbeiros = (props) => {
         }
     }, [props, isFocused]);
 
-    if (loading) {
-        return <Loading/>
-    } else {
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-            <View style={style.container}>
+        <SafeAreaView style={style.container}>
+            <ScrollView
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getBarbeiros()}/> }
+            >
                 <TouchableOpacity
-                style={style.button}
-                onPress={() => props.navigation.navigate("DadosBarbeiro", { barbeariaID: props.route.params?.barbeariaID })}
+                    style={style.button}
+                    onPress={() => props.navigation.navigate("DadosBarbeiro", { barbeariaID: props.route.params?.barbeariaID })}
                 >
                     <Text style={style.text}>Cadastrar Novo Barbeiro</Text>
                 </TouchableOpacity>
@@ -137,7 +135,8 @@ const Barbeiros = (props) => {
                         </View>
                     )
                 })}
-            </View>
+                <View style={{marginTop: 20}}></View>
+            </ScrollView>
             <AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'90%'}>
                 <TextInput
                 style={style.input}
@@ -154,8 +153,8 @@ const Barbeiros = (props) => {
                     :<ActivityIndicator/>}
                 </TouchableOpacity>
             </AbsoluteModal>
-        </ScrollView>
-    )}
+        </SafeAreaView>
+    )
 }
 
 const mapStateToProps = ({ usuario }) => {
