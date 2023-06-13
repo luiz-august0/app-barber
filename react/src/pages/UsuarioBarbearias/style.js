@@ -1,10 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native'
+import { Dimensions, Platform, StyleSheet } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        marginTop: Platform.OS !== 'ios'?'20%':0,
         backgroundColor: globalStyles.main_color
     }, 
     text: {
