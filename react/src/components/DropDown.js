@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FlatList, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
@@ -39,7 +39,7 @@ const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 
 	const renderItem = ({ item }) => (
 		<TouchableOpacity style={styles.item} onPress={() => onItemPress(item)}>
-		  	<Text style={{color: '#fff'}} >{item.label}</Text>
+		  	<Text style={{color: '#fff', fontFamily: 'Montserrat-Bold'}} >{item.label}</Text>
 		</TouchableOpacity>
 	);
 
@@ -51,19 +51,24 @@ const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 
   	const renderDropdown = () => {
 		return (
-			<Modal visible={visible} transparent animationType="none">
-				<TouchableOpacity
-					style={[styles.button, { top: dropdownTopButton, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}
-					onPress={toggleDropdown}
-				>			
-				</TouchableOpacity>
-				<View style={[styles.dropdown, { top: dropdownTop, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}>
-					<FlatList
-						data={data}
-						renderItem={renderItem}
-						keyExtractor={(item, index) => index.toString()}
-					/>
-				</View>
+			<Modal visible={visible} transparent animationType="fade" onRequestClose={() => setVisible(false)}>
+				<TouchableWithoutFeedback onPress={() => setVisible(false)}>
+            		<View style={styles.modalOverlay} />
+          		</TouchableWithoutFeedback>
+				<View>
+					<TouchableOpacity
+						style={[styles.button, { top: dropdownTopButton, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}
+						onPress={toggleDropdown}
+					>			
+					</TouchableOpacity>
+					<View style={[styles.dropdown, { top: dropdownTop, left: dropdownLeft, right: dropdownRight, width: dropdownWidth }]}>
+						<FlatList
+							data={data}
+							renderItem={renderItem}
+							keyExtractor={(item, index) => index.toString()}
+						/>
+					</View>
+          		</View>
 			</Modal>
 		)
   	};
@@ -96,6 +101,7 @@ const styles = StyleSheet.create({
   	},
   	buttonText: {
     	flex: 1,
+		fontFamily: 'Montserrat-Bold',
     	textAlign: 'center',
 		color: '#ffff'
   	},
@@ -115,6 +121,13 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderRadius: 10
 	},
+	modalOverlay: {
+		position: 'absolute',
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0
+	}
 });
 
 export default Dropdown;

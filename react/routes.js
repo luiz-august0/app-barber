@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItem, DrawerItemList, DrawerContentScrollView } from '@react-navigation/drawer';
@@ -26,6 +25,7 @@ import DadosBarbeiro from './src/pages/DadosBarbeiro';
 import MenuBarbeiro from './src/pages/MenuBarbeiro';
 import Header from './src/components/Header';
 import ServicosBarbeiro from './src/pages/ServicosBarbeiro';
+import AgendamentoBarbearia from './src/pages/AgendamentoBarbearia';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -205,6 +205,11 @@ const Routes = () => {
                     name="ServicosBarbeiro"
                     component={ServicosBarbeiro}
                     options={{ headerTitle: "Serviços vinculados" }}
+                    />
+                    <Stack.Screen
+                    name="AgendamentoBarbearia"
+                    component={AgendamentoBarbearia}
+                    options={{ headerTitle: "Agendamento - Barbearia" }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

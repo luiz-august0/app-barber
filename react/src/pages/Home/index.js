@@ -41,12 +41,21 @@ const Home = (props) => {
         } 
         else if (props.usuario.state.tipo === "C") {
             return (
-                <TouchableOpacity
-                style={style.button}
-                >
-                    <MIcon name="calendar-week" size={80} color={'#ffff'}></MIcon>
-                    <Text style={style.text}>Agendamentos</Text>
-                </TouchableOpacity>
+                <>
+                    <TouchableOpacity
+                    style={style.button}
+                    onPress={() => props.navigation.navigate('AgendamentoBarbearia')}
+                    >
+                        <MIcon name="calendar-cursor" size={80} color={'#ffff'}></MIcon>
+                        <Text style={style.text}>Agendar Horário</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={style.button}
+                    >
+                    <MIcon name="calendar-month" size={80} color={'#ffff'}></MIcon>
+                    <Text style={style.text}>Meus Agendamentos</Text>
+                    </TouchableOpacity>
+                </>
             )
         }
     }
