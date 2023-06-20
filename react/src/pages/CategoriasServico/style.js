@@ -1,11 +1,11 @@
-import { Platform, StyleSheet } from 'react-native'
+import { Platform, StatusBar, StyleSheet } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: Platform.OS !== 'ios'?'20%':0,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
         backgroundColor: globalStyles.main_color
     }, 
     text: {

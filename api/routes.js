@@ -51,7 +51,8 @@ routes.post('/usuario_perfil/:id', (req, res) => {
 routes.delete('/usuario/:id', UsuarioController.destroy);
 
 //Rotas barbearia
-routes.get('/barbearia', BarbeariaController.getBarbearias);
+routes.post('/barbearia_pesquisa', BarbeariaController.getBarbearias);
+routes.get('/barbearia_visitadas/:id', BarbeariaController.getBarbeariasVisitadas);
 routes.get('/barbearia/:id', BarbeariaController.getDadosBarbearia);
 routes.get('/barbearia_usuario/:id', BarbeariaController.getBarbeariasUsuario);
 routes.post('/barbearia', BarbeariaController.postBarbearia);

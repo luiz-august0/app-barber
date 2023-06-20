@@ -249,7 +249,8 @@ const style = StyleSheet.create({
 	viewItemText: {
 		flex: 1,
 		textAlign: 'center',
-		color: '#ffff'
+		color: '#ffff',
+		fontFamily: 'Montserrat-Regular'
 	}
 });
 

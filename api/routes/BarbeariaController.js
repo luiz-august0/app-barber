@@ -49,22 +49,59 @@ class BarbeariaController {
         try {
             const { nome, cidade, endRua, endNumero, endBairro } = req.body;
 
-            let SQL = `SELECT * FROM barbearia WHERE 1 > 0 `;
+            let SQL = `SELECT B.*, AVG(BA.Aval_Rate) AS Aval_Rate FROM barbearia B 
+                       LEFT JOIN barbearia_avaliacoes BA
+                       ON B.Barb_Codigo = BA.Barb_Codigo
+                       LEFT JOIN agendamento AG
+                       ON B.Barb_Codigo = AG.Barb_Codigo
+                       WHERE 1 > 0 
+                       AND AG.Barb_Codigo IS NULL `;
+
             if ((nome !== null) && (nome !== '')) {
-                SQL = SQL + `AND Barb_Nome LIKE "%${nome}%" `;
+                SQL = SQL + `AND B.Barb_Nome LIKE "%${nome}%" `;
             }
             if ((cidade !== null) && (cidade !== '')) {
-                SQL = SQL + `AND Barb_Cidade LIKE "%${cidade}%" `;
+                SQL = SQL + `AND B.Barb_Cidade LIKE "%${cidade}%" `;
             }
             if ((endRua !== null) && (endRua !== '')) {
-                SQL = SQL + `AND Barb_Rua LIKE "%${endRua}%" `;
+                SQL = SQL + `AND B.Barb_Rua LIKE "%${endRua}%" `;
             }
             if ((endNumero !== null) && (endNumero !== '')) {
-                SQL = SQL + `AND Barb_Numero LIKE "%${endNumero}%" `;
+                SQL = SQL + `AND B.Barb_Numero LIKE "%${endNumero}%" `;
             }
             if ((endBairro !== null) && (endBairro !== '')) {
-                SQL = SQL + `AND Barb_Bairro LIKE "%${endBairro}%" `;
+                SQL = SQL + `AND B.Barb_Bairro LIKE "%${endBairro}%" `;
             }
+
+            SQL = SQL + ` GROUP BY B.Barb_Codigo`;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    SQL,
+                    (error, result, fields) => {
+                        if (error) { console.log(error); return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async getBarbeariasVisitadas (req, res) {
+        try {
+            const { id } = req.params;
+
+            let SQL = `SELECT B.*, AVG(BA.Aval_Rate) AS Aval_Rate FROM barbearia B
+                       INNER JOIN agendamento AG
+                       ON B.Barb_Codigo = AG.Barb_Codigo
+                       LEFT JOIN barbearia_avaliacoes BA
+                       ON B.Barb_Codigo = BA.Barb_Codigo
+                       WHERE AG.Usr_Codigo = ${id}
+                       GROUP BY B.Barb_Codigo `;
 
             mysql.getConnection((error, conn) => {
                 conn.query(

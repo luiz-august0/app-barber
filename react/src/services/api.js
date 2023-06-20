@@ -68,6 +68,14 @@ export const getDadosBarbearia = async (barbeariaID) => {
     return api.get(`/barbearia/${barbeariaID}`);
 };
 
+export const getBarbeariasPesquisa = async (nome, cidade, endRua, endNumero, endBairro) => {
+    return api.post('/barbearia_pesquisa', { nome, cidade, endRua, endNumero, endBairro });
+};
+
+export const getBarbeariasVisitadas = async (id) => {
+    return api.get(`/barbearia_visitadas/${id}`);
+};
+
 export const getContatosBarbearia = async (barbeariaID) => {
     return api.get(`/barbearia_contatos/${barbeariaID}`);
 };

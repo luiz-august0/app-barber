@@ -1,10 +1,10 @@
-import { Dimensions, Platform, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native';
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: Platform.OS !== 'ios'?'20%':0,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
         backgroundColor: globalStyles.main_color
     }, 
     headerView: {
@@ -20,12 +20,32 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#ffff',
     },
+    textTitleBarb: {
+        fontSize: 22,
+        fontFamily: 'Montserrat-Bold',
+        color: '#000',
+    },
+    textSubtitleBarb: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-Regular',
+        color: '#000',
+    },
     button: {
         justifyContent: 'center',
         width: Dimensions.get('window').width / 2.5,
         height: 50,
         borderRadius: 20,
         backgroundColor: '#343434'
+    },
+    buttonConfirmFilter: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 35,
+        marginBottom: 20,
+        width: 150,
+        height: 40,
+        borderRadius: 10,
+        backgroundColor: '#05A94E'
     },
     buttonFilter: {
         flexDirection: "row", 
@@ -52,5 +72,27 @@ export default StyleSheet.create({
         color: '#000',
         marginTop: 20,
         marginBottom: 10
+    },
+    input: {
+        marginTop: 10,
+        width: 220,
+        height: 55,
+        backgroundColor: '#404040',
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 50
+    },
+    renderItemBarbearia: {
+        flex:1, 
+        flexDirection: "row", 
+        marginTop: 20, 
+        borderColor: '#000', 
+        borderWidth: 2, 
+        borderRadius: 10,
+        borderTopLeftRadius: 50, 
+        borderBottomLeftRadius: 50, 
+        alignItems: "center"
     }
 });
