@@ -27,6 +27,7 @@
   "scripts": {
     "start": "npm-run-all -p start:*",
     "start:server": "nodemon server.js",
-    "start:queue": "nodemon queue.js"
+    "start:queue": "nodemon queue.js",
+    "start:threads": "nodemon threads.js"
   }
 }
