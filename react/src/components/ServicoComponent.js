@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, TouchableOpacity, Image, TouchableNativeFeedback, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, TouchableNativeFeedback, StyleSheet, Text } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { Card } from "react-native-paper";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -8,7 +8,7 @@ import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
 import globalFunction from "../globalFunction";
 
-const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation}) => {
+const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation, barbeariaID}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
@@ -71,19 +71,18 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
             />
-            <Card>
+            <Card style={{backgroundColor: barbeariaID?'#404040':'#fff'}}>
                 <Card.Title title={nome} 
                             subtitle={`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${tempo}min`}
-                            titleStyle={{textAlign: "center"}}
-                            subtitleStyle={{textAlign: "center"}}
+                            titleStyle={{textAlign: "center", color: barbeariaID?'#fff':'#000'}}
+                            subtitleStyle={{textAlign: "center", color: barbeariaID?'#fff':'#000'}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
-                <TouchableOpacity onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria })}>
-                    <MIcon 
-                    style={{textAlign: "right", padding: 10}}
-                    name="arrow-forward" 
-                    size={35} 
-                    color={'#05A94E'}/>
+                <TouchableOpacity 
+                style={style.buttonSelect}
+                onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID})}>
+                    <Text style={[style.textSubtitle, { color: barbeariaID?'#fff':'#000' }]}>Selecionar</Text>
+                    <MIcon name="arrow-forward" size={30} color={'#05A94E'}></MIcon>
                 </TouchableOpacity>
             </Card>
             <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
@@ -103,6 +102,18 @@ const style = StyleSheet.create({
         width: 300, 
         height: 350, 
         marginBottom: 25,
+    },
+    buttonSelect: {
+        flexDirection: "row",
+        alignItems: "center", 
+        padding: 5, 
+        marginTop: 10, 
+        justifyContent: "flex-end"
+    },
+    textSubtitle: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-Regular',
+        marginRight: 5
     }
 })
 

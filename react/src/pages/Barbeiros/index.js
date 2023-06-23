@@ -128,7 +128,7 @@ const Barbeiros = (props) => {
                                     <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'red'}></MIcon>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: e.Usr_Codigo})}>
-                                    <Text style={[style.text, {fontSize: 14}]}>Abrir</Text>
+                                    <Text style={[style.text, {fontSize: 14}]}>Ir ao menu</Text>
                                     <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#05A94E'}></MIcon>
                                 </TouchableOpacity>
                             </View>

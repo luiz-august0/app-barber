@@ -10,15 +10,17 @@ export async function teste() {
 				(error, result, fields) => {
 					if (error) { console.log(error) }
 
-					result.map((e) => {
-						const data = { id: e.Barb_Codigo };
-
-						const queueExec = async() => {
-							//await Queue.add('Teste', data);
-						}
-
-						queueExec();
-					})
+					if (JSON.stringify(result) !== "[]") {
+						result.map((e) => {
+							const data = { id: e.Barb_Codigo };
+	
+							const queueExec = async() => {
+								//await Queue.add('Teste', data);
+							}
+	
+							queueExec();
+						})
+					}
 
 				}
 			)

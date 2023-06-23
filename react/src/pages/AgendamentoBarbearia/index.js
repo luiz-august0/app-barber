@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, RefreshControl, SafeAreaView, Text, View, TouchableOpacity, Dimensions, Alert, Image, Platform, PermissionsAndroid } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import style from "./style";
 import Dropdown from "../../components/DropDown";
 import { useIsFocused } from "@react-navigation/native";
@@ -91,7 +92,6 @@ const AgendamentoBarbearia = (props) => {
             setBarbeariasPesq(arrayPesq);
             setBarbeariasVisitadas(arrayVisit);
         } catch (error) {
-            console.log(error)
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar as barbearias, contate o suporte");
         }
         setRefresh(false);
@@ -131,7 +131,7 @@ const AgendamentoBarbearia = (props) => {
         }
 
         return (
-            <TouchableOpacity key={item.Barb_Codigo} style={style.renderItemBarbearia}>
+            <View key={item.Barb_Codigo} style={style.renderItemBarbearia}>
                 {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>
                 :<Image style={style.image} source={perfil}/>}
@@ -140,8 +140,16 @@ const AgendamentoBarbearia = (props) => {
                     <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
                     {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Montserrat-Bold'}]}>{`Distância: ${distance}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
+                    <TouchableOpacity style={style.buttonRenderItem}>
+                        <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Ver perfil da barbearia</Text>
+                        <MIcon name="eye" size={30} color={'#000'}></MIcon>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoServico", { barbeariaID: item.Barb_Codigo})}>
+                        <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Selecionar barbearia</Text>
+                        <MAIcon name="arrow-forward" size={30} color={'#05A94E'}></MAIcon>
+                    </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 
@@ -168,25 +176,30 @@ const AgendamentoBarbearia = (props) => {
                             <Dropdown label="Ordenação" data={ordens} onSelect={setOrdem} initialValue={initialOrdemState} dropdownWidth={Dimensions.get('window').width / 2.5}/>
                         </View>
                     </View>
-                    {JSON.stringify(barbeariasVisitadas)!=="[]"?
-                    <>
-                        <Text style={style.textSubTitle}>
-                            Barbearias já visitadas
+                    {JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"?
+                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbearias cadastradas</Text>:
+                    <>                    
+                        {JSON.stringify(barbeariasVisitadas)!=="[]"?
+                        <>
+                            <Text style={style.textSubTitle}>
+                                Barbearias já visitadas
+                            </Text>
+                            <View style={{height: 2, backgroundColor: '#000'}}></View>
+                            {barbeariasVisitadas
+                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
+                                .map((e) => { return renderItem(e)})}
+                            <View style={{height: 2, backgroundColor: '#000', marginTop: 20}}></View>
+                        </>
+                        :null}
+                        <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
+                            Conheça novas barbearias
                         </Text>
                         <View style={{height: 2, backgroundColor: '#000'}}></View>
-                        {barbeariasVisitadas
+                        {barbeariasPesq
                             .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
                             .map((e) => { return renderItem(e)})}
-                        <View style={{height: 2, backgroundColor: '#000', marginTop: 20}}></View>
                     </>
-                    :null}
-                    <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
-                        Conheça novas barbearias
-                    </Text>
-                    <View style={{height: 2, backgroundColor: '#000'}}></View>
-                    {barbeariasPesq
-                        .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
-                        .map((e) => { return renderItem(e)})}
+                    }
                 </View>
                 <AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'100%'}>
                     <ScrollView

@@ -11,7 +11,7 @@ export default StyleSheet.create({
         flex:1, 
         padding: 10, 
         flexDirection: "row", 
-        justifyContent: "space-between", 
+        justifyContent: "flex-end", 
         marginTop: 40 
     },
     text: {
@@ -103,5 +103,38 @@ export default StyleSheet.create({
         borderRadius: 20, 
         marginTop: 10, 
         justifyContent: "center"
-    }
+    },
+    categoriaComponent: {
+        justifyContent: 'center',
+        padding: 9,
+        marginTop: 20,
+        borderRadius: 10,
+        backgroundColor: '#343434'
+    },
+    categoriaView: {
+        flexDirection: "row", 
+        alignItems: "center", 
+        justifyContent: "space-between"
+    },
+    textCategoria: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'left',
+        color: '#ffff',
+    },
+    categoriaViewButtons: { 
+        flexDirection: 'column',
+    },
+    textCategoriaButton: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-Regular',
+        textAlign: 'center',
+        color: '#ffff',
+    },
+    buttonCategoriaComponent:{
+        flexDirection: 'row',
+        justifyContent: "center", 
+        alignItems: "center",
+        paddingVertical: 15
+    },
 });
