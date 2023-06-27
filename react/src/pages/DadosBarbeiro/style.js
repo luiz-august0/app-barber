@@ -15,7 +15,7 @@ export default StyleSheet.create({
     textTitle: {
         width: '100%',
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
         marginBottom: 10
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     textButton: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },

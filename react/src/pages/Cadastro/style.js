@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
@@ -7,60 +7,64 @@ export default StyleSheet.create({
         backgroundColor: globalStyles.main_color
     },
     image: {
-        marginTop: '30%',
         height: 250,
-        width: 250
+        width: 350
     },
     text_title: {
         marginTop: '2%',
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         fontSize: 26,
         color: '#000'
     },
     button1: {
+        alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '11%',
-        marginBottom: 25,
-        width: 200,
-        height: 50,
-        borderRadius: 20,
-        backgroundColor: '#343434'
+        marginTop: 40,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     button2: {
+        alignItems: 'center',
         justifyContent: 'center',
-        width: 200,
-        height: 50,
-        borderRadius: 20,
-        backgroundColor: '#343434'
+        marginTop: 15,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     text: {
-        width: '100%',
-        fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontSize: 14,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#FFCA9F',
     },
     safeAreaC: {
-        marginTop: 90,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
+        marginTop: Platform.OS === "android" ? Dimensions.get('window').height / 4 - 50 : Dimensions.get('window').height / 4
     },
     inputC: {
         marginTop: 10,
         width: '70%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
+    },
+    inputC2: {
+        marginTop: 10,
+        width: '70%',
+        height: 55,
+        backgroundColor: '#BA6213',
     },
     btnCadastro: {
-        alignItems: 'center',
-        justifyContent: 'center',
         marginTop: 25,
         marginBottom: 25,
     },
     imageCadastro: {
-        padding: "6%",
-        width: "100%",
-        height: 13
+        width: 65,
+        height: 65
     },
     inputAreaSenhaC: {
         marginTop: 20,
@@ -85,18 +89,18 @@ export default StyleSheet.create({
     btnRedefinir: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
-        width: 110,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#05A94E'
+        marginTop: 25,
+        marginBottom: 25,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     textHeader: {
-        color: '#000', 
-        marginTop: 120, 
+        color: '#BA6213', 
         textAlign: 'center', 
+        marginBottom: 20,
         fontSize: 27, 
-        fontWeight: 'bold', 
-        fontFamily: 'Montserrat-Bold'
+        fontFamily: 'Manrope-Regular'
     }
 });

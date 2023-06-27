@@ -16,18 +16,18 @@ export default StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },
     textTitleBarb: {
         fontSize: 22,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         color: '#000',
     },
     textSubtitleBarb: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         color: '#000',
     },
     button: {
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     },
     textTitle: {
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
         marginTop: 20,
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     },
     textSubTitle: {
         fontSize: 22,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'left',
         color: '#000',
         marginTop: 20,
@@ -118,7 +118,7 @@ export default StyleSheet.create({
     },
     textCategoria: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'left',
         color: '#ffff',
     },
@@ -127,7 +127,7 @@ export default StyleSheet.create({
     },
     textCategoriaButton: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
         color: '#ffff',
     },

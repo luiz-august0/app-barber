@@ -70,7 +70,7 @@ const ServicosBarbeiro = (props) => {
             <TouchableOpacity key={id} style={style.buttonViewServico} onPress={() => handleClickServico(id)}>
 				<View style={style.viewButtonServico}>
 					<Text style={style.textViewServico}>{nome}</Text>
-					<Text style={[style.textViewServico, {fontSize: 14, fontFamily: 'Montserrat-Regular',}]}>{`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${duracao}min`}</Text>
+					<Text style={[style.textViewServico, {fontSize: 14, fontFamily: 'Manrope-Regular',}]}>{`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${duracao}min`}</Text>
 				</View>
 				<View style={style.buttonSelectServico}>
 					<FIcon name={vinculado?`check-circle`:`circle-thin`} size={25} color={'#05A94E'}></FIcon>

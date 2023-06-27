@@ -11,33 +11,31 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     barberImage: {
-        marginTop: '15%',
         height: 250,
-        width: 250
+        width: 350
     },
     inputL: {
         marginTop: 10,
         width: '70%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
     btnLogin: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 25,
-        marginBottom: 25,
-        width: 80,
-        height: 35,
-        borderRadius: 10,
-        backgroundColor: '#21BA9E'
+        marginTop: 80,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     btnCadastro: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
-        width: 150,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#fa8a5a'
+        marginTop: 15,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     }
 });

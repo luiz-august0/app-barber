@@ -39,7 +39,7 @@ const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 
 	const renderItem = ({ item }) => (
 		<TouchableOpacity style={styles.item} onPress={() => onItemPress(item)}>
-		  	<Text style={{color: '#fff', fontFamily: 'Montserrat-Regular'}} >{item.label}</Text>
+		  	<Text style={{color: '#fff', fontFamily: 'Manrope-Regular'}} >{item.label}</Text>
 		</TouchableOpacity>
 	);
 
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   	},
   	buttonText: {
     	flex: 1,
-		fontFamily: 'Montserrat-Regular',
+		fontFamily: 'Manrope-Regular',
     	textAlign: 'center',
 		color: '#ffff'
   	},

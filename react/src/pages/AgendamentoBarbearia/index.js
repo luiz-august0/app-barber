@@ -138,7 +138,7 @@ const AgendamentoBarbearia = (props) => {
                 <View style={{flex:1, padding: 10}}>
                     <Text style={style.textTitleBarb}>{item.Barb_Nome}</Text>
                     <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
-                    {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Montserrat-Bold'}]}>{`Distância: ${distance}`}</Text>:null}
+                    {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold'}]}>{`Distância: ${distance}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
                     <TouchableOpacity style={style.buttonRenderItem}>
                         <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Ver perfil da barbearia</Text>

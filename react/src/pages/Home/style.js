@@ -10,11 +10,11 @@ export default StyleSheet.create({
         marginTop: '40%'
     },
     text: {
-        width: '100%',
+        width: '90%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#FFCA9F',
     },
     button: {
         alignItems: 'center',
@@ -22,7 +22,7 @@ export default StyleSheet.create({
         width: Dimensions.get('window').width / 2.2,
         height: 150,
         borderRadius: 20,
-        backgroundColor: '#343434'
+        backgroundColor: '#BA6213'
     },
     viewButtons: {
         flex: 1, 

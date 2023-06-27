@@ -44,8 +44,9 @@ const DrawerContent = (props) => {
             <Header/>
             <DrawerItemList {...props} />
             <DrawerItem label="Sair" 
+            labelStyle={{fontFamily: 'Manrope-Regular'}}
             icon={({color, size}) => <MIcon color={color} size={size + 20} name="logout" />}
-            inactiveTintColor='#000'
+            inactiveTintColor='#FFCA9F'
             onPress={() => { logout(); props.navigation.navigate('Login');}}/>
         </DrawerContentScrollView>
     )
@@ -56,13 +57,15 @@ const HomeNav = () => {
         <Drawer.Navigator useLegacyImplementation={true} initialRouteName="Home" 
             drawerContent={props => <DrawerContent {...props} />}
             screenOptions={{
+                headerTitleStyle: { fontFamily: 'Manrope-Regular' },
+                drawerLabelStyle: { fontFamily: 'Manrope-Regular' },
                 headerShown: true,
-                headerTintColor: "#000",
-                drawerInactiveTintColor: "#000",
-                headerPressColor: "#515657",
-                drawerActiveTintColor: "#515657",
+                headerTintColor: "#2B513B",
+                drawerInactiveTintColor: "#FFCA9F",
+                headerPressColor: "#BA6213",
+                drawerActiveTintColor: "#BA6213",
                 drawerStyle: {
-                    backgroundColor: '#fff',
+                    backgroundColor: '#2B513B',
                     width: 240,
                 },
                 headerStyle: {
@@ -103,8 +106,9 @@ const Routes = () => {
                     headerShown: true,
                     headerBackTitleVisible: false,
                     headerStyle: { backgroundColor: globalStyles.main_color },
-                    headerTintColor: '#000',
-                    headerTransparent: true
+                    headerTintColor: '#2B513B',
+                    headerTransparent: true,
+                    headerTitleStyle: {fontFamily: 'Manrope-Regular'}
                 }}
                 initialRouteName='Login'>
                     <Stack.Screen

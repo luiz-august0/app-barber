@@ -8,8 +8,13 @@ import {name as appName} from './app.json';
 import storeConfig from './src/store/storeConfig';
 
 let customFonts = {
-    'Montserrat-Bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
-    'Montserrat-Regular': require('./src/assets/fonts/Montserrat-Regular.ttf')
+    'Manrope-Bold': require('./src/assets/fonts/Manrope-Bold.ttf'),
+    'Manrope-ExtraBold': require('./src/assets/fonts/Manrope-ExtraBold.ttf'),
+    'Manrope-ExtraLight': require('./src/assets/fonts/Manrope-ExtraLight.ttf'),
+    'Manrope-Light': require('./src/assets/fonts/Manrope-Light.ttf'),
+    'Manrope-Medium': require('./src/assets/fonts/Manrope-Medium.ttf'),
+    'Manrope-Regular': require('./src/assets/fonts/Manrope-Regular.ttf'),
+    'Manrope-SemiBold': require('./src/assets/fonts/Manrope-SemiBold.ttf'),
 };
 
 const store = storeConfig();

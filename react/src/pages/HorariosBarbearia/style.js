@@ -14,7 +14,7 @@ export default StyleSheet.create({
     textTitle: {
         width: '100%',
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
         marginTop: 10,
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     text: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },
@@ -38,7 +38,7 @@ export default StyleSheet.create({
     },
     textItem: {
         fontSize: 18, 
-        fontFamily: 'Montserrat-Bold', 
+        fontFamily: 'Manrope-Bold', 
         marginBottom: 35
     },
 });

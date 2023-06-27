@@ -34,8 +34,8 @@ const Home = (props) => {
                 style={style.button}
                 onPress={() => props.navigation.navigate('UsuarioBarbearias')}
                 >
-                    <MIcon name="office-building" size={80} color={'#ffff'}></MIcon>
-                    <Text style={style.text}>Minhas Barbearias</Text>
+                    <MIcon name="office-building" size={80} color={'#FFCA9F'}></MIcon>
+                    <Text style={style.text}>MINHAS BARBEARIAS</Text>
                 </TouchableOpacity>
             )
         } 
@@ -46,14 +46,14 @@ const Home = (props) => {
                     style={style.button}
                     onPress={() => props.navigation.navigate('AgendamentoBarbearia')}
                     >
-                        <MIcon name="calendar-cursor" size={80} color={'#ffff'}></MIcon>
-                        <Text style={style.text}>Agendar Horário</Text>
+                        <MIcon name="calendar-cursor" size={80} color={'#FFCA9F'}></MIcon>
+                        <Text style={style.text}>AGENDAR HORÁRIO</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={style.button}
                     >
-                    <MIcon name="calendar-month" size={80} color={'#ffff'}></MIcon>
-                    <Text style={style.text}>Meus Agendamentos</Text>
+                    <MIcon name="calendar-month" size={80} color={'#FFCA9F'}></MIcon>
+                    <Text style={style.text}>MEUS AGENDAMENTOS</Text>
                     </TouchableOpacity>
                 </>
             )

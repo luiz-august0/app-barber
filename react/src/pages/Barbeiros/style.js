@@ -12,7 +12,7 @@ export default StyleSheet.create({
     text: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },
@@ -22,20 +22,20 @@ export default StyleSheet.create({
     },
     textDetails: {
         fontSize: 14,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         color: '#ffff',
         margin: 2
     },
     textButtonAdd: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
     },
     textTitle: {
         width: '100%',
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
         marginTop: '20%',

@@ -250,7 +250,7 @@ const style = StyleSheet.create({
 		flex: 1,
 		textAlign: 'center',
 		color: '#ffff',
-		fontFamily: 'Montserrat-Regular'
+		fontFamily: 'Manrope-Regular'
 	}
 });
 

@@ -3,7 +3,6 @@ import { SafeAreaView, Text, TouchableOpacity, View, Image, Alert, ActivityIndic
 import { TextInput, HelperText } from "react-native-paper";
 import style from './style'
 import { createUsuario, postEnviaEmailRecuperacaoSenha, verifyUsuario } from '../../services/api';
-import imgChair from '../../img/chair.png';
 import globalStyles from '../../globalStyles';
 import globalFunction from '../../globalFunction';
 import { connect } from 'react-redux';
@@ -17,20 +16,19 @@ const C00 = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[style.container, { alignItems: 'center' }]}>
-      <Image source={imgChair} style={style.image} />
-      <Text style={style.text_title}>Barber</Text>
+    <View style={[style.container, { alignItems: 'center', justifyContent: 'center' }]}>
+      <Image source={require('../../img/barber.png')} style={style.image} />
       <TouchableOpacity
         style={style.button1}
         onPress={() => onClickButton('B')}
       >
-        <Text style={style.text}>Sou Barbeiro</Text>
+        <Text style={style.text}>SOU BARBEIRO</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={style.button2}
         onPress={() => onClickButton('C')}
       >
-        <Text style={style.text}>Sou Cliente</Text>
+        <Text style={style.text}>SOU CLIENTE</Text>
       </TouchableOpacity>
     </View>
   )
@@ -66,8 +64,8 @@ const C01 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={style.textHeader}>Quem é você ?</Text>
         <SafeAreaView style={style.safeAreaC}>
+          <Text style={style.textHeader}>QUEM É VOCÊ?</Text>
           <TextInput
             style={style.inputC}
             mode='flat'
@@ -75,8 +73,8 @@ const C01 = ({ navigation, route }) => {
             label="Nome"
             error={errors.nome !== null ? true : false}
             onFocus={() => handleError(null, 'nome')}
-            theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="account" />}
+            theme={{ colors: { placeholder: `${nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="account" />}
             value={nome}
             onChangeText={(nome) => setNome(nome)}
           />
@@ -90,8 +88,8 @@ const C01 = ({ navigation, route }) => {
             label="Sobrenome"
             error={errors.snome !== null ? true : false}
             onFocus={() => handleError(null, 'snome')}
-            theme={{ colors: { placeholder: `${snome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="account" />}
+            theme={{ colors: { placeholder: `${snome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="account" />}
             value={snome}
             onChangeText={(snome) => setSnome(snome)}
           />
@@ -106,7 +104,6 @@ const C01 = ({ navigation, route }) => {
               source={require('../../img/next-button.png')}
               style={style.imageCadastro}
             />
-            <Text>Avançar</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </View>
@@ -167,14 +164,13 @@ const C02 = ({ navigation, route }) => {
           await verifyUsuario(email.trim(), cpfNoMask);
         }
       } catch (error) {
+        isAllowed = false;
         if (error.message === "Request failed with status code 400") {
           handleError('Email já cadastrado', 'email');
-          isAllowed = false;
         }
 
         if (error.message === "Request failed with status code 406") {
           handleError('CPF já cadastrado', 'cpf');
-          isAllowed = false;
         }
       }
     }
@@ -185,8 +181,8 @@ const C02 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={style.textHeader}>Informações pessoais</Text>
         <SafeAreaView style={style.safeAreaC}>
+          <Text style={style.textHeader}>INFORMAÇÕES PESSOAIS</Text>
           <TextInput
             style={style.inputC}
             mode='flat'
@@ -195,8 +191,8 @@ const C02 = ({ navigation, route }) => {
             label="Email"
             error={errors.email !== null ? true : false}
             onFocus={() => handleError(null, 'email')}
-            theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="email" />}
+            theme={{ colors: { placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="email" />}
             value={email}
             onChangeText={(email) => setEmail(email)}
           />
@@ -211,8 +207,8 @@ const C02 = ({ navigation, route }) => {
             label="Celular"
             error={errors.ncelular !== null ? true : false}
             onFocus={() => handleError(null, 'ncelular')}
-            theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="phone" />}
+            theme={{ colors: { placeholder: `${ncelular!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="phone" />}
             value={ncelular}
             onChangeText={(ncelular) => setNcelular(ncelular)}
           />
@@ -227,8 +223,8 @@ const C02 = ({ navigation, route }) => {
             label="CPF"
             error={errors.cpf !== null ? true : false}
             onFocus={() => handleError(null, 'cpf')}
-            theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="account" />}
+            theme={{ colors: { placeholder: `${cpf!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="account" />}
             value={globalFunction.formataCPF(cpf)}
             onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
           />
@@ -243,7 +239,7 @@ const C02 = ({ navigation, route }) => {
               source={require('../../img/next-button.png')}
               style={style.imageCadastro}
             />
-            <Text>Avançar</Text>
+            
           </TouchableOpacity>
         </SafeAreaView>
       </View>
@@ -292,19 +288,19 @@ const C03 = ({ navigation, route }) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container} >
-        <Text style={style.textHeader}>Crie uma senha segura</Text>
         <SafeAreaView style={style.safeAreaC}>
+          <Text style={style.textHeader}>CRIE UMA SENHA SEGURA</Text>
           <TextInput
             style={style.inputC}
             mode='flat'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
             label="Senha"
             error={errors.senha !== null ? true : false}
             onFocus={() => handleError(null, 'senha')}
             secureTextEntry={hidePass1}
-            left={<TextInput.Icon color="white" name="lock" />}
-            right={<TextInput.Icon color="white" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+            left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+            right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
             value={senha}
             onChangeText={(senha) => setSenha(senha)}
           />
@@ -315,13 +311,13 @@ const C03 = ({ navigation, route }) => {
             style={style.inputC}
             mode='flat'
             activeOutlineColor='#fff'
-            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
             label="Confirmar Senha"
             error={errors.senhaConfirmed !== null ? true : false}
             onFocus={() => handleError(null, 'senhaConfirmed')}
             secureTextEntry={hidePass2}
-            left={<TextInput.Icon color="white" name="lock" />}
-            right={<TextInput.Icon color="white" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+            left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+            right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
             value={senhaConfirmed}
             onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
           />
@@ -336,7 +332,7 @@ const C03 = ({ navigation, route }) => {
               source={require('../../img/next-button.png')}
               style={style.imageCadastro}
             />
-            <Text>Avançar</Text>
+            
           </TouchableOpacity>
         </SafeAreaView>
       </View>
@@ -444,18 +440,18 @@ const C04 = (props) => {
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
       <View style={style.container}>
-        {!loading?<Text style={{ color: '#000', textAlign: 'center', marginTop: 120, fontSize: 27, fontWeight: 'bold', fontFamily: 'Montserrat-Bold' }} >Confirmar</Text>:null}
         {!loading?
-          <SafeAreaView style={style.safeAreaC}>
+          <SafeAreaView style={[style.safeAreaC, {marginTop: 0}]}>
+            <Text style={[style.textHeader, { color: '#2B513B' }]}>CONFIRME SEUS DADOS</Text>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
               label="Nome"
               error={errors.nome !== null ? true : false}
               onFocus={() => handleError(null, 'nome')}
-              theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-              left={<TextInput.Icon color="white" name="account" />}
+              theme={{ colors: { placeholder: `${nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+              left={<TextInput.Icon color="#FFCA9F" name="account" />}
               value={nome}
               onChangeText={(nome) => setNome(nome)}
             />
@@ -463,14 +459,14 @@ const C04 = (props) => {
               {errors.nome}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
               label="Sobrenome"
               error={errors.snome !== null ? true : false}
               onFocus={() => handleError(null, 'snome')}
-              theme={{ colors: { placeholder: `${snome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-              left={<TextInput.Icon color="white" name="account" />}
+              theme={{ colors: { placeholder: `${snome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+              left={<TextInput.Icon color="#FFCA9F" name="account" />}
               value={snome}
               onChangeText={(snome) => setSnome(snome)}
             />
@@ -478,15 +474,15 @@ const C04 = (props) => {
               {errors.snome}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
               keyboardType='email-address'
               label="Email"
               error={errors.email !== null ? true : false}
               onFocus={() => handleError(null, 'email')}
-              theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-              left={<TextInput.Icon color="white" name="email" />}
+              theme={{ colors: { placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+              left={<TextInput.Icon color="#FFCA9F" name="email" />}
               value={email}
               onChangeText={(email) => setEmail(email)}
             />
@@ -494,15 +490,15 @@ const C04 = (props) => {
               {errors.email}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
               keyboardType='phone-pad'
               label="Celular"
               error={errors.ncelular !== null ? true : false}
               onFocus={() => handleError(null, 'ncelular')}
-              theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-              left={<TextInput.Icon color="white" name="phone" />}
+              theme={{ colors: { placeholder: `${ncelular!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+              left={<TextInput.Icon color="#FFCA9F" name="phone" />}
               value={ncelular}
               onChangeText={(ncelular) => setNcelular(ncelular)}
             />
@@ -510,15 +506,15 @@ const C04 = (props) => {
               {errors.ncelular}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
               keyboardType='numeric'
               label="CPF"
               error={errors.cpf !== null ? true : false}
               onFocus={() => handleError(null, 'cpf')}
-              theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-              left={<TextInput.Icon color="white" name="account" />}
+              theme={{ colors: { placeholder: `${cpf!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+              left={<TextInput.Icon color="#FFCA9F" name="account" />}
               value={globalFunction.formataCPF(cpf)}
               onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
             />
@@ -526,16 +522,16 @@ const C04 = (props) => {
               {errors.cpf}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
-              theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+              theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
               label="Senha"
               error={errors.senha !== null ? true : false}
               onFocus={() => handleError(null, 'senha')}
               secureTextEntry={hidePass1}
-              left={<TextInput.Icon color="white" name="lock" />}
-              right={<TextInput.Icon color="white" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+              left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+              right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
               value={senha}
               onChangeText={(senha) => setSenha(senha)}
             />
@@ -543,16 +539,16 @@ const C04 = (props) => {
               {errors.senha}
             </HelperText>
             <TextInput
-              style={style.inputC}
+              style={style.inputC2}
               mode='flat'
               activeOutlineColor='#fff'
-              theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
+              theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
               label="Confirmar Senha"
               error={errors.senhaConfirmed !== null ? true : false}
               onFocus={() => handleError(null, 'senhaConfirmed')}
               secureTextEntry={hidePass2}
-              left={<TextInput.Icon color="white" name="lock" />}
-              right={<TextInput.Icon color="white" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+              left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+              right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
               value={senhaConfirmed}
               onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
             />
@@ -564,10 +560,10 @@ const C04 = (props) => {
               onPress={CadastraUsuario}
             >
               <Image
-                source={require('../../img/next-button.png')}
+                source={require('../../img/confirm.png')}
                 style={style.imageCadastro}
               />
-              <Text>Avançar</Text>
+              
             </TouchableOpacity>
           </SafeAreaView>
         :<ActivityIndicator style={{marginTop: Dimensions.get('window').height / 2}}/>}
@@ -614,26 +610,27 @@ const RedefinirSenha = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
-      <View style={[style.container, { marginTop: '50%' }]} >
+      <View style={style.container} >
         <SafeAreaView style={style.safeAreaC}>
+          <Text style={[style.textHeader, { color: '#2B513B' }]}>DIGITE O EMAIL DA SUA CONTA</Text>
           <TextInput
-            style={style.inputC}
+            style={style.inputC2}
             mode='flat'
             activeOutlineColor='#fff'
             keyboardType='email-address'
             label="Email"
             error={errors.email !== null ? true : false}
             onFocus={() => handleError(null, 'email')}
-            theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-            left={<TextInput.Icon color="white" name="email" />}
+            theme={{ colors: { placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+            left={<TextInput.Icon color="#FFCA9F" name="email" />}
             value={email}
             onChangeText={(email) => setEmail(email)}
           />
           <HelperText  type="error" visible={errors.email !== null ? true : false}>
             {errors.email}
           </HelperText>
-          <TouchableOpacity style={[style.btnRedefinir, { backgroundColor: !loading?'#05A94E':'gray' }]} onPress={() => {!loading?enviaEmail():null}}>
-            {!loading?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Enviar</Text>
+          <TouchableOpacity style={[style.btnRedefinir, { backgroundColor: '#2B513B' }]} onPress={() => {!loading?enviaEmail():null}}>
+            {!loading?<Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>ENVIAR</Text>
             :<ActivityIndicator/>}
           </TouchableOpacity>
         </SafeAreaView>

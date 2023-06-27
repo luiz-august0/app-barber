@@ -100,7 +100,7 @@ const MenuBarbearia = (props) => {
 						>
 							<MIcon name="google-maps" size={70} color={'#ffff'}></MIcon>
 							<Text style={style.text}>Visualizar no mapa</Text>
-							<Text style={[style.text, { fontSize: 12, fontFamily: 'Montserrat-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
+							<Text style={[style.text, { fontSize: 12, fontFamily: 'Manrope-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

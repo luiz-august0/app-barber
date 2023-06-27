@@ -23,13 +23,13 @@ export default StyleSheet.create({
     },
     text: {
         fontSize: 14,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         color: '#000'
     },
     textTitle: {
         width: '100%',
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
         marginTop: '15%',

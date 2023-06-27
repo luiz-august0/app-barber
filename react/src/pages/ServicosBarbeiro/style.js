@@ -11,13 +11,13 @@ export default StyleSheet.create({
     text: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },
     textTitle: {
         fontSize: 27,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#000',
         marginTop: 50,
@@ -26,14 +26,14 @@ export default StyleSheet.create({
     textButton: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'center',
         color: '#ffff',
     },
     textViewServico: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         color: '#ffff',
     },
     button: {
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     },
     textCategoria: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Manrope-Bold',
         textAlign: 'left',
         color: '#ffff',
     },
@@ -78,7 +78,7 @@ export default StyleSheet.create({
     },
     textCategoriaButton: {
         fontSize: 14,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
         color: '#ffff',
     },

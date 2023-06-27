@@ -98,8 +98,8 @@ const Login = (props) => {
               activeOutlineColor='#fff'
               label="Email"
               keyboardType='email-address'
-              theme={{colors: {placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
-              left={<TextInput.Icon color="white" name="email" />}
+              theme={{colors: {placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F'}}}
+              left={<TextInput.Icon color="#FFCA9F" name="email" />}
               value= {email}
               onChangeText={ (email) => setEmail(email) }
           />
@@ -107,34 +107,32 @@ const Login = (props) => {
               style={ style.inputL }
               mode='flat'
               activeOutlineColor='#fff'
-              theme={{colors: {placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white'}}}
+              theme={{colors: {placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F'}}}
               label="Senha"
               secureTextEntry={hidePass}
-              left={<TextInput.Icon color="white" name="lock"/>}
-              right={<TextInput.Icon color="white" onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
+              left={<TextInput.Icon color="#FFCA9F" name="lock"/>}
+              right={<TextInput.Icon color="#FFCA9F" onPress={ () => setHidePass(!hidePass) } name={ hidePass ? "eye-off":"eye"}></TextInput.Icon>}
               value= {senha}
               onChangeText={ (senha) => setSenha(senha) }
           />
             <TouchableOpacity
             onPress={() => props.navigation.navigate('RedefinirSenha')}
             >
-              <Text style={{ color: "#000", marginTop: 10, fontSize: 14, fontWeight: 'bold' }} >Esqueci a Senha</Text>
+              <Text style={{ color: "#BA6213", marginTop: 10, fontSize: 14, fontFamily: 'Manrope-Regular' }} >Esqueci a Senha</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
             onPress={handleSubmit}
             style={ style.btnLogin }
             >
-            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login</Text>
+              <Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>LOGIN</Text>
             </TouchableOpacity>
-
-            <Text style={{ color: "#000", fontSize: 14, fontWeight: 'bold' }} >Não tem cadastro ?</Text>
 
             <TouchableOpacity 
             onPress={() => props.navigation.navigate('C00')}
             style={style.btnCadastro}
             >
-            <Text style={{ color: "#fff", fontSize: 14, fontWeight: 'bold' }}>Cadastrar agora</Text>
+              <Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>CADASTRE-SE AGORA</Text>
             </TouchableOpacity>
         </SafeAreaView>
         </View>

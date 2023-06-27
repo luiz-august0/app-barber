@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     },
     user: {
         fontSize: 22,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#000',
+        color: '#FFCA9F',
         marginTop: 10
     },
     avatar: {

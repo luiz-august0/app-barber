@@ -112,7 +112,7 @@ const style = StyleSheet.create({
     },
     textSubtitle: {
         fontSize: 16,
-        fontFamily: 'Montserrat-Regular',
+        fontFamily: 'Manrope-Regular',
         marginRight: 5
     }
 })
