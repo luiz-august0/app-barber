@@ -82,7 +82,7 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 style={style.buttonSelect}
                 onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID})}>
                     <Text style={[style.textSubtitle, { color: barbeariaID?'#fff':'#000' }]}>Selecionar</Text>
-                    <MIcon name="arrow-forward" size={30} color={'#05A94E'}></MIcon>
+                    <MIcon name="arrow-forward" size={30} color={'#2B513B'}></MIcon>
                 </TouchableOpacity>
             </Card>
             <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>

@@ -13,16 +13,16 @@ export default StyleSheet.create({
         fontSize: 27,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
+        color: '#BA6213',
         marginTop: 10,
         marginBottom: 40
     },
     text: {
-        width: '100%',
+        width: '90%',
         fontSize: 18,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#BA6213',
     },
     button: {
         alignItems: 'center',
@@ -31,7 +31,7 @@ export default StyleSheet.create({
         height: 150,
         borderRadius: 20,
         marginHorizontal: 5,
-        backgroundColor: '#343434'
+        backgroundColor: '#FDEBDD'
     },
     imageContainer: {
         flex: 1,

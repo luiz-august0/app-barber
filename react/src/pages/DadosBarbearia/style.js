@@ -11,29 +11,30 @@ export default StyleSheet.create({
     text: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Manrope-Bold',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff'
+        color: '#FFCA9F'
     },
     textTitle: {
         width: '100%',
-        fontSize: 27,
-        fontFamily: 'Manrope-Bold',
+        fontSize: 30,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#000',
+        color: '#2B513B',
         marginTop: '15%',
-        marginBottom: '5%'
+        marginBottom: 5
     },
     textSubtitle: {
-        width: '100%',
         fontSize: 12,
         textAlign: 'center',
-        color: '#000',
+        fontFamily: 'Manrope-Regular',
+        color: '#2B513B',
         marginBottom: 30
     },
     textButtom: {
         width: '100%',
         fontSize: 14,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'right',
         color: '#ffff',
         marginBottom: 10
@@ -42,17 +43,17 @@ export default StyleSheet.create({
         marginTop: 10,
         width: '70%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 35,
         marginBottom: 20,
-        width: 150,
+        width: 250,
         height: 40,
-        borderRadius: 10,
-        backgroundColor: '#0096FF'
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     imageContainer: {
         width: '50%',
@@ -68,8 +69,8 @@ export default StyleSheet.create({
     },
     viewCEP: {
         justifyContent: "center", 
-        backgroundColor: '#FFFF', 
-        borderRadius: 10, 
+        backgroundColor: '#BA6213', 
+        borderRadius: 5, 
         width: '70%', 
         height: 50, 
         marginTop: 10 

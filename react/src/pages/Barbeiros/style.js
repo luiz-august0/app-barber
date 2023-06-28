@@ -90,6 +90,6 @@ export default StyleSheet.create({
         width: 110,
         height: 40,
         borderRadius: 10,
-        backgroundColor: '#05A94E'
+        backgroundColor: '#2B513B'
     },
 });

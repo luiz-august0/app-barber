@@ -137,19 +137,19 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 		return (
 			<View style={{flexDirection: "row", marginBottom: 10, flexWrap: "wrap"}}>
 				<View>
-					<Text style={{fontSize: 14}}>Horário inicial</Text>
+					<Text style={{fontSize: 12, fontFamily: 'Manrope-Regular', color: '#BA6213'}}>HORÁRIO INICIAL</Text>
 					<Dropdown label="Horário" data={horarios} onSelect={setHorarioInicial} dropdownWidth={100}/>
 				</View>
 				<View style={{marginLeft: 10}}>
-					<Text style={{fontSize: 14}}>Horário final</Text>
+					<Text style={{fontSize: 12, fontFamily: 'Manrope-Regular', color: '#BA6213'}}>HORÁRIO FINAL</Text>
 					<Dropdown label="Horário" data={horarios} onSelect={setHorarioFinal} dropdownWidth={100}/>
 				</View>
 				<View style={{flexDirection: "row", marginLeft: 10}}>
 					<TouchableOpacity style={style.buttonItem} onPress={() => onPressCancel()}>
-						<MIcon name="cancel" size={25} color={'red'}></MIcon>	
+						<MIcon name="cancel" size={25} color={'#71150D'}></MIcon>	
 					</TouchableOpacity>
 					<TouchableOpacity style={style.buttonItem} onPress={() => handleSubmit()}>
-						<MIcon name="check-circle" size={25} color={'#05A94E'}></MIcon>	
+						<MIcon name="check-circle" size={25} color={'#2B513B'}></MIcon>	
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -159,12 +159,12 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 	if (JSON.stringify(dataHorariosDia) == '[]') {
 		return (
 			<View>
-				<Text style={[style.viewItemText, { color: '#000', marginBottom: 10 }]}>
-					Fechado
+				<Text style={[style.viewItemText, { color: '#2B513B', marginBottom: 10 }]}>
+					FECHADO
 				</Text>
 				{addMode?viewInsert():
 				<TouchableOpacity style={{marginTop: 10}} onPress={() => onPressAdd()}>
-					<MIcon name="add-circle" size={25} color={'#05A94E'}></MIcon>	
+					<MIcon name="add-circle" size={25} color={'#2B513B'}></MIcon>	
 				</TouchableOpacity>}
 			</View>
 		)
@@ -174,7 +174,7 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 			{dataHorariosDia.map((e) => (
 				<View style={{flexDirection: "row", marginBottom: 10, flexWrap: "wrap"}} key={e.BarbH_Seq}>
 					<View>
-						<Text style={{fontSize: 14}}>Horário inicial</Text>
+						<Text style={{fontSize: 12, fontFamily: 'Manrope-Regular', color: '#BA6213'}}>HORÁRIO INICIAL</Text>
 						{(editMode)&&(e.BarbH_Seq == seqInEdit)?
 						<Dropdown label="Horário" data={horarios} onSelect={setHorarioInicial} initialValue={horarioInicial} dropdownWidth={100}/>:
 						<View style={style.viewItem}>
@@ -184,7 +184,7 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 						</View>}
 					</View>
 					<View style={{marginLeft: 10}}>
-						<Text style={{fontSize: 14}}>Horário final</Text>
+						<Text style={{fontSize: 12, fontFamily: 'Manrope-Regular', color: '#BA6213'}}>HORÁRIO FINAL</Text>
 						{(editMode)&&(e.BarbH_Seq == seqInEdit)?
 						<Dropdown label="Horário" data={horarios} onSelect={setHorarioFinal} initialValue={horarioFinal} dropdownWidth={100}/>:
 						<View style={style.viewItem}>
@@ -197,10 +197,10 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 						{(!editMode) && (!addMode)?
 						<>
 							<TouchableOpacity style={style.buttonItem} onPress={() => onPressEdit(e.BarbH_Seq, e.BarbH_HoraInicio, e.BarbH_HoraFim)}>
-								<MIcon name="edit" size={25} color={'#e65c00'}></MIcon>	
+								<MIcon name="edit" size={25} color={'#BA6213'}></MIcon>	
 							</TouchableOpacity>
 							<TouchableOpacity style={style.buttonItem} onPress={() => handleDelete(e.BarbH_Seq)}>
-								<MIcon name="delete" size={25} color={'red'}></MIcon>	
+								<MIcon name="delete" size={25} color={'#71150D'}></MIcon>	
 							</TouchableOpacity>
 						</>
 						:
@@ -208,10 +208,10 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 							{e.BarbH_Seq == seqInEdit?
 							<>
 								<TouchableOpacity style={style.buttonItem} onPress={() => onPressCancel()}>
-									<MIcon name="cancel" size={25} color={'red'}></MIcon>	
+									<MIcon name="cancel" size={25} color={'#71150D'}></MIcon>	
 								</TouchableOpacity>
 								<TouchableOpacity style={style.buttonItem} onPress={() => handleSubmit()}>
-									<MIcon name="check-circle" size={25} color={'#05A94E'}></MIcon>	
+									<MIcon name="check-circle" size={25} color={'#2B513B'}></MIcon>	
 								</TouchableOpacity>
 							</>
 							:null}
@@ -222,7 +222,7 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 			))}
 			{addMode?viewInsert():
 			<TouchableOpacity style={{marginTop: 10}} onPress={() => onPressAdd()}>
-				<MIcon name="add-circle" size={25} color={'#05A94E'}></MIcon>	
+				<MIcon name="add-circle" size={25} color={'#2B513B'}></MIcon>	
 			</TouchableOpacity>}
 			</>
 		)
@@ -240,7 +240,7 @@ const style = StyleSheet.create({
 	viewItem: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		backgroundColor: '#404040',
+		backgroundColor: '#FDEBDD',
 		height: 40,
 		width: 100,
 		paddingHorizontal: 10,
@@ -249,7 +249,7 @@ const style = StyleSheet.create({
 	viewItemText: {
 		flex: 1,
 		textAlign: 'center',
-		color: '#ffff',
+		color: '#BA6213',
 		fontFamily: 'Manrope-Regular'
 	}
 });

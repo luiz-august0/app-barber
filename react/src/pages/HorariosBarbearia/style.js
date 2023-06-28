@@ -39,6 +39,7 @@ export default StyleSheet.create({
     textItem: {
         fontSize: 18, 
         fontFamily: 'Manrope-Bold', 
+        color: '#BA6213',
         marginBottom: 35
     },
 });

@@ -134,15 +134,15 @@ const CategoriasServico = (props) => {
                                             setModalVisible(true);
                                         }}>
                                             <Text style={style.textCategoriaButton}>Editar</Text>
-                                            <MIcon name="edit" size={25} color={'#e65c00'}></MIcon>
+                                            <MIcon name="edit" size={25} color={'#BA6213'}></MIcon>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleDeleteCategoria(e.ServCat_Codigo)}>
                                             <Text style={style.textCategoriaButton}>Excluir</Text>
-                                            <MIcon name="delete" size={25} color={'red'}></MIcon>
+                                            <MIcon name="delete" size={25} color={'#71150D'}></MIcon>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => props.navigation.navigate('Servicos', { categoriaID:  e.ServCat_Codigo})}>
                                             <Text style={style.textCategoriaButton}>Ver Serviços</Text>
-                                            <MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
+                                            <MIcon name="arrow-forward" size={25} color={'#2B513B'}></MIcon>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -155,7 +155,7 @@ const CategoriasServico = (props) => {
                     <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
@@ -167,7 +167,7 @@ const CategoriasServico = (props) => {
                     <HelperText type="error" visible={errors.nome !== null ? true : false}>
                         {errors.nome}
                     </HelperText>
-                    <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
+                    <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#2B513B':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
                         {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
                         :<ActivityIndicator/>}
                     </TouchableOpacity>

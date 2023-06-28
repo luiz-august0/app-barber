@@ -45,7 +45,7 @@ export default StyleSheet.create({
         width: 150,
         height: 40,
         borderRadius: 10,
-        backgroundColor: '#05A94E'
+        backgroundColor: '#2B513B'
     },
     buttonFilter: {
         flexDirection: "row", 

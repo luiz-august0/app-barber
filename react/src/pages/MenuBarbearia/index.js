@@ -66,15 +66,15 @@ const MenuBarbearia = (props) => {
 						style={style.button}
 						onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
 						>
-							<MIcon name="office-building" size={80} color={'#ffff'}></MIcon>
-							<Text style={style.text}>Dados de cadastro</Text>
+							<MIcon name="office-building" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>DADOS DE CADASTRO</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 						style={style.button}
 						onPress={() => props.navigation.navigate('HorariosBarbearia',{ barbeariaID: props.route.params?.barbeariaID })}
 						>
-							<MIcon name="timetable" size={80} color={'#ffff'}></MIcon>
-							<Text style={style.text}>Horários</Text>
+							<MIcon name="timetable" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>HORÁRIOS</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={style.viewButtons}>
@@ -82,15 +82,15 @@ const MenuBarbearia = (props) => {
 						style={style.button}
 						onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
 						>
-							<MAIcon name="person" size={80} color={'#ffff'}></MAIcon>
-							<Text style={style.text}>Barbeiros</Text>
+							<MAIcon name="person" size={80} color={'#BA6213'}></MAIcon>
+							<Text style={style.text}>BARBEIROS</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 						style={style.button}
 						onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
 						>
-							<MIcon name="scissors-cutting" size={80} color={'#ffff'}></MIcon>
-							<Text style={style.text}>Serviços</Text>
+							<MIcon name="scissors-cutting" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>SERVIÇOS</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={[style.viewButtons, { flexDirection: "column" }]}>
@@ -98,8 +98,8 @@ const MenuBarbearia = (props) => {
 						style={[style.button, { height: 200 }]}
 						onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
 						>
-							<MIcon name="google-maps" size={70} color={'#ffff'}></MIcon>
-							<Text style={style.text}>Visualizar no mapa</Text>
+							<MIcon name="google-maps" size={70} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>VISUALIZAR NO MAPA</Text>
 							<Text style={[style.text, { fontSize: 12, fontFamily: 'Manrope-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
 						</TouchableOpacity>
 					</View>

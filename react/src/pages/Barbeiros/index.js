@@ -125,11 +125,11 @@ const Barbeiros = (props) => {
                             <View style={style.buttonComponent}>
                                 <TouchableOpacity onPress={() => handleDeleteBarbeiro(e.Usr_Codigo, e.Usr_Tipo)}>
                                     <Text style={[style.text, {fontSize: 14}]}>Excluir</Text>
-                                    <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'red'}></MIcon>
+                                    <MIcon style={{marginHorizontal: 50}} name="delete" size={35} color={'#71150D'}></MIcon>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: e.Usr_Codigo})}>
                                     <Text style={[style.text, {fontSize: 14}]}>Ir ao menu</Text>
-                                    <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#05A94E'}></MIcon>
+                                    <MIcon style={{marginHorizontal: 50}} name="arrow-forward" size={35} color={'#2B513B'}></MIcon>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -141,14 +141,14 @@ const Barbeiros = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Especialidade"
                 theme={{ colors: { placeholder: `${especialidade!==null&&especialidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                 left={<TextInput.Icon color="white" name="account" />}
                 value={especialidade}
                 onChangeText={(especialidade) => setEspecialidade(especialidade)}
                 />
-                <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#05A94E':'gray' }]} onPress={() => {!loadingResponse?handleSubmitBarbeiro():null}}>
+                <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#2B513B':'gray' }]} onPress={() => {!loadingResponse?handleSubmitBarbeiro():null}}>
                     {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
                     :<ActivityIndicator/>}
                 </TouchableOpacity>

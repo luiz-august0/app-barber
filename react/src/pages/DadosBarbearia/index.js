@@ -529,12 +529,12 @@ const DadosBarbearia = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Descrição"
                     error={errors.descricao !== null ? true : false}
                     onFocus={() => handleError(null, 'descricao')}
-                    theme={{ colors: { placeholder: `${state.descricao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
+                    theme={{ colors: { placeholder: `${state.descricao!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                    left={<TextInput.Icon color="#FFCA9F" name="account" />}
                     value={state.descricao}
                     onChangeText={(descricao) => setValueState('descricao', descricao)}
                 />
@@ -544,30 +544,30 @@ const DadosBarbearia = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Contato"
                     keyboardType="number-pad"
                     error={errors.contato !== null ? true : false}
                     onFocus={() => handleError(null, 'contato')}
-                    theme={{ colors: { placeholder: `${state.contato!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
+                    theme={{ colors: { placeholder: `${state.contato!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                    left={<TextInput.Icon color="#FFCA9F" name="account" />}
                     value={state.contato}
                     onChangeText={(contato) => setValueState('contato', contato)}
                 />
                 <HelperText type="error" visible={errors.contato !== null ? true : false}>
                     {errors.contato}
                 </HelperText>
-                <TouchableOpacity style={[style.button, {backgroundColor: '#05A94E', marginBottom: 10}]} onPress={() => handleSubmitContato()}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#2B513B', marginBottom: 10}]} onPress={() => handleSubmitContato()}>
+                    <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>CONFIRMAR</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E', marginTop: 0}]} onPress={() => {
+                <TouchableOpacity style={[style.button, {backgroundColor: '#71150D', marginTop: 0}]} onPress={() => {
                     setEditContatoMode(false);
                     setInsertContatoMode(false); 
                     setValueState('contato', '');
                     setValueState('descricao', '');
                     setContatoInEdit('');
                     }}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cancelar</Text>
+                    <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>CANCELAR</Text>
                 </TouchableOpacity>
             </>
         )
@@ -579,31 +579,31 @@ const DadosBarbearia = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Email"
                     keyboardType="email-address"
                     error={errors.email !== null ? true : false}
                     editable={!loadingProprietario}
                     onFocus={() => handleError(null, 'email')}
-                    theme={{ colors: { placeholder: `${state.email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="email" />}
+                    theme={{ colors: { placeholder: `${state.email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                    left={<TextInput.Icon color="#FFCA9F" name="email" />}
                     value={state.email}
                     onChangeText={(email) => setValueState('email', email)}
                 />
                 <HelperText type="error" visible={errors.email !== null ? true : false}>
                     {errors.email}
                 </HelperText>
-                <TouchableOpacity style={[style.button, {backgroundColor: !loadingProprietario?'#05A94E':'gray', marginBottom: 10}]} onPress={() => handleSubmitProprietario()}>
+                <TouchableOpacity style={[style.button, {backgroundColor: '#2B513B', marginBottom: 10}]} onPress={() => handleSubmitProprietario()}>
                     {!loadingProprietario?
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Confirmar</Text>
+                    <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>CONFIRMAR</Text>
                     :<ActivityIndicator/>}
                 </TouchableOpacity>
                 {!loadingProprietario?
-                <TouchableOpacity style={[style.button, {backgroundColor: '#E82E2E', marginTop: 0}]} onPress={() => {
+                <TouchableOpacity style={[style.button, {backgroundColor: '#71150D', marginTop: 0}]} onPress={() => {
                     setInsertProprietarioMode(false); 
                     setValueState('email', '');
                     }}>
-                    <Text style={{ color: "#ffff", fontSize: 14, fontWeight: 'bold' }}>Cancelar</Text>
+                    <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>CANCELAR</Text>
                 </TouchableOpacity>:null}
             </>
         )
@@ -630,12 +630,12 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Nome"
                 error={errors.nome !== null ? true : false}
                 onFocus={() => handleError(null, 'nome')}
-                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="account" />}
+                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="account" />}
                 value={state.nome}
                 onChangeText={(nome) => setValueState('nome', nome)}
                 />
@@ -645,12 +645,12 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Razão Social"
                 error={errors.razao !== null ? true : false}
                 onFocus={() => handleError(null, 'razao')}
-                theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="account" />}
+                theme={{ colors: { placeholder: `${state.razao!==null&&state.razao!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="account" />}
                 value={state.razao}
                 onChangeText={(razao) => setValueState('razao', razao)}
                 />
@@ -660,13 +660,13 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="CNPJ"
                 keyboardType="number-pad"
                 error={errors.cnpj !== null ? true : false}
                 onFocus={() => handleError(null, 'cnpj')}
-                theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="account" />}
+                theme={{ colors: { placeholder: `${state.cnpj!==null&&state.cnpj!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="account" />}
                 value={globalFunction.formataCampo(state.cnpj, "00.000.000/0000-00")}
                 onChangeText={(cnpj) => setValueState('cnpj', globalFunction.formataCampo(cnpj, "00.000.000/0000-00"))}
                 />
@@ -676,13 +676,13 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="IE"
                 keyboardType="number-pad"
                 error={errors.inscEstadual !== null ? true : false}
                 onFocus={() => { handleError(null, 'inscEstadual'); Alert.alert('Atenção', 'Caso você seja isento de inscrição estadual, deixe o campo correspondente em branco')}}
-                theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="account" />}
+                theme={{ colors: { placeholder: `${state.inscEstadual!==null&&state.inscEstadual!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="account" />}
                 value={state.inscEstadual}
                 onChangeText={(inscEstadual) => setValueState('inscEstadual', inscEstadual)}
                 />
@@ -691,7 +691,7 @@ const DadosBarbearia = (props) => {
                 </HelperText>
                 {loadingCEP?
                 <View style={style.viewCEP} >
-                    <Text style={[style.text, { fontSize: 14, color: '#000' }]} >Consultando CEP...</Text>
+                    <Text style={style.text} >Consultando CEP...</Text>
                     <ActivityIndicator/>
                 </View>
                 :
@@ -699,14 +699,14 @@ const DadosBarbearia = (props) => {
                     <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="CEP"
                     keyboardType="number-pad"
                     error={errors.cep !== null ? true : false}
                     onFocus={() => onFocusCEP()}
                     onEndEditing={() => consultaCEP()}
-                    theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="home-city" />}
+                    theme={{ colors: { placeholder: `${state.cep!==null&&state.cep!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                    left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                     value={globalFunction.formataCampo(state.cep, "00.000-000")}
                     onChangeText={(cep) => setValueState('cep', globalFunction.formataCampo(cep, "00.000-000"))}
                     />
@@ -718,13 +718,13 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Cidade"
                 editable={!loadingCEP}
                 error={errors.cidade !== null ? true : false}
                 onFocus={() => handleError(null, 'cidade')}
-                theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.cidade}
                 onChangeText={(cidade) => setValueState('cidade', cidade)}
                 />
@@ -734,15 +734,15 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="UF"
                 editable={!loadingCEP}
                 keyboardType="default"
                 maxLength={2}
                 error={errors.uf !== null ? true : false}
                 onFocus={() => handleError(null, 'uf')}
-                theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.uf!==null&&state.uf!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.uf!== null?state.uf.toUpperCase():null}
                 onChangeText={(uf) => setValueState('uf', uf!== null?uf.toUpperCase():null)}
                 />
@@ -752,13 +752,13 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Rua"
                 editable={!loadingCEP}
                 error={errors.rua !== null ? true : false}
                 onFocus={() => handleError(null, 'rua')}
-                theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.rua!==null&&state.rua!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.rua}
                 onChangeText={(rua) => setValueState('rua', rua)}
                 />
@@ -768,14 +768,14 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Número"
                 editable={!loadingCEP}
                 keyboardType="number-pad"
                 error={errors.numero !== null ? true : false}
                 onFocus={() => handleError(null, 'numero')}
-                theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.numero!==null&&state.numero!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.numero}
                 onChangeText={(numero) => setValueState('numero', numero)}
                 />
@@ -785,13 +785,13 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Bairro"
                 editable={!loadingCEP}
                 error={errors.bairro !== null ? true : false}
                 onFocus={() => handleError(null, 'bairro')}
-                theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.bairro!==null&&state.bairro!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.bairro}
                 onChangeText={(bairro) => setValueState('bairro', bairro)}
                 />
@@ -801,20 +801,20 @@ const DadosBarbearia = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Complemento"
                 editable={!loadingCEP}
                 error={errors.complemento !== null ? true : false}
                 onFocus={() => handleError(null, 'complemento')}
-                theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="home-city" />}
+                theme={{ colors: { placeholder: `${state.complemento!==null&&state.complemento!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                 value={state.complemento}
                 onChangeText={(complemento) => setValueState('complemento', complemento)}
                 />
                 <HelperText type="error" visible={errors.complemento !== null ? true : false}>
                     {errors.complemento}
                 </HelperText>
-                <Text style={style.textTitle}>Contatos</Text>    
+                <Text style={style.textTitle}>CONTATOS</Text>    
                 <TouchableOpacity onPress={() => {
                     setEditContatoMode(false); 
                     setInsertContatoMode(false); 
@@ -825,17 +825,18 @@ const DadosBarbearia = (props) => {
                     handleError(null, 'descricao');
                     setInsertContatoMode(true);
                     }}>
-                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                    <Text style={[style.textButtom, { color: '#BA6213', fontSize: 16 }]}>ADICIONAR</Text>
                 </TouchableOpacity>
                 {insertContatoMode?addEditContato():null}
                 {contatos.map((e) => {
                     return (
-                        <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
+                        <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#BA6213'}}>
                         <Card.Title title={`${e.descricao}: ${e.contato}`}
+                                    titleStyle={{fontFamily: 'Manrope-Bold', color: '#FFCA9F'}}
                                     titleNumberOfLines={0}/>
                         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <TouchableOpacity onPress={() => handleDeleteContato(e.idContato)}>
-                                <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
+                                <Text style={[style.textButtom, { color: '#71150D', textAlign: 'center' }]}>EXCLUIR</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
                                 setEditContatoMode(false); 
@@ -848,7 +849,7 @@ const DadosBarbearia = (props) => {
                                 setEditContatoMode(true); 
                                 setContatoInEdit(e.idContato);
                                 }}>
-                                <Text style={[style.textButtom, { color: "#e65c00", textAlign: 'center', marginLeft: 10}]}>Editar</Text>
+                                <Text style={[style.textButtom, { color: "#2B513B", textAlign: 'center', marginLeft: 10}]}>EDITAR</Text>
                             </TouchableOpacity>
                         </View>
                         {(editContatoMode) && (contatoInEdit === e.idContato)?
@@ -859,35 +860,34 @@ const DadosBarbearia = (props) => {
                         </Card>
                     )
                 })}
-                <Text style={style.textTitle}>Proprietários</Text>    
+                <Text style={style.textTitle}>PROPRIETÁRIOS</Text>    
                 <TouchableOpacity onPress={() => {
                     setInsertProprietarioMode(false); 
                     setValueState('email', '');
                     handleError(null, 'email');
                     setInsertProprietarioMode(true);
                     }}>
-                    <Text style={[style.textButtom, { color: '#05A94E', fontSize: 16 }]}>Adicionar</Text>
+                    <Text style={[style.textButtom, { color: '#BA6213', fontSize: 16 }]}>ADICIONAR</Text>
                 </TouchableOpacity>
                 {insertProprietarioMode?addProprietario():null}
                 {proprietarios.map((e) => {
                     return (
-                        <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#FFFF'}}>
+                        <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#BA6213'}}>
                         <Card.Title subtitle={
                             `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
                         }
                         subtitleNumberOfLines={0}
+                        subtitleStyle={{fontFamily: 'Manrope-Bold', color: '#FFCA9F'}}
                         />
                         {e.idProprietario != props.usuario.state.id?
-                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <TouchableOpacity onPress={() => handleDeleteProprietario(e.idProprietario)}>
-                            <Text style={[style.textButtom, { color: 'red', textAlign: 'center' }]}>Excluir</Text>
-                        </TouchableOpacity>
-                        </View>:null}
+                            <Text style={[style.textButtom, { color: '#71150D', textAlign: 'center' }]}>EXCLUIR</Text>
+                        </TouchableOpacity>:null}
                         </Card>
                     )
                 })}
-                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
+                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, { marginBottom: 30, width: 280 }]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                    {loadingSubmit?<ActivityIndicator/>:<Text style={style.text}>CONFIRMAR DADOS</Text>}
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingWrapper>

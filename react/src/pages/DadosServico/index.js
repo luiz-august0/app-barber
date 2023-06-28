@@ -250,7 +250,7 @@ const DadosServico = (props) => {
             <View key={url} style={style.itemImage}>
                 <Image style={style.image} source={{ uri: url  }}/>
                 <TouchableOpacity style={{alignItems: 'center', marginTop: 10, justifyContent: "center"}} onPress={() => handleDeleteImage(urlImg)}>
-                    <MIcon name="delete" size={35} color={'red'}></MIcon>
+                    <MIcon name="delete" size={35} color={'#71150D'}></MIcon>
                     <Text style={style.text}>Excluir</Text>
                 </TouchableOpacity>
             </View>
@@ -291,7 +291,7 @@ const DadosServico = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Nome"
                 error={errors.nome !== null ? true : false}
                 onFocus={() => handleError(null, 'nome')}
@@ -306,7 +306,7 @@ const DadosServico = (props) => {
                 <TextInput
                 style={style.input}
                 mode='flat'
-                activeOutlineColor='#fff'
+                activeOutlineColor='#FFCA9F'
                 label="Valor"
                 keyboardType="decimal-pad"
                 error={errors.valor !== null ? true : false}
@@ -324,7 +324,7 @@ const DadosServico = (props) => {
                         <TextInput
                         style={[style.input, { width: "88%" }]}
                         mode='flat'
-                        activeOutlineColor='#fff'
+                        activeOutlineColor='#FFCA9F'
                         label="Duração"
                         editable={false}
                         keyboardType="decimal-pad"
@@ -369,18 +369,18 @@ const DadosServico = (props) => {
                 </View>
                 {(props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined)?
                 <View style={style.viewSubmit}>
-                    <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                    <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
                         {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
                     </TouchableOpacity>
                     <TouchableOpacity style={{alignItems: "center", justifyContent: 'center'}} onPress={() => handleDeleteServico()}>
-                        <MIcon name="delete" size={35} color={'red'}></MIcon>
+                        <MIcon name="delete" size={35} color={'#71150D'}></MIcon>
                         <Text style={style.text}>Excluir</Text>
                     </TouchableOpacity>
                 </View>
                 :
                 <TouchableOpacity 
                 activeOpacity={loadingSubmit ? 1 : 0.7} 
-                style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E', marginTop: 100, marginBottom: 50}]} 
+                style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B', marginTop: 100, marginBottom: 50}]} 
                 onPress={() => {!loadingSubmit?handleSubmit():null}}>
                 {loadingSubmit?
                 <ActivityIndicator/>

@@ -14,7 +14,7 @@ export default StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#FFCA9F',
+        color: '#BA6213',
     },
     button: {
         alignItems: 'center',
@@ -22,7 +22,7 @@ export default StyleSheet.create({
         width: Dimensions.get('window').width / 2.2,
         height: 150,
         borderRadius: 20,
-        backgroundColor: '#BA6213'
+        backgroundColor: '#FDEBDD'
     },
     viewButtons: {
         flex: 1, 

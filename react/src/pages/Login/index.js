@@ -95,7 +95,7 @@ const Login = (props) => {
           <TextInput
               style={ style.inputL }
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               label="Email"
               keyboardType='email-address'
               theme={{colors: {placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F'}}}
@@ -106,7 +106,7 @@ const Login = (props) => {
           <TextInput
               style={ style.inputL }
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               theme={{colors: {placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F'}}}
               label="Senha"
               secureTextEntry={hidePass}

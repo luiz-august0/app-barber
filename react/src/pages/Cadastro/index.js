@@ -69,7 +69,7 @@ const C01 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             label="Nome"
             error={errors.nome !== null ? true : false}
             onFocus={() => handleError(null, 'nome')}
@@ -84,7 +84,7 @@ const C01 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             label="Sobrenome"
             error={errors.snome !== null ? true : false}
             onFocus={() => handleError(null, 'snome')}
@@ -186,7 +186,7 @@ const C02 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             keyboardType='email-address'
             label="Email"
             error={errors.email !== null ? true : false}
@@ -202,7 +202,7 @@ const C02 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             keyboardType='phone-pad'
             label="Celular"
             error={errors.ncelular !== null ? true : false}
@@ -218,7 +218,7 @@ const C02 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             keyboardType='number-pad'
             label="CPF"
             error={errors.cpf !== null ? true : false}
@@ -293,7 +293,7 @@ const C03 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
             label="Senha"
             error={errors.senha !== null ? true : false}
@@ -310,7 +310,7 @@ const C03 = ({ navigation, route }) => {
           <TextInput
             style={style.inputC}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
             label="Confirmar Senha"
             error={errors.senhaConfirmed !== null ? true : false}
@@ -446,7 +446,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               label="Nome"
               error={errors.nome !== null ? true : false}
               onFocus={() => handleError(null, 'nome')}
@@ -461,7 +461,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               label="Sobrenome"
               error={errors.snome !== null ? true : false}
               onFocus={() => handleError(null, 'snome')}
@@ -476,7 +476,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               keyboardType='email-address'
               label="Email"
               error={errors.email !== null ? true : false}
@@ -492,7 +492,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               keyboardType='phone-pad'
               label="Celular"
               error={errors.ncelular !== null ? true : false}
@@ -508,7 +508,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               keyboardType='numeric'
               label="CPF"
               error={errors.cpf !== null ? true : false}
@@ -524,7 +524,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
               label="Senha"
               error={errors.senha !== null ? true : false}
@@ -541,7 +541,7 @@ const C04 = (props) => {
             <TextInput
               style={style.inputC2}
               mode='flat'
-              activeOutlineColor='#fff'
+              activeOutlineColor='#FFCA9F'
               theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
               label="Confirmar Senha"
               error={errors.senhaConfirmed !== null ? true : false}
@@ -616,7 +616,7 @@ const RedefinirSenha = ({ navigation, route }) => {
           <TextInput
             style={style.inputC2}
             mode='flat'
-            activeOutlineColor='#fff'
+            activeOutlineColor='#FFCA9F'
             keyboardType='email-address'
             label="Email"
             error={errors.email !== null ? true : false}

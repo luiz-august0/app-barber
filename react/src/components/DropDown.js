@@ -39,7 +39,7 @@ const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 
 	const renderItem = ({ item }) => (
 		<TouchableOpacity style={styles.item} onPress={() => onItemPress(item)}>
-		  	<Text style={{color: '#fff', fontFamily: 'Manrope-Regular'}} >{item.label}</Text>
+		  	<Text style={{color: '#BA6213', fontFamily: 'Manrope-Regular'}} >{item.label}</Text>
 		</TouchableOpacity>
 	);
 
@@ -80,10 +80,10 @@ const Dropdown = ({ label, data, onSelect, initialValue, dropdownWidth }) => {
 				onPress={toggleDropdown}
 			>
 				{renderDropdown()}
-				<Text style={[styles.buttonText, { color: (selected && '#ffff') || 'gray' }]}>
+				<Text style={[styles.buttonText, { color: (selected && '#BA6213') || '#BA6213' }]}>
 					{(selected && selected.label) || label}
 				</Text>
-				<Icon type='font-awesome' name='angle-down' color={'gray'}/>
+				<Icon type='font-awesome' name='angle-down' color={'#BA6213'}/>
 			</TouchableOpacity>
 		</View>
   	);
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
 	button: {
     	flexDirection: 'row',
     	alignItems: 'center',
-    	backgroundColor: '#404040',
+    	backgroundColor: '#FDEBDD',
     	height: 40,
     	width: 150,
     	paddingHorizontal: 10,
@@ -103,10 +103,10 @@ const styles = StyleSheet.create({
     	flex: 1,
 		fontFamily: 'Manrope-Regular',
     	textAlign: 'center',
-		color: '#ffff'
+		color: '#BA6213'
   	},
 	dropdown: {
-		backgroundColor: '#404040',
+		backgroundColor: '#FDEBDD',
 		width: 150,
 		maxHeight: 250,
 		shadowColor: '#000000',

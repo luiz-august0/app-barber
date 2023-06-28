@@ -205,7 +205,7 @@ const DadosBarbeiro = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
@@ -220,7 +220,7 @@ const DadosBarbeiro = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     keyboardType='email-address'
                     label="Email"
                     error={errors.email !== null ? true : false}
@@ -237,7 +237,7 @@ const DadosBarbeiro = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     keyboardType='phone-pad'
                     label="Celular"
                     error={errors.ncelular !== null ? true : false}
@@ -253,7 +253,7 @@ const DadosBarbeiro = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     keyboardType='numeric'
                     label="CPF"
                     error={errors.cpf !== null ? true : false}
@@ -270,7 +270,7 @@ const DadosBarbeiro = (props) => {
                 <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Especialidade"
                     error={errors.espec !== null ? true : false}
                     onFocus={() => handleError(null, 'espec')}
@@ -287,7 +287,7 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#fff'
+                        activeOutlineColor='#FFCA9F'
                         theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                         label="Nova Senha"
                         error={errors.senha !== null ? true : false}
@@ -304,7 +304,7 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#fff'
+                        activeOutlineColor='#FFCA9F'
                         theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                         label="Confirmar Senha"
                         error={errors.senhaConfirmed !== null ? true : false}
@@ -320,7 +320,7 @@ const DadosBarbeiro = (props) => {
                     </HelperText>
                 </>
                 :null}
-                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
                     {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
                 </TouchableOpacity>
             </View>

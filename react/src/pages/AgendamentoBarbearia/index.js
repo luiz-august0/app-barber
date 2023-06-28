@@ -146,7 +146,7 @@ const AgendamentoBarbearia = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoServico", { barbeariaID: item.Barb_Codigo})}>
                         <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Selecionar barbearia</Text>
-                        <MAIcon name="arrow-forward" size={30} color={'#05A94E'}></MAIcon>
+                        <MAIcon name="arrow-forward" size={30} color={'#2B513B'}></MAIcon>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -209,7 +209,7 @@ const AgendamentoBarbearia = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Nome"
                             error={errors.nome !== null ? true : false}
                             onFocus={() => handleError(null, 'nome')}
@@ -224,7 +224,7 @@ const AgendamentoBarbearia = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Cidade"
                             error={errors.cidade !== null ? true : false}
                             onFocus={() => handleError(null, 'cidade')}
@@ -239,7 +239,7 @@ const AgendamentoBarbearia = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Rua"
                             error={errors.endRua !== null ? true : false}
                             onFocus={() => handleError(null, 'endRua')}
@@ -254,7 +254,7 @@ const AgendamentoBarbearia = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Número"
                             keyboardType="number-pad"
                             error={errors.endNumero !== null ? true : false}
@@ -270,7 +270,7 @@ const AgendamentoBarbearia = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Bairro"
                             error={errors.endBairro !== null ? true : false}
                             onFocus={() => handleError(null, 'endBairro')}

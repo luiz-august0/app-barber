@@ -96,7 +96,7 @@ const AgendamentoServico = (props) => {
                     <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#fff'
+                    activeOutlineColor='#FFCA9F'
                     label="Pesquisar"
                     theme={{ colors: { placeholder: "gray", disabled: '#fff', text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" name="magnify"/>}
@@ -120,7 +120,7 @@ const AgendamentoServico = (props) => {
                                         <View style={style.categoriaViewButtons}>
                                             <TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
                                                 <Text style={style.textCategoriaButton}>Ver serviços</Text>
-                                                <MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
+                                                <MIcon name="arrow-forward" size={25} color={'#2B513B'}></MIcon>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -139,7 +139,7 @@ const AgendamentoServico = (props) => {
                             <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#fff'
+                            activeOutlineColor='#FFCA9F'
                             label="Pesquisar"
                             theme={{ colors: { placeholder: "gray", disabled: '#fff', text: 'white', primary: 'white' } }}
                             left={<TextInput.Icon color="white" name="magnify"/>}

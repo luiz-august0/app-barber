@@ -38,20 +38,22 @@ const UsuarioBarbearias = (props) => {
                 style={style.button}
                 onPress={() => props.navigation.navigate('DadosBarbearia')}
                 >
-                    <Text style={style.text}>Cadastrar Nova Barbearia</Text>
+                    <Text style={style.text}>CADASTRAR NOVA BARBEARIA</Text>
                 </TouchableOpacity>
                 {JSON.stringify(barbearias) != "[]"?
-                <Text style={style.textTitle}>Minhas Barbearias</Text>:null}
+                <Text style={style.textTitle}>MINHAS BARBEARIAS</Text>:null}
                 {barbearias.map((e) => {
                     const cep = globalFunction.formataCampo(e.Barb_CEP, "00.000-000");
                     const cnpj = globalFunction.formataCampo(e.Barb_CNPJ, "00.000.000/0000-00");
 
                     return (
-                    <Card key={e.Barb_Codigo} onPress={() => props.navigation.navigate('MenuBarbearia', { barbeariaID: e.Barb_Codigo })} style={{width: 300, marginBottom: 25}}>
+                    <Card key={e.Barb_Codigo} onPress={() => props.navigation.navigate('MenuBarbearia', { barbeariaID: e.Barb_Codigo })} style={{width: 300, marginBottom: 25, backgroundColor: '#FDEBDD'}}>
                         {e.Barb_LogoUrl!==null?
                         <Card.Cover resizeMode="cover" source={{ uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}` }} />
                         :null}
                         <Card.Title title={e.Barb_Nome} 
+                                    titleStyle={{color: '#BA6213', fontFamily: 'Manrope-Bold'}}
+                                    subtitleStyle={{color: '#000', fontFamily: 'Manrope-Regular'}}
                                     subtitle={`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}, ${cep} \nCNPJ: ${cnpj} \nIE: ${e.Barb_InscEst}`}
                                     titleNumberOfLines={0} 
                                     subtitleNumberOfLines={0}/>

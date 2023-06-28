@@ -22,26 +22,26 @@ export default StyleSheet.create({
         marginBottom: 10
     },
     text: {
-        width: '100%',
         fontSize: 12,
         textAlign: 'center',
-        color: '#000',
+        fontFamily: 'Manrope-Regular',
+        color: '#2B513B',
         marginBottom: 30
     },
     inputC: {
         marginTop: 10,
         width: '70%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-        width: 150,
+        width: 250,
         height: 40,
-        borderRadius: 10,
-        backgroundColor: '#0096FF'
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     safeAreaC: {
         justifyContent: 'center',

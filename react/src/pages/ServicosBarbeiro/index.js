@@ -73,7 +73,7 @@ const ServicosBarbeiro = (props) => {
 					<Text style={[style.textViewServico, {fontSize: 14, fontFamily: 'Manrope-Regular',}]}>{`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${duracao}min`}</Text>
 				</View>
 				<View style={style.buttonSelectServico}>
-					<FIcon name={vinculado?`check-circle`:`circle-thin`} size={25} color={'#05A94E'}></FIcon>
+					<FIcon name={vinculado?`check-circle`:`circle-thin`} size={25} color={'#2B513B'}></FIcon>
 				</View>
             </TouchableOpacity>
         )
@@ -117,7 +117,7 @@ const ServicosBarbeiro = (props) => {
 									<View style={style.categoriaViewButtons}>
 										<TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
 											<Text style={style.textCategoriaButton}>Selecionar</Text>
-											<MIcon name="arrow-forward" size={25} color={'#05A94E'}></MIcon>
+											<MIcon name="arrow-forward" size={25} color={'#2B513B'}></MIcon>
 										</TouchableOpacity>
 									</View>
 								</View>
@@ -136,7 +136,7 @@ const ServicosBarbeiro = (props) => {
 									renderItem={({item}) => <RenderItem id={item.Serv_Codigo} nome={item.Serv_Nome} valor={item.Serv_Valor} duracao={item.Minutos} vinculado={item.Vinculado}/>}
 									keyExtractor={item => item.Serv_Codigo}
 								/>
-								<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.confirmButton, {backgroundColor: loadingSubmit?'gray':'#05A94E'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+								<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.confirmButton, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
 									{loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
 								</TouchableOpacity>
 							</>
