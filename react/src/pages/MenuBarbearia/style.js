@@ -9,7 +9,6 @@ export default StyleSheet.create({
         backgroundColor: globalStyles.main_color
     }, 
     textTitle: {
-        width: '100%',
         fontSize: 27,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',

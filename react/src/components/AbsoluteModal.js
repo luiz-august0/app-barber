@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import OIcon from 'react-native-vector-icons/Octicons';
 
 const AbsoluteModal = ({children, modalVisible, width, handlePressOut}) => {
@@ -9,19 +9,21 @@ const AbsoluteModal = ({children, modalVisible, width, handlePressOut}) => {
         transparent={true}
         visible={modalVisible}
         >
-            <View style={style.centeredView}>
-                <View style={[style.modalView]}>
-                <TouchableOpacity style={{position: "absolute", right: "110%", padding: 10}} onPress={() => handlePressOut()}>
-                    <OIcon 
-                    name="x" 
-                    size={30} 
-                    color={'gray'}
-                    />
-                </TouchableOpacity>
-                    <View style={{marginBottom: 30}} />
-                    {children}
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+                <View style={style.centeredView}>
+                    <View style={[style.modalView]}>
+                    <TouchableOpacity style={{position: "absolute", right: "110%", padding: 10}} onPress={() => handlePressOut()}>
+                        <OIcon 
+                        name="x" 
+                        size={30} 
+                        color={'gray'}
+                        />
+                    </TouchableOpacity>
+                        <View style={{marginBottom: 30}} />
+                        {children}
+                    </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </Modal>
     )
 }

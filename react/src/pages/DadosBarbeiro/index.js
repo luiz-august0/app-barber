@@ -202,126 +202,128 @@ const DadosBarbeiro = (props) => {
                 </View>
                 }
                 <Text style={style.text}>Clique na imagem para mudar a foto de perfil</Text>
-                <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#FFCA9F'
-                    label="Nome"
-                    error={errors.nome !== null ? true : false}
-                    onFocus={() => handleError(null, 'nome')}
-                    theme={{ colors: { placeholder: `${nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
-                    value={nome}
-                    onChangeText={(nome) => setNome(nome)}
-                />
-                <HelperText type="error" visible={errors.nome !== null ? true : false}>
-                    {errors.nome}
-                </HelperText>
-                <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#FFCA9F'
-                    keyboardType='email-address'
-                    label="Email"
-                    error={errors.email !== null ? true : false}
-                    onFocus={() => handleError(null, 'email')}
-                    theme={{ colors: { placeholder: `${email!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="email" />}
-                    value={email}
-                    onChangeText={(email) => setEmail(email)}
-                    editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
-                />
-                <HelperText type="error" visible={errors.email !== null ? true : false}>
-                    {errors.email}
-                </HelperText>
-                <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#FFCA9F'
-                    keyboardType='phone-pad'
-                    label="Celular"
-                    error={errors.ncelular !== null ? true : false}
-                    onFocus={() => handleError(null, 'ncelular')}
-                    theme={{ colors: { placeholder: `${ncelular!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="phone" />}
-                    value={ncelular}
-                    onChangeText={(ncelular) => setNcelular(ncelular)}
-                />
-                <HelperText type="error" visible={errors.ncelular !== null ? true : false}>
-                    {errors.ncelular}
-                </HelperText>
-                <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#FFCA9F'
-                    keyboardType='numeric'
-                    label="CPF"
-                    error={errors.cpf !== null ? true : false}
-                    onFocus={() => handleError(null, 'cpf')}
-                    theme={{ colors: { placeholder: `${cpf!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
-                    value={globalFunction.formataCPF(cpf)}
-                    onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
-                    editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
-                />
-                <HelperText type="error" visible={errors.cpf !== null ? true : false}>
-                    {errors.cpf}
-                </HelperText>
-                <TextInput
-                    style={style.input}
-                    mode='flat'
-                    activeOutlineColor='#FFCA9F'
-                    label="Especialidade"
-                    error={errors.espec !== null ? true : false}
-                    onFocus={() => handleError(null, 'espec')}
-                    theme={{ colors: { placeholder: `${espec!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="account" />}
-                    value={espec}
-                    onChangeText={(espec) => setEspec(espec)}
-                />
-                <HelperText type="error" visible={errors.espec !== null ? true : false}>
-                    {errors.espec}
-                </HelperText>
-                {props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''?
-                <>
+                <View style={style.viewInputs}>
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#FFCA9F'
-                        theme={{ colors: { placeholder: `${senha!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        label="Nova Senha"
-                        error={errors.senha !== null ? true : false}
-                        onFocus={() => handleError(null, 'senha')}
-                        secureTextEntry={hidePass1}
-                        left={<TextInput.Icon color="white" name="lock" />}
-                        right={<TextInput.Icon color="white" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
-                        value={senha}
-                        onChangeText={(senha) => setSenha(senha)}
-                        />
-                    <HelperText HelperText type="error" visible={errors.senha !== null ? true : false}>
-                        {errors.senha}
+                        activeOutlineColor='#000'
+                        label="Nome"
+                        error={errors.nome !== null ? true : false}
+                        onFocus={() => handleError(null, 'nome')}
+                        theme={{ colors: { placeholder: `${nome!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                        left={<TextInput.Icon color="#000" name="account" />}
+                        value={nome}
+                        onChangeText={(nome) => setNome(nome)}
+                    />
+                    <HelperText type="error" visible={errors.nome !== null ? true : false}>
+                        {errors.nome}
                     </HelperText>
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#FFCA9F'
-                        theme={{ colors: { placeholder: `${senhaConfirmed!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                        label="Confirmar Senha"
-                        error={errors.senhaConfirmed !== null ? true : false}
-                        onFocus={() => handleError(null, 'senhaConfirmed')}
-                        secureTextEntry={hidePass2}
-                        left={<TextInput.Icon color="white" name="lock" />}
-                        right={<TextInput.Icon color="white" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
-                        value={senhaConfirmed}
-                        onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
-                        />
-                    <HelperText type="error" visible={errors.senhaConfirmed !== null ? true : false}>
-                        {errors.senhaConfirmed}
+                        activeOutlineColor='#000'
+                        keyboardType='email-address'
+                        label="Email"
+                        error={errors.email !== null ? true : false}
+                        onFocus={() => handleError(null, 'email')}
+                        theme={{ colors: { placeholder: `${email!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                        left={<TextInput.Icon color="#000" name="email" />}
+                        value={email}
+                        onChangeText={(email) => setEmail(email)}
+                        editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
+                    />
+                    <HelperText type="error" visible={errors.email !== null ? true : false}>
+                        {errors.email}
                     </HelperText>
-                </>
-                :null}
-                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                    {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
+                    <TextInput
+                        style={style.input}
+                        mode='flat'
+                        activeOutlineColor='#000'
+                        keyboardType='phone-pad'
+                        label="Celular"
+                        error={errors.ncelular !== null ? true : false}
+                        onFocus={() => handleError(null, 'ncelular')}
+                        theme={{ colors: { placeholder: `${ncelular!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                        left={<TextInput.Icon color="#000" name="phone" />}
+                        value={ncelular}
+                        onChangeText={(ncelular) => setNcelular(ncelular)}
+                    />
+                    <HelperText type="error" visible={errors.ncelular !== null ? true : false}>
+                        {errors.ncelular}
+                    </HelperText>
+                    <TextInput
+                        style={style.input}
+                        mode='flat'
+                        activeOutlineColor='#000'
+                        keyboardType='numeric'
+                        label="CPF"
+                        error={errors.cpf !== null ? true : false}
+                        onFocus={() => handleError(null, 'cpf')}
+                        theme={{ colors: { placeholder: `${cpf!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                        left={<TextInput.Icon color="#000" name="account" />}
+                        value={globalFunction.formataCPF(cpf)}
+                        onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
+                        editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
+                    />
+                    <HelperText type="error" visible={errors.cpf !== null ? true : false}>
+                        {errors.cpf}
+                    </HelperText>
+                    <TextInput
+                        style={style.input}
+                        mode='flat'
+                        activeOutlineColor='#000'
+                        label="Especialidade"
+                        error={errors.espec !== null ? true : false}
+                        onFocus={() => handleError(null, 'espec')}
+                        theme={{ colors: { placeholder: `${espec!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                        left={<TextInput.Icon color="#000" name="account" />}
+                        value={espec}
+                        onChangeText={(espec) => setEspec(espec)}
+                    />
+                    <HelperText type="error" visible={errors.espec !== null ? true : false}>
+                        {errors.espec}
+                    </HelperText>
+                    {props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''?
+                    <>
+                        <TextInput
+                            style={style.input}
+                            mode='flat'
+                            activeOutlineColor='#000'
+                            theme={{ colors: { placeholder: `${senha!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                            label="Nova Senha"
+                            error={errors.senha !== null ? true : false}
+                            onFocus={() => handleError(null, 'senha')}
+                            secureTextEntry={hidePass1}
+                            left={<TextInput.Icon color="#000" name="lock" />}
+                            right={<TextInput.Icon color="#000" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+                            value={senha}
+                            onChangeText={(senha) => setSenha(senha)}
+                            />
+                        <HelperText HelperText type="error" visible={errors.senha !== null ? true : false}>
+                            {errors.senha}
+                        </HelperText>
+                        <TextInput
+                            style={style.input}
+                            mode='flat'
+                            activeOutlineColor='#000'
+                            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                            label="Confirmar Senha"
+                            error={errors.senhaConfirmed !== null ? true : false}
+                            onFocus={() => handleError(null, 'senhaConfirmed')}
+                            secureTextEntry={hidePass2}
+                            left={<TextInput.Icon color="#000" name="lock" />}
+                            right={<TextInput.Icon color="#000" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+                            value={senhaConfirmed}
+                            onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
+                            />
+                        <HelperText type="error" visible={errors.senhaConfirmed !== null ? true : false}>
+                            {errors.senhaConfirmed}
+                        </HelperText>
+                    </>
+                    :null}
+                </View>
+                <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={style.button} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                    {loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CONFIRMAR DADOS</Text>}
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingWrapper>

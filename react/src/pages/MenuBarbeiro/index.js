@@ -51,7 +51,7 @@ const MenuBarbeiro = (props) => {
 				<View style={style.imageContainer}>
 					<Image source={image} style={style.image}/>
 				</View>
-				<Text style={style.textTitleName}>{state.nome}</Text>
+				<Text style={style.textTitle}>{state.nome}</Text>
 				<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text>
 				<View style={{flex: 1}}>
 					<View style={style.viewButtons}>
@@ -59,15 +59,15 @@ const MenuBarbeiro = (props) => {
 						style={style.button}
 						onPress={() => props.navigation.navigate('DadosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
 						>
-							<MAIcon name="person" size={80} color={'#ffff'}></MAIcon>
-							<Text style={style.text}>Dados de cadastro</Text>
+							<MAIcon name="person" size={80} color={'#BA6213'}></MAIcon>
+							<Text style={style.text}>DADOS DE CADASTRO</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 						style={style.button}
 						onPress={() => props.navigation.navigate('ServicosBarbeiro', { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID })}
 						>
-							<MIcon name="scissors-cutting" size={80} color={'#ffff'}></MIcon>
-							<Text style={style.text}>Serviços vinculados</Text>
+							<MIcon name="scissors-cutting" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>SERVIÇOS VINCULADOS</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

@@ -8,6 +8,14 @@ export default StyleSheet.create({
         marginTop: 100,
         backgroundColor: globalStyles.main_color
     }, 
+    viewInputs: {
+        flex: 1, 
+        width: '80%', 
+        alignItems: "center", 
+        borderRadius: 20, 
+        backgroundColor: '#BA6213', 
+        padding: 20
+    },
     containerPassword: {
         flex: 1,
         backgroundColor: globalStyles.main_color
@@ -21,34 +29,34 @@ export default StyleSheet.create({
         marginBottom: 10
     },
     text: {
-        width: '100%',
         fontSize: 12,
         textAlign: 'center',
-        color: '#000',
+        fontFamily: 'Manrope-Regular',
+        color: '#2B513B',
         marginBottom: 30
     },
     textButton: {
         width: '100%',
         fontSize: 18,
-        fontFamily: 'Manrope-Bold',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#FFCA9F'
     },
     input: {
         marginTop: 10,
-        width: '70%',
+        width: '90%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#FFCA9F',
     },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 35,
-        marginBottom: 100,
-        width: 150,
+        marginBottom: 50,
+        width: 280,
         height: 40,
-        borderRadius: 10,
-        backgroundColor: '#0096FF'
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     imageContainer: {
         width: '50%',
