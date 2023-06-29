@@ -15,15 +15,15 @@ export default StyleSheet.create({
         marginTop: 40 
     },
     text: {
-        fontSize: 16,
-        fontFamily: 'Manrope-Bold',
+        fontSize: 14,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#FFCA9F'
     },
     textTitleBarb: {
         fontSize: 22,
         fontFamily: 'Manrope-Bold',
-        color: '#000',
+        color: '#BA6213',
     },
     textSubtitleBarb: {
         fontSize: 16,
@@ -31,53 +31,53 @@ export default StyleSheet.create({
         color: '#000',
     },
     button: {
+        alignItems: 'center',
         justifyContent: 'center',
-        width: Dimensions.get('window').width / 2.5,
-        height: 50,
-        borderRadius: 20,
-        backgroundColor: '#343434'
+        width: Dimensions.get('window').width / 2.2,
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     buttonConfirmFilter: {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 35,
         marginBottom: 20,
-        width: 150,
+        width: 200,
         height: 40,
-        borderRadius: 10,
+        borderRadius: 5,
         backgroundColor: '#2B513B'
     },
     buttonFilter: {
         flexDirection: "row", 
         alignItems: "center", 
         justifyContent: "center", 
-        height: 50, 
-        borderRadius: 20, 
-        width: 150, 
-        borderColor: '#000',
-        borderWidth: 3
+        width: Dimensions.get('window').width / 2.2,
+        height: 45,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#BA6213'
     },
     textTitle: {
-        fontSize: 27,
+        fontSize: 22,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
-        marginTop: 20,
-        marginBottom: 10
+        color: '#2B513B',
+        marginTop: 20
     },
     textSubTitle: {
         fontSize: 22,
         fontFamily: 'Manrope-Bold',
         textAlign: 'left',
-        color: '#000',
+        color: '#2B513B',
         marginTop: 20,
         marginBottom: 10
     },
     input: {
         marginTop: 10,
-        width: 220,
+        width: 250,
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
     image: {
         width: 100,
@@ -88,11 +88,9 @@ export default StyleSheet.create({
         flex:1, 
         flexDirection: "row", 
         marginTop: 20, 
-        borderColor: '#000', 
-        borderWidth: 2, 
-        borderRadius: 10,
-        borderTopLeftRadius: 50, 
-        borderBottomLeftRadius: 50, 
+        backgroundColor: '#FDEBDD',
+        borderRadius: 20,
+        padding: 10,
         alignItems: "center"
     },
     buttonRenderItem: {
@@ -102,6 +100,8 @@ export default StyleSheet.create({
         backgroundColor: '#ffff', 
         borderRadius: 20, 
         marginTop: 10, 
-        justifyContent: "center"
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: '#000'
     }
 });

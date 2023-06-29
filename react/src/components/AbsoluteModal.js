@@ -33,7 +33,7 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginTop: 22,
+        marginTop: 22
     },
     modalView: {
         maxHeight: '100%',

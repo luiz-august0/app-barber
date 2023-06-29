@@ -58,18 +58,17 @@ export default StyleSheet.create({
         borderWidth: 3
     },
     textTitle: {
-        fontSize: 27,
+        fontSize: 22,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
-        marginTop: 20,
-        marginBottom: 10
+        color: '#2B513B',
+        marginTop: 20
     },
     textSubTitle: {
         fontSize: 22,
         fontFamily: 'Manrope-Bold',
         textAlign: 'left',
-        color: '#000',
+        color: '#2B513B',
         marginTop: 20,
         marginBottom: 10
     },
@@ -77,7 +76,9 @@ export default StyleSheet.create({
         marginTop: 10,
         width: 220,
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#FFCA9F',
+        borderWidth: 2,
+        borderColor: '#BA6213'
     },
     image: {
         width: 100,
@@ -109,7 +110,7 @@ export default StyleSheet.create({
         padding: 9,
         marginTop: 20,
         borderRadius: 10,
-        backgroundColor: '#343434'
+        backgroundColor: '#FDEBDD'
     },
     categoriaView: {
         flexDirection: "row", 
@@ -120,7 +121,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Manrope-Bold',
         textAlign: 'left',
-        color: '#ffff',
+        color: '#2B513B',
     },
     categoriaViewButtons: { 
         flexDirection: 'column',
@@ -129,7 +130,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
     },
     buttonCategoriaComponent:{
         flexDirection: 'row',

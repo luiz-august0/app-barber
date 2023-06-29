@@ -138,7 +138,7 @@ const AgendamentoBarbearia = (props) => {
                 <View style={{flex:1, padding: 10}}>
                     <Text style={style.textTitleBarb}>{item.Barb_Nome}</Text>
                     <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
-                    {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold'}]}>{`Distância: ${distance}`}</Text>:null}
+                    {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
                     <TouchableOpacity style={style.buttonRenderItem}>
                         <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Ver perfil da barbearia</Text>
@@ -159,20 +159,20 @@ const AgendamentoBarbearia = (props) => {
                 showsVerticalScrollIndicator={false}
                 refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getBarbearias(state.nome, state.cidade, state.endRua, state.endNumero, state.endBairro)}/> }
             >
-                <Text style={style.textTitle}>Escolha uma barbearia</Text>
+                <Text style={style.textTitle}>ESCOLHA UMA BARBEARIA</Text>
                 <View style={style.headerView}>
                     <TouchableOpacity style={style.button}>
-                        <Text style={style.text}>Ver no mapa</Text>
+                        <Text style={style.text}>VER NO MAPA</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.buttonFilter} onPress={() => setModalVisible(true)}>
-                        <Text style={[style.text, { color: '#000', fontSize: 18 }]}>Filtros</Text>
-                        <MIcon name="filter" size={30} color={'#000'}></MIcon>
+                        <Text style={[style.text, { color: '#BA6213' }]}>FILTRAR</Text>
+                        <MIcon name="filter" size={30} color={'#BA6213'}></MIcon>
                     </TouchableOpacity>
                 </View>
                 <View style={{padding: 10}}>
                     <View style={{marginTop: 10, alignItems: "flex-end"}}>
                         <View style={{alignItems: "center"}}>
-                            <Text style={[style.text, { color: '#000', fontSize: 14 }]}>Ordenar por</Text>
+                            <Text style={[style.text, { color: '#000' }]}>Ordenar por</Text>
                             <Dropdown label="Ordenação" data={ordens} onSelect={setOrdem} initialValue={initialOrdemState} dropdownWidth={Dimensions.get('window').width / 2.5}/>
                         </View>
                     </View>
@@ -182,19 +182,19 @@ const AgendamentoBarbearia = (props) => {
                         {JSON.stringify(barbeariasVisitadas)!=="[]"?
                         <>
                             <Text style={style.textSubTitle}>
-                                Barbearias já visitadas
+                                BARBEARIAS JÁ VISITADAS
                             </Text>
-                            <View style={{height: 2, backgroundColor: '#000'}}></View>
+                            <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                             {barbeariasVisitadas
                                 .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
                                 .map((e) => { return renderItem(e)})}
-                            <View style={{height: 2, backgroundColor: '#000', marginTop: 20}}></View>
+                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
                         </>
                         :null}
                         <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
-                            Conheça novas barbearias
+                            CONHEÇA NOVAS BARBEARIAS
                         </Text>
-                        <View style={{height: 2, backgroundColor: '#000'}}></View>
+                        <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                         {barbeariasPesq
                             .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
                             .map((e) => { return renderItem(e)})}
@@ -213,8 +213,8 @@ const AgendamentoBarbearia = (props) => {
                             label="Nome"
                             error={errors.nome !== null ? true : false}
                             onFocus={() => handleError(null, 'nome')}
-                            theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="account" />}
+                            theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                            left={<TextInput.Icon color="#FFCA9F" name="account" />}
                             value={state.nome}
                             onChangeText={(nome) => setValueState('nome', nome)}
                             />
@@ -228,8 +228,8 @@ const AgendamentoBarbearia = (props) => {
                             label="Cidade"
                             error={errors.cidade !== null ? true : false}
                             onFocus={() => handleError(null, 'cidade')}
-                            theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="home-city" />}
+                            theme={{ colors: { placeholder: `${state.cidade!==null&&state.cidade!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                            left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                             value={state.cidade}
                             onChangeText={(cidade) => setValueState('cidade', cidade)}
                             />
@@ -243,8 +243,8 @@ const AgendamentoBarbearia = (props) => {
                             label="Rua"
                             error={errors.endRua !== null ? true : false}
                             onFocus={() => handleError(null, 'endRua')}
-                            theme={{ colors: { placeholder: `${state.endRua!==null&&state.endRua!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="home-city" />}
+                            theme={{ colors: { placeholder: `${state.endRua!==null&&state.endRua!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                            left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                             value={state.endRua}
                             onChangeText={(endRua) => setValueState('endRua', endRua)}
                             />
@@ -259,8 +259,8 @@ const AgendamentoBarbearia = (props) => {
                             keyboardType="number-pad"
                             error={errors.endNumero !== null ? true : false}
                             onFocus={() => handleError(null, 'endNumero')}
-                            theme={{ colors: { placeholder: `${state.endNumero!==null&&state.endNumero!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="home-city" />}
+                            theme={{ colors: { placeholder: `${state.endNumero!==null&&state.endNumero!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                            left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                             value={state.endNumero}
                             onChangeText={(endNumero) => setValueState('endNumero', endNumero)}
                             />
@@ -274,8 +274,8 @@ const AgendamentoBarbearia = (props) => {
                             label="Bairro"
                             error={errors.endBairro !== null ? true : false}
                             onFocus={() => handleError(null, 'endBairro')}
-                            theme={{ colors: { placeholder: `${state.endBairro!==null&&state.endBairro!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="home-city" />}
+                            theme={{ colors: { placeholder: `${state.endBairro!==null&&state.endBairro!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                            left={<TextInput.Icon color="#FFCA9F" name="home-city" />}
                             value={state.endBairro}
                             onChangeText={(endBairro) => setValueState('endBairro', endBairro)}
                             />
@@ -283,10 +283,10 @@ const AgendamentoBarbearia = (props) => {
                                 {errors.endBairro}
                             </HelperText>
                             <TouchableOpacity style={style.buttonConfirmFilter} onPress={() => handlePressFilter()}>
-                                <Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Filtrar</Text>
+                                <Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular'}}>FILTRAR</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[style.buttonConfirmFilter, { marginTop: 0, backgroundColor: '#404040' }]} onPress={() => cleanFilters()}>
-                                <Text style={[ style.text, { color: "#fff", fontSize: 14 }]}>Limpar filtros</Text>
+                            <TouchableOpacity style={[style.buttonConfirmFilter, { marginTop: 0, backgroundColor: '#BA6213' }]} onPress={() => cleanFilters()}>
+                                <Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular'}}>LIMPAR FILTROS</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>

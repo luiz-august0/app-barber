@@ -91,15 +91,15 @@ const AgendamentoServico = (props) => {
                 showsVerticalScrollIndicator={false}
                 refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => onRefresh()}/> }
             >
-                <Text style={style.textTitle}>Escolha um serviço</Text>
+                <Text style={style.textTitle}>ESCOLHA UM SERVIÇO</Text>
                 <View style={style.headerView}>
                     <TextInput
                     style={style.input}
                     mode='flat'
                     activeOutlineColor='#FFCA9F'
                     label="Pesquisar"
-                    theme={{ colors: { placeholder: "gray", text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="magnify"/>}
+                    theme={{ colors: { placeholder: "#BA6213", text: '#BA6213', primary: '#BA6213' } }}
+                    left={<TextInput.Icon color="#BA6213" name="magnify"/>}
                     onChangeText={(search) => filterCategoriaByNome(search)}
                     />
                 </View>
@@ -107,9 +107,9 @@ const AgendamentoServico = (props) => {
                     {JSON.stringify(filteredCategorias) !== "[]"?
                     <>   
                         <Text style={style.textSubTitle}>
-                            Categorias de serviço
+                            CATEGORIAS DE SERVIÇO
                         </Text>
-                        <View style={{height: 2, backgroundColor: '#000'}}></View>
+                        <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                         {filteredCategorias.map((e) => {
                             return (
                                 <View key={e.ServCat_Codigo} style={style.categoriaComponent}>
@@ -137,12 +137,12 @@ const AgendamentoServico = (props) => {
                         {loadingServicos?<ActivityIndicator size={"large"}/>:
                         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                             <TextInput
-                            style={style.input}
+                            style={[style.input, { backgroundColor: '#fff' }]}
                             mode='flat'
                             activeOutlineColor='#FFCA9F'
                             label="Pesquisar"
-                            theme={{ colors: { placeholder: "gray", text: 'white', primary: 'white' } }}
-                            left={<TextInput.Icon color="white" name="magnify"/>}
+                            theme={{ colors: { placeholder: "#BA6213", text: '#BA6213', primary: '#BA6213' } }}
+                            left={<TextInput.Icon color="#BA6213" name="magnify"/>}
                             onChangeText={(search) => filterServicosByNome(search)}
                             />
                             {JSON.stringify(filteredCategoriaServicos) !== "[]"?
