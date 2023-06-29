@@ -16,11 +16,12 @@ export default StyleSheet.create({
         color: '#ffff',
     },
     textTitle: {
-        fontSize: 27,
+        width: '100%',
+        fontSize: 24,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
-        marginTop: 50,
+        color: '#2B513B',
+        marginTop: '20%',
         marginBottom: '5%'
     },
     textButton: {
@@ -48,19 +49,19 @@ export default StyleSheet.create({
     confirmButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 35,
+        marginTop: 25,
         marginBottom: 100,
-        width: 150,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#0096FF'
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     categoriaComponent: {
         justifyContent: 'center',
         padding: 9,
         marginTop: 20,
         borderRadius: 10,
-        backgroundColor: '#343434'
+        backgroundColor: '#FDEBDD'
     },
     categoriaView: {
         flexDirection: "row", 
@@ -71,7 +72,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Manrope-Bold',
         textAlign: 'left',
-        color: '#ffff',
+        color: '#BA6213',
     },
     categoriaViewButtons: { 
         flexDirection: 'column',
@@ -80,7 +81,7 @@ export default StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#2B513B',
     },
     buttonCategoriaComponent:{
         flexDirection: 'row',
@@ -96,7 +97,7 @@ export default StyleSheet.create({
         padding: 10, 
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#343434',
+        backgroundColor: '#BA6213',
         marginVertical: 10,
     },
     viewButtonServico: {

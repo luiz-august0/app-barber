@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import style from "./style";
 import FIcon from 'react-native-vector-icons/Feather';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MAIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { deleteBarbeariaServico, deleteImagemServico, getImagensServico, postBarbeariaServico, postImagemServico, showBarbeariaServico, updateBarbeariaServico } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import Loading from "../../components/Loading";
@@ -250,8 +251,8 @@ const DadosServico = (props) => {
             <View key={url} style={style.itemImage}>
                 <Image style={style.image} source={{ uri: url  }}/>
                 <TouchableOpacity style={{alignItems: 'center', marginTop: 10, justifyContent: "center"}} onPress={() => handleDeleteImage(urlImg)}>
-                    <MIcon name="delete" size={35} color={'#71150D'}></MIcon>
-                    <Text style={style.text}>Excluir</Text>
+                    <MAIcon name="delete-circle-outline" size={35} color={'#71150D'}></MAIcon>
+                    <Text style={[style.text, {color: '#000'}]}>Excluir</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -295,8 +296,8 @@ const DadosServico = (props) => {
                 label="Nome"
                 error={errors.nome !== null ? true : false}
                 onFocus={() => handleError(null, 'nome')}
-                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="content-cut" />}
+                theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="content-cut" />}
                 value={state.nome}
                 onChangeText={(nome) => setValueState('nome', nome)}
                 />
@@ -311,35 +312,28 @@ const DadosServico = (props) => {
                 keyboardType="decimal-pad"
                 error={errors.valor !== null ? true : false}
                 onFocus={() => handleError(null, 'valor')}
-                theme={{ colors: { placeholder: `${state.valor!==null&&state.valor!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                left={<TextInput.Icon color="white" name="currency-brl" />}
+                theme={{ colors: { placeholder: `${state.valor!==null&&state.valor!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="currency-brl" />}
                 value={state.valor}
                 onChangeText={(valor) => setValueState('valor', valor)}
                 />
                 <HelperText type="error" visible={errors.valor !== null ? true : false}>
                     {errors.valor}
                 </HelperText>
-                <View style={{flexDirection: "row", width: "70%"}}>
-                    <View style={{flexDirection: "row"}} >
-                        <TextInput
-                        style={[style.input, { width: "88%" }]}
-                        mode='flat'
-                        activeOutlineColor='#FFCA9F'
-                        label="Duração"
-                        editable={false}
-                        keyboardType="decimal-pad"
-                        error={errors.duracao !== null ? true : false}
-                        onFocus={() => handleError(null, 'duracao')}
-                        theme={{ colors: { placeholder: `${state.duracao!==null&&state.duracao!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
-                        left={<TextInput.Icon color="white" name="clock-outline" />}
-                        value={state.duracao}
-                        onChangeText={(duracao) => setValueState('duracao', duracao)}
-                        />
-                    </View>
-                    <View style={{justifyContent: "center", right: "35%"}}>
-                        <Text style={style.text}>Minutos</Text>
-                    </View>
-                </View>
+                <TextInput
+                style={style.input}
+                mode='flat'
+                activeOutlineColor='#FFCA9F'
+                label="Duração"
+                editable={false}
+                keyboardType="decimal-pad"
+                error={errors.duracao !== null ? true : false}
+                onFocus={() => handleError(null, 'duracao')}
+                theme={{ colors: { placeholder: `${state.duracao!==null&&state.duracao!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                left={<TextInput.Icon color="#FFCA9F" name="clock-outline" />}
+                value={state.duracao}
+                onChangeText={(duracao) => setValueState('duracao', duracao)}
+                />
                 <HelperText type="error" visible={errors.duracao !== null ? true : false}>
                     {errors.duracao}
                 </HelperText>
@@ -369,18 +363,17 @@ const DadosServico = (props) => {
                 </View>
                 {(props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined)?
                 <View style={style.viewSubmit}>
-                    <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-                        {loadingSubmit?<ActivityIndicator/>:<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
+                    <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={style.button} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+                        {loadingSubmit?<ActivityIndicator/>:<Text style={style.text}>CONFIRMAR</Text>}
                     </TouchableOpacity>
-                    <TouchableOpacity style={{alignItems: "center", justifyContent: 'center'}} onPress={() => handleDeleteServico()}>
-                        <MIcon name="delete" size={35} color={'#71150D'}></MIcon>
-                        <Text style={style.text}>Excluir</Text>
+                    <TouchableOpacity style={{ marginTop: 25, marginBottom: 50, alignItems: "center", justifyContent: "center"}} onPress={() => handleDeleteServico()}>
+                        <MAIcon name="delete-circle-outline" size={50} color={'#71150D'}></MAIcon>
                     </TouchableOpacity>
                 </View>
                 :
                 <TouchableOpacity 
                 activeOpacity={loadingSubmit ? 1 : 0.7} 
-                style={[style.button, {backgroundColor: loadingSubmit?'gray':'#2B513B', marginTop: 100, marginBottom: 50}]} 
+                style={[style.button, {marginTop: 100, marginBottom: 50}]} 
                 onPress={() => {!loadingSubmit?handleSubmit():null}}>
                 {loadingSubmit?
                 <ActivityIndicator/>

@@ -10,17 +10,17 @@ export default StyleSheet.create({
     }, 
     text: {
         width: '100%',
-        fontSize: 18,
-        fontFamily: 'Manrope-Bold',
+        fontSize: 14,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#ffff'
     },
     textTitle: {
         width: '100%',
-        fontSize: 27,
+        fontSize: 24,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
+        color: '#2B513B',
         marginTop: '20%',
         marginBottom: '5%'
     },
@@ -28,8 +28,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: 55,
         width: 300,
-        height: 50,
-        borderRadius: 20,
-        backgroundColor: '#343434'
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     }
 });

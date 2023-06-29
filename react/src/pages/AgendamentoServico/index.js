@@ -98,7 +98,7 @@ const AgendamentoServico = (props) => {
                     mode='flat'
                     activeOutlineColor='#FFCA9F'
                     label="Pesquisar"
-                    theme={{ colors: { placeholder: "gray", disabled: '#fff', text: 'white', primary: 'white' } }}
+                    theme={{ colors: { placeholder: "gray", text: 'white', primary: 'white' } }}
                     left={<TextInput.Icon color="white" name="magnify"/>}
                     onChangeText={(search) => filterCategoriaByNome(search)}
                     />
@@ -141,7 +141,7 @@ const AgendamentoServico = (props) => {
                             mode='flat'
                             activeOutlineColor='#FFCA9F'
                             label="Pesquisar"
-                            theme={{ colors: { placeholder: "gray", disabled: '#fff', text: 'white', primary: 'white' } }}
+                            theme={{ colors: { placeholder: "gray", text: 'white', primary: 'white' } }}
                             left={<TextInput.Icon color="white" name="magnify"/>}
                             onChangeText={(search) => filterServicosByNome(search)}
                             />

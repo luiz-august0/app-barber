@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, SafeAreaView, RefreshControl } from "react-native";
 import style from "./style";
 import globalStyles from "../../globalStyles";
 import { getBarbeariaCategoriaServicos } from "../../services/api";
@@ -33,33 +33,38 @@ const Servicos = (props) => {
         return <Loading/>
     } else {
     return (
-        <ScrollView style={{ backgroundColor: globalStyles.main_color }}>
-            <View style={style.container}>
-                <TouchableOpacity
-                style={style.button}
-                onPress={() => props.navigation.navigate("DadosServico", { categoriaID: props.route.params?.categoriaID })}
-                >
-                    <Text style={style.text}>Cadastrar Novo Serviço</Text>
-                </TouchableOpacity>
-                {JSON.stringify(servicos) !== "[]"?
-                <Text style={style.textTitle}>Serviços</Text>:null}
-                {servicos.map((e) => {
-                    return (
-                        <View key={e.Serv_Codigo}>
-                            <ServicoComponent 
-                            props={props}
-                            nome={e.Serv_Nome} 
-                            valor={e.Serv_Valor} 
-                            tempo={e.Minutos} 
-                            id={e.Serv_Codigo} 
-                            idCategoria={e.ServCat_Codigo}
-                            screenNavigation={'DadosServico'}
-                            />
-                        </View>
-                    )
-                })}
-            </View>
-        </ScrollView>
+        <SafeAreaView style={style.container}>
+            <ScrollView
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl refreshing={loading} onRefresh={() => getServicos()}/> }
+            >
+                <View style={{alignItems: "center"}}>
+                    <TouchableOpacity
+                    style={style.button}
+                    onPress={() => props.navigation.navigate("DadosServico", { categoriaID: props.route.params?.categoriaID })}
+                    >
+                        <Text style={style.text}>CADASTRAR NOVO SERVIÇO</Text>
+                    </TouchableOpacity>
+                    {JSON.stringify(servicos) !== "[]"?
+                    <Text style={style.textTitle}>SERVIÇOS</Text>:null}
+                    {servicos.map((e) => {
+                        return (
+                            <View key={e.Serv_Codigo}>
+                                <ServicoComponent 
+                                props={props}
+                                nome={e.Serv_Nome} 
+                                valor={e.Serv_Valor} 
+                                tempo={e.Minutos} 
+                                id={e.Serv_Codigo} 
+                                idCategoria={e.ServCat_Codigo}
+                                screenNavigation={'DadosServico'}
+                                />
+                            </View>
+                        )
+                    })}
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )}
 }
     

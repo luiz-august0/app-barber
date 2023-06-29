@@ -115,11 +115,11 @@ const CategoriasServico = (props) => {
                 style={style.button}
                 onPress={() => setModalVisible(true)}
                 >
-                    <Text style={style.text}>Cadastrar Nova Categoria</Text>
+                    <Text style={style.text}>CADASTRAR NOVA CATEGORIA</Text>
                 </TouchableOpacity>
                 {JSON.stringify(categorias) !== "[]"?
                 <>
-                    <Text style={style.textTitle}>Categorias</Text>
+                    <Text style={style.textTitle}>CATEGORIAS</Text>
                     {categorias.map((e) => {
                         return (
                             <View key={e.ServCat_Codigo} style={style.categoriaComponent}>
@@ -159,16 +159,16 @@ const CategoriasServico = (props) => {
                     label="Nome"
                     error={errors.nome !== null ? true : false}
                     onFocus={() => handleError(null, 'nome')}
-                    theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
-                    left={<TextInput.Icon color="white" name="content-cut" />}
+                    theme={{ colors: { placeholder: `${nome!==null&&nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                    left={<TextInput.Icon color="#FFCA9F" name="content-cut" />}
                     value={nome}
                     onChangeText={(nome) => setNome(nome)}
                     />
                     <HelperText type="error" visible={errors.nome !== null ? true : false}>
                         {errors.nome}
                     </HelperText>
-                    <TouchableOpacity style={[style.buttonConfirma, { backgroundColor: !loadingResponse?'#2B513B':'gray' }]} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
-                        {!loadingResponse?<Text style={{ color: '#fff', fontWeight: 'bold'}}>Confirmar</Text>
+                    <TouchableOpacity style={style.buttonConfirma} onPress={() => {!loadingResponse?handleSubmitCategoria():null}}>
+                        {!loadingResponse?<Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular'}}>CONFIRMAR</Text>
                         :<ActivityIndicator/>}
                     </TouchableOpacity>
                 </AbsoluteModal>

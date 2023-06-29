@@ -1,4 +1,4 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native'
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native'
 import globalStyles from '../../globalStyles';
 
 export default StyleSheet.create({
@@ -9,28 +9,33 @@ export default StyleSheet.create({
         backgroundColor: globalStyles.main_color
     }, 
     text: {
-        fontSize: 18,
-        fontFamily: 'Manrope-Bold',
+        width: '100%',
+        fontSize: 14,
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#ffff'
     },
     textCategoria: {
         fontSize: 16,
         fontFamily: 'Manrope-Bold',
-        textAlign: 'left',
-        color: '#ffff',
+        textAlign: 'center',
+        color: '#BA6213',
     },
     textCategoriaButton: {
+        position: 'absolute',
+        width: Dimensions.get('window').width,
+        bottom: 25,
         fontSize: 14,
         fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#ffff',
+        color: '#000',
     },
     textTitle: {
-        fontSize: 27,
+        width: '100%',
+        fontSize: 24,
         fontFamily: 'Manrope-Bold',
         textAlign: 'center',
-        color: '#000',
+        color: '#2B513B',
         marginTop: '20%',
         marginBottom: '5%'
     },
@@ -38,44 +43,42 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: 55,
         width: 300,
-        height: 50,
-        borderRadius: 20,
-        backgroundColor: '#343434'
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
     },
     categoriaComponent: {
-        justifyContent: 'center',
         padding: 9,
         marginTop: 20,
         borderRadius: 10,
-        backgroundColor: '#343434'
+        backgroundColor: '#FDEBDD'
     },
     categoriaView: {
-        flexDirection: "row", 
-        alignItems: "center", 
-        justifyContent: "space-between"
+        flexDirection: "column"
     },
     categoriaViewButtons: { 
-        flexDirection: 'column',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingTop: 30
     },
     buttonCategoriaComponent:{
-        flexDirection: 'row',
         justifyContent: "center", 
-        alignItems: "center",
-        paddingVertical: 15
+        alignItems: "center"
     },
     buttonConfirma: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
-        width: 110,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#2B513B'
+        marginTop: 25,
+        marginBottom: 25,
+        width: '70%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     input: {
         marginTop: 10,
         width: '100%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
 });

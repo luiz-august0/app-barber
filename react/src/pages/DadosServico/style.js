@@ -23,8 +23,8 @@ export default StyleSheet.create({
     },
     text: {
         fontSize: 14,
-        fontFamily: 'Manrope-Bold',
-        color: '#000'
+        fontFamily: 'Manrope-Regular',
+        color: '#FFCA9F'
     },
     textTitle: {
         width: '100%',
@@ -37,8 +37,8 @@ export default StyleSheet.create({
     },
     buttonPickImage: {
         flexDirection: "row", 
-        backgroundColor: "gray", 
-        borderRadius: 10, 
+        backgroundColor: "#BA6213", 
+        borderRadius: 5, 
         alignItems: "center", 
         padding: 10
     },
@@ -46,20 +46,22 @@ export default StyleSheet.create({
         marginTop: 10,
         width: '70%',
         height: 55,
-        backgroundColor: '#404040',
+        backgroundColor: '#2B513B',
     },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: 150,
-        height: 40,
-        borderRadius: 10,
-        backgroundColor: '#0096FF'
+        marginTop: 25,
+        marginBottom: 50,
+        width: '60%',
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     buttonMinusAdd: {
         flexDirection: "row", 
-        backgroundColor: "gray", 
-        borderRadius: 10, 
+        backgroundColor: "#2B513B", 
+        borderRadius: 5, 
         alignItems: "center", 
         padding: 10
     },

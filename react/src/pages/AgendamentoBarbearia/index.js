@@ -213,7 +213,7 @@ const AgendamentoBarbearia = (props) => {
                             label="Nome"
                             error={errors.nome !== null ? true : false}
                             onFocus={() => handleError(null, 'nome')}
-                            theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, disabled: '#fff', text: 'white', primary: 'white' } }}
+                            theme={{ colors: { placeholder: `${state.nome!==null&&state.nome!==''?"white":"gray"}`, text: 'white', primary: 'white' } }}
                             left={<TextInput.Icon color="white" name="account" />}
                             value={state.nome}
                             onChangeText={(nome) => setValueState('nome', nome)}

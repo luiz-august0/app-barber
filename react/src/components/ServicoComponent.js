@@ -51,8 +51,8 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 layout="default"
                 layoutCardOffset={10}
                 data={images}
-                sliderWidth={300}
-                itemWidth={300}
+                sliderWidth={240}
+                itemWidth={240}
                 renderItem={renderItem}
                 onSnapToItem={(index) => setIndex(index)}
             />
@@ -71,17 +71,17 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
             />
-            <Card style={{backgroundColor: barbeariaID?'#404040':'#fff'}}>
+            <Card style={{backgroundColor: '#BA6213', borderRadius: 0}}>
                 <Card.Title title={nome} 
                             subtitle={`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${tempo}min`}
-                            titleStyle={{textAlign: "center", color: barbeariaID?'#fff':'#000'}}
-                            subtitleStyle={{textAlign: "center", color: barbeariaID?'#fff':'#000'}}
+                            titleStyle={{textAlign: "left", color: '#000', fontFamily: 'Manrope-Bold', fontSize: 24}}
+                            subtitleStyle={{textAlign: "left", color: '#000', fontFamily: 'Manrope-Regular', fontSize: 14}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
                 <TouchableOpacity 
                 style={style.buttonSelect}
                 onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID})}>
-                    <Text style={[style.textSubtitle, { color: barbeariaID?'#fff':'#000' }]}>Selecionar</Text>
+                    <Text style={[style.textSubtitle, { color: '#000' }]}>Selecionar</Text>
                     <MIcon name="arrow-forward" size={30} color={'#2B513B'}></MIcon>
                 </TouchableOpacity>
             </Card>
@@ -99,9 +99,11 @@ const style = StyleSheet.create({
         resizeMode: 'cover'
     },
     itemServico: {
-        width: 300, 
-        height: 350, 
+        width: 250, 
+        height: 320, 
         marginBottom: 25,
+        borderWidth: 5,
+        borderColor: '#2B513B'
     },
     buttonSelect: {
         flexDirection: "row",

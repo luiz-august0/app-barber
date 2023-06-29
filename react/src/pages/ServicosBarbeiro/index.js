@@ -106,7 +106,7 @@ const ServicosBarbeiro = (props) => {
 			>	
 				{JSON.stringify(categorias) !== "[]"?
 				<>
-					<Text style={style.textTitle}>Categorias</Text>
+					<Text style={style.textTitle}>CATEGORIAS</Text>
 					{categorias.map((e) => {
 						return (
 							<View key={e.ServCat_Codigo} style={style.categoriaComponent}>
@@ -129,15 +129,15 @@ const ServicosBarbeiro = (props) => {
 						<>
 							{JSON.stringify(servicos) !== "[]"?
 							<>
-								<Text style={[style.textTitle, {fontSize: 18, marginTop: 0}]}>Selecione os serviços que serão vinculados ao barbeiro</Text>
+								<Text style={[style.textTitle, {fontSize: 18, marginTop: 0, fontFamily: 'Manrope-Regular'}]}>Selecione os serviços que serão vinculados ao barbeiro</Text>
 								<FlatList
 									style={{width: '110%'}}
 									data={servicos}
 									renderItem={({item}) => <RenderItem id={item.Serv_Codigo} nome={item.Serv_Nome} valor={item.Serv_Valor} duracao={item.Minutos} vinculado={item.Vinculado}/>}
 									keyExtractor={item => item.Serv_Codigo}
 								/>
-								<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.confirmButton, {backgroundColor: loadingSubmit?'gray':'#2B513B'}]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-									{loadingSubmit?<ActivityIndicator/>:<Text style={[ style.textButton, { color: "#fff", fontSize: 14 }]}>Confirmar</Text>}
+								<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={style.confirmButton} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+									{loadingSubmit?<ActivityIndicator/>:<Text style={{ color: '#FFFF', fontFamily: 'Manrope-Regular'}}>CONFIRMAR</Text>}
 								</TouchableOpacity>
 							</>
 							:<Text style={[style.text, {fontSize: 14, color: '#000'}]}>Não há serviços cadastrados para a categoria selecionada</Text>}
