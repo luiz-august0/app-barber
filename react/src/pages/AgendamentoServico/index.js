@@ -96,7 +96,7 @@ const AgendamentoServico = (props) => {
                     <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#FFCA9F'
+                    activeOutlineColor='#BA6213'
                     label="Pesquisar"
                     theme={{ colors: { placeholder: "#BA6213", text: '#BA6213', primary: '#BA6213' } }}
                     left={<TextInput.Icon color="#BA6213" name="magnify"/>}
@@ -139,7 +139,7 @@ const AgendamentoServico = (props) => {
                             <TextInput
                             style={[style.input, { backgroundColor: '#fff' }]}
                             mode='flat'
-                            activeOutlineColor='#FFCA9F'
+                            activeOutlineColor='#BA6213'
                             label="Pesquisar"
                             theme={{ colors: { placeholder: "#BA6213", text: '#BA6213', primary: '#BA6213' } }}
                             left={<TextInput.Icon color="#BA6213" name="magnify"/>}
@@ -157,7 +157,7 @@ const AgendamentoServico = (props) => {
                                             tempo={e.Minutos} 
                                             id={e.Serv_Codigo} 
                                             idCategoria={e.ServCat_Codigo}
-                                            screenNavigation={'DadosServico'}
+                                            screenNavigation={'AgendamentoBarbeiro'}
                                             barbeariaID={props.route.params?.barbeariaID}
                                             />
                                         </View>

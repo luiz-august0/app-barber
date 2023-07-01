@@ -100,6 +100,33 @@ class BarbeariaBarbeirosController {
         }
     }
 
+	async getBarbeirosByServico(req, res) {
+        const { id } = req.params;
+        const { servicoID } = req.body;
+
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+					`SELECT BB.Barb_Codigo, U.Usr_Codigo, U.Usr_Nome, U.Usr_Contato, U.Usr_FotoPerfil, AVG(BAV.Aval_Rate) AS Aval_Rate
+                     FROM barbearia_barbeiros BB 
+                     INNER JOIN usuario U ON BB.Usr_Codigo = U.Usr_Codigo
+                     LEFT JOIN barbeiro_avaliacoes BAV ON BAV.Usr_Codigo = U.Usr_Codigo
+                     INNER JOIN barbeiro_servicos BS ON BS.Barb_Codigo = BB.Barb_Codigo AND BS.Usr_Codigo = U.Usr_Codigo 
+					 WHERE BB.Barb_Codigo = ${id} AND BS.Serv_Codigo = ${servicoID}
+                     GROUP BY U.Usr_Codigo`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
+        }
+    }
+
 	async getBarbeariasByBarbeiro(req, res) {
         const { id } = req.params;
 
