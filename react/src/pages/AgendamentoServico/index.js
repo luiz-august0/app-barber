@@ -85,6 +85,10 @@ const AgendamentoServico = (props) => {
 		}
 	}
 
+    const onPressSelect = () => {
+        setModalVisible(false);
+    }
+
     return (
         <SafeAreaView style={style.container}>
             <ScrollView
@@ -159,6 +163,7 @@ const AgendamentoServico = (props) => {
                                             idCategoria={e.ServCat_Codigo}
                                             screenNavigation={'AgendamentoBarbeiro'}
                                             barbeariaID={props.route.params?.barbeariaID}
+                                            onPressSelect={onPressSelect}
                                             />
                                         </View>
                                     )

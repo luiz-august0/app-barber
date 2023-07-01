@@ -49,13 +49,13 @@ const AgendamentoBarbeiro = (props) => {
 
     const renderItem = (item) => {
         return (
-            <View key={item.Usr_Codigo} style={style.renderItemBarbearia}>
+            <View key={item.Usr_Codigo} style={style.renderItemBarbeiro}>
                 {item.Usr_FotoPerfil!==null&&item.Usr_FotoPerfil!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Usr_FotoPerfil}`}}/>
                 :<Image style={style.image} source={perfil}/>}
                 <View style={{flex:1, padding: 10}}>
                     <Text style={style.textTitleBarb}>{item.Usr_Nome}</Text>
-                    <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
+                    {item.BarbB_Especialidade!==""&&item.BarbB_Especialidade!==null?<Text style={[style.textTitleBarb, { color: '#000', fontSize: 16 }]}>{item.BarbB_Especialidade}</Text>:null}      
                     {item.Usr_Contato!==""&&item.Usr_Contato!==null?<Text style={style.textSubtitleBarb}>{`Contato: ${item.Usr_Contato}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
                     <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoServico", { barbeariaID: item.Barb_Codigo})}>
@@ -78,10 +78,10 @@ const AgendamentoBarbeiro = (props) => {
                     <TextInput
                     style={style.input}
                     mode='flat'
-                    activeOutlineColor='#2B513B'
+                    activeOutlineColor='#BA6213'
                     label="Pesquisar"
-                    theme={{ colors: { placeholder: "#2B513B", text: '#2B513B', primary: '#2B513B' } }}
-                    left={<TextInput.Icon color="#2B513B" name="magnify"/>}
+                    theme={{ colors: { placeholder: "#BA6213", text: '#BA6213', primary: '#BA6213' } }}
+                    left={<TextInput.Icon color="#BA6213" name="magnify"/>}
                     onChangeText={(search) => filterBarbeiroByNome(search)}
                     />
                 </View>

@@ -107,7 +107,7 @@ class BarbeariaBarbeirosController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-					`SELECT BB.Barb_Codigo, U.Usr_Codigo, U.Usr_Nome, U.Usr_Contato, U.Usr_FotoPerfil, AVG(BAV.Aval_Rate) AS Aval_Rate
+					`SELECT BB.Barb_Codigo, U.Usr_Codigo, U.Usr_Nome, BB.BarbB_Especialidade, U.Usr_Contato, U.Usr_FotoPerfil, AVG(BAV.Aval_Rate) AS Aval_Rate
                      FROM barbearia_barbeiros BB 
                      INNER JOIN usuario U ON BB.Usr_Codigo = U.Usr_Codigo
                      LEFT JOIN barbeiro_avaliacoes BAV ON BAV.Usr_Codigo = U.Usr_Codigo

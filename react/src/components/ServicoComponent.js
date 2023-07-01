@@ -8,7 +8,7 @@ import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
 import globalFunction from "../globalFunction";
 
-const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation, barbeariaID}) => {
+const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation, barbeariaID, onPressSelect}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
@@ -43,6 +43,14 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 <Image style={style.itemImage} source={{ uri: item.Img_Url  }} />
             </TouchableNativeFeedback>
         )
+    }
+
+    const handleClickSelect = () => {
+        props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID});
+
+        if (barbeariaID) {
+            onPressSelect();
+        }
     }
 
     return (
@@ -80,7 +88,7 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                             subtitleNumberOfLines={0}/>
                 <TouchableOpacity 
                 style={style.buttonSelect}
-                onPress={() => props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID})}>
+                onPress={() => handleClickSelect()}>
                     <Text style={[style.textSubtitle, { color: '#000' }]}>Selecionar</Text>
                     <MIcon name="arrow-forward" size={30} color={'#2B513B'}></MIcon>
                 </TouchableOpacity>

@@ -22,6 +22,10 @@ const ordens = [
     {
         label: "Distância",
         text: "Distância"
+    },
+    {
+        label: "Melhor Avaliação",
+        text: "Melhor Avaliação"
     }
 ]
 
@@ -186,7 +190,7 @@ const AgendamentoBarbearia = (props) => {
                             </Text>
                             <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                             {barbeariasVisitadas
-                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
+                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
                                 .map((e) => { return renderItem(e)})}
                             <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
                         </>
@@ -196,7 +200,7 @@ const AgendamentoBarbearia = (props) => {
                         </Text>
                         <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                         {barbeariasPesq
-                            .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true:a.DistanceCalculated > b.DistanceCalculated)
+                            .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
                             .map((e) => { return renderItem(e)})}
                     </>
                     }

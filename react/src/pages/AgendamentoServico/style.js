@@ -10,8 +10,7 @@ export default StyleSheet.create({
     headerView: {
         flex:1, 
         padding: 10, 
-        flexDirection: "row", 
-        justifyContent: "flex-end", 
+        alignItems: 'center',
         marginTop: 40 
     },
     text: {

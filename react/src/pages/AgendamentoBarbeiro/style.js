@@ -22,7 +22,7 @@ export default StyleSheet.create({
     textTitleBarb: {
         fontSize: 22,
         fontFamily: 'Manrope-Bold',
-        color: '#000',
+        color: '#BA6213',
     },
     textSubtitleBarb: {
         fontSize: 16,
@@ -77,22 +77,20 @@ export default StyleSheet.create({
         height: 55,
         backgroundColor: '#FFCA9F',
         borderWidth: 2,
-        borderColor: '#2B513B'
+        borderColor: '#BA6213'
     },
     image: {
         width: 100,
         height: 100,
         borderRadius: 50
     },
-    renderItemBarbearia: {
+    renderItemBarbeiro: {
         flex:1, 
         flexDirection: "row", 
         marginTop: 20, 
-        borderColor: '#000', 
-        borderWidth: 2, 
-        borderRadius: 10,
-        borderTopLeftRadius: 50, 
-        borderBottomLeftRadius: 50, 
+        backgroundColor: '#FDEBDD',
+        borderRadius: 20,
+        padding: 10,
         alignItems: "center"
     },
     buttonRenderItem: {
