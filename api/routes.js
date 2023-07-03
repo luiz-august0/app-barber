@@ -7,6 +7,7 @@ import BarbeariaHorariosController from "./routes/BarbeariaHorariosController";
 import BarbeariaServicosController from "./routes/BarbeariaServicosController";
 import BarbeariaBarbeirosController from "./routes/BarbeariaBarbeirosController";
 import Queue from "./lib/Queue";
+import BarbeariaAgendamentoController from "./routes/BarbeariaAgendamentoController";
 const { createBullBoard } = require('@bull-board/api');
 const { BullAdapter } = require('@bull-board/api/bullAdapter');
 const { ExpressAdapter } = require('@bull-board/express');
@@ -115,5 +116,11 @@ routes.post('/barbearia_barbeiroData', BarbeariaBarbeirosController.getDataBarbe
 routes.post('/barbeiro_servico_get', BarbeariaBarbeirosController.getServicosBarbeiro);
 routes.post('/barbeiro_servico_post', BarbeariaBarbeirosController.postServicoBarbeiro);
 routes.post('/barbeiro_servico_remove', BarbeariaBarbeirosController.deleteServicoBarbeiro);
+
+//Rotas agendamento
+routes.post('/barbeiro_agendamentohorarios', BarbeariaAgendamentoController.getHorariosDisponiveisBarbeiro);
+routes.post('/barbearia_agendamento', BarbeariaAgendamentoController.postAgendamento);
+routes.put('/barbearia_agendamento/:id', BarbeariaAgendamentoController.updateStatusAgendamento);
+routes.delete('/barbearia_agendamento/:id', BarbeariaAgendamentoController.deleteAgendamento);
 
 export default routes;

@@ -72,6 +72,7 @@ CREATE TABLE horarios (
 );
 
 CREATE TABLE agendamento(
+    Agdm_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Barb_Codigo INT NOT NULL,
     Agdm_Barbeiro INT NOT NULL,
     Usr_Codigo INT NOT NULL,

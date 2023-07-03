@@ -224,6 +224,23 @@ export const postServicoBarbeiro = async(usuarioID, barbeariaID, servicoID) => {
 export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
     return api.post('/barbeiro_servico_remove', { usuarioID, barbeariaID });
 };
+
+//Rotas agendamento
+export const getHorariosDisponiveisBarbeiro = async(barbeariaID, barbeiroID, data, tempServ) => {
+    return api.post("/barbeiro_agendamentohorarios", { barbeariaID, barbeiroID, data, tempServ });
+};
+
+export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, horaInicio, horaFim, data) => {
+    return api.post("/barbearia_agendamento", { barbeariaID, barbeiroID, usuarioID, servicoID, horaInicio, horaFim, data });
+};
+
+export const updateStatusAgendamento = async(id, status) => {
+    return api.put(`/barbearia_agendamento/${id}`, { status });
+};
+
+export const deleteAgendamento = async(id) => {
+    return api.delete(`/barbearia_agendamento/${id}`);
+};
 /**************************************************************/
 
 /*GoogleMaps*/
