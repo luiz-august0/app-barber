@@ -51,6 +51,22 @@ class GFunctions {
         return hours+':'+minutes+':'+seconds;
     }
 
+    formatStringDate = (date) => {
+        let year = date.getFullYear();
+        let month = (1 + date.getMonth()).toString().padStart(2, '0');
+        let day = date.getDate().toString().padStart(2, '0');
+      
+        return day + '/' + month + '/' + year;
+    }
+
+    formatDateToSql = (date) => {
+        let year = date.getFullYear();
+        let month = (1 + date.getMonth()).toString().padStart(2, '0');
+        let day = date.getDate().toString().padStart(2, '0');
+      
+        return year + '-' + month + '-' + day;
+    }
+
     commaPerPoint = (value) => {
         if (value !== '' && value !== null && value !== undefined) {
             return value.replace(',', '.');
