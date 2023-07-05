@@ -25,9 +25,9 @@ const routes = new Router();
 
 routes.use('/admin/queues', serverAdapter.getRouter());
 routes.post('/usuario', UsuarioController.create);
-routes.post('/usuarioVerify', UsuarioController.verify);
-routes.post('/usuario_emailrecuperacao', UsuarioController.postEnviaEmailRecuperacaoSenha);
-routes.post('/usuario_recuperacao', UsuarioController.postRecuperacaoSenha);
+routes.post('/usuario/verify', UsuarioController.verify);
+routes.post('/usuario/email/recuperacao', UsuarioController.postEnviaEmailRecuperacaoSenha);
+routes.post('/usuario/recuperacao', UsuarioController.postRecuperacaoSenha);
 routes.put('/sessions', SessionController.create);
 routes.use(auth);
 
@@ -35,9 +35,9 @@ routes.use(auth);
 routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:id', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
-routes.put('/usuario_password/:id', UsuarioController.updatePassword);
-routes.post('/usuariobarbeiro_email', UsuarioController.getDataUsuarioBarbeiroWithEmail);
-routes.post('/usuario_perfil/:id', (req, res) => {
+routes.put('/usuario/password/:id', UsuarioController.updatePassword);
+routes.post('/usuario/barbeiro/email', UsuarioController.getDataUsuarioBarbeiroWithEmail);
+routes.post('/usuario/perfil/:id', (req, res) => {
 	uploadFile(req.body.file)
 		.then((url) => {
 			try {
@@ -52,20 +52,20 @@ routes.post('/usuario_perfil/:id', (req, res) => {
 routes.delete('/usuario/:id', UsuarioController.destroy);
 
 //Rotas barbearia
-routes.post('/barbearia_pesquisa', BarbeariaController.getBarbearias);
-routes.get('/barbearia_visitadas/:id', BarbeariaController.getBarbeariasVisitadas);
+routes.post('/barbearia/pesquisa', BarbeariaController.getBarbearias);
+routes.get('/barbearia/visitadas/:id', BarbeariaController.getBarbeariasVisitadas);
 routes.get('/barbearia/:id', BarbeariaController.getDadosBarbearia);
-routes.get('/barbearia_usuario/:id', BarbeariaController.getBarbeariasUsuario);
+routes.get('/barbearia/usuario/:id', BarbeariaController.getBarbeariasUsuario);
 routes.post('/barbearia', BarbeariaController.postBarbearia);
 routes.put('/barbearia/:id', BarbeariaController.updateBarbearia);
 routes.delete('/barbearia/:id', BarbeariaController.deleteBarbearia);
-routes.get('/barbearia_contatos/:id', BarbeariaController.getBarbeariaContatos);
-routes.post('/barbearia_contatos/:id', BarbeariaController.postBarbeariaContatos);
-routes.post('/barbearia_contatos_remove/:id', BarbeariaController.deleteBarbeariaContatos);
-routes.get('/barbearia_proprietarios/:id', BarbeariaController.getBarbeariaProprietarios);
-routes.post('/barbearia_proprietarios/:id', BarbeariaController.postBarbeariaProprietarios);
-routes.post('/barbearia_proprietarios_remove/:id', BarbeariaController.deleteBarbeariaProprietarios);
-routes.post('/barbearia_logo/:id', (req, res) => {
+routes.get('/barbearia/contatos/:id', BarbeariaController.getBarbeariaContatos);
+routes.post('/barbearia/contatos/:id', BarbeariaController.postBarbeariaContatos);
+routes.post('/barbearia/contatos/remove/:id', BarbeariaController.deleteBarbeariaContatos);
+routes.get('/barbearia/proprietarios/:id', BarbeariaController.getBarbeariaProprietarios);
+routes.post('/barbearia/proprietarios/:id', BarbeariaController.postBarbeariaProprietarios);
+routes.post('/barbearia/proprietarios/remove/:id', BarbeariaController.deleteBarbeariaProprietarios);
+routes.post('/barbearia/logo/:id', (req, res) => {
 	uploadFile(req.body.file)
 		.then((url) => {
 			try {
@@ -78,22 +78,22 @@ routes.post('/barbearia_logo/:id', (req, res) => {
 		.catch((err) => res.status(500).json(err));
 });
 routes.get('/barbearia_horarios', BarbeariaHorariosController.getHorarios);
-routes.post('/barbearia_horarios_dia/:id', BarbeariaHorariosController.getBarbeariaHorariosDia);
-routes.post('/barbearia_horariodia_post/:id', BarbeariaHorariosController.postBarbeariaHorarioDia);
-routes.post('/barbearia_horariodia_update/:id', BarbeariaHorariosController.updateBarbeariaHorarioDia);
-routes.delete('/barbearia_horariodia_delete/:id', BarbeariaHorariosController.deleteBarbeariaHorarioDia);
-routes.get('/barbearia_categoria/:id', BarbeariaServicosController.getBarbeariaCategorias);
-routes.get('/barbearia_categoriaById/:id', BarbeariaServicosController.showBarbeariaCategoria);
-routes.post('/barbearia_categoria', BarbeariaServicosController.postBarbeariaCategoria);
-routes.put('/barbearia_categoria/:id', BarbeariaServicosController.updateBarbeariaCategoria);
-routes.delete('/barbearia_categoria/:id', BarbeariaServicosController.deleteBarbeariaCategoria);
-routes.get('/barbearia_servicoscategoria/:id', BarbeariaServicosController.getBarbeariaCategoriaServicos);
-routes.get('/barbearia_servico/:id', BarbeariaServicosController.showBarbeariaServico);
-routes.post('/barbearia_servico', BarbeariaServicosController.postBarbeariaServico);
-routes.put('/barbearia_servico/:id', BarbeariaServicosController.updateBarbeariaServico);
-routes.delete('/barbearia_servico/:id', BarbeariaServicosController.deleteBarbeariaServico);
-routes.get('/barbearia_servicoimagens/:id', BarbeariaServicosController.getImagensServico);
-routes.post('/barbearia_servicoimagem/:id', (req, res) => {
+routes.post('/barbearia/horariosdia/:id', BarbeariaHorariosController.getBarbeariaHorariosDia);
+routes.post('/barbearia/horariodia/post/:id', BarbeariaHorariosController.postBarbeariaHorarioDia);
+routes.post('/barbearia/horariodia/update/:id', BarbeariaHorariosController.updateBarbeariaHorarioDia);
+routes.delete('/barbearia/horariodia/delete/:id', BarbeariaHorariosController.deleteBarbeariaHorarioDia);
+routes.get('/barbearia/categoria/:id', BarbeariaServicosController.getBarbeariaCategorias);
+routes.get('/barbearia/categoria/byId/:id', BarbeariaServicosController.showBarbeariaCategoria);
+routes.post('/barbearia/categoria', BarbeariaServicosController.postBarbeariaCategoria);
+routes.put('/barbearia/categoria/:id', BarbeariaServicosController.updateBarbeariaCategoria);
+routes.delete('/barbearia/categoria/:id', BarbeariaServicosController.deleteBarbeariaCategoria);
+routes.get('/barbearia/servicoscategoria/:id', BarbeariaServicosController.getBarbeariaCategoriaServicos);
+routes.get('/barbearia/servico/:id', BarbeariaServicosController.showBarbeariaServico);
+routes.post('/barbearia/servico', BarbeariaServicosController.postBarbeariaServico);
+routes.put('/barbearia/servico/:id', BarbeariaServicosController.updateBarbeariaServico);
+routes.delete('/barbearia/servico/:id', BarbeariaServicosController.deleteBarbeariaServico);
+routes.get('/barbearia/servicoimagens/:id', BarbeariaServicosController.getImagensServico);
+routes.post('/barbearia/servicoimagem/:id', (req, res) => {
 	uploadFile(req.body.file)
 		.then((url) => {
 			try {
@@ -105,22 +105,22 @@ routes.post('/barbearia_servicoimagem/:id', (req, res) => {
 		})
 		.catch((err) => res.status(500).json(err));
 });
-routes.post('/barbearia_servicoimagem_remove/:id', BarbeariaServicosController.deleteImagemServico);
-routes.post('/barbearia_barbeiro', BarbeariaBarbeirosController.postBarbeiro);
-routes.post('/barbearia_barbeiro_atualiza', BarbeariaBarbeirosController.updateBarbeiro);
-routes.post('/barbearia_barbeiro_remove', BarbeariaBarbeirosController.deleteBarbeiro);
-routes.get('/barbearia_barbeirosByBarbearia/:id', BarbeariaBarbeirosController.getBarbeirosByBarbearia);
-routes.post('/barbearia_barbeirosByServico/:id', BarbeariaBarbeirosController.getBarbeirosByServico);
-routes.get('/barbearia_barbeariasByBarbeiro/:id', BarbeariaBarbeirosController.getBarbeariasByBarbeiro);
-routes.post('/barbearia_barbeiroData', BarbeariaBarbeirosController.getDataBarbeiro);
-routes.post('/barbeiro_servico_get', BarbeariaBarbeirosController.getServicosBarbeiro);
-routes.post('/barbeiro_servico_post', BarbeariaBarbeirosController.postServicoBarbeiro);
-routes.post('/barbeiro_servico_remove', BarbeariaBarbeirosController.deleteServicoBarbeiro);
+routes.post('/barbearia/servicoimagem/remove/:id', BarbeariaServicosController.deleteImagemServico);
+routes.post('/barbearia/barbeiro', BarbeariaBarbeirosController.postBarbeiro);
+routes.post('/barbearia/barbeiro/atualiza', BarbeariaBarbeirosController.updateBarbeiro);
+routes.post('/barbearia/barbeiro/remove', BarbeariaBarbeirosController.deleteBarbeiro);
+routes.get('/barbearia/barbeiros/byBarbearia/:id', BarbeariaBarbeirosController.getBarbeirosByBarbearia);
+routes.post('/barbearia/barbeiros/byServico/:id', BarbeariaBarbeirosController.getBarbeirosByServico);
+routes.get('/barbearia/barbearias/byBarbeiro/:id', BarbeariaBarbeirosController.getBarbeariasByBarbeiro);
+routes.post('/barbearia/barbeiro/data', BarbeariaBarbeirosController.getDataBarbeiro);
+routes.post('/barbeiro/servico/get', BarbeariaBarbeirosController.getServicosBarbeiro);
+routes.post('/barbeiro/servico/post', BarbeariaBarbeirosController.postServicoBarbeiro);
+routes.post('/barbeiro/servico/remove', BarbeariaBarbeirosController.deleteServicoBarbeiro);
 
 //Rotas agendamento
-routes.post('/barbeiro_agendamentohorarios', BarbeariaAgendamentoController.getHorariosDisponiveisBarbeiro);
-routes.post('/barbearia_agendamento', BarbeariaAgendamentoController.postAgendamento);
-routes.put('/barbearia_agendamento/:id', BarbeariaAgendamentoController.updateStatusAgendamento);
-routes.delete('/barbearia_agendamento/:id', BarbeariaAgendamentoController.deleteAgendamento);
+routes.post('/barbeiro/agendamento/horarios', BarbeariaAgendamentoController.getHorariosDisponiveisBarbeiro);
+routes.post('/barbearia/agendamento', BarbeariaAgendamentoController.postAgendamento);
+routes.put('/barbearia/agendamento/:id', BarbeariaAgendamentoController.updateStatusAgendamento);
+routes.delete('/barbearia/agendamento/:id', BarbeariaAgendamentoController.deleteAgendamento);
 
 export default routes;
