@@ -3,8 +3,12 @@ import { teste } from "./threadJobs/teste";
 function loopThread() {
 	setTimeout(function(){
 		setTimeout(async function(){
-			await teste();
-			console.log('ThreadTeste executed');
+			try {
+				await teste();
+				console.log('ThreadTeste executed');
+			} catch (error) {
+				console.log('Erro: ' + error);
+			}
 		}, 0);
 
 		setTimeout(async function() {
