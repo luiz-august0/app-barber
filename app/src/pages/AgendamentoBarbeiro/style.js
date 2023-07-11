@@ -100,7 +100,9 @@ export default StyleSheet.create({
         backgroundColor: '#ffff', 
         borderRadius: 20, 
         marginTop: 10, 
-        justifyContent: "center"
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: '#000'
     },
     categoriaComponent: {
         justifyContent: 'center',

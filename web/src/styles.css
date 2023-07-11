@@ -5,14 +5,14 @@
     justify-content: center;
     min-height: 100vh;
     padding: 0 2rem;
-    background-color: #f0e2d5;
+    background-color: #FFCA9F;
 }
 #app .p {
     font-weight: bold;
 }
 
 #app .form{
-    background-color: #fff;
+    background-color: #FDEBDD;
     width: 100%;
     max-width: 480px;
     padding: 4rem;
@@ -30,7 +30,7 @@
 
 #app .field label {
     display: block;
-    color:#000;
+    color:#2B513B;
     font-size: 20px;
     text-align: left;
 }
@@ -44,7 +44,7 @@
     border-radius: 5px;
     outline: none;
     transition: all 0.2s ease;
-    background-color: #404040;
+    background-color: #2B513B;
     color: #fff;
 }
 
@@ -65,13 +65,13 @@
     border-radius: 10px;
     outline: none;
     border: none;
-    background-color: #2B513B;
+    background-color: #BA6213;
     cursor: pointer;
     font-weight: bold;
-    color: white;
+    color: #FFCA9F;
     transition: all 0.2s ease;
 }
 
 #app .actions button:hover {
-    background-color: #396340;
+    background-color: #2B513B;
 }

@@ -19,6 +19,14 @@ export default StyleSheet.create({
         color: '#2B513B',
         marginTop: 20
     },
+    textSubTitle: {
+        fontSize: 22,
+        fontFamily: 'Manrope-Bold',
+        textAlign: 'left',
+        color: '#2B513B',
+        marginTop: 20,
+        marginBottom: 10
+    },
     text: {
         fontSize: 14,
         fontFamily: 'Manrope-Regular',
@@ -44,4 +52,19 @@ export default StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#2B513B'
     },
+    viewHorarios: {
+        marginTop: 10, 
+        flexDirection: "row", 
+        justifyContent: "space-around", 
+        flexWrap: "wrap"
+    },
+    buttonHorario: {
+        alignItems: "center", 
+        justifyContent: "center", 
+        width: 100, 
+        height: 50, 
+        backgroundColor: '#FDEBDD', 
+        borderRadius: 20, 
+        marginVertical: 10
+    }
 });
