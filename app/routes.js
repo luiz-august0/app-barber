@@ -56,7 +56,7 @@ const DrawerContent = (props) => {
 
 const HomeNav = () => {
     return (
-        <Drawer.Navigator useLegacyImplementation={true} initialRouteName="Home" 
+        <Drawer.Navigator initialRouteName="Home" 
             drawerContent={props => <DrawerContent {...props} />}
             screenOptions={{
                 headerTitleStyle: { fontFamily: 'Manrope-Regular' },

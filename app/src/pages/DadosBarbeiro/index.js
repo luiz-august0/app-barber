@@ -165,16 +165,16 @@ const DadosBarbeiro = (props) => {
             quality: 1,
         })
         
-        if (!res.cancelled) {
-            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+        if (!res.canceled) {
+            const file = `data:${res.assets[0].type}/jpeg;base64,${res.assets[0].base64}`;
 
             try {
                 setLoading(true);
                 if (props.route.params?.barbeiroID!==undefined&&props.route.params?.barbeiroID!==null&&props.route.params?.barbeiroID!=='') {
                     const responseImage = await updateUsuarioFoto(props.route.params?.barbeiroID, file);
-                    setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                    setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.assets[0].base64});
                 } else {
-                    setImage({uri: res.uri, base64: res.base64});
+                    setImage({uri: res.uri, base64: res.assets[0].base64});
                 }
                 setLoading(false);
             } catch (error) {

@@ -87,7 +87,11 @@ const AgendamentoHorario = (props) => {
                             </TouchableOpacity>
                         ))}
                     </View>
-                </View>:<Text style={[style.textSubTitle, { textAlign: 'center', marginTop: 50 }]}>Não há horários disponíveis para a data selecionada</Text>}
+                </View>
+                :
+                <View>
+                    {Platform.OS=="ios"&&show?null:<Text style={[style.textSubTitle, { textAlign: 'center', marginTop: 50 }]}>Não há horários disponíveis para a data selecionada</Text>}
+                </View>}
             </ScrollView>
         </SafeAreaView>
     )

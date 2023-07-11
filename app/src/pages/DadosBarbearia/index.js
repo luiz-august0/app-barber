@@ -131,16 +131,16 @@ const DadosBarbearia = (props) => {
             quality: 1,
         })
         
-        if (!res.cancelled) {
-            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+        if (!res.canceled) {
+            const file = `data:${res.assets[0].type}/jpeg;base64,${res.assets[0].base64}`;
             setLoadingLogo(true);
 
             try {
                 if (props.route.params?.barbeariaID !== null && props.route.params?.barbeariaID !== '' && props.route.params?.barbeariaID !== undefined) {
                     const responseImage = await postBarbeariaLogo(props.route.params?.barbeariaID, file);
-                    setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                    setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.assets[0].base64});
                 } else {
-                    setImage({uri: res.uri, base64: res.base64, type: res.type});
+                    setImage({uri: res.uri, base64: res.assets[0].base64, type: res.assets[0].type});
                 }
             } catch (error) {
                 Alert.alert('Atenção', 'Ops!, ocorreu algum erro ao realizar o upload da imagem.' );

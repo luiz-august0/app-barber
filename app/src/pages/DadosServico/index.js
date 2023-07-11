@@ -82,16 +82,16 @@ const DadosServico = (props) => {
             quality: 1,
         })
         
-        if (!res.cancelled) {
-            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+        if (!res.canceled) {
+            const file = `data:${res.assets[0].type}/jpeg;base64,${res.assets[0].base64}`;
 
             try {
                 setLoadingImage(true);
                 if (props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined) {
                     const responseImage = await postImagemServico(props.route.params?.servicoID, file);
-                    setImages([...images, {Img_Url: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64, type: res.type, urlImg: responseImage.data}]);
+                    setImages([...images, {Img_Url: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.assets[0].base64, type: res.assets[0].type, urlImg: responseImage.data}]);
                 } else {
-                    setImages([...images, {Img_Url: res.uri, base64: res.base64, type: res.type, urlImg: res.uri}]);
+                    setImages([...images, {Img_Url: res.uri, base64: res.assets[0].base64, type: res.assets[0].type, urlImg: res.uri}]);
                 }
                 setLoadingImage(false);
             } catch (error) {
@@ -117,16 +117,16 @@ const DadosServico = (props) => {
             quality: 1,
         })
         
-        if (!res.cancelled) {
-            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+        if (!res.canceled) {
+            const file = `data:${res.assets[0].type}/jpeg;base64,${res.assets[0].base64}`;
 
             try {
                 setLoadingImage(true);
                 if (props.route.params?.servicoID !== null && props.route.params?.servicoID !== '' && props.route.params?.servicoID !== undefined) {
                     const responseImage = await postImagemServico(props.route.params?.servicoID, file);
-                    setImages([...images, {Img_Url: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64, type: res.type, urlImg: responseImage.data}]);
+                    setImages([...images, {Img_Url: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.assets[0].base64, type: res.assets[0].type, urlImg: responseImage.data}]);
                 } else {
-                    setImages([...images, {Img_Url: res.uri, base64: res.base64, type: res.type, urlImg: res.uri}]);
+                    setImages([...images, {Img_Url: res.uri, base64: res.assets[0].base64, type: res.assets[0].type, urlImg: res.uri}]);
                 }
                 setLoadingImage(false);
             } catch (error) {

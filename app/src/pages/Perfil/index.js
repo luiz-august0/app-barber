@@ -136,13 +136,13 @@ const Perfil = (props) => {
             quality: 1,
         })
         
-        if (!res.cancelled) {
-            const file = `data:${res.type}/jpeg;base64,${res.base64}`;
+        if (!res.canceled) {
+            const file = `data:${res.assets[0].type}/jpeg;base64,${res.assets[0].base64}`;
 
             try {
                 setLoading(true);
                 const responseImage = await updateUsuarioFoto(props.usuario.state.id, file);
-                setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.base64});
+                setImage({uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${responseImage.data}`, base64: res.assets[0].base64});
                 updateStoreUsuario();
                 setLoading(false);
             } catch (error) {

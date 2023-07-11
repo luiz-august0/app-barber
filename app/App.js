@@ -3,9 +3,8 @@ import * as Font from 'expo-font';
 import Routes from './routes';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AppRegistry } from 'react-native';
-import {name as appName} from './app.json';
 import storeConfig from './src/store/storeConfig';
+import { AppRegistry } from 'react-native';
 
 let customFonts = {
     'Manrope-Bold': require('./src/assets/fonts/Manrope-Bold.ttf'),
@@ -50,4 +49,4 @@ export default class Redux extends React.Component {
     }
 }
 
-AppRegistry.registerComponent(appName, () => Redux);
+AppRegistry.registerComponent('main', () => Redux);
