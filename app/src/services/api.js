@@ -230,8 +230,8 @@ export const getHorariosDisponiveisBarbeiro = async(barbeariaID, barbeiroID, dat
     return api.post("/barbeiro/agendamento/horarios", { barbeariaID, barbeiroID, data, tempServ });
 };
 
-export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, horaFim, data) => {
-    return api.post("/barbearia/agendamento", { barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, horaFim, data });
+export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, data) => {
+    return api.post("/barbearia/agendamento", { barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, data });
 };
 
 export const updateStatusAgendamento = async(id, status) => {
