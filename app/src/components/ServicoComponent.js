@@ -86,12 +86,13 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                             subtitleStyle={{textAlign: "left", color: '#000', fontFamily: 'Manrope-Regular', fontSize: 14}}
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
+                {screenNavigation?
                 <TouchableOpacity 
                 style={style.buttonSelect}
                 onPress={() => handleClickSelect()}>
                     <Text style={[style.textSubtitle, { color: '#000' }]}>Selecionar</Text>
                     <MIcon name="arrow-forward" size={30} color={'#2B513B'}></MIcon>
-                </TouchableOpacity>
+                </TouchableOpacity>:null}
             </Card>
             <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
                 <PreviewImage arrayImages={images}/>

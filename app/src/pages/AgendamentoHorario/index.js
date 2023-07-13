@@ -12,6 +12,7 @@ const AgendamentoHorario = (props) => {
     const [refresh, setRefresh] = useState(false);
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
+    const [tempServ, setTempServ] = useState('');
     const [horariosDisp, serHorariosDisp] = useState([]);
   
     const onChange = (event, selectedDate) => {
@@ -27,6 +28,7 @@ const AgendamentoHorario = (props) => {
         try {
             const resServico = await showBarbeariaServico(props.route.params?.servicoID);
             const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos);
+            setTempServ(resServico.data[0].Minutos);
             serHorariosDisp(res.data);
         } catch (error) {
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os horários disponíveis do barbeiro, contate o suporte");
@@ -41,7 +43,7 @@ const AgendamentoHorario = (props) => {
 
     useEffect(() => {
         if(isFocused) { 
-            getHorariosDisponiveis(new Date());
+            getHorariosDisponiveis(date);
         }
     }, [props, isFocused]);
 
@@ -82,7 +84,15 @@ const AgendamentoHorario = (props) => {
                     <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                     <View style={style.viewHorarios}>
                         {horariosDisp.map((e) => (
-                            <TouchableOpacity key={e.Horario} style={style.buttonHorario}>
+                            <TouchableOpacity key={e.Horario} style={style.buttonHorario} 
+                                onPress={() => props.navigation.navigate('AgendamentoDetalhes', { 
+                                    barbeariaID: props.route.params?.barbeariaID,
+                                    barbeiroID: props.route.params?.barbeiroID,
+                                    servicoID: props.route.params?.servicoID,
+                                    tempServ: tempServ,
+                                    horaInicio: e.Horario,
+                                    data: date
+                                })}>
                                 <Text style={[style.text, { fontFamily: 'Manrope-Bold' }]}>{e.Horario}</Text>
                             </TouchableOpacity>
                         ))}
