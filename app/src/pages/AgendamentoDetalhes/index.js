@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, Linking, ActivityIndicator } from "react-native";
+import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, Linking, ActivityIndicator, RefreshControl } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from "./style";
 import perfil from "../../img/perfil.png";
@@ -65,7 +65,10 @@ const AgendamentoDetalhes = (props) => {
 	} else {
 		return (
 			<SafeAreaView style={style.container}>
-				<ScrollView showsVerticalScrollIndicator={false}>
+				<ScrollView 
+				showsVerticalScrollIndicator={false}
+                refreshControl={ <RefreshControl onRefresh={() => getData()}/> }
+				>
 					<View style={style.headerDetails}>
 						<View style={style.headerContent}>
 							<Text style={style.text}>Data:</Text>

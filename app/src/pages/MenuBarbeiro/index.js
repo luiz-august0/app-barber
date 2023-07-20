@@ -3,11 +3,9 @@ import { ScrollView, View, Text, TouchableOpacity, Image, Alert, SafeAreaView, R
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useIsFocused } from "@react-navigation/native";
-import globalStyles from "../../globalStyles";
 import style from "./style";
 import perfil from "../../img/perfil.png";
 import { getDataBarbeiro } from "../../services/api";
-import Loading from "../../components/Loading";
 
 const MenuBarbeiro = (props) => {
 	const isFocused = useIsFocused();
@@ -52,7 +50,7 @@ const MenuBarbeiro = (props) => {
 					<Image source={image} style={style.image}/>
 				</View>
 				<Text style={style.textTitle}>{state.nome}</Text>
-				<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text>
+				{state.espec!==null&&state.espec!==""?<Text style={style.textTitleEspec}>{`Especialidade: ${state.espec}`}</Text> : <View style={{marginTop: 10, marginBottom: 40}}/>}
 				<View style={{flex: 1}}>
 					<View style={style.viewButtons}>
 						<TouchableOpacity

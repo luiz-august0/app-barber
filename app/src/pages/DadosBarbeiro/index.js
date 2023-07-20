@@ -132,6 +132,7 @@ const DadosBarbeiro = (props) => {
                         updateStoreUsuario();
                     }
                     Alert.alert('Atenção', 'Barbeiro alterado com sucesso');
+                    props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID});
                 } else {
                     const response = await createUsuario(email.trim(), nome, senha, ncelular, cpfNoMask, 'F');
                     const data = response.data;
@@ -141,8 +142,8 @@ const DadosBarbeiro = (props) => {
                         await updateUsuarioFoto(data.insertId, file);
                     }
                     Alert.alert('Atenção', 'Barbeiro cadastrado com sucesso');
+                    props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: data.insertId});
                 }
-                props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID})
             } catch (error) {
                 if (error.message === "Request failed with status code 400") {
                     handleError('Email já cadastrado', 'email');

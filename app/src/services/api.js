@@ -241,6 +241,10 @@ export const updateStatusAgendamento = async(id, status) => {
 export const deleteAgendamento = async(id) => {
     return api.delete(`/barbearia/agendamento/${id}`);
 };
+
+export const getAgendamentos = async(barbeariaID, barbeiroID, usuarioID, servicoID, dataInicio, dataFim, status) => {
+    return api.post("/barbearia/agendamento/get", { barbeariaID, barbeiroID, usuarioID, servicoID, dataInicio, dataFim, status });
+};
 /**************************************************************/
 
 /*GoogleMaps*/
