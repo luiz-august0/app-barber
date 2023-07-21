@@ -30,6 +30,7 @@ import AgendamentoServico from './src/pages/AgendamentoServico';
 import AgendamentoBarbeiro from './src/pages/AgendamentoBarbeiro';
 import AgendamentoHorario from './src/pages/AgendamentoHorario';
 import AgendamentoDetalhes from './src/pages/AgendamentoDetalhes';
+import Agendamentos from './src/pages/Agendamentos';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -238,6 +239,11 @@ const Routes = () => {
                     name="AgendamentoDetalhes"
                     component={AgendamentoDetalhes}
                     options={{ headerTitle: "Agendamento - Detalhes" }}
+                    />
+                    <Stack.Screen
+                    name="Agendamentos"
+                    component={Agendamentos}
+                    options={{ headerTitle: "Agendamentos" }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

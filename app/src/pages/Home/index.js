@@ -51,9 +51,10 @@ const Home = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={style.button}
+                    onPress={() => props.navigation.navigate('Agendamentos')}
                     >
-                    <MIcon name="calendar-month" size={80} color={'#BA6213'}></MIcon>
-                    <Text style={style.text}>MEUS AGENDAMENTOS</Text>
+                        <MIcon name="calendar-month" size={80} color={'#BA6213'}></MIcon>
+                        <Text style={style.text}>MEUS AGENDAMENTOS</Text>
                     </TouchableOpacity>
                 </>
             )
