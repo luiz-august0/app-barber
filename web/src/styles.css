@@ -73,5 +73,6 @@
 }
 
 #app .actions button:hover {
-    background-color: #2B513B;
+    height: 2.6rem;
+    box-shadow: 0px 2px 5px black;
 }

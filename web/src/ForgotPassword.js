@@ -97,10 +97,10 @@ const ForgotPassword = () => {
     return (
         <div id="app">
             {confirmed?
-            <h1 style={{color: '#BA6213', fontFamily: 'unset', fontSize: 28}} >Senha alterada com sucesso, volte ao aplicativo e faça o login novamente</h1>
+            <h1 style={{color: '#BA6213', fontFamily: 'unset', fontSize: 28, textAlign: 'center'}} >Senha alterada com sucesso, volte ao aplicativo e faça o login novamente</h1>
             :
             <>
-                <h1 style={{color: '#BA6213', fontFamily: 'unset', fontSize: 28}} >RECUPERAÇÃO DE SENHA</h1>
+                <h1 style={{color: '#BA6213', fontFamily: 'unset', fontSize: 28, textAlign: 'center'}} >RECUPERAÇÃO DE SENHA</h1>
                 <form className="form" onSubmit={handleSubmit}>
                     <div className="field">
                         <label htmlFor="senha">Senha</label>
