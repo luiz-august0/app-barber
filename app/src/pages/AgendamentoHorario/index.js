@@ -13,7 +13,7 @@ const AgendamentoHorario = (props) => {
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const [tempServ, setTempServ] = useState('');
-    const [horariosDisp, serHorariosDisp] = useState([]);
+    const [horariosDisp, setHorariosDisp] = useState([]);
   
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
@@ -27,9 +27,14 @@ const AgendamentoHorario = (props) => {
         setRefresh(true);
         try {
             const resServico = await showBarbeariaServico(props.route.params?.servicoID);
-            const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos);
             setTempServ(resServico.data[0].Minutos);
-            serHorariosDisp(res.data);
+
+            if (new Date(dateParameter.toString()) >= new Date()) {
+                const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos);
+                setHorariosDisp(res.data);
+            } else {
+                setHorariosDisp([]);
+            }
         } catch (error) {
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os horários disponíveis do barbeiro, contate o suporte");
         }

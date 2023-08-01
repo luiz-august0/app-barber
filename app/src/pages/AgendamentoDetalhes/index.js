@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import globalFunction from "../../globalFunction";
 import { useIsFocused } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { getDadosBarbearia, getDataBarbeiro, postAgendamento, showBarbeariaServico } from "../../services/api";
+import { getDadosBarbearia, getDataBarbeiro, postAgendamento, showBarbeariaServico, updateStatusAgendamento } from "../../services/api";
 import SmallStarRate from "../../components/SmallStarRate";
 import ServicoComponent from "../../components/ServicoComponent";
 import { Card } from "react-native-paper";
@@ -44,16 +44,33 @@ const AgendamentoDetalhes = (props) => {
 	const handleSubmit = async() => {
 		setLoadingSubmit(true);
 
-		try {
-			await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
-			Alert.alert("Atenção", "Agendamento realizado com sucesso");
-			props.navigation.navigate('Agendamentos');
-		} catch (error) {
-			if (error.message === "Request failed with status code 405") {
-				Alert.alert("Atenção", "Não foi possível gravar o agendamento pois já existe um com o horário selecionado, por favor selecione outro horário");
-				props.navigation.goBack(null);
+		if (!props.route.params?.agdmID) {
+			try {
+				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
+				Alert.alert("Atenção", "Agendamento realizado com sucesso");
+				props.navigation.navigate('Agendamentos');
+			} catch (error) {
+				if (error.message === "Request failed with status code 405") {
+					Alert.alert("Atenção", "Não foi possível gravar o agendamento pois já existe um com o horário selecionado, por favor selecione outro horário");
+					props.navigation.goBack(null);
+				} else {
+					Alert.alert("Atenção", "Ops, Ocorreu um erro ao gravar o agendamento, contate o suporte");
+				}
+			}
+		} else {
+			let status = "";
+
+			if (props.usuario.state.tipo == "B") {
+				status = "R";
 			} else {
-				Alert.alert("Atenção", "Ops, Ocorreu um erro ao gravar o agendamento, contate o suporte");
+				status = "C";
+			}
+			try {
+				await updateStatusAgendamento(props.route.params?.agdmID, status);
+				Alert.alert("Atenção", "Agendamento cancelado com sucesso");
+				props.navigation.navigate('Agendamentos');
+			} catch (error) {
+				Alert.alert("Atenção", "Ops, Ocorreu um erro ao cancelar o agendamento, contate o suporte");
 			}
 		}
 
@@ -128,9 +145,21 @@ const AgendamentoDetalhes = (props) => {
 						/>
 					</View>
 					<View style={style.viewButtons}>
+						{!props.route.params?.agdmID?
 						<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={style.button} onPress={() => {!loadingSubmit?handleSubmit():null}}>
 							{loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CONFIRMAR</Text>}
 						</TouchableOpacity>
+						:
+						<>
+							{props.usuario.state.tipo=="C"&&props.route.params?.status!=="R"&&props.route.params?.status!=="C"?
+							<TouchableOpacity style={style.button} onPress={() => console.log()}>
+								<Text style={style.textButton}>AVALIAR SERVIÇO</Text>
+							</TouchableOpacity>:null}
+							{props.route.params?.status!=="R"&&props.route.params?.status!=="C"&&props.route.params?.status!=="RE"?
+							<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, { marginTop: 20, backgroundColor: "#71150D" }]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
+								{loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CANCELAR</Text>}
+							</TouchableOpacity>:null}
+						</>}
 					</View>
 				</ScrollView>
 			</SafeAreaView>

@@ -55,8 +55,6 @@ export default StyleSheet.create({
         marginHorizontal: 10
     },
     contentItem: {
-        alignItems: 'center',
-        justifyContent: 'center',
         padding: 10,
         borderRadius: 5,
         backgroundColor: '#2B513B'
@@ -112,5 +110,16 @@ export default StyleSheet.create({
         flex: 1, 
         justifyContent: "center", 
         alignItems: "center"
+    },
+    contentItemStatus: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "space-around",
+        marginTop: 10
+    },
+    statusComponent: {
+        width: 20, 
+        height: 20,
+        borderRadius: 100
     }
 });

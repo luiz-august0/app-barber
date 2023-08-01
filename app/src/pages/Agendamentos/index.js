@@ -16,10 +16,6 @@ const statusList = [
         text: "Pendente"
     },
     {
-        label: "Aceito",
-        text: "Aceito"
-    },
-    {
         label: "Cancelado",
         text: "Cancelado"
     },
@@ -55,9 +51,6 @@ const Agendamentos = (props) => {
             switch (status) {
                 case "Pendente":
                     reqStatus = "P"
-                    break;
-                case "Aceito":
-                    reqStatus = "A"
                     break;
                 case "Cancelado":
                     reqStatus = "C"
@@ -112,8 +105,42 @@ const Agendamentos = (props) => {
     }
 
     const renderItem = (item) => {
-        let status = '';
+        let status = "";
+        let renderStatus = "";
+        let renderColor = "";
 
+        if (item.Agdm_Status == "P") {
+            let agdmDate = globalFunction.formatDateToSql(new Date(item.Agdm_Data));
+
+            if (new Date(`${agdmDate}T${item.Agdm_HoraInicio}`) <= new Date()) {
+                status = "RE";
+            } else {
+                status = "P";
+            }
+        } else {
+            status = item.Agdm_Status;
+        }
+
+        switch (status) {
+            case "P":
+                renderStatus = "Pendente";
+                renderColor = "#F6C602";
+                break;
+            case "RE":
+                renderStatus = "Realizado";
+                renderColor = "#10E805";
+                break;
+            case "R":
+                renderStatus = "Recusado";
+                renderColor = "#EA0800";
+                break;
+            case "C":
+                renderStatus = "Cancelado";
+                renderColor = "#EA0800";
+                break;
+            default:
+                break;
+        }
 
         return (
             <TouchableOpacity 
@@ -126,13 +153,18 @@ const Agendamentos = (props) => {
                 servicoID: item.Serv_Codigo,
                 tempServ: item.Minutos,
                 horaInicio: item.Agdm_HoraInicio,
-                data: new Date(item.Agdm_Data)
+                data: new Date(item.Agdm_Data),
+                status: status
             })}>
                 {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>
                 :<Image style={style.image} source={perfil}/>}
                 <View style={style.contentItem}>
                     <Text style={[style.standardText, { fontFamily: 'Manrope-Bold' }]}>{`${globalFunction.formatStringDate(new Date(item.Agdm_Data))} - ${item.Agdm_HoraInicio}`}</Text>
+                    <View style={style.contentItemStatus}>
+                        <View style={[style.statusComponent, { backgroundColor: renderColor }]}/>
+                        <Text style={style.standardText}>{`Status: ${renderStatus}`}</Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         )
