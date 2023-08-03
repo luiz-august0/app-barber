@@ -11,6 +11,7 @@ import AbsoluteModal from "../../components/AbsoluteModal";
 import { connect } from "react-redux";
 import perfil from "../../img/perfil.png";
 import globalFunction from "../../globalFunction";
+import SimpleModal from "../../components/SimpleModal";
 
 const statusList = [
     {
@@ -48,7 +49,7 @@ const Agendamentos = (props) => {
     const [status, setStatus] = useState(initialStatusState);
     const [dataInicio, setDataInicio] = useState(initialDate);
     const [dataFim, setDataFim] = useState(initialFinalDate);
-    const [showDataInicial, setShowDataInicial] = useState(false);
+    const [showDataInicial, setShowDataInicial] = useState(true);
     const [showDataFinal, setShowDataFinal] = useState(false);
     const [agendamentos, setAgendamentos] = useState([]);
 
@@ -260,22 +261,24 @@ const Agendamentos = (props) => {
                                     <Text style={[style.text, { color: '#BA6213' }]}>{globalFunction.formatStringDate(dataInicio)}</Text>
                                     <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
                                 </TouchableOpacity>
-                                {showDataInicial && (
-                                    <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={dataInicio}
-                                    mode={'date'}
-                                    is24Hour={true}
-                                    display={Platform.OS=="ios"?"spinner":"default"}
-                                    onChange={onChangeDataInicial}
-                                    />
-                                )}
-                                {Platform.OS=="ios"&&showDataInicial?
-                                <View style={{alignItems: "center"}}>
-                                    <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataInicial(false)}>
-                                        <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
-                                    </TouchableOpacity>
-                                </View>:null}
+                                <SimpleModal modalVisible={true}>
+                                    {showDataInicial && (
+                                        <DateTimePicker
+                                        testID="dateTimePicker"
+                                        value={dataInicio}
+                                        mode={'date'}
+                                        is24Hour={true}
+                                        display={Platform.OS=="ios"?"inline":"default"}
+                                        onChange={onChangeDataInicial}
+                                        />
+                                    )}
+                                    {Platform.OS=="ios"&&showDataInicial?
+                                    <View style={{alignItems: "center"}}>
+                                        <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataInicial(false)}>
+                                            <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
+                                        </TouchableOpacity>
+                                    </View>:null}
+                                </SimpleModal>
                             </View>
                             <View style={{marginTop: 20}}>
                                 <Text style={[style.text, { color: '#000' }]}>Data final</Text>

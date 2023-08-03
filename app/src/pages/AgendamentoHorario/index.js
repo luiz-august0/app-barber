@@ -71,7 +71,7 @@ const AgendamentoHorario = (props) => {
                     value={date}
                     mode={'date'}
                     is24Hour={true}
-                    display={Platform.OS=="ios"?"spinner":"default"}
+                    display={Platform.OS=="ios"?"inline":"default"}
                     onChange={onChange}
                     />
                 )}

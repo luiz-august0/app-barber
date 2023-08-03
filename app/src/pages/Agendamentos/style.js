@@ -15,10 +15,9 @@ export default StyleSheet.create({
         marginTop: 40 
     },
     itemsView: {
-        display: 'flex',
         flexDirection: "row", 
         justifyContent: "space-around", 
-        alignItems: "center",
+        alignItems: "flex-start",
         flexWrap: 'wrap'
     },
     text: {
