@@ -15,10 +15,11 @@ export default StyleSheet.create({
         marginTop: 40 
     },
     itemsView: {
+        display: 'flex',
         flexDirection: "row", 
         justifyContent: "space-around", 
-        alignItems: "center", 
-        flexWrap: "wrap"
+        alignItems: "center",
+        flexWrap: 'wrap'
     },
     text: {
         fontSize: 14,
@@ -121,5 +122,24 @@ export default StyleSheet.create({
         width: 20, 
         height: 20,
         borderRadius: 100
-    }
+    },
+    buttonConfirmDate: {
+        flexDirection: "row", 
+        alignItems: "center", 
+        justifyContent: "space-evenly", 
+        width: Dimensions.get('window').width / 2.2,
+        height: 45,
+        borderRadius: 5,
+        backgroundColor: '#2B513B'
+    },
+    buttonDate: {
+        flexDirection: "row", 
+        alignItems: "center", 
+        justifyContent: "space-evenly", 
+        width: Dimensions.get('window').width / 2.2,
+        height: 45,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#BA6213'
+    },
 });

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, RefreshControl, SafeAreaView, Text, View, TouchableOpacity, Dimensions, Alert, Image } from "react-native";
+import { ScrollView, RefreshControl, SafeAreaView, Text, View, TouchableOpacity, Dimensions, Alert, Image, Platform } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import style from "./style";
 import Dropdown from "../../components/DropDown";
 import { useIsFocused } from "@react-navigation/native";
@@ -14,6 +16,10 @@ const statusList = [
     {
         label: "Pendente",
         text: "Pendente"
+    },
+    {
+        label: "Realizado",
+        text: "Realizado"
     },
     {
         label: "Cancelado",
@@ -30,14 +36,20 @@ const statusList = [
 ]
 
 const initialStatusState = {label: 'Todos', text: 'Todos'};
+let initialDate = new Date();
+let initialFinalDate = new Date();
+initialDate.setDate(initialDate.getDate() - 30);
+initialFinalDate.setDate(initialFinalDate.getDate() + 30);
 
 const Agendamentos = (props) => {
     const isFocused = useIsFocused();
     const [modalVisible, setModalVisible] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [status, setStatus] = useState(initialStatusState);
-    const [dataInicio, setDataInicio] = useState();
-    const [dataFim, setDataFim] = useState();
+    const [dataInicio, setDataInicio] = useState(initialDate);
+    const [dataFim, setDataFim] = useState(initialFinalDate);
+    const [showDataInicial, setShowDataInicial] = useState(false);
+    const [showDataFinal, setShowDataFinal] = useState(false);
     const [agendamentos, setAgendamentos] = useState([]);
 
     const getMeusAgendamentos = async(dataInicio, dataFim, status) => {
@@ -50,6 +62,9 @@ const Agendamentos = (props) => {
 
             switch (status) {
                 case "Pendente":
+                    reqStatus = "P"
+                    break;
+                case "Realizado":
                     reqStatus = "P"
                     break;
                 case "Cancelado":
@@ -73,8 +88,28 @@ const Agendamentos = (props) => {
                 usuarioID = props.usuario.state.id; 
             }
 
-            const res = await getAgendamentos(barbeariaID, barbeiroID, usuarioID, null, dataInicio, dataFim, reqStatus);
-            setAgendamentos(res.data);
+            const res = await getAgendamentos(barbeariaID, barbeiroID, usuarioID, null, globalFunction.formatDateToSql(dataInicio), globalFunction.formatDateToSql(dataFim), reqStatus);
+            
+            if (status == "Realizado" || status == "Pendente") {
+                let arrayAgdm = [];
+
+                res.data.map((item) => {
+                    if (status == "Realizado") {
+                        if (new Date(`${globalFunction.formatDateToSql(new Date(item.Agdm_Data))}T${item.Agdm_HoraInicio}`) <= new Date()) {
+                            arrayAgdm.push(item);
+                        }
+                    } else {
+                        if (new Date(`${globalFunction.formatDateToSql(new Date(item.Agdm_Data))}T${item.Agdm_HoraInicio}`) > new Date()) {
+                            arrayAgdm.push(item);
+                        }
+                    }
+                })
+                
+                setAgendamentos(arrayAgdm);
+            } else {
+                setAgendamentos(res.data);
+            }
+
         } catch (error) {
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os agendamentos, contate o suporte");
         }
@@ -83,16 +118,17 @@ const Agendamentos = (props) => {
 
     useEffect(() => {
         if(isFocused) { 
-            getMeusAgendamentos();
+            setStatus(initialStatusState);
+            getMeusAgendamentos(initialDate, initialFinalDate, null);
         }
     }, [props, isFocused]);
 
     const cleanFilters = () => {
-        setDataInicio();
-        setDataFim();
+        setDataInicio(initialDate);
+        setDataFim(initialFinalDate);
         setStatus(initialStatusState);
         setModalVisible(false);
-        getMeusAgendamentos();
+        getMeusAgendamentos(initialDate, initialFinalDate, null);
     }
 
     const handlePressFilter = () => {
@@ -103,6 +139,20 @@ const Agendamentos = (props) => {
     const handlePressOut = () => {
         setModalVisible(false);
     }
+
+    const onChangeDataInicial = (event, selectedDate) => {
+        setDataInicio(selectedDate);
+        if (Platform.OS !== 'ios') {
+            setShowDataInicial(false);
+        }
+    };
+
+    const onChangeDataFinal = (event, selectedDate) => {
+        setDataFim(selectedDate);
+        if (Platform.OS !== 'ios') {
+            setShowDataFinal(false);
+        }
+    };
 
     const renderItem = (item) => {
         let status = "";
@@ -203,6 +253,52 @@ const Agendamentos = (props) => {
                             <View style={{alignItems: "center"}}>
                                 <Text style={[style.text, { color: '#000' }]}>Status do agendamento</Text>
                                 <Dropdown label="Status" data={statusList} onSelect={setStatus} initialValue={status} dropdownWidth={Dimensions.get('window').width / 2.5}/>
+                            </View>
+                            <View style={{marginTop: 20}}>
+                                <Text style={[style.text, { color: '#000' }]}>Data inicial</Text>
+                                <TouchableOpacity style={style.buttonDate} onPress={() => setShowDataInicial(true)}>
+                                    <Text style={[style.text, { color: '#BA6213' }]}>{globalFunction.formatStringDate(dataInicio)}</Text>
+                                    <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
+                                </TouchableOpacity>
+                                {showDataInicial && (
+                                    <DateTimePicker
+                                    testID="dateTimePicker"
+                                    value={dataInicio}
+                                    mode={'date'}
+                                    is24Hour={true}
+                                    display={Platform.OS=="ios"?"spinner":"default"}
+                                    onChange={onChangeDataInicial}
+                                    />
+                                )}
+                                {Platform.OS=="ios"&&showDataInicial?
+                                <View style={{alignItems: "center"}}>
+                                    <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataInicial(false)}>
+                                        <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
+                                    </TouchableOpacity>
+                                </View>:null}
+                            </View>
+                            <View style={{marginTop: 20}}>
+                                <Text style={[style.text, { color: '#000' }]}>Data final</Text>
+                                <TouchableOpacity style={style.buttonDate} onPress={() => setShowDataFinal(true)}>
+                                    <Text style={[style.text, { color: '#BA6213' }]}>{globalFunction.formatStringDate(dataFim)}</Text>
+                                    <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
+                                </TouchableOpacity>
+                                {showDataFinal && (
+                                    <DateTimePicker
+                                    testID="dateTimePicker"
+                                    value={dataFim}
+                                    mode={'date'}
+                                    is24Hour={true}
+                                    display={Platform.OS=="ios"?"spinner":"default"}
+                                    onChange={onChangeDataFinal}
+                                    />
+                                )}
+                                {Platform.OS=="ios"&&showDataFinal?
+                                <View style={{alignItems: "center"}}>
+                                    <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataFinal(false)}>
+                                        <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
+                                    </TouchableOpacity>
+                                </View>:null}
                             </View>
                             <TouchableOpacity style={style.buttonConfirmFilter} onPress={() => handlePressFilter()}>
                                 <Text style={style.standardText}>FILTRAR</Text>

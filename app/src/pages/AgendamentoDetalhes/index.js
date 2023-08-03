@@ -151,7 +151,7 @@ const AgendamentoDetalhes = (props) => {
 						</TouchableOpacity>
 						:
 						<>
-							{props.usuario.state.tipo=="C"&&props.route.params?.status!=="R"&&props.route.params?.status!=="C"?
+							{props.usuario.state.tipo=="C"&&props.route.params?.status!=="R"&&props.route.params?.status!=="C"&&props.route.params?.status!=="P"?
 							<TouchableOpacity style={style.button} onPress={() => console.log()}>
 								<Text style={style.textButton}>AVALIAR SERVIÇO</Text>
 							</TouchableOpacity>:null}
