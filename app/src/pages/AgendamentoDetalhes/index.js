@@ -151,11 +151,11 @@ const AgendamentoDetalhes = (props) => {
 						</TouchableOpacity>
 						:
 						<>
-							{props.usuario.state.tipo=="C"&&props.route.params?.status!=="R"&&props.route.params?.status!=="C"&&props.route.params?.status!=="P"?
+							{props.usuario.state.tipo=="C"&&props.route.params?.status=="RL"?
 							<TouchableOpacity style={style.button} onPress={() => console.log()}>
 								<Text style={style.textButton}>AVALIAR SERVIÇO</Text>
 							</TouchableOpacity>:null}
-							{props.route.params?.status!=="R"&&props.route.params?.status!=="C"&&props.route.params?.status!=="RE"?
+							{props.route.params?.status=="P"?
 							<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, { marginTop: 20, backgroundColor: "#71150D" }]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
 								{loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CANCELAR</Text>}
 							</TouchableOpacity>:null}

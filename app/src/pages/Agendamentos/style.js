@@ -15,10 +15,10 @@ export default StyleSheet.create({
         marginTop: 40 
     },
     itemsView: {
-        flexDirection: "row", 
-        justifyContent: "space-around", 
-        alignItems: "flex-start",
-        flexWrap: 'wrap'
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        gap: 10
     },
     text: {
         fontSize: 14,
@@ -49,15 +49,17 @@ export default StyleSheet.create({
         backgroundColor: '#2B513B'
     },
     item: {
+        width: 160, 
         alignItems: "center", 
-        justifyContent: "center", 
-        marginVertical: 20,
-        marginHorizontal: 10
+        justifyContent: "center",
+        marginVertical: 10
     },
     contentItem: {
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#2B513B'
+        backgroundColor: '#2B513B',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buttonFilter: {
         flexDirection: "row", 
@@ -114,7 +116,8 @@ export default StyleSheet.create({
     contentItemStatus: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: "space-around",
+        justifyContent: "center",
+        gap: 3,
         marginTop: 10
     },
     statusComponent: {

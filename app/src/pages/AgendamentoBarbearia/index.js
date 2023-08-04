@@ -181,7 +181,7 @@ const AgendamentoBarbearia = (props) => {
                         </View>
                     </View>
                     {JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"?
-                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbearias cadastradas</Text>:
+                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbearias para visualizar</Text>:
                     <>                    
                         {JSON.stringify(barbeariasVisitadas)!=="[]"?
                         <>

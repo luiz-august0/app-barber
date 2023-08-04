@@ -49,7 +49,7 @@ const Agendamentos = (props) => {
     const [status, setStatus] = useState(initialStatusState);
     const [dataInicio, setDataInicio] = useState(initialDate);
     const [dataFim, setDataFim] = useState(initialFinalDate);
-    const [showDataInicial, setShowDataInicial] = useState(true);
+    const [showDataInicial, setShowDataInicial] = useState(false);
     const [showDataFinal, setShowDataFinal] = useState(false);
     const [agendamentos, setAgendamentos] = useState([]);
 
@@ -66,7 +66,7 @@ const Agendamentos = (props) => {
                     reqStatus = "P"
                     break;
                 case "Realizado":
-                    reqStatus = "P"
+                    reqStatus = "RL"
                     break;
                 case "Cancelado":
                     reqStatus = "C"
@@ -90,27 +90,7 @@ const Agendamentos = (props) => {
             }
 
             const res = await getAgendamentos(barbeariaID, barbeiroID, usuarioID, null, globalFunction.formatDateToSql(dataInicio), globalFunction.formatDateToSql(dataFim), reqStatus);
-            
-            if (status == "Realizado" || status == "Pendente") {
-                let arrayAgdm = [];
-
-                res.data.map((item) => {
-                    if (status == "Realizado") {
-                        if (new Date(`${globalFunction.formatDateToSql(new Date(item.Agdm_Data))}T${item.Agdm_HoraInicio}`) <= new Date()) {
-                            arrayAgdm.push(item);
-                        }
-                    } else {
-                        if (new Date(`${globalFunction.formatDateToSql(new Date(item.Agdm_Data))}T${item.Agdm_HoraInicio}`) > new Date()) {
-                            arrayAgdm.push(item);
-                        }
-                    }
-                })
-                
-                setAgendamentos(arrayAgdm);
-            } else {
-                setAgendamentos(res.data);
-            }
-
+            setAgendamentos(res.data);
         } catch (error) {
             Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os agendamentos, contate o suporte");
         }
@@ -156,28 +136,15 @@ const Agendamentos = (props) => {
     };
 
     const renderItem = (item) => {
-        let status = "";
         let renderStatus = "";
         let renderColor = "";
 
-        if (item.Agdm_Status == "P") {
-            let agdmDate = globalFunction.formatDateToSql(new Date(item.Agdm_Data));
-
-            if (new Date(`${agdmDate}T${item.Agdm_HoraInicio}`) <= new Date()) {
-                status = "RE";
-            } else {
-                status = "P";
-            }
-        } else {
-            status = item.Agdm_Status;
-        }
-
-        switch (status) {
+        switch (item.Agdm_Status) {
             case "P":
                 renderStatus = "Pendente";
                 renderColor = "#F6C602";
                 break;
-            case "RE":
+            case "RL":
                 renderStatus = "Realizado";
                 renderColor = "#10E805";
                 break;
@@ -211,13 +178,27 @@ const Agendamentos = (props) => {
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>
                 :<Image style={style.image} source={perfil}/>}
                 <View style={style.contentItem}>
-                    <Text style={[style.standardText, { fontFamily: 'Manrope-Bold' }]}>{`${globalFunction.formatStringDate(new Date(item.Agdm_Data))} - ${item.Agdm_HoraInicio}`}</Text>
+                    <Text style={[style.standardText, { fontFamily: 'Manrope-Bold', textAlign: "center" }]}>{globalFunction.formatStringDate(new Date(item.Agdm_Data))}</Text>
+                    <Text style={[style.standardText, { fontFamily: 'Manrope-Bold', textAlign: "center" }]}>{item.Agdm_HoraInicio}</Text>
                     <View style={style.contentItemStatus}>
                         <View style={[style.statusComponent, { backgroundColor: renderColor }]}/>
                         <Text style={style.standardText}>{`Status: ${renderStatus}`}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
+        )
+    }
+
+    const renderComponentData = (value, onChange) => {
+        return (
+            <DateTimePicker
+            testID="dateTimePicker"
+            value={value}
+            mode={'date'}
+            is24Hour={true}
+            display={Platform.OS=="ios"?"inline":"default"}
+            onChange={onChange}
+            />
         )
     }
 
@@ -261,24 +242,15 @@ const Agendamentos = (props) => {
                                     <Text style={[style.text, { color: '#BA6213' }]}>{globalFunction.formatStringDate(dataInicio)}</Text>
                                     <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
                                 </TouchableOpacity>
-                                <SimpleModal modalVisible={true}>
-                                    {showDataInicial && (
-                                        <DateTimePicker
-                                        testID="dateTimePicker"
-                                        value={dataInicio}
-                                        mode={'date'}
-                                        is24Hour={true}
-                                        display={Platform.OS=="ios"?"inline":"default"}
-                                        onChange={onChangeDataInicial}
-                                        />
-                                    )}
-                                    {Platform.OS=="ios"&&showDataInicial?
-                                    <View style={{alignItems: "center"}}>
-                                        <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataInicial(false)}>
-                                            <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
-                                        </TouchableOpacity>
-                                    </View>:null}
-                                </SimpleModal>
+                                {showDataInicial && 
+                                Platform.OS!=="ios"?renderComponentData(dataInicio, onChangeDataInicial)
+                                :
+                                <SimpleModal modalVisible={showDataInicial}>
+                                    {renderComponentData(dataInicio, onChangeDataInicial)}
+                                    <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataInicial(false)}>
+                                        <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
+                                    </TouchableOpacity>
+                                </SimpleModal>}
                             </View>
                             <View style={{marginTop: 20}}>
                                 <Text style={[style.text, { color: '#000' }]}>Data final</Text>
@@ -286,22 +258,15 @@ const Agendamentos = (props) => {
                                     <Text style={[style.text, { color: '#BA6213' }]}>{globalFunction.formatStringDate(dataFim)}</Text>
                                     <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
                                 </TouchableOpacity>
-                                {showDataFinal && (
-                                    <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={dataFim}
-                                    mode={'date'}
-                                    is24Hour={true}
-                                    display={Platform.OS=="ios"?"spinner":"default"}
-                                    onChange={onChangeDataFinal}
-                                    />
-                                )}
-                                {Platform.OS=="ios"&&showDataFinal?
-                                <View style={{alignItems: "center"}}>
+                                {showDataFinal && 
+                                Platform.OS!=="ios"?renderComponentData(dataFim, onChangeDataFinal)
+                                :
+                                <SimpleModal modalVisible={showDataFinal}>
+                                    {renderComponentData(dataFim, onChangeDataFinal)}
                                     <TouchableOpacity style={style.buttonConfirmDate} onPress={() => setShowDataFinal(false)}>
                                         <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
                                     </TouchableOpacity>
-                                </View>:null}
+                                </SimpleModal>}
                             </View>
                             <TouchableOpacity style={style.buttonConfirmFilter} onPress={() => handlePressFilter()}>
                                 <Text style={style.standardText}>FILTRAR</Text>
