@@ -133,6 +133,7 @@ export default StyleSheet.create({
     },
 	input: {
         height: 100,
+        width: 250,
 		marginLeft: 8,
 		marginRight: 8,
 		padding: 8,

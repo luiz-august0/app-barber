@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
@@ -12,6 +13,7 @@ import { usuarioLogado } from "../../store/actions/usuario";
 import KeyboardAvoidingWrapper from "../../components/KeyboardAvoidingWrapper";
 
 const Perfil = (props) => {
+    const isFocused = useIsFocused();
     const initialStateErrors = { 'nome': null, 'email': null, 'ncelular': null, 'cpf': null };
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -65,8 +67,10 @@ const Perfil = (props) => {
     }
 
     useEffect(() => {
-        getUsuarioData();
-    }, []);
+        if (isFocused) {
+            getUsuarioData();
+        }
+    }, [props, isFocused]);
 
     const handleError = (error, input) => {
         setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -111,7 +115,7 @@ const Perfil = (props) => {
         if (isValid) {
             try {
                 await updateUsuario(email.trim(), nome, ncelular, cpfNoMask, props.usuario.state.id);
-                Alert.alert('Atenção', 'Usuário alterado com sucesso!');
+                Alert.alert('Atenção', 'Usuário alterado com sucesso');
                 getUsuarioData();
                 updateStoreUsuario();
                 setEditMode(false);

@@ -17,6 +17,7 @@ import StarRateOptions from "../../components/StarRateOptions";
 const AgendamentoDetalhes = (props) => {
 	const isFocused = useIsFocused();
 	const [usuarioData, setUsuarioData] = useState([]);
+	const [clienteData, setClienteData] = useState([]);
 	const [servicoData, setServicoData] = useState([]);
 	const [barbeariaData, setBarbeariaData] = useState([]);
 	const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -30,9 +31,14 @@ const AgendamentoDetalhes = (props) => {
 	const getData = async() => {
 		setLoading(true);
 		try {
-			if (props.usuario.state.tipo=="C") {
+			if (props.usuario.state.tipo!=="F") {
 				const res = await getDataBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID)
 				setUsuarioData(res.data[0]);
+
+				if (props.route.params?.usuarioID) {					
+					const resCliente = await getUsuario(props.route.params?.usuarioID);
+					setClienteData(resCliente.data[0]);
+				}
 			} else {
 				const res = await getUsuario(props.route.params?.usuarioID);
 				setUsuarioData(res.data[0])
@@ -42,7 +48,7 @@ const AgendamentoDetalhes = (props) => {
 			setServicoData(resServico.data[0]);
 			setBarbeariaData(resBarbearia.data[0]);
 		} catch (error) {
-			Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os detalhes do agendamento, contate o suporte");
+			Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os detalhes do agendamento, contate o suporte");
 		}
 		setLoading(false);
 	}
@@ -64,13 +70,13 @@ const AgendamentoDetalhes = (props) => {
 			try {
 				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
 				Alert.alert("Atenção", "Agendamento realizado com sucesso");
-				props.navigation.navigate('Agendamentos');
+				props.navigation.navigate('HomeNav');
 			} catch (error) {
 				if (error.message === "Request failed with status code 405") {
 					Alert.alert("Atenção", "Não foi possível gravar o agendamento pois já existe um com o horário selecionado, por favor selecione outro horário");
 					props.navigation.goBack(null);
 				} else {
-					Alert.alert("Atenção", "Ops, Ocorreu um erro ao gravar o agendamento, contate o suporte");
+					Alert.alert("Atenção", "Ops, ocorreu um erro ao gravar o agendamento, contate o suporte");
 				}
 			}
 		} else {
@@ -105,7 +111,7 @@ const AgendamentoDetalhes = (props) => {
 				Alert.alert("Atenção", `Agendamento ${statusMessage}`);
 				props.navigation.navigate('Agendamentos');
 			} catch (error) {
-				Alert.alert("Atenção", "Ops, Ocorreu um erro ao cancelar o agendamento, contate o suporte");
+				Alert.alert("Atenção", "Ops, ocorreu um erro ao cancelar o agendamento, contate o suporte");
 			}
 		}
 
@@ -133,11 +139,36 @@ const AgendamentoDetalhes = (props) => {
 			await postAvaliacao(props.usuario.state.id, props.route.params?.barbeariaID, props.route.params?.barbeiroID, comment, starRating);
 			Alert.alert("Atenção", "Avaliação enviada com sucesso");
 		} catch (error) {
-			Alert.alert("Atenção", "Ops, Ocorreu um erro ao enviar a avaliação, contate o suporte");
+			Alert.alert("Atenção", "Ops, ocorreu um erro ao enviar a avaliação, contate o suporte");
 		}
 
 		setLoadingSubmitRate(false);	
 		cleanState();
+	}
+
+	const renderInformacoesCliente = (item) => {
+		return (
+			<>
+				<View style={style.headerSubtitleComponent}>
+					<Text style={[style.textTitle, { fontSize: 18 }]}>INFORMAÇÕES DO CLIENTE</Text>
+				</View>
+				<View style={style.separateComponent}></View>
+				<View style={style.barbeariaComponent}>
+					{item.Usr_FotoPerfil!==""&&item.Usr_FotoPerfil!==null?
+					<Image style={style.barbeariaComponentImage} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Usr_FotoPerfil}`}}/>:
+					<Image style={style.barbeariaComponentImage} source={perfil}/>}
+					<Card style={style.cardBarbearia}>
+						<Card.Title 
+							title={item.Usr_Nome} 
+							subtitle={`Email: ${item.Usr_Email}${item.Usr_Contato!==""&&item.Usr_Contato!==null?`\nContato: ${item.Usr_Contato}`:""}`}
+							titleStyle={style.textTitleBarbeariaComponent}
+							subtitleStyle={style.textSubtitleBarbeariaComponent}
+							titleNumberOfLines={0} 
+							subtitleNumberOfLines={0}/>
+					</Card>
+				</View>	
+			</>
+		)
 	}
 
 	if (loading) { 
@@ -155,14 +186,14 @@ const AgendamentoDetalhes = (props) => {
 							<Text style={[style.text, { fontFamily: 'Manrope-Bold' }]}>{` ${globalFunction.formatStringDate(new Date(props.route.params?.data.toString()))} às ${props.route.params?.horaInicio}`}</Text>
 						</View>
 						<View style={style.headerContent}>
-							<Text style={[style.text, { marginHorizontal: 5 }]}>{props.usuario.state.tipo=="C"?"Barbeiro:":"Cliente:"}</Text>
+							<Text style={[style.text, { marginHorizontal: 5 }]}>{props.usuario.state.tipo!=="F"?"Barbeiro:":"Cliente:"}</Text>
 							<View style={style.headerContentBarbeiro}>
 								{usuarioData.Usr_FotoPerfil!==""&&usuarioData.Usr_FotoPerfil!==null?
 								<Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${usuarioData.Usr_FotoPerfil}`}}/>:
 								<Image style={style.image} source={perfil}/>}
 								<View style={style.componentBarbeiro}>
 									<Text style={style.textBarb}>{usuarioData.Usr_Nome}</Text>
-									{props.usuario.state.tipo=="C"?<SmallStarRate starRating={usuarioData.Aval_Rate}/>:null}
+									{props.usuario.state.tipo!=="F"?<SmallStarRate starRating={usuarioData.Aval_Rate}/>:null}
 								</View>
 							</View>
 						</View>
@@ -199,24 +230,7 @@ const AgendamentoDetalhes = (props) => {
 						</>
 						:
 						<>
-							<View style={style.headerSubtitleComponent}>
-								<Text style={[style.textTitle, { fontSize: 18 }]}>INFORMAÇÕES DO CLIENTE</Text>
-							</View>
-							<View style={style.separateComponent}></View>
-							<View style={style.barbeariaComponent}>
-								{usuarioData.Usr_FotoPerfil!==""&&usuarioData.Usr_FotoPerfil!==null?
-								<Image style={style.barbeariaComponentImage} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${usuarioData.Usr_FotoPerfil}`}}/>:
-								<Image style={style.barbeariaComponentImage} source={perfil}/>}
-								<Card style={style.cardBarbearia}>
-									<Card.Title 
-										title={usuarioData.Usr_Nome} 
-										subtitle={`Email: ${usuarioData.Usr_Email}${usuarioData.Usr_Contato!==""&&usuarioData.Usr_Contato!==null?`\nContato: ${usuarioData.Usr_Contato}`:""}`}
-										titleStyle={style.textTitleBarbeariaComponent}
-										subtitleStyle={style.textSubtitleBarbeariaComponent}
-										titleNumberOfLines={0} 
-										subtitleNumberOfLines={0}/>
-								</Card>
-							</View>	
+							{renderInformacoesCliente(props.usuario.state.tipo!=="F"?clienteData:usuarioData)}
 						</>}
 						<View style={[style.headerSubtitleComponent, { marginTop: 20 }]}>
 							<Text style={style.textTitle}>SERVIÇO</Text>

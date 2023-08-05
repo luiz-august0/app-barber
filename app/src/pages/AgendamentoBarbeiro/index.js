@@ -21,7 +21,7 @@ const AgendamentoBarbeiro = (props) => {
             setInitialBarbeiros(res.data);
             setFilteredBarbeiros(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os barbeiros, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os barbeiros, contate o suporte");
         }
         setRefresh(false);
     }

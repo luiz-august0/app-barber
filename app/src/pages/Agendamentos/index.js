@@ -92,7 +92,7 @@ const Agendamentos = (props) => {
             const res = await getAgendamentos(barbeariaID, barbeiroID, usuarioID, null, globalFunction.formatDateToSql(dataInicio), globalFunction.formatDateToSql(dataFim), reqStatus);
             setAgendamentos(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os agendamentos, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os agendamentos, contate o suporte");
         }
         setRefresh(false);
     }

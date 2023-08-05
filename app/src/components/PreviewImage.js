@@ -45,7 +45,7 @@ const PreviewImage = ({arrayImages}) => {
 
 const style = StyleSheet.create({
     container: {
-        height: "80%", 
+        height: "100%", 
         marginBottom: 25
     },
 	itemImage: {

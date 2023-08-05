@@ -37,7 +37,7 @@ const AgendamentoHorario = (props) => {
                 setHorariosDisp([]);
             }
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os horários disponíveis do barbeiro, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os horários disponíveis do barbeiro, contate o suporte");
         }
         setRefresh(false);
     }

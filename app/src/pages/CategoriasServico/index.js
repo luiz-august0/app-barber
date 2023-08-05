@@ -29,7 +29,7 @@ const CategoriasServico = (props) => {
             const res = await getBarbeariaCategorias(props.route.params?.barbeariaID);
             setCategorias(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar as categorias, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar as categorias, contate o suporte");
         }
         setLoading(false);
     }

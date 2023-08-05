@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert, Image, ActivityIndicator, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
 import { createUsuario, getDataBarbeiro, getUsuario, postBarbeiro, updateBarbeiro, updateUsuario, updateUsuarioFoto } from "../../services/api";

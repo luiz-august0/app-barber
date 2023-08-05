@@ -205,6 +205,10 @@ export const getBarbeirosByServico = async(id, servicoID) => {
     return api.post(`/barbearia/barbeiros/byServico/${id}`, { servicoID });
 };
 
+export const getBarbeirosByUsuario = async(id) => {
+    return api.get(`/barbearia/barbeiros/byUsuario/${id}`);
+};
+
 export const getBarbeariasByBarbeiro = async(id) => {
     return api.get(`/barbearia/barbearias/byBarbeiro/${id}`);
 };

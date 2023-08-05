@@ -18,7 +18,7 @@ const Servicos = (props) => {
             const res = await getBarbeariaCategoriaServicos(props.route.params?.categoriaID);
             setServicos(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os serviços, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os serviços, contate o suporte");
         }
         setLoading(false);
     }

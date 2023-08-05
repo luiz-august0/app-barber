@@ -96,7 +96,7 @@ const AgendamentoBarbearia = (props) => {
             setBarbeariasPesq(arrayPesq);
             setBarbeariasVisitadas(arrayVisit);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar as barbearias, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar as barbearias, contate o suporte");
         }
         setRefresh(false);
     }

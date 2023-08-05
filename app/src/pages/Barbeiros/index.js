@@ -8,7 +8,6 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import perfil from "../../img/perfil.png";
 import globalFunction from "../../globalFunction";
 import AbsoluteModal from "../../components/AbsoluteModal";
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 import { TextInput } from "react-native-paper";
 
 const Barbeiros = (props) => {
@@ -25,7 +24,7 @@ const Barbeiros = (props) => {
             const res = await getBarbeirosByBarbearia(props.route.params?.barbeariaID);
             setBarbeiros(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os barbeiros, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os barbeiros, contate o suporte");
         }
         setRefresh(false);
     }
@@ -40,7 +39,7 @@ const Barbeiros = (props) => {
             await postBarbeiro(props.route.params?.barbeariaID, props.usuario.state.id, especialidade);
             Alert.alert("Atenção", "Barbeiro cadastrado com sucesso");
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu algum erro ao confirmar, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu algum erro ao confirmar, contate o suporte");
         }
         setLoadingResponse(false);
         setModalVisible(false);

@@ -25,7 +25,7 @@ const AgendamentoServico = (props) => {
             setInitialCategorias(res.data);
             setFilteredCategorias(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar as categorias de serviço, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar as categorias de serviço, contate o suporte");
         }
         setRefresh(false);
     }
@@ -37,7 +37,7 @@ const AgendamentoServico = (props) => {
             setInitialCategoriaServicos(res.data);
             setFilteredCategoriaServicos(res.data);
         } catch (error) {
-            Alert.alert("Atenção", "Ops, Ocorreu um erro ao carregar os serviços da categoria selecionada, contate o suporte");
+            Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar os serviços da categoria selecionada, contate o suporte");
         }
         setLoadingServicos(false);
     }
