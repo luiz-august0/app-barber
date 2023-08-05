@@ -131,4 +131,15 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#FFCA9F'
     },
+	input: {
+        height: 100,
+		marginLeft: 8,
+		marginRight: 8,
+		padding: 8,
+		borderWidth: 1,
+		borderColor: '#ccc',
+		borderRadius: 4,
+		color: '#fff',
+		backgroundColor: '#000'
+	},
 })

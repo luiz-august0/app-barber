@@ -9,12 +9,17 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const StarRateOptions = () => {
+const StarRateOptions = ({onChangeRate}) => {
   	const starRatingOptions = [1, 2, 3, 4, 5];
 
 	const [starRating, setStarRating] = useState(null);
 
 	const animatedButtonScale = new Animated.Value(1);
+
+	const onChange = (option) => {
+		onChangeRate(option);
+		setStarRating(option);
+	}
 
 	const handlePressIn = () => {
 		Animated.spring(animatedButtonScale, {
@@ -39,15 +44,13 @@ const StarRateOptions = () => {
 	};
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
 		<View style={styles.container}>
-			<Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text>
 			<View style={styles.stars}>
 			{starRatingOptions.map((option) => (
 				<TouchableWithoutFeedback
 				onPressIn={() => handlePressIn(option)}
 				onPressOut={() => handlePressOut(option)}
-				onPress={() => setStarRating(option)}
+				onPress={() => onChange(option)}
 				key={option}
 				>
 					<Animated.View style={animatedScaleStyle}>
@@ -61,13 +64,11 @@ const StarRateOptions = () => {
 			))}
 			</View>
 		</View>
-		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
   	container: {
-		flex: 1,
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',

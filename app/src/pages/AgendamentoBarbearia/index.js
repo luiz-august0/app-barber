@@ -192,16 +192,19 @@ const AgendamentoBarbearia = (props) => {
                             {barbeariasVisitadas
                                 .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
                                 .map((e) => { return renderItem(e)})}
-                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
                         </>
                         :null}
-                        <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
-                            CONHEÇA NOVAS BARBEARIAS
-                        </Text>
-                        <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
-                        {barbeariasPesq
-                            .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
-                            .map((e) => { return renderItem(e)})}
+                        {JSON.stringify(barbeariasPesq)!=="[]"?
+                        <>                        
+                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
+                            <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
+                                CONHEÇA NOVAS BARBEARIAS
+                            </Text>
+                            <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
+                            {barbeariasPesq
+                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
+                                .map((e) => { return renderItem(e)})}
+                        </>:null}
                     </>
                     }
                 </View>

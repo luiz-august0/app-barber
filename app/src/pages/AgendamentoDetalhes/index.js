@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, Linking, ActivityIndicator, RefreshControl } from "react-native";
+import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, Linking, ActivityIndicator, RefreshControl, TextInput } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from "./style";
 import perfil from "../../img/perfil.png";
@@ -7,26 +7,38 @@ import Loading from "../../components/Loading";
 import globalFunction from "../../globalFunction";
 import { useIsFocused } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { getDadosBarbearia, getDataBarbeiro, postAgendamento, showBarbeariaServico, updateStatusAgendamento } from "../../services/api";
+import { getDadosBarbearia, getDataBarbeiro, getUsuario, postAgendamento, postAvaliacao, showBarbeariaServico, updateStatusAgendamento } from "../../services/api";
 import SmallStarRate from "../../components/SmallStarRate";
 import ServicoComponent from "../../components/ServicoComponent";
 import { Card } from "react-native-paper";
+import AbsoluteModal from "../../components/AbsoluteModal";
+import StarRateOptions from "../../components/StarRateOptions";
 
 const AgendamentoDetalhes = (props) => {
 	const isFocused = useIsFocused();
-	const [barbeiroData, setBarbeiroData] = useState([]);
+	const [usuarioData, setUsuarioData] = useState([]);
 	const [servicoData, setServicoData] = useState([]);
 	const [barbeariaData, setBarbeariaData] = useState([]);
 	const [loadingSubmit, setLoadingSubmit] = useState(false);
+	const [loadingSubmitRate, setLoadingSubmitRate] = useState(false);
+	const [loadingSubmitRL, setLoadingSubmitRL] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);	
+	const [starRating, setStarRating] = useState(0);
+	const [comment, setComment] = useState("");
 
 	const getData = async() => {
 		setLoading(true);
 		try {
-			const resBarb = await getDataBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID);
+			if (props.usuario.state.tipo=="C") {
+				const res = await getDataBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID)
+				setUsuarioData(res.data[0]);
+			} else {
+				const res = await getUsuario(props.route.params?.usuarioID);
+				setUsuarioData(res.data[0])
+			}
 			const resServico = await showBarbeariaServico(props.route.params?.servicoID);
 			const resBarbearia = await getDadosBarbearia(props.route.params?.barbeariaID);
-			setBarbeiroData(resBarb.data[0]);
 			setServicoData(resServico.data[0]);
 			setBarbeariaData(resBarbearia.data[0]);
 		} catch (error) {
@@ -41,8 +53,12 @@ const AgendamentoDetalhes = (props) => {
         }
     }, [props, isFocused]);
 
-	const handleSubmit = async() => {
-		setLoadingSubmit(true);
+	const handleSubmit = async(statusParam) => {
+		if (statusParam == "RL") {
+			setLoadingSubmitRL(true);
+		} else {
+			setLoadingSubmit(true); 
+		}
 
 		if (!props.route.params?.agdmID) {
 			try {
@@ -59,22 +75,69 @@ const AgendamentoDetalhes = (props) => {
 			}
 		} else {
 			let status = "";
+			let statusMessage = "";
 
-			if (props.usuario.state.tipo == "B") {
-				status = "R";
+			if (props.usuario.state.tipo == "B" || props.usuario.state.tipo == "F") {
+				if (statusParam == "RL") {
+					status = statusParam;
+				} else {
+					status = "R";
+				}
 			} else {
 				status = "C";
 			}
+
+			switch (status) {
+				case "R":
+					statusMessage = "recusado com sucesso"
+					break;
+				case "C":
+					statusMessage = "cancelado com sucesso"
+					break;
+				case "RL":
+					statusMessage = "marcado como realizado"
+				default:
+					break;
+			}
+
 			try {
 				await updateStatusAgendamento(props.route.params?.agdmID, status);
-				Alert.alert("Atenção", "Agendamento cancelado com sucesso");
+				Alert.alert("Atenção", `Agendamento ${statusMessage}`);
 				props.navigation.navigate('Agendamentos');
 			} catch (error) {
 				Alert.alert("Atenção", "Ops, Ocorreu um erro ao cancelar o agendamento, contate o suporte");
 			}
 		}
 
-		setLoadingSubmit(false);
+		if (statusParam == "RL") {
+			setLoadingSubmitRL(false);
+		} else {
+			setLoadingSubmit(false); 
+		}
+	}
+
+	const cleanState = () => {
+        setModalVisible(false);
+		setComment("");
+		setStarRating(0);
+	}
+
+	const handlePressOut = () => {
+		cleanState();
+    }
+
+	const handleSubmitRate = async() => {
+		setLoadingSubmitRate(true);	
+
+		try {
+			await postAvaliacao(props.usuario.state.id, props.route.params?.barbeariaID, props.route.params?.barbeiroID, comment, starRating);
+			Alert.alert("Atenção", "Avaliação enviada com sucesso");
+		} catch (error) {
+			Alert.alert("Atenção", "Ops, Ocorreu um erro ao enviar a avaliação, contate o suporte");
+		}
+
+		setLoadingSubmitRate(false);	
+		cleanState();
 	}
 
 	if (loading) { 
@@ -92,45 +155,69 @@ const AgendamentoDetalhes = (props) => {
 							<Text style={[style.text, { fontFamily: 'Manrope-Bold' }]}>{` ${globalFunction.formatStringDate(new Date(props.route.params?.data.toString()))} às ${props.route.params?.horaInicio}`}</Text>
 						</View>
 						<View style={style.headerContent}>
-							<Text style={[style.text, { marginHorizontal: 5 }]}>Barbeiro:</Text>
+							<Text style={[style.text, { marginHorizontal: 5 }]}>{props.usuario.state.tipo=="C"?"Barbeiro:":"Cliente:"}</Text>
 							<View style={style.headerContentBarbeiro}>
-								{barbeiroData.Usr_FotoPerfil!==""&&barbeiroData.Usr_FotoPerfil!==null?
-								<Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${barbeiroData.Usr_FotoPerfil}`}}/>:
+								{usuarioData.Usr_FotoPerfil!==""&&usuarioData.Usr_FotoPerfil!==null?
+								<Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${usuarioData.Usr_FotoPerfil}`}}/>:
 								<Image style={style.image} source={perfil}/>}
 								<View style={style.componentBarbeiro}>
-									<Text style={style.textBarb}>{barbeiroData.Usr_Nome}</Text>
-									<SmallStarRate starRating={barbeiroData.Aval_Rate}/>
+									<Text style={style.textBarb}>{usuarioData.Usr_Nome}</Text>
+									{props.usuario.state.tipo=="C"?<SmallStarRate starRating={usuarioData.Aval_Rate}/>:null}
 								</View>
 							</View>
 						</View>
 					</View>	
 					<View style={style.viewContent}>
-						<View style={style.headerSubtitleComponent}>
-							<Text style={style.textTitle}>BARBEARIA</Text>
-						</View>
-						<View style={style.separateComponent}></View>
-						<View style={style.barbeariaComponent}>
-							{barbeariaData.Barb_LogoUrl!==""&&barbeariaData.Barb_LogoUrl!==null?
-							<Image style={style.barbeariaComponentImage} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${barbeariaData.Barb_LogoUrl}`}}/>:
-							<Image style={style.barbeariaComponentImage} source={perfil}/>}
-							<Card style={style.cardBarbearia}>
-								<Card.Title 
-									title={barbeariaData.Barb_Nome} 
-									subtitle={`${barbeariaData.Barb_Rua}, ${barbeariaData.Barb_Numero} - ${barbeariaData.Barb_Bairro}, ${barbeariaData.Barb_Cidade} - ${barbeariaData.Barb_UF}`}
-									titleStyle={style.textTitleBarbeariaComponent}
-									subtitleStyle={style.textSubtitleBarbeariaComponent}
-									titleNumberOfLines={0} 
-									subtitleNumberOfLines={0}/>
-								<TouchableOpacity style={style.barbeariaButtonComponent}>
-									<Text style={[style.text, {marginRight: 5}]}>Ver perfil da barbearia</Text>
-									<MIcon name="eye" size={30} color={'#000'}></MIcon>
-                    			</TouchableOpacity>
-								<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => Linking.openURL(`https://maps.google.com?q=${barbeariaData.Barb_GeoLatitude},${barbeariaData.Barb_GeoLongitude}`)}>
-									<Text style={[style.text, {marginRight: 5}]}>Visualizar no mapa</Text>
-									<MIcon name="google-maps" size={30} color={'#000'}></MIcon>
-                    			</TouchableOpacity>
-							</Card>
-						</View>
+						{props.usuario.state.tipo=="C"?
+						<>
+							<View style={style.headerSubtitleComponent}>
+								<Text style={style.textTitle}>BARBEARIA</Text>
+							</View>
+							<View style={style.separateComponent}></View>
+							<View style={style.barbeariaComponent}>
+								{barbeariaData.Barb_LogoUrl!==""&&barbeariaData.Barb_LogoUrl!==null?
+								<Image style={style.barbeariaComponentImage} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${barbeariaData.Barb_LogoUrl}`}}/>:
+								<Image style={style.barbeariaComponentImage} source={perfil}/>}
+								<Card style={style.cardBarbearia}>
+									<Card.Title 
+										title={barbeariaData.Barb_Nome} 
+										subtitle={`${barbeariaData.Barb_Rua}, ${barbeariaData.Barb_Numero} - ${barbeariaData.Barb_Bairro}, ${barbeariaData.Barb_Cidade} - ${barbeariaData.Barb_UF}`}
+										titleStyle={style.textTitleBarbeariaComponent}
+										subtitleStyle={style.textSubtitleBarbeariaComponent}
+										titleNumberOfLines={0} 
+										subtitleNumberOfLines={0}/>
+									<TouchableOpacity style={style.barbeariaButtonComponent}>
+										<Text style={[style.text, {marginRight: 5}]}>Ver perfil da barbearia</Text>
+										<MIcon name="eye" size={30} color={'#000'}></MIcon>
+									</TouchableOpacity>
+									<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => Linking.openURL(`https://maps.google.com?q=${barbeariaData.Barb_GeoLatitude},${barbeariaData.Barb_GeoLongitude}`)}>
+										<Text style={[style.text, {marginRight: 5}]}>Visualizar no mapa</Text>
+										<MIcon name="google-maps" size={30} color={'#000'}></MIcon>
+									</TouchableOpacity>
+								</Card>
+							</View>
+						</>
+						:
+						<>
+							<View style={style.headerSubtitleComponent}>
+								<Text style={[style.textTitle, { fontSize: 18 }]}>INFORMAÇÕES DO CLIENTE</Text>
+							</View>
+							<View style={style.separateComponent}></View>
+							<View style={style.barbeariaComponent}>
+								{usuarioData.Usr_FotoPerfil!==""&&usuarioData.Usr_FotoPerfil!==null?
+								<Image style={style.barbeariaComponentImage} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${usuarioData.Usr_FotoPerfil}`}}/>:
+								<Image style={style.barbeariaComponentImage} source={perfil}/>}
+								<Card style={style.cardBarbearia}>
+									<Card.Title 
+										title={usuarioData.Usr_Nome} 
+										subtitle={`Email: ${usuarioData.Usr_Email}${usuarioData.Usr_Contato!==""&&usuarioData.Usr_Contato!==null?`\nContato: ${usuarioData.Usr_Contato}`:""}`}
+										titleStyle={style.textTitleBarbeariaComponent}
+										subtitleStyle={style.textSubtitleBarbeariaComponent}
+										titleNumberOfLines={0} 
+										subtitleNumberOfLines={0}/>
+								</Card>
+							</View>	
+						</>}
 						<View style={[style.headerSubtitleComponent, { marginTop: 20 }]}>
 							<Text style={style.textTitle}>SERVIÇO</Text>
 						</View>
@@ -152,15 +239,34 @@ const AgendamentoDetalhes = (props) => {
 						:
 						<>
 							{props.usuario.state.tipo=="C"&&props.route.params?.status=="RL"?
-							<TouchableOpacity style={style.button} onPress={() => console.log()}>
+							<TouchableOpacity style={style.button} onPress={() => setModalVisible(true)}>
 								<Text style={style.textButton}>AVALIAR SERVIÇO</Text>
+							</TouchableOpacity>:null}
+							{props.usuario.state.tipo!=="C"&&props.route.params?.status=="P"?
+							<TouchableOpacity activeOpacity={loadingSubmitRL ? 1 : 0.7} style={style.button} onPress={() => {!loadingSubmitRL?handleSubmit("RL"):null}}>
+								{loadingSubmitRL?<ActivityIndicator/>:<Text style={style.textButton}>MARCAR COMO REALIZADO</Text>}
 							</TouchableOpacity>:null}
 							{props.route.params?.status=="P"?
 							<TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={[style.button, { marginTop: 20, backgroundColor: "#71150D" }]} onPress={() => {!loadingSubmit?handleSubmit():null}}>
-								{loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CANCELAR</Text>}
+								{loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>{props.usuario.state.tipo!=="C"?"RECUSAR":"CANCELAR"}</Text>}
 							</TouchableOpacity>:null}
 						</>}
 					</View>
+					<AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'100%'}>
+						<Text style={style.text}>Avalie o serviço que foi realizado</Text>
+						<StarRateOptions onChangeRate={setStarRating}/>
+						<TextInput
+						style={style.input}
+						placeholder="Escreva aqui um comentário sobre o serviço"
+						placeholderTextColor={"gray"}
+						value={comment}
+						multiline={true}
+						onChangeText={(comment) => setComment(comment)}
+						/>
+						<TouchableOpacity activeOpacity={loadingSubmitRate ? 1 : 0.7} style={[style.button, { marginTop: 30 }]} onPress={() => {!loadingSubmitRate?handleSubmitRate():null}}>
+							{loadingSubmitRate?<ActivityIndicator/>:<Text style={style.textButton}>ENVIAR</Text>}
+						</TouchableOpacity>
+					</AbsoluteModal>
 				</ScrollView>
 			</SafeAreaView>
 		)

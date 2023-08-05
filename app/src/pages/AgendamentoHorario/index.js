@@ -6,6 +6,7 @@ import style from "./style";
 import globalFunction from "../../globalFunction";
 import { getHorariosDisponiveisBarbeiro, showBarbeariaServico } from "../../services/api";
 import { useIsFocused } from "@react-navigation/native";
+import SimpleModal from "../../components/SimpleModal";
 
 const AgendamentoHorario = (props) => {
     const isFocused = useIsFocused();
@@ -52,6 +53,17 @@ const AgendamentoHorario = (props) => {
         }
     }, [props, isFocused]);
 
+    const renderComponentData = () => (
+        <DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        mode={'date'}
+        is24Hour={true}
+        display={Platform.OS=="ios"?"inline":"default"}
+        onChange={onChange}
+        />
+    )
+
     return (
         <SafeAreaView style={style.container}>
             <ScrollView
@@ -65,22 +77,16 @@ const AgendamentoHorario = (props) => {
                         <Fontisto name="date" size={30} color={'#BA6213'}></Fontisto>
                     </TouchableOpacity>
                 </View>
-                {show && (
-                    <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={'date'}
-                    is24Hour={true}
-                    display={Platform.OS=="ios"?"inline":"default"}
-                    onChange={onChange}
-                    />
+                {show&&(
+                    Platform.OS!=="ios"?renderComponentData()
+                    :
+                    <SimpleModal modalVisible={show}>
+                        {renderComponentData()}
+                        <TouchableOpacity style={style.buttonConfirm} onPress={() => onConfirmDate(date)}>
+                            <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
+                        </TouchableOpacity>
+                    </SimpleModal>
                 )}
-                {Platform.OS=="ios"&&show?
-                <View style={{alignItems: "center"}}>
-                    <TouchableOpacity style={style.buttonConfirm} onPress={() => onConfirmDate(date)}>
-                        <Text style={[style.text, { color: '#FFCA9F' }]}>CONFIRMAR</Text>
-                    </TouchableOpacity>
-                </View>:null}
                 {JSON.stringify(horariosDisp)!=="[]"?
                 <View style={{padding: 10, marginTop: 10}}>
                     <Text style={style.textSubTitle}>

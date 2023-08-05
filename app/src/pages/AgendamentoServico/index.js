@@ -132,7 +132,7 @@ const AgendamentoServico = (props) => {
                             )
                         })}
                     </>
-                    :<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há categorias de serviço cadastradas</Text>}
+                    :<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há categorias de serviço para visualizar</Text>}
                 </View>
                 <AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'100%'}>
                     <ScrollView
@@ -168,7 +168,7 @@ const AgendamentoServico = (props) => {
                                         </View>
                                     )
                                 })}
-                            </View>:<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há serviços cadastrados</Text>}
+                            </View>:<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há serviços para visualizar</Text>}
                         </View>}
                     </ScrollView>
                 </AbsoluteModal>

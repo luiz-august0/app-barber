@@ -138,6 +138,22 @@ const Agendamentos = (props) => {
     const renderItem = (item) => {
         let renderStatus = "";
         let renderColor = "";
+        
+        const renderImageComponent = () => {
+            let render = "";
+
+            if (props.usuario.state.tipo=="C") {
+                render = item.Barb_LogoUrl;
+            } else {
+                render = item.Usr_FotoPerfil;
+            }
+
+            if (render!==null&&render!=="") {
+                return <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${render}`}}/>
+            } else {
+                return <Image style={style.image} source={perfil}/>
+            } 
+        }
 
         switch (item.Agdm_Status) {
             case "P":
@@ -168,15 +184,14 @@ const Agendamentos = (props) => {
                 agdmID: item.Agdm_Codigo,
                 barbeariaID: item.Barb_Codigo,
                 barbeiroID: item.Agdm_Barbeiro,
+                usuarioID: item.Usr_Codigo,
                 servicoID: item.Serv_Codigo,
                 tempServ: item.Minutos,
                 horaInicio: item.Agdm_HoraInicio,
                 data: new Date(item.Agdm_Data),
-                status: status
+                status: item.Agdm_Status
             })}>
-                {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""?
-                <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>
-                :<Image style={style.image} source={perfil}/>}
+                {renderImageComponent()}
                 <View style={style.contentItem}>
                     <Text style={[style.standardText, { fontFamily: 'Manrope-Bold', textAlign: "center" }]}>{globalFunction.formatStringDate(new Date(item.Agdm_Data))}</Text>
                     <Text style={[style.standardText, { fontFamily: 'Manrope-Bold', textAlign: "center" }]}>{item.Agdm_HoraInicio}</Text>
@@ -209,7 +224,7 @@ const Agendamentos = (props) => {
                 refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getMeusAgendamentos(dataInicio, dataFim, status.text)}/> }
             >
                 <Text style={style.textTitle}>SEUS AGENDAMENTOS</Text>
-                <View style={style.headerView}>
+                <View style={[style.headerView, { justifyContent: `${props.usuario.state.tipo==="C"?"space-between":"center"}`}]}>
                     {props.usuario.state.tipo==="C"?
                     <TouchableOpacity style={style.button} onPress={() => props.navigation.navigate('AgendamentoBarbearia')}>
                         <Text style={style.text}>REALIZAR NOVO AGENDAMENTO</Text>

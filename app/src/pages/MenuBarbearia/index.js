@@ -3,12 +3,9 @@ import { ScrollView, View, Text, TouchableOpacity, Image, Linking, RefreshContro
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import { useIsFocused } from "@react-navigation/native";
-import globalStyles from "../../globalStyles";
 import globalFunction from "../../globalFunction";
 import style from "./style";
-import perfil from "../../img/perfil.png";
 import { getDadosBarbearia } from "../../services/api";
-import Loading from "../../components/Loading";
 
 const MenuBarbearia = (props) => {
 	const isFocused = useIsFocused();
@@ -64,10 +61,10 @@ const MenuBarbearia = (props) => {
 					<View style={style.viewButtons}>
 						<TouchableOpacity
 						style={style.button}
-						onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
+						onPress={() => props.navigation.navigate('Agendamentos')}
 						>
-							<MIcon name="office-building" size={80} color={'#BA6213'}></MIcon>
-							<Text style={style.text}>DADOS DE CADASTRO</Text>
+							<MIcon name="calendar-month" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>AGENDAMENTOS</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 						style={style.button}
@@ -80,11 +77,20 @@ const MenuBarbearia = (props) => {
 					<View style={style.viewButtons}>
 						<TouchableOpacity
 						style={style.button}
+						onPress={() => props.navigation.navigate('DadosBarbearia', { barbeariaID: props.route.params?.barbeariaID })}
+						>
+							<MIcon name="office-building" size={80} color={'#BA6213'}></MIcon>
+							<Text style={style.text}>DADOS DE CADASTRO</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+						style={style.button}
 						onPress={() => props.navigation.navigate('Barbeiros',{ barbeariaID: props.route.params?.barbeariaID })}
 						>
 							<MAIcon name="person" size={80} color={'#BA6213'}></MAIcon>
 							<Text style={style.text}>BARBEIROS</Text>
 						</TouchableOpacity>
+					</View>
+					<View style={style.viewButtons}>
 						<TouchableOpacity
 						style={style.button}
 						onPress={() => props.navigation.navigate('CategoriasServico',{ barbeariaID: props.route.params?.barbeariaID })}
@@ -92,8 +98,6 @@ const MenuBarbearia = (props) => {
 							<MIcon name="scissors-cutting" size={80} color={'#BA6213'}></MIcon>
 							<Text style={style.text}>SERVIÇOS</Text>
 						</TouchableOpacity>
-					</View>
-					<View style={[style.viewButtons, { flexDirection: "column" }]}>
 						<TouchableOpacity
 						style={[style.button, { height: 200 }]}
 						onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
