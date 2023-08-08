@@ -22,7 +22,10 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       },
-      "package": "barbeio.expo.client"
+      "package": "barbeio.expo.client",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {},
     "plugins": [
@@ -32,6 +35,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "57f9b4e7-1dc5-481c-92d4-9730ea3d3fd5"
+      }
+    }
   }
 }
