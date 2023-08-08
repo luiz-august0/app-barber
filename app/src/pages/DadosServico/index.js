@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert } from "react-native";
-import { FlatList } from 'react-native-gesture-handler';
+import { View, Text, TouchableOpacity, ActivityIndicator, Image, ScrollView, Alert, FlatList } from "react-native";
 import { TextInput, HelperText } from 'react-native-paper';
 import globalStyles from "../../globalStyles";
 import * as ImagePicker from 'expo-image-picker';
