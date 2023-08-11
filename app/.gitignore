@@ -12,6 +12,8 @@ package-lock.json
 yarn.lock
 web-build/
 environment.json
+eas.json
+.env*
 
 # macOS
 .DS_Store

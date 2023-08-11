@@ -1,8 +1,7 @@
 import axios from "axios";
-import { MAPS_KEY, API_URL } from '../../environment.json';
 
 export const api = axios.create({
-    baseURL: API_URL
+    baseURL: process.env.EXPO_PUBLIC_API_URL
 });
 
 //Rotas de apis externas
@@ -257,5 +256,5 @@ export const postAvaliacao = async(usuarioID, barbeariaID, barbeiroID, mensagem,
 
 /*GoogleMaps*/
 export const getGeocoding = async (rua, numero, bairro, cidade, uf, cep) => {
-    return api.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${rua},+${numero}+-+${bairro},+${cidade}+-+${uf},+${cep}&key=${MAPS_KEY}`);
+    return api.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${rua},+${numero}+-+${bairro},+${cidade}+-+${uf},+${cep}&key=${process.env.EXPO_PUBLIC_MAPS_KEY}`);
 };
