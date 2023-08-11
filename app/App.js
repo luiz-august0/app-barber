@@ -5,6 +5,13 @@ import { Provider } from 'react-redux';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import storeConfig from './src/store/storeConfig';
 import { AppRegistry } from 'react-native';
+import * as Sentry from 'sentry-expo';
+
+Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    enableInExpoDevelopment: true,
+    debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+});
 
 let customFonts = {
     'Manrope-Bold': require('./src/assets/fonts/Manrope-Bold.ttf'),

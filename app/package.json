@@ -18,11 +18,16 @@
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "6.9.13",
+    "@sentry/cli": "^2.20.5",
+    "@sentry/react-native": "5.5.0",
     "AsyncStorage": "^0.1.5",
     "axios": "^0.27.2",
     "cpf-cnpj-validator": "^1.0.3",
     "deprecated-react-native-prop-types": "^4.1.0",
     "expo": "~49.0.6",
+    "expo-application": "~5.3.0",
+    "expo-constants": "~14.4.2",
+    "expo-device": "~5.4.0",
     "expo-font": "~11.4.0",
     "expo-image-picker": "~14.3.1",
     "expo-location": "~16.1.0",
@@ -43,7 +48,8 @@
     "react-native-web": "~0.19.6",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "sentry-expo": "~7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
