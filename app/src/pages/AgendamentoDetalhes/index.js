@@ -109,7 +109,7 @@ const AgendamentoDetalhes = (props) => {
 			try {
 				await updateStatusAgendamento(props.route.params?.agdmID, status);
 				Alert.alert("Atenção", `Agendamento ${statusMessage}`);
-				props.navigation.navigate('Agendamentos');
+				props.navigation.goBack(null);
 			} catch (error) {
 				Alert.alert("Atenção", "Ops, ocorreu um erro ao cancelar o agendamento, contate o suporte");
 			}
@@ -160,7 +160,7 @@ const AgendamentoDetalhes = (props) => {
 					<Card style={style.cardBarbearia}>
 						<Card.Title 
 							title={item.Usr_Nome} 
-							subtitle={`Email: ${item.Usr_Email}${item.Usr_Contato!==""&&item.Usr_Contato!==null?`\nContato: ${item.Usr_Contato}`:""}`}
+							subtitle={`Email: ${item.Usr_Email}${item.Usr_Contato!==""&&item.Usr_Contato!==null?`\nContato: ${globalFunction.formataTelefone(item.Usr_Contato)}`:""}`}
 							titleStyle={style.textTitleBarbeariaComponent}
 							subtitleStyle={style.textSubtitleBarbeariaComponent}
 							titleNumberOfLines={0} 

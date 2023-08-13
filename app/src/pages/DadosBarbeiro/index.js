@@ -82,6 +82,7 @@ const DadosBarbeiro = (props) => {
     const handleSubmit = async() => {
         let isValid = true;
         const cpfNoMask = globalFunction.formataCampo(cpf, '00000000000');
+        const contatoNoMask = globalFunction.formataCampo(ncelular, '000000000000000');
 
         if (nome == "") {
             handleError("Nome inválido", "nome");
@@ -93,8 +94,8 @@ const DadosBarbeiro = (props) => {
             isValid = false;
         }
 
-        if (ncelular.length > 0) {
-            if (ncelular.length < 11 || ncelular.length > 11) {
+        if (contatoNoMask.length > 0) {
+            if (contatoNoMask.length < 11 || contatoNoMask.length > 11) {
                 handleError("Número de telefone inválido", "ncelular");
                 isValid = false;
             }
@@ -126,7 +127,7 @@ const DadosBarbeiro = (props) => {
             setLoadingSubmit(true);
             try {
                 if (props.route.params?.barbeiroID!==undefined&&props.route.params?.barbeiroID!==null&&props.route.params?.barbeiroID!=='') {
-                    await updateUsuario(email.trim(), nome, ncelular, cpfNoMask, props.route.params?.barbeiroID);
+                    await updateUsuario(email.trim(), nome, contatoNoMask, cpfNoMask, props.route.params?.barbeiroID);
                     await updateBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, espec);
                     if (props.route.params?.barbeiroID.toString() == props.usuario.state.id.toString()) {
                         updateStoreUsuario();
@@ -134,7 +135,7 @@ const DadosBarbeiro = (props) => {
                     Alert.alert('Atenção', 'Barbeiro alterado com sucesso');
                     props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: props.route.params?.barbeiroID});
                 } else {
-                    const response = await createUsuario(email.trim(), nome, senha, ncelular, cpfNoMask, 'F');
+                    const response = await createUsuario(email.trim(), nome, senha, contatoNoMask, cpfNoMask, 'F');
                     const data = response.data;
                     await postBarbeiro(props.route.params?.barbeariaID, data.insertId, espec);
                     if (image.base64 !== undefined) {
@@ -154,6 +155,8 @@ const DadosBarbeiro = (props) => {
                 }
             }
             setLoadingSubmit(false);
+        } else {
+            Alert.alert('Atenção', 'Alguns campos não foram preenchidos corretamente, verifique');
         }
     }
 
@@ -246,8 +249,8 @@ const DadosBarbeiro = (props) => {
                         onFocus={() => handleError(null, 'ncelular')}
                         theme={{ colors: { placeholder: `${ncelular!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
                         left={<TextInput.Icon color="#000" name="phone" />}
-                        value={ncelular}
-                        onChangeText={(ncelular) => setNcelular(ncelular)}
+                        value={globalFunction.formataTelefone(ncelular)}
+                        onChangeText={(ncelular) => setNcelular(globalFunction.formataTelefone(ncelular))}
                     />
                     <HelperText type="error" visible={errors.ncelular !== null ? true : false}>
                         {errors.ncelular}

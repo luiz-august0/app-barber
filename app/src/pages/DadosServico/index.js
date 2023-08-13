@@ -367,6 +367,7 @@ const DadosServico = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginTop: 25, marginBottom: 50, alignItems: "center", justifyContent: "center"}} onPress={() => handleDeleteServico()}>
                         <MAIcon name="delete-circle-outline" size={50} color={'#71150D'}></MAIcon>
+                        <Text style={[style.text, {color: '#000'}]}>Excluir</Text>
                     </TouchableOpacity>
                 </View>
                 :

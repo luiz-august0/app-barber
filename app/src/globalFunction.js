@@ -39,6 +39,17 @@ class GFunctions {
         return value.replace(/^(\d{3})\D*(\d{3})\D*(\d{3})\D*(\d{2})$/g,'$1.$2.$3-$4');
     }
 
+    formataTelefone = (value) => {
+        if (value === null) {
+            return "";
+        }
+
+        value = value.replace(/\D/g,'');
+        value = value.replace(/(\d{2})(\d)/,"($1) $2");
+        value = value.replace(/(\d)(\d{4})$/,"$1-$2");
+        return value;
+    } 
+
     minsToHHMMSS = (value) => {
         var mins_num = parseFloat(value, 10);
         var hours   = Math.floor(mins_num / 60);
@@ -148,7 +159,7 @@ class GFunctions {
                 * Math.cos(deg2rad(position1.lat))
                 * Math.sin(dLng / 2) * Math.sin(dLng / 2),
             c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return ((R * c *1000).toFixed());
+        return (R * c *1000);
     }
 }
 

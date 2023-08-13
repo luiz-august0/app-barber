@@ -182,10 +182,12 @@ const DadosBarbearia = (props) => {
     }
 
     const handleSubmitContato = () => {
+        const contatoNoMask = globalFunction.formataCampo(state.contato, '000000000000000');
+
         const validFields = () => {
             let isValid = true;
 
-            if (state.contato === '' || state.contato === null) {
+            if (contatoNoMask === '' || contatoNoMask === null) {
                 isValid = false;
                 handleError("Número de contato deve ser informado", "contato");
             }
@@ -195,8 +197,8 @@ const DadosBarbearia = (props) => {
                 handleError("Descrição do contato deve ser informada", "descricao"); 
             }
 
-            if (state.contato !== '' && state.contato !== null) {
-                if (state.contato.trim().length < 11 || state.contato.trim().length > 11) {
+            if (contatoNoMask !== '' && contatoNoMask !== null) {
+                if (contatoNoMask.trim().length < 11 || contatoNoMask.trim().length > 11) {
                     isValid = false;
                     handleError("Número de contato inválido", "contato");
                 }
@@ -204,12 +206,12 @@ const DadosBarbearia = (props) => {
 
             contatos.map((e) => {
                 if (contatoInEdit !== '') {
-                    if ((e.contato === state.contato) && (e.idContato !== contatoInEdit)) {
+                    if ((e.contato === contatoNoMask) && (e.idContato !== contatoInEdit)) {
                         isValid = false;
                         handleError('Contato informado já existente', 'contato');
                     }
                 } else {
-                    if (e.contato === state.contato) {
+                    if (e.contato === contatoNoMask) {
                         isValid = false;
                         handleError('Contato informado já existente', 'contato');
                     }
@@ -224,7 +226,7 @@ const DadosBarbearia = (props) => {
 
             if (contatoInEdit !== '') {
                 newArrayContatos = contatos.map(e => {
-                    if (e.idContato === contatoInEdit) return {idContato: contatoInEdit, descricao: state.descricao, contato: state.contato};
+                    if (e.idContato === contatoInEdit) return {idContato: contatoInEdit, descricao: state.descricao, contato: contatoNoMask};
                     return e;
                 });
                 setContatos(newArrayContatos);
@@ -232,7 +234,7 @@ const DadosBarbearia = (props) => {
                 contatos.map((e) => {
                     newArrayContatos.push({idContato: e.idContato, descricao: e.descricao, contato: e.contato});
                 }); 
-                newArrayContatos.push({idContato: contatos.length + 1, descricao: state.descricao, contato: state.contato});
+                newArrayContatos.push({idContato: contatos.length + 1, descricao: state.descricao, contato: contatoNoMask});
                 updateIDContato(newArrayContatos);
             }
             
@@ -520,6 +522,8 @@ const DadosBarbearia = (props) => {
                 console.log(error);
             }
             setLoadingSubmit(false);
+        } else {
+            Alert.alert('Atenção', 'Alguns campos não foram preenchidos corretamente, verifique');
         }
     }
 
@@ -551,8 +555,8 @@ const DadosBarbearia = (props) => {
                     onFocus={() => handleError(null, 'contato')}
                     theme={{ colors: { placeholder: `${state.contato!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
                     left={<TextInput.Icon color="#000" name="account" />}
-                    value={state.contato}
-                    onChangeText={(contato) => setValueState('contato', contato)}
+                    value={globalFunction.formataTelefone(state.contato)}
+                    onChangeText={(contato) => setValueState('contato', globalFunction.formataTelefone(contato))}
                 />
                 <HelperText type="error" visible={errors.contato !== null ? true : false}>
                     {errors.contato}
@@ -833,7 +837,7 @@ const DadosBarbearia = (props) => {
                 {contatos.map((e) => {
                     return (
                         <Card key={e.idContato} style={{width: 300, marginBottom: 10, backgroundColor: '#BA6213'}}>
-                        <Card.Title title={`${e.descricao}: ${e.contato}`}
+                        <Card.Title title={`${e.descricao}: ${globalFunction.formataTelefone(e.contato)}`}
                                     titleStyle={{fontFamily: 'Manrope-Bold', color: '#FFCA9F'}}
                                     titleNumberOfLines={0}/>
                         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -876,7 +880,7 @@ const DadosBarbearia = (props) => {
                     return (
                         <Card key={e.idProprietario} style={{width: 300, marginBottom: 10, backgroundColor: '#BA6213'}}>
                         <Card.Title subtitle={
-                            `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${e.contato}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
+                            `Email: ${e.email}\nNome: ${e.nome}${e.contato!==null&&e.contato!==''?`\nContato: ${globalFunction.formataTelefone(e.contato)}`:''}${e.cpf!==null&&e.cpf!==''?`\nCPF: ${globalFunction.formataCampo(e.cpf, '000.000.000-00')}`:''}`
                         }
                         subtitleNumberOfLines={0}
                         subtitleStyle={{fontFamily: 'Manrope-Bold', color: '#FFCA9F'}}

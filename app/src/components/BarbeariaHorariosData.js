@@ -193,31 +193,29 @@ const BarbeariaHorariosData = ({ barbeariaID, id }, props) => {
 							</Text>
 						</View>}
 					</View>
-					<View style={{flexDirection: "row", marginLeft: 10}}>
 						{(!editMode) && (!addMode)?
-						<>
+						<View style={{flexDirection: "row"}}>
 							<TouchableOpacity style={style.buttonItem} onPress={() => onPressEdit(e.BarbH_Seq, e.BarbH_HoraInicio, e.BarbH_HoraFim)}>
 								<MIcon name="edit" size={25} color={'#BA6213'}></MIcon>	
 							</TouchableOpacity>
 							<TouchableOpacity style={style.buttonItem} onPress={() => handleDelete(e.BarbH_Seq)}>
 								<MIcon name="delete" size={25} color={'#71150D'}></MIcon>	
 							</TouchableOpacity>
-						</>
+						</View>
 						:
 						<>
 							{e.BarbH_Seq == seqInEdit?
-							<>
+							<View style={{flexDirection: "row"}}>
 								<TouchableOpacity style={style.buttonItem} onPress={() => onPressCancel()}>
 									<MIcon name="cancel" size={25} color={'#71150D'}></MIcon>	
 								</TouchableOpacity>
 								<TouchableOpacity style={style.buttonItem} onPress={() => handleSubmit()}>
 									<MIcon name="check-circle" size={25} color={'#2B513B'}></MIcon>	
 								</TouchableOpacity>
-							</>
+							</View>
 							:null}
 						</>
 						}
-					</View>
 				</View>
 			))}
 			{addMode?viewInsert():

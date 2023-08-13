@@ -78,13 +78,12 @@ const Agendamentos = (props) => {
                     break;
             }
 
-            if (props.usuario.state.tipo === "B" || props.usuario.state.tipo === "F") {
+            if (props.usuario.state.tipo === "F") {
                 const resUsuario = await getUsuario(props.usuario.state.id);
                 barbeariaID = resUsuario.data[0].Barb_Codigo;
-
-                if (props.usuario.state.tipo === "F") {
-                    barbeiroID = props.usuario.state.id;
-                }
+                barbeiroID = props.usuario.state.id;
+            } else if (props.usuario.state.tipo === "B") {
+                barbeariaID = props.route.params?.barbeariaID;
             } else {
                 usuarioID = props.usuario.state.id; 
             }

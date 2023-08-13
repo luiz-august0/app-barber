@@ -65,9 +65,9 @@ const AgendamentoBarbearia = (props) => {
             let arrayPesq = [];
             let arrayVisit = [];
             if (nome !== undefined) {
-                res = await getBarbeariasPesquisa(nome, cidade, endRua, endNumero, endBairro);
+                res = await getBarbeariasPesquisa(nome, cidade, endRua, endNumero, endBairro, props.usuario.state.id);
             } else {
-                res = await getBarbeariasPesquisa(null, null, null, null, null);
+                res = await getBarbeariasPesquisa(null, null, null, null, null, props.usuario.state.id);
             }
 
             res.data.map((e) => {
@@ -77,7 +77,7 @@ const AgendamentoBarbearia = (props) => {
                 ):0;
 
                 arrayPesq.push({Barb_Codigo: e.Barb_Codigo, Barb_Nome: e.Barb_Nome, Barb_Rua: e.Barb_Rua, Barb_Numero: e.Barb_Numero,
-                    Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
+                    Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate==null?0:e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
                     Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0});
             });
 
@@ -89,7 +89,7 @@ const AgendamentoBarbearia = (props) => {
                 ):0;
 
                 arrayVisit.push({Barb_Codigo: e.Barb_Codigo, Barb_Nome: e.Barb_Nome, Barb_Rua: e.Barb_Rua, Barb_Numero: e.Barb_Numero,
-                    Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
+                    Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate==null?0:e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
                     Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0});
             });
 
@@ -129,9 +129,9 @@ const AgendamentoBarbearia = (props) => {
     const renderItem = (item) => {
         let distance = '';
         if (item.Distance < 1000) {
-            distance = `${item.Distance.toString()}m`;
+            distance = `${item.Distance.toFixed(0).toString()}m`;
         } else {
-            distance = `${(item.Distance / 1000).toString().replace('.', ',')}km`
+            distance = `${(item.Distance / 1000).toFixed(2).toString().replace('.', ',')}km`
         }
 
         return (
@@ -155,6 +155,17 @@ const AgendamentoBarbearia = (props) => {
                 </View>
             </View>
         )
+    }
+
+    const sortBarbearias = (a, b) => {
+        switch (ordem.label) {
+            case "Nome":
+                return a.Barb_Nome < b.Barb_Nome ? -1 : true;
+            case "Distância":  
+                return a.DistanceCalculated < b.DistanceCalculated ? -1 : true;
+            default:
+                return a.Aval_Rate > b.Aval_Rate ? -1 : true;
+        }
     }
 
     return (
@@ -190,19 +201,19 @@ const AgendamentoBarbearia = (props) => {
                             </Text>
                             <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                             {barbeariasVisitadas
-                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
+                                .sort((a, b) => sortBarbearias(a,b))
                                 .map((e) => { return renderItem(e)})}
+                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
                         </>
                         :null}
                         {JSON.stringify(barbeariasPesq)!=="[]"?
                         <>                        
-                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
                             <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
                                 CONHEÇA NOVAS BARBEARIAS
                             </Text>
                             <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
                             {barbeariasPesq
-                                .sort((a, b) => ordem.label=="Nome"?a.Barb_Nome < b.Barb_Nome ? -1 : true : ordem.label=="Distância"?a.DistanceCalculated > b.DistanceCalculated : a.Aval_Rate < b.Aval_Rate)
+                                .sort((a, b) => sortBarbearias(a,b))
                                 .map((e) => { return renderItem(e)})}
                         </>:null}
                     </>

@@ -7,6 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
 import { getBarbeirosByServico } from "../../services/api";
 import StarRate from "../../components/StarRate";
+import globalFunction from '../../globalFunction';
 
 const AgendamentoBarbeiro = (props) => {
     const isFocused = useIsFocused();
@@ -56,7 +57,7 @@ const AgendamentoBarbeiro = (props) => {
                 <View style={{flex:1, padding: 10}}>
                     <Text style={style.textTitleBarb}>{item.Usr_Nome}</Text>
                     {item.BarbB_Especialidade!==""&&item.BarbB_Especialidade!==null?<Text style={[style.textTitleBarb, { color: '#000', fontSize: 16 }]}>{item.BarbB_Especialidade}</Text>:null}      
-                    {item.Usr_Contato!==""&&item.Usr_Contato!==null?<Text style={style.textSubtitleBarb}>{`Contato: ${item.Usr_Contato}`}</Text>:null}
+                    {item.Usr_Contato!==""&&item.Usr_Contato!==null?<Text style={style.textSubtitleBarb}>{`Contato: ${globalFunction.formataTelefone(item.Usr_Contato)}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
                     <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoHorario", { barbeariaID: item.Barb_Codigo, barbeiroID: item.Usr_Codigo, servicoID: props.route.params?.servicoID })}>
                         <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Selecionar barbeiro</Text>

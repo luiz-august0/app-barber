@@ -56,7 +56,8 @@ export default StyleSheet.create({
         marginTop: 10, 
         flexDirection: "row", 
         justifyContent: "space-around", 
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        gap: 20
     },
     buttonHorario: {
         alignItems: "center", 
@@ -64,7 +65,6 @@ export default StyleSheet.create({
         width: 100, 
         height: 50, 
         backgroundColor: '#FDEBDD', 
-        borderRadius: 20, 
-        marginVertical: 10
+        borderRadius: 20,
     }
 });

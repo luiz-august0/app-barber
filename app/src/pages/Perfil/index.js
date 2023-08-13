@@ -79,6 +79,7 @@ const Perfil = (props) => {
     const AtualizaUsuario = async() => {
         let isValid = true;
         const cpfNoMask = globalFunction.formataCampo(cpf, '00000000000');
+        const contatoNoMask = globalFunction.formataCampo(ncelular, '000000000000000');
 
         if (nome == "") {
             handleError("Nome inválido", "nome");
@@ -90,8 +91,8 @@ const Perfil = (props) => {
             isValid = false;
         }
 
-        if (ncelular.length > 0) {
-            if (ncelular.length < 11 || ncelular.length > 11) {
+        if (contatoNoMask.length > 0) {
+            if (contatoNoMask.length < 11 || contatoNoMask.length > 11) {
                 handleError("Número de telefone inválido", "ncelular");
                 isValid = false;
             }
@@ -114,7 +115,7 @@ const Perfil = (props) => {
 
         if (isValid) {
             try {
-                await updateUsuario(email.trim(), nome, ncelular, cpfNoMask, props.usuario.state.id);
+                await updateUsuario(email.trim(), nome, contatoNoMask, cpfNoMask, props.usuario.state.id);
                 Alert.alert('Atenção', 'Usuário alterado com sucesso');
                 getUsuarioData();
                 updateStoreUsuario();
@@ -214,8 +215,8 @@ const Perfil = (props) => {
                     onFocus={() => handleError(null, 'ncelular')}
                     theme={{ colors: { placeholder: `${ncelular!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
                     left={<TextInput.Icon color="#FFCA9F" name="phone" />}
-                    value={ncelular}
-                    onChangeText={(ncelular) => setNcelular(ncelular)}
+                    value={globalFunction.formataTelefone(ncelular)}
+                    onChangeText={(ncelular) => setNcelular(globalFunction.formataTelefone(ncelular))}
                     editable={onEditMode}
                 />
                 <HelperText type="error" visible={errors.ncelular !== null ? true : false}>

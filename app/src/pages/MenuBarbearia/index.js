@@ -61,7 +61,7 @@ const MenuBarbearia = (props) => {
 					<View style={style.viewButtons}>
 						<TouchableOpacity
 						style={style.button}
-						onPress={() => props.navigation.navigate('Agendamentos')}
+						onPress={() => props.navigation.navigate('Agendamentos', { barbeariaID: props.route.params?.barbeariaID })}
 						>
 							<MIcon name="calendar-month" size={80} color={'#BA6213'}></MIcon>
 							<Text style={style.text}>AGENDAMENTOS</Text>
@@ -99,12 +99,11 @@ const MenuBarbearia = (props) => {
 							<Text style={style.text}>SERVIÇOS</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-						style={[style.button, { height: 200 }]}
+						style={style.button}
 						onPress={() => Linking.openURL(`https://maps.google.com?q=${state.lat},${state.lng}`)}
 						>
 							<MIcon name="google-maps" size={70} color={'#BA6213'}></MIcon>
 							<Text style={style.text}>VISUALIZAR NO MAPA</Text>
-							<Text style={[style.text, { fontSize: 12, fontFamily: 'Manrope-Regular' }]}>{`${state.rua}, ${state.numero} - ${state.bairro}, ${state.cidade} - ${state.uf}, ${state.cep}`}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
