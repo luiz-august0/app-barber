@@ -235,7 +235,7 @@ const Agendamentos = (props) => {
                 </View>
                 <View style={{padding: 10}}>
                     {JSON.stringify(agendamentos)=="[]"?
-                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há agendamentos para visualizar</Text>:
+                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>{refresh?"Carregando agendamentos...":"Não há agendamentos para visualizar"}</Text>:
                     <View style={style.itemsView}>                    
                         {agendamentos.map((item) => renderItem(item))}
                     </View>

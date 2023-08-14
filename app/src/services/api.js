@@ -258,3 +258,7 @@ export const postAvaliacao = async(usuarioID, barbeariaID, barbeiroID, mensagem,
 export const getGeocoding = async (rua, numero, bairro, cidade, uf, cep) => {
     return api.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${rua},+${numero}+-+${bairro},+${cidade}+-+${uf},+${cep}&key=${process.env.EXPO_PUBLIC_MAPS_KEY}`);
 };
+
+export const getAddress = async (lat, lng) => {
+    return api.post(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.EXPO_PUBLIC_MAPS_KEY}`);
+}

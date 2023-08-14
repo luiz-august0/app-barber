@@ -5,7 +5,7 @@ import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import style from "./style";
 import Dropdown from "../../components/DropDown";
 import { useIsFocused } from "@react-navigation/native";
-import { getBarbeariasPesquisa, getBarbeariasVisitadas } from "../../services/api";
+import { getAddress, getBarbeariasPesquisa, getBarbeariasVisitadas } from "../../services/api";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import { connect } from "react-redux";
 import { HelperText, TextInput } from "react-native-paper";
@@ -38,7 +38,7 @@ const AgendamentoBarbearia = (props) => {
     const [ordem, setOrdem] = useState(initialOrdemState);
     const [barbeariasPesq, setBarbeariasPesq] = useState([]);
     const [barbeariasVisitadas, setBarbeariasVisitadas] = useState([]);
-    const [state, setState] = useState({'nome': null, 'cidade': null, 'endRua': null, 'endNumero': null, 'endBairro': null});
+    const [state, setState] = useState({'nome': null, 'cidade': null, 'cidadeLocal': null, 'endRua': null, 'endNumero': null, 'endBairro': null});
     const [errors, setErrors] = useState({'nome': null, 'cidade': null, 'endRua': null, 'endNumero': null, 'endBairro': null});
 
     const setValueState = (input, value) => {
@@ -56,7 +56,9 @@ const AgendamentoBarbearia = (props) => {
 
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                Alert.alert("Atenção", "Você recusou este app para acessar sua localização!");
+                Alert.alert("Atenção", "Você recusou este app para acessar sua localização. Para visualizar as barbearias disponíveis é necessário ativar a localização para este aplicativo");
+                setRefresh(false);
+                return;
             } else {
                 location = await Location.getCurrentPositionAsync({});
             }
@@ -101,25 +103,45 @@ const AgendamentoBarbearia = (props) => {
         setRefresh(false);
     }
 
+    const getAddressLocation = async() => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status=='granted') {
+            setRefresh(true);
+            let location = await Location.getCurrentPositionAsync({});
+            let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[7].address_components[0].long_name;
+            setValueState('cidade', address);
+            setValueState('cidadeLocal', address);
+            return address;
+        }
+    }
+
     useEffect(() => {
         if(isFocused) { 
-            getBarbearias();
+            getAddressLocation().then(res => {
+                getBarbearias(state.nome, res, state.endRua, state.endNumero, state.endBairro);
+            })
         }
     }, [props, isFocused]);
 
     const cleanFilters = () => {
         setValueState('nome', null);
-        setValueState('cidade', null);
         setValueState('endRua', null);
+        setValueState('cidade', state.cidadeLocal);
         setValueState('endNumero', null);
         setValueState('endBairro', null);
+        handleError(null, 'cidade')
         setModalVisible(false);
-        getBarbearias();
+        getBarbearias(state.nome, state.cidadeLocal, state.endRua, state.endNumero, state.endBairro);
     }
 
     const handlePressFilter = () => {
-        getBarbearias(state.nome, state.cidade, state.endRua, state.endNumero, state.endBairro); 
-        setModalVisible(false);
+        if (state.cidade!==""&&state.cidade!==null) {
+            getBarbearias(state.nome, state.cidade, state.endRua, state.endNumero, state.endBairro); 
+            setModalVisible(false);
+        } else {
+            handleError('Cidade deve ser informada', 'cidade')
+        }
     }
 
     const handlePressOut = () => {
@@ -191,33 +213,37 @@ const AgendamentoBarbearia = (props) => {
                             <Dropdown label="Ordenação" data={ordens} onSelect={setOrdem} initialValue={initialOrdemState} dropdownWidth={Dimensions.get('window').width / 2.5}/>
                         </View>
                     </View>
-                    {JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"?
-                    <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbearias para visualizar</Text>:
-                    <>                    
-                        {JSON.stringify(barbeariasVisitadas)!=="[]"?
-                        <>
-                            <Text style={style.textSubTitle}>
-                                BARBEARIAS JÁ VISITADAS
-                            </Text>
-                            <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
-                            {barbeariasVisitadas
-                                .sort((a, b) => sortBarbearias(a,b))
-                                .map((e) => { return renderItem(e)})}
-                            <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
+                    {(refresh)&&(JSON.stringify(barbeariasVisitadas)=="[]"||JSON.stringify(barbeariasPesq)=="[]")?<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Carregando barbearias...</Text>
+                    :
+                    <>
+                        {JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"?
+                        <Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbearias para visualizar</Text>:
+                        <>                    
+                            {JSON.stringify(barbeariasVisitadas)!=="[]"?
+                            <>
+                                <Text style={style.textSubTitle}>
+                                    BARBEARIAS JÁ VISITADAS
+                                </Text>
+                                <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
+                                {barbeariasVisitadas
+                                    .sort((a, b) => sortBarbearias(a,b))
+                                    .map((e) => { return renderItem(e)})}
+                                <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
+                            </>
+                            :null}
+                            {JSON.stringify(barbeariasPesq)!=="[]"?
+                            <>                        
+                                <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
+                                    CONHEÇA NOVAS BARBEARIAS
+                                </Text>
+                                <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
+                                {barbeariasPesq
+                                    .sort((a, b) => sortBarbearias(a,b))
+                                    .map((e) => { return renderItem(e)})}
+                            </>:null}
                         </>
-                        :null}
-                        {JSON.stringify(barbeariasPesq)!=="[]"?
-                        <>                        
-                            <Text style={[style.textSubTitle, {marginTop: JSON.stringify(barbeariasVisitadas)!=="[]"?50:20}]}>
-                                CONHEÇA NOVAS BARBEARIAS
-                            </Text>
-                            <View style={{height: 2, backgroundColor: '#2B513B'}}></View>
-                            {barbeariasPesq
-                                .sort((a, b) => sortBarbearias(a,b))
-                                .map((e) => { return renderItem(e)})}
-                        </>:null}
-                    </>
-                    }
+                        }
+                    </>}
                 </View>
                 <AbsoluteModal handlePressOut={handlePressOut} modalVisible={modalVisible} width={'100%'}>
                     <ScrollView

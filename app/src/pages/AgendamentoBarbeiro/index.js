@@ -91,7 +91,7 @@ const AgendamentoBarbeiro = (props) => {
                     <>   
                         {filteredBarbeiros.map((e) => renderItem(e))}
                     </>
-                    :<Text style={[style.textSubTitle, { textAlign: 'center' }]}>Não há barbeiros disponíveis</Text>}
+                    :<Text style={[style.textSubTitle, { textAlign: 'center' }]}>{refresh?"Carregando barbeiros...":"Não há barbeiros disponíveis"}</Text>}
                 </View>
             </ScrollView>
         </SafeAreaView>
