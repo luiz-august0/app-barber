@@ -17,10 +17,9 @@ const AgendamentoHorario = (props) => {
     const [horariosDisp, setHorariosDisp] = useState([]);
   
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setDate(currentDate);
+        setDate(selectedDate);
         if (Platform.OS !== 'ios') {
-            onConfirmDate(currentDate);
+            onConfirmDate(selectedDate);
         }
     };
 
@@ -30,7 +29,7 @@ const AgendamentoHorario = (props) => {
             const resServico = await showBarbeariaServico(props.route.params?.servicoID);
             setTempServ(resServico.data[0].Minutos);
 
-            if (new Date(dateParameter.toString()) >= new Date()) {
+            if (new Date(dateParameter.toString()).getDate() >= new Date().getDate()) {
                 const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos);
                 setHorariosDisp(res.data);
             } else {

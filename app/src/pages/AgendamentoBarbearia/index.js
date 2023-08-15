@@ -60,7 +60,7 @@ const AgendamentoBarbearia = (props) => {
                 setRefresh(false);
                 return;
             } else {
-                location = await Location.getCurrentPositionAsync({});
+                location = await Location.getLastKnownPositionAsync({});
             }
 
             let res = [];
@@ -104,15 +104,15 @@ const AgendamentoBarbearia = (props) => {
     }
 
     const getAddressLocation = async() => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-
-        if (status=='granted') {
-            setRefresh(true);
-            let location = await Location.getCurrentPositionAsync({});
+        try {  
+            let location = await Location.getLastKnownPositionAsync({});
             let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[7].address_components[0].long_name;
             setValueState('cidade', address);
             setValueState('cidadeLocal', address);
+            setRefresh(true);
             return address;
+        } catch (error) {
+            return "";
         }
     }
 
@@ -228,7 +228,7 @@ const AgendamentoBarbearia = (props) => {
                                 {barbeariasVisitadas
                                     .sort((a, b) => sortBarbearias(a,b))
                                     .map((e) => { return renderItem(e)})}
-                                <View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>
+                                {JSON.stringify(barbeariasPesq)!=="[]"?<View style={{height: 2, backgroundColor: '#2B513B', marginTop: 20}}></View>:null}
                             </>
                             :null}
                             {JSON.stringify(barbeariasPesq)!=="[]"?

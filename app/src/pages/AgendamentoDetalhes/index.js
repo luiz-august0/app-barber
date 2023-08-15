@@ -73,9 +73,14 @@ const AgendamentoDetalhes = (props) => {
 				props.navigation.navigate('HomeNav');
 			} catch (error) {
 				if (error.message === "Request failed with status code 405") {
-					Alert.alert("Atenção", "Não foi possível gravar o agendamento pois já existe um com o horário selecionado, por favor selecione outro horário");
+					Alert.alert("Atenção", "O agendamento não pôde ser efetuado pois já há um agendamento no horário escolhido. Por favor, selecione outro horário disponível");
 					props.navigation.goBack(null);
-				} else {
+				} 
+				else if (error.message === "Request failed with status code 401") {
+					Alert.alert("Atenção", "O agendamento não pôde ser efetuado pois o horário escolhido não está disponível. Por favor, selecione outro horário");
+					props.navigation.goBack(null);
+				}
+				else {
 					Alert.alert("Atenção", "Ops, ocorreu um erro ao gravar o agendamento, contate o suporte");
 				}
 			}
