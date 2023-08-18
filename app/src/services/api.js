@@ -229,8 +229,8 @@ export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
 };
 
 //Rotas agendamento
-export const getHorariosDisponiveisBarbeiro = async(barbeariaID, barbeiroID, data, tempServ) => {
-    return api.post("/barbeiro/agendamento/horarios", { barbeariaID, barbeiroID, data, tempServ });
+export const getHorariosDisponiveisBarbeiro = async(barbeariaID, barbeiroID, data, tempServ, horario) => {
+    return api.post("/barbeiro/agendamento/horarios", { barbeariaID, barbeiroID, data, tempServ, horario });
 };
 
 export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, data) => {

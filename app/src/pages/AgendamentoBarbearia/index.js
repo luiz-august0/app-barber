@@ -52,15 +52,16 @@ const AgendamentoBarbearia = (props) => {
     const getBarbearias = async(nome, cidade, endRua, endNumero, endBairro) => {
         setRefresh(true);
         try {        
-            let location = [];
-
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 Alert.alert("Atenção", "Você recusou este app para acessar sua localização. Para visualizar as barbearias disponíveis é necessário ativar a localização para este aplicativo");
                 setRefresh(false);
                 return;
-            } else {
-                location = await Location.getLastKnownPositionAsync({});
+            } 
+            
+            let location = await Location.getLastKnownPositionAsync({});
+            if (JSON.stringify(location) == "[]") {
+                location = await Location.getCurrentPositionAsync({});
             }
 
             let res = [];
@@ -98,6 +99,7 @@ const AgendamentoBarbearia = (props) => {
             setBarbeariasPesq(arrayPesq);
             setBarbeariasVisitadas(arrayVisit);
         } catch (error) {
+            console.log(error)
             Alert.alert("Atenção", "Ops, ocorreu um erro ao carregar as barbearias, contate o suporte");
         }
         setRefresh(false);
@@ -106,7 +108,10 @@ const AgendamentoBarbearia = (props) => {
     const getAddressLocation = async() => {
         try {  
             let location = await Location.getLastKnownPositionAsync({});
-            let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[7].address_components[0].long_name;
+            if (JSON.stringify(location) == "[]") {
+                location = await Location.getCurrentPositionAsync({});
+            }
+            let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[6].address_components[0].long_name;
             setValueState('cidade', address);
             setValueState('cidadeLocal', address);
             setRefresh(true);

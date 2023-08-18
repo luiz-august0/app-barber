@@ -30,7 +30,7 @@ const AgendamentoHorario = (props) => {
             setTempServ(resServico.data[0].Minutos);
 
             if (new Date(dateParameter.toString()).getDate() >= new Date().getDate()) {
-                const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos);
+                const res = await getHorariosDisponiveisBarbeiro(props.route.params?.barbeariaID, props.route.params?.barbeiroID, globalFunction.formatDateToSql(dateParameter), resServico.data[0].Minutos, new Date().getTime());
                 setHorariosDisp(res.data);
             } else {
                 setHorariosDisp([]);
@@ -110,7 +110,7 @@ const AgendamentoHorario = (props) => {
                 </View>
                 :
                 <View>
-                    {Platform.OS=="ios"&&show?null:<Text style={[style.textSubTitle, { textAlign: 'center', marginTop: 50 }]}>Não há horários disponíveis para a data selecionada</Text>}
+                    {Platform.OS=="ios"&&show?null:<Text style={[style.textSubTitle, { textAlign: 'center', marginTop: 50 }]}>{refresh?"Carregando horários...":"Não há horários disponíveis para a data selecionada"}</Text>}
                 </View>}
             </ScrollView>
         </SafeAreaView>
