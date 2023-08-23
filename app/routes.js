@@ -31,6 +31,7 @@ import AgendamentoBarbeiro from './src/pages/AgendamentoBarbeiro';
 import AgendamentoHorario from './src/pages/AgendamentoHorario';
 import AgendamentoDetalhes from './src/pages/AgendamentoDetalhes';
 import Agendamentos from './src/pages/Agendamentos';
+import PerfilBarbearia from './src/pages/PerfilBarbearia';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -244,6 +245,11 @@ const Routes = () => {
                     name="Agendamentos"
                     component={Agendamentos}
                     options={{ headerTitle: "Agendamentos" }}
+                    />
+                    <Stack.Screen
+                    name="PerfilBarbearia"
+                    component={PerfilBarbearia}
+                    options={{ headerTitle: "Perfil da Barbearia" }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

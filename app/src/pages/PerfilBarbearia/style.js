@@ -17,20 +17,19 @@ export default StyleSheet.create({
         marginBottom: 40
     },
     text: {
-        width: '90%',
         fontSize: 18,
-        fontFamily: 'Manrope-Bold',
+        fontFamily: 'Manrope-Regular',
         textAlign: 'center',
-        color: '#BA6213',
+        color: '#FFCA9F'
     },
     button: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        width: Dimensions.get('window').width / 2.2,
-        height: 150,
-        borderRadius: 20,
-        marginHorizontal: 5,
-        backgroundColor: '#FDEBDD'
+        width: Dimensions.get('window').width / 1.5,
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: '#BA6213'
     },
     image: {
         width: Dimensions.get('window').width,

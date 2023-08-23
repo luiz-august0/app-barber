@@ -53,9 +53,7 @@ const MenuBarbearia = (props) => {
 				showsVerticalScrollIndicator={false}
                 refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getDataBarbearia(props.route.params?.barbeariaID)}/> }
 			>
-				<View style={style.imageContainer}>
-					{image!==null?<Image source={image} style={style.image}/>:null}
-				</View>
+				{image!==null?<Image source={image} style={style.image}/>:null}
 				<Text style={style.textTitle}>{state.nome}</Text>
 				<View style={{flex: 1}}>
 					<View style={style.viewButtons}>

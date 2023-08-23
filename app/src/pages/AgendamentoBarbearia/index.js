@@ -171,7 +171,7 @@ const AgendamentoBarbearia = (props) => {
                     <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
                     {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
-                    <TouchableOpacity style={style.buttonRenderItem}>
+                    <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: item.Barb_Codigo})}>
                         <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Ver perfil da barbearia</Text>
                         <MIcon name="eye" size={30} color={'#000'}></MIcon>
                     </TouchableOpacity>
