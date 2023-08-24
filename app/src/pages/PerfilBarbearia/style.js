@@ -49,6 +49,11 @@ export default StyleSheet.create({
         width: Dimensions.get('window').width,
         height: 200,
     },
+    imageUsuario: {
+        width: 50,
+        height: 50,
+        borderRadius: 50
+    },
     centerView: {
         alignItems: "center", 
         justifyContent: "center",
@@ -68,7 +73,8 @@ export default StyleSheet.create({
         flexDirection: "row", 
         flexWrap: "wrap", 
         alignItems: "center", 
-        justifyContent: "center"
+        justifyContent: "center",
+        marginBottom: 30
     },
     resumoAvaliacoesView: {
         alignItems: "center", 

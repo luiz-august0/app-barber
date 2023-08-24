@@ -6,6 +6,9 @@ import style from "./style";
 import { getAvaliacoes, getContatosBarbearia, getDadosBarbearia } from "../../services/api";
 import globalFunction from "../../globalFunction";
 import FlexibleStarRate from "../../components/FlexibleStarRate";
+import perfil from "../../img/perfil.png";
+import moment from "moment";
+import 'moment/locale/pt-br';
 
 const PerfilBarbearia = (props) => {
 	const isFocused = useIsFocused();
@@ -130,6 +133,22 @@ const PerfilBarbearia = (props) => {
 								<Text style={[style.textCenter, { fontFamily: 'Manrope-Regular', fontSize: 14}]}>{`${totalAvaliacaoes} avaliações`}</Text>
 							</View>
 						</View>
+						{avaliacoesComentario.map((e) => {
+							return (
+								<View key={e.Aval_Date+e.Usr_Codigo} style={{padding: 10, backgroundColor: "#FDEBDD", marginVertical: 10}}>
+									<View style={{flexDirection: "row", alignItems: "center", marginBottom: 10}}>
+										{e.Usr_FotoPerfil!==null&&e.Usr_FotoPerfil!==""?
+										<Image style={style.imageUsuario} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Usr_FotoPerfil}`}}/>
+										:<Image style={style.imageUsuario} source={perfil}/>}
+										<Text style={[style.textCenter, { marginLeft: 5, fontSize: 14 }]}>{e.Usr_Nome}</Text>
+									</View>
+									<View style={{flexDirection: "row", alignItems: "center", marginBottom: 10}}>
+										<FlexibleStarRate starRating={parseFloat(e.Aval_Rate).toFixed(2)} size={18}/>
+										<Text style={[style.textCenter, { marginLeft: 5, fontSize: 14, fontFamily: 'Manrope-Regular' }]}>{moment(e.Aval_Date.toString()).fromNow()}</Text>
+									</View>
+								</View>
+							)
+						})}
 					</>:null}
 				</View>
 			</ScrollView>
