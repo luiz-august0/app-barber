@@ -16,6 +16,20 @@ export default StyleSheet.create({
         marginTop: 10,
         marginBottom: 40
     },
+    textSubTitle: {
+        fontSize: 22,
+        fontFamily: 'Manrope-Bold',
+        textAlign: 'left',
+        color: '#2B513B',
+        marginTop: 20,
+        marginBottom: 10
+    },
+    textCenter: {
+        fontSize: 18,
+        fontFamily: 'Manrope-Bold',
+        textAlign: 'center',
+        color: '#BA6213',
+    },
     text: {
         fontSize: 18,
         fontFamily: 'Manrope-Regular',
@@ -35,10 +49,30 @@ export default StyleSheet.create({
         width: Dimensions.get('window').width,
         height: 200,
     },
-    viewButtons: { 
+    centerView: {
+        alignItems: "center", 
+        justifyContent: "center",
+        marginBottom: 10
+    },
+    separatedComponent: {
+        height: 2, 
+        backgroundColor: '#2B513B',
+        marginBottom: 10
+    },
+    contatosView: {
         flexDirection: "row", 
-        justifyContent: "space-evenly", 
-        alignItems: 'center',
-        marginTop: 10,
+        alignItems: "center", 
+        justifyContent: "center"
+    },
+    avaliacoesView: {
+        flexDirection: "row", 
+        flexWrap: "wrap", 
+        alignItems: "center", 
+        justifyContent: "center"
+    },
+    resumoAvaliacoesView: {
+        alignItems: "center", 
+        justifyContent: "center",
+        marginLeft: 10
     }
 });

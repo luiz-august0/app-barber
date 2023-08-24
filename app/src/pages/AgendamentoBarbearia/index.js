@@ -60,7 +60,7 @@ const AgendamentoBarbearia = (props) => {
             } 
             
             let location = await Location.getLastKnownPositionAsync({});
-            if (JSON.stringify(location) == "[]") {
+            if (location == null) {
                 location = await Location.getCurrentPositionAsync({});
             }
 
@@ -108,7 +108,7 @@ const AgendamentoBarbearia = (props) => {
     const getAddressLocation = async() => {
         try {  
             let location = await Location.getLastKnownPositionAsync({});
-            if (JSON.stringify(location) == "[]") {
+            if (location == null) {
                 location = await Location.getCurrentPositionAsync({});
             }
             let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[6].address_components[0].long_name;
@@ -162,7 +162,7 @@ const AgendamentoBarbearia = (props) => {
         }
 
         return (
-            <View key={item.Barb_Codigo} style={style.renderItemBarbearia}>
+            <TouchableOpacity key={item.Barb_Codigo} style={style.renderItemBarbearia} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: item.Barb_Codigo})}>
                 {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>
                 :<Image style={style.image} source={perfil}/>}
@@ -171,16 +171,8 @@ const AgendamentoBarbearia = (props) => {
                     <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
                     {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
-                    <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: item.Barb_Codigo})}>
-                        <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Ver perfil da barbearia</Text>
-                        <MIcon name="eye" size={30} color={'#000'}></MIcon>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoServico", { barbeariaID: item.Barb_Codigo})}>
-                        <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Selecionar barbearia</Text>
-                        <MAIcon name="arrow-forward" size={30} color={'#2B513B'}></MAIcon>
-                    </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 

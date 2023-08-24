@@ -8,7 +8,7 @@ import globalFunction from "../../globalFunction";
 import { useIsFocused } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { getDadosBarbearia, getDataBarbeiro, getUsuario, postAgendamento, postAvaliacao, showBarbeariaServico, updateStatusAgendamento } from "../../services/api";
-import SmallStarRate from "../../components/SmallStarRate";
+import FlexibleStarRate from "../../components/FlexibleStarRate";
 import ServicoComponent from "../../components/ServicoComponent";
 import { Card } from "react-native-paper";
 import AbsoluteModal from "../../components/AbsoluteModal";
@@ -138,15 +138,18 @@ const AgendamentoDetalhes = (props) => {
     }
 
 	const handleSubmitRate = async() => {
-		setLoadingSubmitRate(true);	
+		if (starRating == 0) {
+			Alert.alert("Atenção", "Não foi selecionado nenhum ranking para a avaliação");
+			return;
+		}
 
+		setLoadingSubmitRate(true);	
 		try {
 			await postAvaliacao(props.usuario.state.id, props.route.params?.barbeariaID, props.route.params?.barbeiroID, comment, starRating);
 			Alert.alert("Atenção", "Avaliação enviada com sucesso");
 		} catch (error) {
 			Alert.alert("Atenção", "Ops, ocorreu um erro ao enviar a avaliação, contate o suporte");
 		}
-
 		setLoadingSubmitRate(false);	
 		cleanState();
 	}
@@ -198,7 +201,7 @@ const AgendamentoDetalhes = (props) => {
 								<Image style={style.image} source={perfil}/>}
 								<View style={style.componentBarbeiro}>
 									<Text style={style.textBarb}>{usuarioData.Usr_Nome}</Text>
-									{props.usuario.state.tipo!=="F"?<SmallStarRate starRating={usuarioData.Aval_Rate}/>:null}
+									{props.usuario.state.tipo!=="F"?<FlexibleStarRate starRating={usuarioData.Aval_Rate} size={18}/>:null}
 								</View>
 							</View>
 						</View>

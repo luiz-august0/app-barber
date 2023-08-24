@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, RefreshControl, SafeAreaView, Text, View, Alert, Image, TouchableOpacity } from "react-native";
 import style from "./style";
 import perfil from "../../img/perfil.png";
-import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import { useIsFocused } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
 import { getBarbeirosByServico } from "../../services/api";
@@ -50,7 +49,7 @@ const AgendamentoBarbeiro = (props) => {
 
     const renderItem = (item) => {
         return (
-            <View key={item.Usr_Codigo} style={style.renderItemBarbeiro}>
+            <TouchableOpacity key={item.Usr_Codigo} style={style.renderItemBarbeiro} onPress={() => props.navigation.navigate("AgendamentoHorario", { barbeariaID: item.Barb_Codigo, barbeiroID: item.Usr_Codigo, servicoID: props.route.params?.servicoID })}>
                 {item.Usr_FotoPerfil!==null&&item.Usr_FotoPerfil!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Usr_FotoPerfil}`}}/>
                 :<Image style={style.image} source={perfil}/>}
@@ -59,12 +58,8 @@ const AgendamentoBarbeiro = (props) => {
                     {item.BarbB_Especialidade!==""&&item.BarbB_Especialidade!==null?<Text style={[style.textTitleBarb, { color: '#000', fontSize: 16 }]}>{item.BarbB_Especialidade}</Text>:null}      
                     {item.Usr_Contato!==""&&item.Usr_Contato!==null?<Text style={style.textSubtitleBarb}>{`Contato: ${globalFunction.formataTelefone(item.Usr_Contato)}`}</Text>:null}
                     <StarRate starRating={item.Aval_Rate}/>
-                    <TouchableOpacity style={style.buttonRenderItem} onPress={() => props.navigation.navigate("AgendamentoHorario", { barbeariaID: item.Barb_Codigo, barbeiroID: item.Usr_Codigo, servicoID: props.route.params?.servicoID })}>
-                        <Text style={[style.textSubtitleBarb, {marginRight: 5}]}>Selecionar barbeiro</Text>
-                        <MAIcon name="arrow-forward" size={30} color={'#2B513B'}></MAIcon>
-                    </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 

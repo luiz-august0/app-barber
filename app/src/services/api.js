@@ -252,6 +252,10 @@ export const getAgendamentos = async(barbeariaID, barbeiroID, usuarioID, servico
 export const postAvaliacao = async(usuarioID, barbeariaID, barbeiroID, mensagem, rate) => {
     return api.post("/barbearia/agendamento/avaliacao", { usuarioID, barbeariaID, barbeiroID, mensagem, rate })
 };
+
+export const getAvaliacoes = async(id) => {
+    return api.get(`/barbearia/agendamento/avaliacao/${id}`);
+};
 /**************************************************************/
 
 /*GoogleMaps*/

@@ -2,12 +2,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  SafeAreaView,
   Animated,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const SmallStarRate = ({starRating}) => {
+const FlexibleStarRate = ({starRating, size}) => {
   	const starRatingOptions = [1, 2, 3, 4, 5];
 
 	const animatedButtonScale = new Animated.Value(1);
@@ -24,7 +23,7 @@ const SmallStarRate = ({starRating}) => {
 					<Animated.View style={animatedScaleStyle}>
 						<MaterialIcons
 						name={starRating >= option ? 'star' : 'star-border'}
-						size={18}
+						size={size}
 						style={starRating >= option ? styles.starSelected : styles.starUnselected}
 						/>
 					</Animated.View>
@@ -52,4 +51,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default SmallStarRate;
+export default FlexibleStarRate;
