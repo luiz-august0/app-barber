@@ -30,6 +30,11 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#BA6213',
     },
+    textComment: {
+        fontSize: 14,
+        fontFamily: 'Manrope-Regular',
+        color: '#343434',
+    },
     text: {
         fontSize: 18,
         fontFamily: 'Manrope-Regular',
@@ -80,5 +85,15 @@ export default StyleSheet.create({
         alignItems: "center", 
         justifyContent: "center",
         marginLeft: 10
+    },
+    commentView: {
+        padding: 10, 
+        backgroundColor: "#FDEBDD", 
+        marginVertical: 10
+    },
+    commentComponentView: {
+        flexDirection: "row", 
+        alignItems: "center", 
+        marginBottom: 10
     }
 });

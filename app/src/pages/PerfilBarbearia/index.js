@@ -86,6 +86,32 @@ const PerfilBarbearia = (props) => {
 		)
 	}
 
+	const RenderComment = ({e}) => {
+		const [fullShow, setFullShow] = useState(false);
+
+		return (
+			<View style={style.commentView}>
+				<View style={style.commentComponentView}>
+					{e.Usr_FotoPerfil!==null&&e.Usr_FotoPerfil!==""?
+					<Image style={style.imageUsuario} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Usr_FotoPerfil}`}}/>
+					:<Image style={style.imageUsuario} source={perfil}/>}
+					<Text style={[style.textCenter, { marginLeft: 5, fontSize: 14 }]}>{e.Usr_Nome}</Text>
+				</View>
+				<View style={style.commentComponentView}>
+					<FlexibleStarRate starRating={parseFloat(e.Aval_Rate).toFixed(2)} size={18}/>
+					<Text style={[style.textComment, { marginLeft: 5, color: "#BA6213" }]}>{moment(e.Aval_Date.toString()).fromNow()}</Text>
+				</View>
+				<View>
+					<Text style={style.textComment}>{e.Aval_Comentario.length>200&&!fullShow?e.Aval_Comentario.substring(0, 200):e.Aval_Comentario}</Text>
+					{e.Aval_Comentario.length>200?										
+					<TouchableOpacity onPress={() => setFullShow(!fullShow)}>
+						<Text style={[style.textComment, { fontFamily: 'Manrope-Bold', textAlign: "right" }]}>{fullShow?"Ver menos":"Ver mais"}</Text>
+					</TouchableOpacity>:null}
+				</View>
+			</View>
+		)
+	}
+
 	return (
 		<SafeAreaView style={style.container}>
 			<ScrollView
@@ -133,22 +159,7 @@ const PerfilBarbearia = (props) => {
 								<Text style={[style.textCenter, { fontFamily: 'Manrope-Regular', fontSize: 14}]}>{`${totalAvaliacaoes} avaliações`}</Text>
 							</View>
 						</View>
-						{avaliacoesComentario.map((e) => {
-							return (
-								<View key={e.Aval_Date+e.Usr_Codigo} style={{padding: 10, backgroundColor: "#FDEBDD", marginVertical: 10}}>
-									<View style={{flexDirection: "row", alignItems: "center", marginBottom: 10}}>
-										{e.Usr_FotoPerfil!==null&&e.Usr_FotoPerfil!==""?
-										<Image style={style.imageUsuario} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Usr_FotoPerfil}`}}/>
-										:<Image style={style.imageUsuario} source={perfil}/>}
-										<Text style={[style.textCenter, { marginLeft: 5, fontSize: 14 }]}>{e.Usr_Nome}</Text>
-									</View>
-									<View style={{flexDirection: "row", alignItems: "center", marginBottom: 10}}>
-										<FlexibleStarRate starRating={parseFloat(e.Aval_Rate).toFixed(2)} size={18}/>
-										<Text style={[style.textCenter, { marginLeft: 5, fontSize: 14, fontFamily: 'Manrope-Regular' }]}>{moment(e.Aval_Date.toString()).fromNow()}</Text>
-									</View>
-								</View>
-							)
-						})}
+						{avaliacoesComentario.map((e) => (<RenderComment key={e.Aval_Date+e.Usr_Codigo} e={e}/>))}
 					</>:null}
 				</View>
 			</ScrollView>

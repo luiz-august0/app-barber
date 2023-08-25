@@ -446,7 +446,7 @@ const C04 = (props) => {
           <SafeAreaView style={[style.safeAreaC, {marginTop: 0}]}>
             <Text style={[style.textHeader, { color: '#2B513B' }]}>CONFIRME SEUS DADOS</Text>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               label="Nome"
@@ -461,7 +461,7 @@ const C04 = (props) => {
               {errors.nome}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               label="Sobrenome"
@@ -476,7 +476,7 @@ const C04 = (props) => {
               {errors.snome}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               keyboardType='email-address'
@@ -492,7 +492,7 @@ const C04 = (props) => {
               {errors.email}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               keyboardType='phone-pad'
@@ -508,7 +508,7 @@ const C04 = (props) => {
               {errors.ncelular}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               keyboardType='numeric'
@@ -524,7 +524,7 @@ const C04 = (props) => {
               {errors.cpf}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
@@ -541,7 +541,7 @@ const C04 = (props) => {
               {errors.senha}
             </HelperText>
             <TextInput
-              style={style.inputC2}
+              style={style.inputC}
               mode='flat'
               activeOutlineColor='#FFCA9F'
               theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
@@ -616,7 +616,7 @@ const RedefinirSenha = ({ navigation, route }) => {
         <SafeAreaView style={style.safeAreaC}>
           <Text style={[style.textHeader, { color: '#2B513B' }]}>DIGITE O EMAIL DA SUA CONTA</Text>
           <TextInput
-            style={style.inputC2}
+            style={style.inputC}
             mode='flat'
             activeOutlineColor='#FFCA9F'
             keyboardType='email-address'

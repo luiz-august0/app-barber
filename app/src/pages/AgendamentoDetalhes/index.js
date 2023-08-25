@@ -225,7 +225,7 @@ const AgendamentoDetalhes = (props) => {
 										subtitleStyle={style.textSubtitleBarbeariaComponent}
 										titleNumberOfLines={0} 
 										subtitleNumberOfLines={0}/>
-									<TouchableOpacity style={style.barbeariaButtonComponent}>
+									<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: barbeariaData.Barb_Codigo})}>
 										<Text style={[style.text, {marginRight: 5}]}>Ver perfil da barbearia</Text>
 										<MIcon name="eye" size={30} color={'#000'}></MIcon>
 									</TouchableOpacity>

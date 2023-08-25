@@ -52,12 +52,6 @@ export default StyleSheet.create({
         height: 55,
         backgroundColor: '#2B513B',
     },
-    inputC2: {
-        marginTop: 10,
-        width: '70%',
-        height: 55,
-        backgroundColor: '#BA6213',
-    },
     btnCadastro: {
         marginTop: 25,
         marginBottom: 25,

@@ -8,14 +8,6 @@ export default StyleSheet.create({
         marginTop: 100,
         backgroundColor: globalStyles.main_color
     }, 
-    viewInputs: {
-        flex: 1, 
-        width: '80%', 
-        alignItems: "center", 
-        borderRadius: 20, 
-        backgroundColor: '#BA6213', 
-        padding: 20
-    },
     text: {
         width: '100%',
         fontSize: 18,
@@ -49,9 +41,9 @@ export default StyleSheet.create({
     },
     input: {
         marginTop: 10,
-        width: '90%',
+        width: '70%',
         height: 55,
-        backgroundColor: '#FFCA9F',
+        backgroundColor: '#2B513B',
     },
     button: {
         alignItems: 'center',
@@ -77,9 +69,8 @@ export default StyleSheet.create({
     },
     viewCEP: {
         justifyContent: "center", 
-        backgroundColor: '#FFCA9F', 
         borderRadius: 5, 
-        width: '90%', 
+        width: '70%', 
         height: 50, 
         marginTop: 10 
     }

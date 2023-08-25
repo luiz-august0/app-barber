@@ -7,14 +7,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginTop: 100,
         backgroundColor: globalStyles.main_color
-    }, 
-    viewInputs: {
-        flex: 1, 
-        width: '80%', 
-        alignItems: "center", 
-        borderRadius: 20, 
-        backgroundColor: '#BA6213', 
-        padding: 20
     },
     containerPassword: {
         flex: 1,
@@ -44,9 +36,9 @@ export default StyleSheet.create({
     },
     input: {
         marginTop: 10,
-        width: '90%',
+        width: '70%',
         height: 55,
-        backgroundColor: '#FFCA9F',
+        backgroundColor: '#2B513B',
     },
     button: {
         alignItems: 'center',
@@ -56,7 +48,7 @@ export default StyleSheet.create({
         width: 280,
         height: 40,
         borderRadius: 5,
-        backgroundColor: '#2B513B'
+        backgroundColor: '#BA6213'
     },
     imageContainer: {
         width: '50%',

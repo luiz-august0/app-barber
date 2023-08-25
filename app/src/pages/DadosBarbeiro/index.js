@@ -206,16 +206,15 @@ const DadosBarbeiro = (props) => {
                 </View>
                 }
                 <Text style={style.text}>Clique na imagem para mudar a foto de perfil</Text>
-                <View style={style.viewInputs}>
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#000'
+                        activeOutlineColor='#FFCA9F'
                         label="Nome"
                         error={errors.nome !== null ? true : false}
                         onFocus={() => handleError(null, 'nome')}
-                        theme={{ colors: { placeholder: `${nome!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
-                        left={<TextInput.Icon color="#000" name="account" />}
+                        theme={{ colors: { placeholder: `${nome!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                        left={<TextInput.Icon color="#FFCA9F" name="account" />}
                         value={nome}
                         onChangeText={(nome) => setNome(nome)}
                     />
@@ -225,13 +224,13 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#000'
+                        activeOutlineColor='#FFCA9F'
                         keyboardType='email-address'
                         label="Email"
                         error={errors.email !== null ? true : false}
                         onFocus={() => handleError(null, 'email')}
-                        theme={{ colors: { placeholder: `${email!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
-                        left={<TextInput.Icon color="#000" name="email" />}
+                        theme={{ colors: { placeholder: `${email!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                        left={<TextInput.Icon color="#FFCA9F" name="email" />}
                         value={email}
                         onChangeText={(email) => setEmail(email)}
                         editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
@@ -242,13 +241,13 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#000'
+                        activeOutlineColor='#FFCA9F'
                         keyboardType='phone-pad'
                         label="Celular"
                         error={errors.ncelular !== null ? true : false}
                         onFocus={() => handleError(null, 'ncelular')}
-                        theme={{ colors: { placeholder: `${ncelular!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
-                        left={<TextInput.Icon color="#000" name="phone" />}
+                        theme={{ colors: { placeholder: `${ncelular!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                        left={<TextInput.Icon color="#FFCA9F" name="phone" />}
                         value={globalFunction.formataTelefone(ncelular)}
                         onChangeText={(ncelular) => setNcelular(globalFunction.formataTelefone(ncelular))}
                     />
@@ -258,13 +257,13 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#000'
+                        activeOutlineColor='#FFCA9F'
                         keyboardType='numeric'
                         label="CPF"
                         error={errors.cpf !== null ? true : false}
                         onFocus={() => handleError(null, 'cpf')}
-                        theme={{ colors: { placeholder: `${cpf!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
-                        left={<TextInput.Icon color="#000" name="account" />}
+                        theme={{ colors: { placeholder: `${cpf!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                        left={<TextInput.Icon color="#FFCA9F" name="account" />}
                         value={globalFunction.formataCPF(cpf)}
                         onChangeText={(cpfField) => setCpf(globalFunction.formataCPF(cpfField))}
                         editable={props.route.params?.barbeiroID==undefined||props.route.params?.barbeiroID==null||props.route.params?.barbeiroID==''}
@@ -275,12 +274,12 @@ const DadosBarbeiro = (props) => {
                     <TextInput
                         style={style.input}
                         mode='flat'
-                        activeOutlineColor='#000'
+                        activeOutlineColor='#FFCA9F'
                         label="Especialidade"
                         error={errors.espec !== null ? true : false}
                         onFocus={() => handleError(null, 'espec')}
-                        theme={{ colors: { placeholder: `${espec!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
-                        left={<TextInput.Icon color="#000" name="account" />}
+                        theme={{ colors: { placeholder: `${espec!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
+                        left={<TextInput.Icon color="#FFCA9F" name="account" />}
                         value={espec}
                         onChangeText={(espec) => setEspec(espec)}
                     />
@@ -292,14 +291,14 @@ const DadosBarbeiro = (props) => {
                         <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#000'
-                            theme={{ colors: { placeholder: `${senha!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                            activeOutlineColor='#FFCA9F'
+                            theme={{ colors: { placeholder: `${senha!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
                             label="Nova Senha"
                             error={errors.senha !== null ? true : false}
                             onFocus={() => handleError(null, 'senha')}
                             secureTextEntry={hidePass1}
-                            left={<TextInput.Icon color="#000" name="lock" />}
-                            right={<TextInput.Icon color="#000" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
+                            left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+                            right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass1(!hidePass1)} name={hidePass1 ? "eye-off" : "eye"}></TextInput.Icon>}
                             value={senha}
                             onChangeText={(senha) => setSenha(senha)}
                             />
@@ -309,14 +308,14 @@ const DadosBarbeiro = (props) => {
                         <TextInput
                             style={style.input}
                             mode='flat'
-                            activeOutlineColor='#000'
-                            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#000":"#000"}`, text: '#000', primary: '#000' } }}
+                            activeOutlineColor='#FFCA9F'
+                            theme={{ colors: { placeholder: `${senhaConfirmed!==''?"#FFCA9F":"#FFCA9F"}`, text: '#FFCA9F', primary: '#FFCA9F' } }}
                             label="Confirmar Senha"
                             error={errors.senhaConfirmed !== null ? true : false}
                             onFocus={() => handleError(null, 'senhaConfirmed')}
                             secureTextEntry={hidePass2}
-                            left={<TextInput.Icon color="#000" name="lock" />}
-                            right={<TextInput.Icon color="#000" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
+                            left={<TextInput.Icon color="#FFCA9F" name="lock" />}
+                            right={<TextInput.Icon color="#FFCA9F" onPress={() => setHidePass2(!hidePass2)} name={hidePass2 ? "eye-off" : "eye"}></TextInput.Icon>}
                             value={senhaConfirmed}
                             onChangeText={(senhaConfirmed) => setSenhaConfirmed(senhaConfirmed)}
                             />
@@ -325,7 +324,6 @@ const DadosBarbeiro = (props) => {
                         </HelperText>
                     </>
                     :null}
-                </View>
                 <TouchableOpacity activeOpacity={loadingSubmit ? 1 : 0.7} style={style.button} onPress={() => {!loadingSubmit?handleSubmit():null}}>
                     {loadingSubmit?<ActivityIndicator/>:<Text style={style.textButton}>CONFIRMAR DADOS</Text>}
                 </TouchableOpacity>
