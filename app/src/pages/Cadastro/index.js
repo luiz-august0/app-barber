@@ -422,7 +422,7 @@ const C04 = (props) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
-            props.navigation.navigate('HomeNav');
+            props.navigation.navigate('Home');
           }
         });
         Alert.alert('Atenção', 'Usuário cadastrado com sucesso!');

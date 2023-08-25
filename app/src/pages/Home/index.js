@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, BackHandler, Alert } from "react-native";
 import style from "./style";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
-import { getBarbeirosByUsuario } from "../../services/api";
+import { api, getBarbeirosByUsuario } from "../../services/api";
+import Header from "../../components/Header";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = (props) => {
     const [barbeariaID, setBarbeariaID] = useState("");
@@ -43,6 +48,14 @@ const Home = (props) => {
         return () => backHandler.remove();
     }, []);
 
+    const logout = async() => {
+        await AsyncStorage.removeItem("usuario");
+        await AsyncStorage.removeItem("token");
+        
+        api.defaults.headers.Authorization = null;
+        props.navigation.navigate('Login');
+    }
+
     const menuAvailable = () => {
         if (props.usuario.state.tipo === "B") {
             return (
@@ -50,7 +63,7 @@ const Home = (props) => {
                 style={style.button}
                 onPress={() => props.navigation.navigate('UsuarioBarbearias')}
                 >
-                    <MIcon name="office-building" size={80} color={'#BA6213'}></MIcon>
+                    <MIcon name="office-building" size={50} color={'#FDEBDD'}></MIcon>
                     <Text style={style.text}>MINHAS BARBEARIAS</Text>
                 </TouchableOpacity>
             )
@@ -63,7 +76,7 @@ const Home = (props) => {
                     style={style.button}
                     onPress={() => props.navigation.navigate('AgendamentoBarbearia')}
                     >
-                        <MIcon name="calendar-cursor" size={80} color={'#BA6213'}></MIcon>
+                        <MIcon name="calendar-cursor" size={50} color={'#FDEBDD'}></MIcon>
                         <Text style={style.text}>AGENDAR HORÁRIO</Text>
                     </TouchableOpacity>
                     :
@@ -71,14 +84,14 @@ const Home = (props) => {
                     style={style.button}
                     onPress={() => props.navigation.navigate("MenuBarbeiro", { barbeariaID: barbeariaID, barbeiroID: props.usuario.state.id})}
                     >
-                        <MIcon name="account-details" size={80} color={'#BA6213'}></MIcon>
+                        <MIcon name="account-details" size={50} color={'#FDEBDD'}></MIcon>
                         <Text style={style.text}>MENU DO BARBEIRO</Text>
                     </TouchableOpacity>}
                     <TouchableOpacity
                     style={style.button}
                     onPress={() => props.navigation.navigate('Agendamentos')}
                     >
-                        <MIcon name="calendar-month" size={80} color={'#BA6213'}></MIcon>
+                        <MIcon name="calendar-month" size={50} color={'#FDEBDD'}></MIcon>
                         <Text style={style.text}>MEUS AGENDAMENTOS</Text>
                     </TouchableOpacity>
                 </>
@@ -87,11 +100,28 @@ const Home = (props) => {
     }
 
     return (
-        <View style={style.container}>
-            <View style={style.viewButtons}>
-                {menuAvailable()}
-            </View>
-        </View>
+        <SafeAreaView style={style.container}>
+            <ScrollView style={style.container}>
+                <Header/>
+                <View style={style.viewButtons}>
+                    {menuAvailable()}
+                    <TouchableOpacity
+                    style={style.button}
+                    onPress={() => props.navigation.navigate('Perfil')}
+                    >
+                        <MAIcon name="person" size={50} color={'#FDEBDD'}></MAIcon>
+                        <Text style={style.text}>PERFIL</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={style.button}
+                    onPress={() => logout()}
+                    >
+                        <MIcon name="logout" size={50} color={'#FDEBDD'}></MIcon>
+                        <Text style={style.text}>SAIR</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
     

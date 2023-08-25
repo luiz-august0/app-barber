@@ -70,7 +70,7 @@ const AgendamentoDetalhes = (props) => {
 			try {
 				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
 				Alert.alert("Atenção", "Agendamento realizado com sucesso");
-				props.navigation.navigate('HomeNav');
+				props.navigation.navigate('Home');
 			} catch (error) {
 				if (error.message === "Request failed with status code 405") {
 					Alert.alert("Atenção", "O agendamento não pôde ser efetuado pois já há um agendamento no horário escolhido. Por favor, selecione outro horário disponível");

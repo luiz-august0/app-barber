@@ -34,7 +34,7 @@ import Agendamentos from './src/pages/Agendamentos';
 import PerfilBarbearia from './src/pages/PerfilBarbearia';
 
 const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+/*const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => {
     const logout = async() => {
@@ -100,7 +100,7 @@ const HomeNav = () => {
                 }/>
         </Drawer.Navigator>
     )
-}
+}*/
 
 const Routes = () => {
     return (
@@ -152,9 +152,14 @@ const Routes = () => {
                     options={{ headerTitle: "Recuperação de Senha" }}
                     />
                     <Stack.Screen 
-                    name="HomeNav" 
-                    component={HomeNav} 
+                    name="Home" 
+                    component={Home} 
                     options={{ headerShown: false, gestureEnabled: false }}
+                    />
+                    <Stack.Screen
+                    name="Perfil"
+                    component={Perfil}
+                    options={{ headerTitle: "Perfil" }}
                     />
                     <Stack.Screen
                     name="EditarSenha"
