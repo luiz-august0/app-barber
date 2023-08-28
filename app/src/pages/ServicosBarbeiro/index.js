@@ -109,19 +109,19 @@ const ServicosBarbeiro = (props) => {
 					<Text style={style.textTitle}>CATEGORIAS</Text>
 					{categorias.map((e) => {
 						return (
-							<View key={e.ServCat_Codigo} style={style.categoriaComponent}>
+							<TouchableOpacity key={e.ServCat_Codigo} style={style.categoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
 								<View style={style.categoriaView}>
 									<View style={{width: '60%'}}>
 										<Text style={style.textCategoria} >{e.ServCat_Nome}</Text>
 									</View>
 									<View style={style.categoriaViewButtons}>
-										<TouchableOpacity style={style.buttonCategoriaComponent} onPress={() => handleSelect(e.ServCat_Codigo)}>
+										<View style={style.buttonCategoriaComponent}>
 											<Text style={style.textCategoriaButton}>Selecionar</Text>
 											<MIcon name="arrow-forward" size={25} color={'#2B513B'}></MIcon>
-										</TouchableOpacity>
+										</View>
 									</View>
 								</View>
-							</View>
+							</TouchableOpacity>
 						)
 					})}
 					<AbsoluteModal width={'100%'} handlePressOut={handlePressOut} modalVisible={modalVisible}>

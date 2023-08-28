@@ -510,7 +510,7 @@ const DadosBarbearia = (props) => {
                         const file = `data:${image.type}/jpeg;base64,${image.base64}`;
                         await postBarbeariaLogo(res.data.insertId, file);
                     }
-                    props.navigation.navigate('MenuBarbearia', { barbeariaID: res.data.insertId });
+                    props.navigation.navigate('UsuarioBarbearias');
                     Alert.alert('Atenção', 'Barbearia cadastrada com sucesso!');
                 }                
             } catch (error) {

@@ -59,8 +59,8 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 layout="default"
                 layoutCardOffset={10}
                 data={images}
-                sliderWidth={240}
-                itemWidth={240}
+                sliderWidth={300}
+                itemWidth={300}
                 renderItem={renderItem}
                 onSnapToItem={(index) => setIndex(index)}
             />
@@ -79,7 +79,7 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
             />
-            <Card style={{backgroundColor: '#BA6213', borderRadius: 0}}>
+            <Card style={{backgroundColor: '#BA6213', borderRadius: 5}} onPress={() => handleClickSelect()}>
                 <Card.Title title={nome} 
                             subtitle={`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${tempo}min`}
                             titleStyle={{textAlign: "left", color: '#000', fontFamily: 'Manrope-Bold', fontSize: 24}}
@@ -87,12 +87,10 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                             titleNumberOfLines={0} 
                             subtitleNumberOfLines={0}/>
                 {screenNavigation?
-                <TouchableOpacity 
-                style={style.buttonSelect}
-                onPress={() => handleClickSelect()}>
+                <View style={style.buttonSelect}>
                     <Text style={[style.textSubtitle, { color: '#000' }]}>Selecionar</Text>
                     <MIcon name="arrow-forward" size={30} color={'#2B513B'}></MIcon>
-                </TouchableOpacity>:null}
+                </View>:null}
             </Card>
             <AbsoluteModal modalVisible={modalVisible} width={'90%'} handlePressOut={handlePressOut}>
                 <PreviewImage arrayImages={images}/>
@@ -105,14 +103,14 @@ const style = StyleSheet.create({
 	itemImage: {
         width: '100%',
         height: '100%',
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        borderRadius: 5
     },
     itemServico: {
-        width: 250, 
+        width: 300, 
         height: 320, 
         marginBottom: 25,
-        borderWidth: 5,
-        borderColor: '#2B513B'
+        borderRadius: 20
     },
     buttonSelect: {
         flexDirection: "row",

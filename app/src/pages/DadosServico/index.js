@@ -377,7 +377,7 @@ const DadosServico = (props) => {
                 onPress={() => {!loadingSubmit?handleSubmit():null}}>
                 {loadingSubmit?
                 <ActivityIndicator/>
-                :<Text style={[ style.text, { color: "#fff" }]}>Confirmar</Text>}
+                :<Text style={style.text}>CONFIRMAR</Text>}
                 </TouchableOpacity>}
             </View>
         </ScrollView>

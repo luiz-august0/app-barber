@@ -66,23 +66,23 @@ export default StyleSheet.create({
     headerSubtitleComponent: {
         padding: 10, 
         backgroundColor: '#BA6213', 
-        width: 250
+        width: 300,
+        borderRadius: 5
     },
     separateComponent: {
-        width: 250, 
+        width: 300, 
         height: 2, 
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        borderRadius: 5
     },
     barbeariaComponent: {
-        width: 250, 
+        width: 300, 
         height: 320, 
-        marginBottom: 25,
-        borderWidth: 5,
-        borderColor: '#2B513B'
+        marginBottom: 25
     },
     cardBarbearia: {
         backgroundColor: '#BA6213', 
-        borderRadius: 0
+        borderRadius: 5
     },
     textTitleBarbeariaComponent: {
         textAlign: "left", 
@@ -97,7 +97,8 @@ export default StyleSheet.create({
         fontSize: 14
     },
     barbeariaComponentImage: {
-        flex: 1
+        flex: 1,
+        borderRadius: 5
     },
     barbeariaButtonComponent: {
         flexDirection: "row",

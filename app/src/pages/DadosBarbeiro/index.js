@@ -143,7 +143,7 @@ const DadosBarbeiro = (props) => {
                         await updateUsuarioFoto(data.insertId, file);
                     }
                     Alert.alert('Atenção', 'Barbeiro cadastrado com sucesso');
-                    props.navigation.navigate("MenuBarbeiro", { barbeariaID: props.route.params?.barbeariaID, barbeiroID: data.insertId});
+                    props.navigation.navigate("Barbeiros", {barbeariaID: props.route.params?.barbeariaID});
                 }
             } catch (error) {
                 if (error.message === "Request failed with status code 400") {

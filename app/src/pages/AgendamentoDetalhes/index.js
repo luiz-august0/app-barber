@@ -87,6 +87,7 @@ const AgendamentoDetalhes = (props) => {
 		} else {
 			let status = "";
 			let statusMessage = "";
+			let confirmMessage = "";
 
 			if (props.usuario.state.tipo == "B" || props.usuario.state.tipo == "F") {
 				if (statusParam == "RL") {
@@ -101,23 +102,35 @@ const AgendamentoDetalhes = (props) => {
 			switch (status) {
 				case "R":
 					statusMessage = "recusado com sucesso"
+					confirmMessage = "Deseja realmente recusar o agendamento ?"
 					break;
 				case "C":
 					statusMessage = "cancelado com sucesso"
+					confirmMessage = "Deseja realmente cancelar o agendamento ?"
 					break;
 				case "RL":
 					statusMessage = "marcado como realizado"
+					confirmMessage = "Deseja realmente marcar como realizado o agendamento ?"
 				default:
 					break;
 			}
 
-			try {
-				await updateStatusAgendamento(props.route.params?.agdmID, status);
-				Alert.alert("Atenção", `Agendamento ${statusMessage}`);
-				props.navigation.goBack(null);
-			} catch (error) {
-				Alert.alert("Atenção", "Ops, ocorreu um erro ao cancelar o agendamento, contate o suporte");
+			const postStatus = async() => {
+				try {
+					await updateStatusAgendamento(props.route.params?.agdmID, status);
+					Alert.alert("Atenção", `Agendamento ${statusMessage}`);
+					props.navigation.goBack(null);
+				} catch (error) {
+					Alert.alert("Atenção", "Ops, ocorreu um erro ao cancelar o agendamento, contate o suporte");
+				}
 			}
+
+			Alert.alert('Confirmação', confirmMessage,
+			[
+				{text: 'Não', style: 'cancel'},
+				{text: 'Sim', onPress: () => postStatus()},
+			],
+			{ cancelable: true });
 		}
 
 		if (statusParam == "RL") {
@@ -225,14 +238,11 @@ const AgendamentoDetalhes = (props) => {
 										subtitleStyle={style.textSubtitleBarbeariaComponent}
 										titleNumberOfLines={0} 
 										subtitleNumberOfLines={0}/>
+									{props.route.params?.agdmID?
 									<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: barbeariaData.Barb_Codigo})}>
 										<Text style={[style.text, {marginRight: 5}]}>Ver perfil da barbearia</Text>
 										<MIcon name="eye" size={30} color={'#000'}></MIcon>
-									</TouchableOpacity>
-									<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => Linking.openURL(`https://maps.google.com?q=${barbeariaData.Barb_GeoLatitude},${barbeariaData.Barb_GeoLongitude}`)}>
-										<Text style={[style.text, {marginRight: 5}]}>Visualizar no mapa</Text>
-										<MIcon name="google-maps" size={30} color={'#000'}></MIcon>
-									</TouchableOpacity>
+									</TouchableOpacity>:null}
 								</Card>
 							</View>
 						</>
