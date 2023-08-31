@@ -88,7 +88,7 @@ export default StyleSheet.create({
         width: '70%',
         height: 45,
         borderRadius: 5,
-        backgroundColor: '#2B513B'
+        backgroundColor: '#BA6213'
     },
     textHeader: {
         color: '#BA6213', 

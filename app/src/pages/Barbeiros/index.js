@@ -120,7 +120,7 @@ const Barbeiros = (props) => {
                                             <Text style={style.textDetails}>{`Telefone: ${globalFunction.formataTelefone(e.Usr_Contato)}`}</Text>:null}
                                             {e.BarbB_Especialidade !== null && e.BarbB_Especialidade !== undefined && e.BarbB_Especialidade !== ""?
                                             <Text style={style.textDetails}>{`Especialidade: ${e.BarbB_Especialidade}`}</Text>:null}
-                                        </>:<Text style={[style.textDetails, {width: '100%'}]}>Eu</Text>}
+                                        </>:<Text style={[style.textDetails, {width: '100%'}]}>Meu usuário</Text>}
                                     </View>
                                 </View>
                                 <View style={style.buttonComponent}>

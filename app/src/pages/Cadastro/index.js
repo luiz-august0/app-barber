@@ -631,7 +631,7 @@ const RedefinirSenha = ({ navigation, route }) => {
           <HelperText  type="error" visible={errors.email !== null ? true : false}>
             {errors.email}
           </HelperText>
-          <TouchableOpacity style={[style.btnRedefinir, { backgroundColor: '#2B513B' }]} onPress={() => {!loading?enviaEmail():null}}>
+          <TouchableOpacity style={style.btnRedefinir} onPress={() => {!loading?enviaEmail():null}}>
             {!loading?<Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>ENVIAR</Text>
             :<ActivityIndicator/>}
           </TouchableOpacity>
