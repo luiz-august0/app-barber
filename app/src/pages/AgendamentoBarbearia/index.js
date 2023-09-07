@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, RefreshControl, SafeAreaView, Text, View, TouchableOpacity, Dimensions, Alert, Image, Platform, PermissionsAndroid } from "react-native";
+import { ScrollView, RefreshControl, SafeAreaView, Text, View, TouchableOpacity, Dimensions, Alert, Image } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import style from "./style";
 import Dropdown from "../../components/DropDown";
 import { useIsFocused } from "@react-navigation/native";
@@ -64,6 +63,13 @@ const AgendamentoBarbearia = (props) => {
                 location = await Location.getCurrentPositionAsync({});
             }
 
+            if (cidade == "" || cidade == null || cidade == undefined) {
+                let address = (await getAddress(location.coords.latitude, location.coords.longitude)).data.results[6].address_components[0].long_name;
+                setValueState('cidade', address);
+                setValueState('cidadeLocal', address);
+                cidade = address;
+            }
+
             let res = [];
             let arrayPesq = [];
             let arrayVisit = [];
@@ -81,7 +87,8 @@ const AgendamentoBarbearia = (props) => {
 
                 arrayPesq.push({Barb_Codigo: e.Barb_Codigo, Barb_Nome: e.Barb_Nome, Barb_Rua: e.Barb_Rua, Barb_Numero: e.Barb_Numero,
                     Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate==null?0:e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
-                    Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0});
+                    Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0, Barb_GeoLatitude: e.Barb_GeoLatitude, 
+                    Barb_GeoLongitude: e.Barb_GeoLongitude});
             });
 
             const resVisitadas = await getBarbeariasVisitadas(props.usuario.state.id);
@@ -93,7 +100,8 @@ const AgendamentoBarbearia = (props) => {
 
                 arrayVisit.push({Barb_Codigo: e.Barb_Codigo, Barb_Nome: e.Barb_Nome, Barb_Rua: e.Barb_Rua, Barb_Numero: e.Barb_Numero,
                     Barb_Bairro: e.Barb_Bairro, Barb_Cidade: e.Barb_Cidade, Barb_UF: e.Barb_UF, Aval_Rate: e.Aval_Rate==null?0:e.Aval_Rate, Barb_LogoUrl: e.Barb_LogoUrl,
-                    Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0});
+                    Distance: status=='granted'?distance:0, DistanceCalculated: status=='granted'?distance/1000:0, Barb_GeoLatitude: e.Barb_GeoLatitude, 
+                    Barb_GeoLongitude: e.Barb_GeoLongitude});
             });
 
             setBarbeariasPesq(arrayPesq);
@@ -195,7 +203,10 @@ const AgendamentoBarbearia = (props) => {
             >
                 <Text style={style.textTitle}>ESCOLHA UMA BARBEARIA</Text>
                 <View style={style.headerView}>
-                    <TouchableOpacity style={style.button}>
+                    <TouchableOpacity 
+                        disabled={JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"}
+                        style={[style.button, { backgroundColor: JSON.stringify(barbeariasVisitadas)=="[]"&&JSON.stringify(barbeariasPesq)=="[]"?"gray":"#BA6213" }]}
+                        onPress={() => JSON.stringify(barbeariasVisitadas)!=="[]"||JSON.stringify(barbeariasPesq)!=="[]"?props.navigation.navigate("AgendamentoMapa", { barbeariasVisitadas, barbeariasPesq }):null}>
                         <Text style={style.text}>VER NO MAPA</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.buttonFilter} onPress={() => setModalVisible(true)}>

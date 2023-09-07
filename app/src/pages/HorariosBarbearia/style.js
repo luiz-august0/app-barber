@@ -6,6 +6,7 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: globalStyles.main_color,
         paddingTop: 50,
+        marginBottom: 250
     },
     item: {
         padding: 20,
