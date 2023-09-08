@@ -239,10 +239,12 @@ const AgendamentoDetalhes = (props) => {
 										titleNumberOfLines={0} 
 										subtitleNumberOfLines={0}/>
 									{props.route.params?.agdmID?
-									<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: barbeariaData.Barb_Codigo})}>
-										<Text style={[style.text, {marginRight: 5}]}>Ver perfil da barbearia</Text>
-										<MIcon name="eye" size={30} color={'#000'}></MIcon>
-									</TouchableOpacity>:null}
+									<View style={{alignItems: "center", justifyContent: "center"}}>
+										<TouchableOpacity style={style.barbeariaButtonComponent} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: barbeariaData.Barb_Codigo})}>
+											<Text style={[style.textTitle, {marginRight: 5, fontSize: 18}]}>Ver perfil da barbearia</Text>
+											<MIcon name="eye" size={30} color={'#FFCA9F'}></MIcon>
+										</TouchableOpacity>
+									</View>:null}
 								</Card>
 							</View>
 						</>

@@ -98,16 +98,20 @@ export default StyleSheet.create({
     },
     barbeariaComponentImage: {
         flex: 1,
-        borderRadius: 5
+        width: '100%',
+        height: '100%',
+        borderRadius: 5,
+        resizeMode: 'cover',
     },
     barbeariaButtonComponent: {
         flexDirection: "row",
         alignItems: "center", 
+        justifyContent: "center",
+        width: '90%',
         padding: 5, 
-        backgroundColor: '#ffff', 
         borderRadius: 20, 
         marginTop: 10, 
-        justifyContent: "center",
+        marginBottom: 10, 
         borderWidth: 1,
         borderColor: '#000'
     },
