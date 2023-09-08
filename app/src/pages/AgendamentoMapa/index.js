@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MapView, { Callout, Marker } from 'react-native-maps';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import style from "./style";
 import { useIsFocused } from "@react-navigation/native";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import * as Location from 'expo-location';
 import perfil from "../../img/perfil.png";
 import FlexibleStarRate from "../../components/FlexibleStarRate";
@@ -60,7 +60,7 @@ const AgendamentoMapa = (props) => {
             showsUserLocation
             loadingEnabled
             zoomEnabled={true}
-            provider="google"
+            provider={PROVIDER_GOOGLE}
             >
                 {barbearias.map((e, index) => {
                     let distance = '';
