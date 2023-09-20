@@ -3,6 +3,7 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import style from "./style";
 import { useIsFocused } from "@react-navigation/native";
 import { Image, Text, View } from "react-native";
+import {Svg, Image as ImageSvg} from 'react-native-svg';
 import * as Location from 'expo-location';
 import perfil from "../../img/perfil.png";
 import FlexibleStarRate from "../../components/FlexibleStarRate";
@@ -52,6 +53,18 @@ const AgendamentoMapa = (props) => {
         }
     }, [props, isFocused]);
 
+    const CustomCallout = ({item, distance}) => (
+        <>
+            {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""? 
+            <Svg width={'100%'} height={100}><ImageSvg width={'100%'} height={'100%'} preserveAspectRatio="xMidYMid slice" href={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/></Svg>:
+            <Svg width={'100%'} height={100}><ImageSvg width={'100%'} height={'100%'} preserveAspectRatio="xMidYMid slice" href={perfil}/></Svg>}
+            <Text style={style.textTitleBarb}>{item.Barb_Nome}</Text>
+            <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
+            {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
+            <FlexibleStarRate starRating={item.Aval_Rate} size={32}/>
+        </>
+    )
+
     return (
         <View style={style.container}>
             <MapView 
@@ -79,13 +92,7 @@ const AgendamentoMapa = (props) => {
                                 <Text style={{fontFamily: 'Manrope-Bold'}}>{e.Barb_Nome}</Text>
                             </View>
                             <Callout style={style.renderItemBarbearia} onPress={() => props.navigation.navigate("PerfilBarbearia", { barbeariaID: e.Barb_Codigo})}>
-                                {e.Barb_LogoUrl!==null&&e.Barb_LogoUrl!==""?
-                                <Image style={style.imageCallout} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${e.Barb_LogoUrl}`}}/>
-                                :<Image style={style.imageCallout} source={perfil}/>}
-                                <Text style={style.textTitleBarb}>{e.Barb_Nome}</Text>
-                                <Text style={style.textSubtitleBarb}>{`${e.Barb_Rua}, ${e.Barb_Numero} - ${e.Barb_Bairro}, ${e.Barb_Cidade} - ${e.Barb_UF}`}</Text>
-                                {e.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
-                                <FlexibleStarRate starRating={e.Aval_Rate} size={32}/>
+                                <CustomCallout item={e} distance={distance}/>
                             </Callout>
                         </Marker>
                     )

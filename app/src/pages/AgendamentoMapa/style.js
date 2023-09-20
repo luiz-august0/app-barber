@@ -13,11 +13,6 @@ export default StyleSheet.create({
         height: 60,
         borderRadius: 10
     },
-    imageCallout: {
-        width: 100,
-        height: 100,
-        borderRadius: 50
-    },
     marker: {
         flex: 1, 
         alignItems: "center", 
@@ -38,5 +33,5 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Manrope-Regular',
         color: '#000',
-    },
+    }
 });

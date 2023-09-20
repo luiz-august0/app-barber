@@ -15,12 +15,13 @@ const Login = (props) => {
   const [senha, setSenha] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
 
   const { login, loadUser } = useContext(Context);
 
   const doLogin = async() => {
-    setIsLoading(true);
+    setIsLoadingLogin(true);
     await login(email.trim(), senha).then((resolve) => {
       const data = resolve.dataUsuario;
       if (resolve.authenticated) {
@@ -28,7 +29,7 @@ const Login = (props) => {
         props.navigation.navigate('Home');
       }
     });
-    setIsLoading(false);
+    setIsLoadingLogin(false);
   }
 
   const handleSubmit = (e) => {
@@ -47,16 +48,18 @@ const Login = (props) => {
       const token = await AsyncStorage.getItem("token");
   
       if (usuario && token) {
-        setIsLoading(true);
         await loadUser().then((resolve) => {
           const data = resolve.dataUsuario;
           if (resolve.authenticated) {
             props.onLogin(data);
             props.navigation.navigate('Home');
+          } else {
+            setIsLoading(false);
           }
         });
+      } else {
         setIsLoading(false);
-      } 
+      }
     }
 
     if (isFocused) {
@@ -125,7 +128,7 @@ const Login = (props) => {
             onPress={handleSubmit}
             style={ style.btnLogin }
             >
-              <Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>LOGIN</Text>
+              {!isLoadingLogin?<Text style={{ color: '#FFCA9F', fontFamily: 'Manrope-Regular' }}>LOGIN</Text>:<ActivityIndicator/>}
             </TouchableOpacity>
 
             <TouchableOpacity 
