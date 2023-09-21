@@ -22,7 +22,7 @@ export const getUsuarios = async () => {
 };
 
 export const verifyUsuario = async (email, cpf) => {
-    return api.post('/usuario/verify', { email, cpf })
+    return api.post('/usuario/verifica', { email, cpf })
 };
 
 export const createUsuario = async (email, nome, senha, contato, cpf, tipo) => {
@@ -34,7 +34,7 @@ export const updateUsuario = async (email, nome, contato, cpf, usuarioID) => {
 };
 
 export const updateUsuarioPassword = async (senhaAntiga, senhaNova, usuarioID) => {
-    return api.put(`/usuario/password/${usuarioID}`, { senhaAntiga, senhaNova });
+    return api.put(`/usuario/senha/${usuarioID}`, { senhaAntiga, senhaNova });
 };
 
 export const deleteUsuario = async (usuarioID) => {
@@ -120,19 +120,19 @@ export const getHorarios = async () => {
 };
 
 export const getBarbeariaHorariosDia = async (barbeariaID, dia) => {
-    return api.post(`/barbearia/horariosdia/${barbeariaID}`, { dia });
+    return api.post(`/barbearia/horariodia/pesquisa/${barbeariaID}`, { dia });
 };
 
 export const postBarbeariaHorarioDia = async (barbeariaID, dia, hrInicial, hrFinal) => {
-    return api.post(`/barbearia/horariodia/post/${barbeariaID}`, { dia, hrInicial, hrFinal });
+    return api.post(`/barbearia/horariodia/envia/${barbeariaID}`, { dia, hrInicial, hrFinal });
 };
 
 export const updateBarbeariaHorarioDia = async (idSeq, hrInicial, hrFinal) => {
-    return api.post(`/barbearia/horariodia/update/${idSeq}`, { hrInicial, hrFinal });
+    return api.post(`/barbearia/horariodia/atualiza/${idSeq}`, { hrInicial, hrFinal });
 };
 
 export const deleteBarbeariaHorarioDia = async (idSeq) => {
-    return api.delete(`/barbearia/horariodia/delete/${idSeq}`);
+    return api.delete(`/barbearia/horariodia/remove/${idSeq}`);
 };
 
 export const postBarbeariaCategoria = async(idBarbearia, nome) => {
@@ -197,31 +197,31 @@ export const deleteBarbeiro = async(barbeariaID, usuarioID) => {
 };
 
 export const getBarbeirosByBarbearia = async(id) => {
-    return api.get(`/barbearia/barbeiros/byBarbearia/${id}`);
+    return api.get(`/barbearia/barbeiros/barbeariaID/${id}`);
 };
 
 export const getBarbeirosByServico = async(id, servicoID) => {
-    return api.post(`/barbearia/barbeiros/byServico/${id}`, { servicoID });
+    return api.post(`/barbearia/barbeiros/pesquisa/servicoID/${id}`, { servicoID });
 };
 
 export const getBarbeirosByUsuario = async(id) => {
-    return api.get(`/barbearia/barbeiros/byUsuario/${id}`);
+    return api.get(`/barbearia/barbeiros/usuarioID/${id}`);
 };
 
 export const getBarbeariasByBarbeiro = async(id) => {
-    return api.get(`/barbearia/barbearias/byBarbeiro/${id}`);
+    return api.get(`/barbearia/barbearias/barbeiroID/${id}`);
 };
 
 export const getDataBarbeiro = async(barbeariaID, usuarioID) => {
-    return api.post('/barbearia/barbeiro/data', { barbeariaID, usuarioID });
+    return api.post('/barbearia/barbeiro/pesquisa', { barbeariaID, usuarioID });
 };
 
 export const getServicosBarbeiro = async(usuarioID, barbeariaID, categoriaID) => {
-    return api.post('/barbeiro/servico/get', { usuarioID, barbeariaID, categoriaID });
+    return api.post('/barbeiro/servico/pesquisa', { usuarioID, barbeariaID, categoriaID });
 };
 
 export const postServicoBarbeiro = async(usuarioID, barbeariaID, servicoID) => {
-    return api.post('/barbeiro/servico/post', { usuarioID, barbeariaID, servicoID });
+    return api.post('/barbeiro/servico/envia', { usuarioID, barbeariaID, servicoID });
 };
 
 export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
@@ -230,11 +230,11 @@ export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
 
 //Rotas agendamento
 export const getHorariosDisponiveisBarbeiro = async(barbeariaID, barbeiroID, data, tempServ, horario) => {
-    return api.post("/barbeiro/agendamento/horarios", { barbeariaID, barbeiroID, data, tempServ, horario });
+    return api.post("/barbeiro/agendamento/pesquisa/horarios", { barbeariaID, barbeiroID, data, tempServ, horario });
 };
 
-export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, data) => {
-    return api.post("/barbearia/agendamento", { barbeariaID, barbeiroID, usuarioID, servicoID, tempServ, horaInicio, data });
+export const postAgendamento = async(barbeariaID, barbeiroID, usuarioID, servicoID, servicoValor, tempServ, horaInicio, data) => {
+    return api.post("/barbearia/agendamento", { barbeariaID, barbeiroID, usuarioID, servicoID, servicoValor, tempServ, horaInicio, data });
 };
 
 export const updateStatusAgendamento = async(id, status) => {
@@ -246,7 +246,7 @@ export const deleteAgendamento = async(id) => {
 };
 
 export const getAgendamentos = async(barbeariaID, barbeiroID, usuarioID, servicoID, dataInicio, dataFim, status) => {
-    return api.post("/barbearia/agendamento/get", { barbeariaID, barbeiroID, usuarioID, servicoID, dataInicio, dataFim, status });
+    return api.post("/barbearia/agendamento/pesquisa", { barbeariaID, barbeiroID, usuarioID, servicoID, dataInicio, dataFim, status });
 };
 
 export const postAvaliacao = async(usuarioID, barbeariaID, barbeiroID, mensagem, rate) => {

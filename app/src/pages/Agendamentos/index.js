@@ -185,6 +185,7 @@ const Agendamentos = (props) => {
                 barbeiroID: item.Agdm_Barbeiro,
                 usuarioID: item.Usr_Codigo,
                 servicoID: item.Serv_Codigo,
+                servicoValor: item.Agdm_Valor,
                 tempServ: item.Minutos,
                 horaInicio: item.Agdm_HoraInicio,
                 data: new Date(item.Agdm_Data),

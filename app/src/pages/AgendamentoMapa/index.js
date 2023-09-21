@@ -3,7 +3,7 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import style from "./style";
 import { useIsFocused } from "@react-navigation/native";
 import { Image, Text, View } from "react-native";
-import {Svg, Image as ImageSvg} from 'react-native-svg';
+import {Svg, Image as ImageSvg, Defs, ClipPath, Circle} from 'react-native-svg';
 import * as Location from 'expo-location';
 import perfil from "../../img/perfil.png";
 import FlexibleStarRate from "../../components/FlexibleStarRate";
@@ -53,17 +53,38 @@ const AgendamentoMapa = (props) => {
         }
     }, [props, isFocused]);
 
-    const CustomCallout = ({item, distance}) => (
-        <>
-            {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""? 
-            <Svg width={'100%'} height={100}><ImageSvg width={'100%'} height={'100%'} preserveAspectRatio="xMidYMid slice" href={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/></Svg>:
-            <Svg width={'100%'} height={100}><ImageSvg width={'100%'} height={'100%'} preserveAspectRatio="xMidYMid slice" href={perfil}/></Svg>}
-            <Text style={style.textTitleBarb}>{item.Barb_Nome}</Text>
-            <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
-            {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
-            <FlexibleStarRate starRating={item.Aval_Rate} size={32}/>
-        </>
-    )
+    const CustomCallout = ({item, distance}) => {
+        const ImageElement = ({image}) => (
+            <Svg height={140} width={140}>
+            <Defs>
+                <ClipPath id="clip">
+                    <Circle cx="50%" cy="50%" r="40%" />
+                </ClipPath>
+            </Defs>
+            <ImageSvg
+            x="5%"
+            y="5%"
+            width="90%"
+            height="90%"
+            preserveAspectRatio="xMidYMid slice"
+            href={image}
+            clipPath="url(#clip)"
+            />
+            </Svg>
+        )
+
+        return (
+            <>
+                {item.Barb_LogoUrl!==null&&item.Barb_LogoUrl!==""? 
+                <ImageElement image={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Barb_LogoUrl}`}}/>:
+                <ImageElement image={perfil}/>}
+                <Text style={style.textTitleBarb}>{item.Barb_Nome}</Text>
+                <Text style={style.textSubtitleBarb}>{`${item.Barb_Rua}, ${item.Barb_Numero} - ${item.Barb_Bairro}, ${item.Barb_Cidade} - ${item.Barb_UF}`}</Text>
+                {item.Distance!==0?<Text style={[style.textSubtitleBarb, {fontFamily: 'Manrope-Bold', color: '#2B513B'}]}>{`Distância: ${distance}`}</Text>:null}
+                <FlexibleStarRate starRating={item.Aval_Rate} size={32}/>
+            </>
+        )
+    }
 
     return (
         <View style={style.container}>

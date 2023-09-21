@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, Linking, ActivityIndicator, RefreshControl, TextInput } from "react-native";
+import { ScrollView, SafeAreaView, Text, Alert, View, Image, TouchableOpacity, ActivityIndicator, RefreshControl, TextInput } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from "./style";
 import perfil from "../../img/perfil.png";
@@ -68,7 +68,7 @@ const AgendamentoDetalhes = (props) => {
 
 		if (!props.route.params?.agdmID) {
 			try {
-				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
+				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, servicoData.Serv_Valor, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
 				Alert.alert("Atenção", "Agendamento realizado com sucesso");
 				props.navigation.navigate('Home');
 			} catch (error) {
@@ -160,11 +160,12 @@ const AgendamentoDetalhes = (props) => {
 		try {
 			await postAvaliacao(props.usuario.state.id, props.route.params?.barbeariaID, props.route.params?.barbeiroID, comment, starRating);
 			Alert.alert("Atenção", "Avaliação enviada com sucesso");
+			props.navigation.goBack(null);
+			cleanState();
 		} catch (error) {
 			Alert.alert("Atenção", "Ops, ocorreu um erro ao enviar a avaliação, contate o suporte");
 		}
 		setLoadingSubmitRate(false);	
-		cleanState();
 	}
 
 	const renderInformacoesCliente = (item) => {
@@ -259,7 +260,7 @@ const AgendamentoDetalhes = (props) => {
 						<ServicoComponent 
 							props={props}
 							nome={servicoData.Serv_Nome} 
-							valor={servicoData.Serv_Valor} 
+							valor={!props.route.params?.agdmID?servicoData.Serv_Valor:props.route.params?.servicoValor} 
 							tempo={servicoData.Minutos} 
 							id={props.route.params?.servicoID} 
 							idCategoria={servicoData.ServCat_Codigo}

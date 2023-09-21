@@ -79,7 +79,7 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
             />
-            <Card style={{backgroundColor: '#BA6213', borderRadius: 5}} onPress={() => handleClickSelect()}>
+            <Card style={{backgroundColor: '#BA6213', borderRadius: 5}} onPress={() => screenNavigation?handleClickSelect():null}>
                 <Card.Title title={nome} 
                             subtitle={`Valor: R$${globalFunction.PointPerComma(parseFloat(valor).toFixed(2).toString())}\nTempo: ${tempo}min`}
                             titleStyle={{textAlign: "left", color: '#000', fontFamily: 'Manrope-Bold', fontSize: 24}}
