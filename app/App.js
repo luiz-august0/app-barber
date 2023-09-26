@@ -1,10 +1,10 @@
 import React from 'react';
+import {registerRootComponent} from 'expo';
 import * as Font from 'expo-font';
 import Routes from './routes';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import storeConfig from './src/store/storeConfig';
-import { AppRegistry } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 Sentry.init({
@@ -56,4 +56,4 @@ export default class Redux extends React.Component {
     }
 }
 
-AppRegistry.registerComponent('main', () => Redux);
+registerRootComponent(Redux);
