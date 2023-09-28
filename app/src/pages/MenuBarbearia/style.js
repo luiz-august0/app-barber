@@ -23,6 +23,12 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#BA6213',
     },
+    textButtonDelete: {
+        fontSize: 16,
+        fontFamily: 'Manrope-Bold',
+        textAlign: 'center',
+        color: '#BA6213',
+    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -41,5 +47,12 @@ export default StyleSheet.create({
         justifyContent: "space-evenly", 
         alignItems: 'center',
         marginTop: 10,
+    },
+    buttonDelete: {
+        marginTop: 50, 
+        marginBottom: 50, 
+        alignItems: "center", 
+        justifyContent: "center", 
+        width: 200
     }
 });
