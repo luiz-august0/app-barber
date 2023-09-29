@@ -3,7 +3,7 @@ import { View, SafeAreaView, Text, TouchableOpacity, Alert, Image, ActivityIndic
 import { useIsFocused } from "@react-navigation/native";
 import { TextInput, HelperText } from "react-native-paper";
 import style from "./style";
-import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto } from "../../services/api";
+import { getUsuario, updateUsuario, updateUsuarioPassword, updateUsuarioFoto, deleteUsuario } from "../../services/api";
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from "../../globalStyles";
 import globalFunction from "../../globalFunction";
@@ -11,6 +11,8 @@ import perfil from "../../img/perfil.png";
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
 import KeyboardAvoidingWrapper from "../../components/KeyboardAvoidingWrapper";
+import MAIcon from 'react-native-vector-icons/MaterialIcons';
+import Loading from "../../components/Loading";
 
 const Perfil = (props) => {
     const isFocused = useIsFocused();
@@ -23,6 +25,7 @@ const Perfil = (props) => {
     const [errors, setErrors] = useState(initialStateErrors);
     const [onEditMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     const updateStoreUsuario = async() => {
         const response = await getUsuario(props.usuario.state.id);
@@ -158,6 +161,31 @@ const Perfil = (props) => {
         
     }
 
+    const handleDeleteUsuario = () => {
+        const deleteRegister = async() => {
+			setDeleting(true);
+            try {
+				await deleteUsuario(props.usuario.state.id);
+                Alert.alert('Atenção', 'Usuário excluído com sucesso');
+				props.navigation.navigate("Login");
+            } catch (error) {
+				if (error.message === "Request failed with status code 401") {
+					Alert.alert('Atenção', 'Não foi possível excluir o usuário pois há agendamentos que ainda irão ocorrer');
+                }
+            }
+			setDeleting(false);
+        }
+
+        Alert.alert('Confirmação', 'Deseja realmente excluir todos os dados de seu usuário? (Atenção, este processo é irreversível)',
+		[
+			{text: 'Não', style: 'cancel'},
+			{text: 'Sim', onPress: () => deleteRegister()},
+		],
+		{ cancelable: true });
+    }
+
+    if (deleting) { return <Loading/> }
+
     return (
         <KeyboardAvoidingWrapper style={{ backgroundColor: globalStyles.main_color }}>
             <View style={style.container}>
@@ -249,10 +277,17 @@ const Perfil = (props) => {
                         </TouchableOpacity>
                     :null}
                     {!onEditMode?
-                        <TouchableOpacity style={[style.button, {backgroundColor: '#2B513B', width: 150}]} onPress={() => props.navigation.navigate('EditarSenha', { id: props.usuario.state.id })}>
-                            <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>ALTERAR SENHA</Text>
-                        </TouchableOpacity>
+                        <>
+                            <TouchableOpacity style={[style.button, {backgroundColor: '#2B513B'}]} onPress={() => props.navigation.navigate('EditarSenha', { id: props.usuario.state.id })}>
+                                <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>ALTERAR SENHA</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[style.button, {backgroundColor: '#71150D', width: 150}]} onPress={() => handleDeleteUsuario()}>
+                                <Text style={{ color: "#FFCA9F", fontSize: 14, fontFamily: 'Manrope-Regular' }}>EXCLUIR USUÁRIO</Text>
+                            </TouchableOpacity>
+                        </>
                     :null}
+                    <View>
+					</View>
                 </View>
             </View>
         </KeyboardAvoidingWrapper>
