@@ -162,7 +162,7 @@ const AgendamentoServico = (props) => {
                                             id={e.Serv_Codigo} 
                                             idCategoria={e.ServCat_Codigo}
                                             screenNavigation={'AgendamentoBarbeiro'}
-                                            barbeariaID={props.route.params?.barbeariaID}
+                                            screenProps={{ barbeariaID: props.route.params?.barbeariaID, usuarioID: props.route.params?.usuarioID }}
                                             onPressSelect={onPressSelect}
                                             />
                                         </View>

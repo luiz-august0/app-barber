@@ -52,12 +52,13 @@ const Agendamentos = (props) => {
     const [showDataInicial, setShowDataInicial] = useState(false);
     const [showDataFinal, setShowDataFinal] = useState(false);
     const [agendamentos, setAgendamentos] = useState([]);
+    const [barbeariaID, setBarbeariaID] = useState();
 
     const getMeusAgendamentos = async(dataInicio, dataFim, status) => {
         setRefresh(true);
         try {   
             let reqStatus = '';  
-            let barbeariaID = ''
+            let barbeariaID = '';
             let barbeiroID = '';
             let usuarioID = '';
 
@@ -87,6 +88,8 @@ const Agendamentos = (props) => {
             } else {
                 usuarioID = props.usuario.state.id; 
             }
+
+            setBarbeariaID(barbeariaID);
 
             const res = await getAgendamentos(barbeariaID, barbeiroID, usuarioID, null, globalFunction.formatDateToSql(dataInicio), globalFunction.formatDateToSql(dataFim), reqStatus);
             setAgendamentos(res.data);
@@ -217,6 +220,14 @@ const Agendamentos = (props) => {
         )
     }
 
+    const navigateToPage = () => {
+        if (props.usuario.state.tipo==="C") {
+            props.navigation.navigate('AgendamentoBarbearia');
+        } else {
+            props.navigation.navigate("AgendamentoCliente", { barbeariaID: barbeariaID});
+        }
+    }
+
     return (
         <SafeAreaView style={style.container}>
             <ScrollView
@@ -224,11 +235,10 @@ const Agendamentos = (props) => {
                 refreshControl={ <RefreshControl refreshing={refresh} onRefresh={() => getMeusAgendamentos(dataInicio, dataFim, status.text)}/> }
             >
                 <Text style={style.textTitle}>SEUS AGENDAMENTOS</Text>
-                <View style={[style.headerView, { justifyContent: `${props.usuario.state.tipo==="C"?"space-between":"center"}`}]}>
-                    {props.usuario.state.tipo==="C"?
-                    <TouchableOpacity style={style.button} onPress={() => props.navigation.navigate('AgendamentoBarbearia')}>
+                <View style={style.headerView}>
+                    <TouchableOpacity style={style.button} onPress={() => navigateToPage()}>
                         <Text style={style.text}>REALIZAR NOVO AGENDAMENTO</Text>
-                    </TouchableOpacity>:null}
+                    </TouchableOpacity>
                     <TouchableOpacity style={style.buttonFilter} onPress={() => setModalVisible(true)}>
                         <Text style={[style.text, { color: '#BA6213' }]}>FILTRAR</Text>
                         <MIcon name="filter" size={30} color={'#BA6213'}></MIcon>

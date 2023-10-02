@@ -56,6 +56,10 @@ export const getUsuarioBarbeiroWithEmail = async(email) => {
 export const postEnviaEmailRecuperacaoSenha = async(email) => {
     return api.post('/usuario/email/recuperacao', { email });
 };
+
+export const getUsuarioClienteByNome = async(nome) => {
+    return api.get(`/usuario/cliente/pesquisa?nome=${nome}`);
+}
 /**************************************************************/
 
 //Rotas barbearia

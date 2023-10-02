@@ -99,6 +99,7 @@ const AgendamentoHorario = (props) => {
                                     barbeariaID: props.route.params?.barbeariaID,
                                     barbeiroID: props.route.params?.barbeiroID,
                                     servicoID: props.route.params?.servicoID,
+                                    usuarioID: props.route.params?.usuarioID,
                                     tempServ: tempServ,
                                     horaInicio: e.Horario,
                                     data: date

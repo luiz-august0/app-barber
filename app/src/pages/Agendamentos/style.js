@@ -11,7 +11,8 @@ export default StyleSheet.create({
         flex:1, 
         padding: 10, 
         flexDirection: "row", 
-        marginTop: 40 
+        marginTop: 40,
+        justifyContent: "space-between"
     },
     itemsView: {
         flexDirection: "row",

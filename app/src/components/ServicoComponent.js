@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, TouchableOpacity, Image, TouchableNativeFeedback, StyleSheet, Text } from "react-native";
+import { View, Image, TouchableNativeFeedback, StyleSheet, Text } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { Card } from "react-native-paper";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -8,7 +8,7 @@ import PreviewImage from "./PreviewImage";
 import AbsoluteModal from "./AbsoluteModal";
 import globalFunction from "../globalFunction";
 
-const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation, barbeariaID, onPressSelect}) => {
+const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNavigation, screenProps, onPressSelect}) => {
     const [images, setImages] = useState([]);
     const [index, setIndex] = useState(0)
     const isCarousel = useRef(null);
@@ -46,9 +46,9 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
     }
 
     const handleClickSelect = () => {
-        props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: barbeariaID});
+        props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: screenProps.barbeariaID, usuarioID: screenProps.usuarioID });
 
-        if (barbeariaID) {
+        if (screenProps.barbeariaID) {
             onPressSelect();
         }
     }

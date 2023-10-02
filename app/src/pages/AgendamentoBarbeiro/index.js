@@ -49,7 +49,7 @@ const AgendamentoBarbeiro = (props) => {
 
     const renderItem = (item) => {
         return (
-            <TouchableOpacity key={item.Usr_Codigo} style={style.renderItemBarbeiro} onPress={() => props.navigation.navigate("AgendamentoHorario", { barbeariaID: item.Barb_Codigo, barbeiroID: item.Usr_Codigo, servicoID: props.route.params?.servicoID })}>
+            <TouchableOpacity key={item.Usr_Codigo} style={style.renderItemBarbeiro} onPress={() => props.navigation.navigate("AgendamentoHorario", { barbeariaID: item.Barb_Codigo, barbeiroID: item.Usr_Codigo, servicoID: props.route.params?.servicoID, usuarioID: props.route.params?.usuarioID })}>
                 {item.Usr_FotoPerfil!==null&&item.Usr_FotoPerfil!==""?
                 <Image style={style.image} source={{uri: `https://res.cloudinary.com/dvwxrpftt/image/upload/${item.Usr_FotoPerfil}`}}/>
                 :<Image style={style.image} source={perfil}/>}

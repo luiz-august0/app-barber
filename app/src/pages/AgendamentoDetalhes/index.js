@@ -68,7 +68,7 @@ const AgendamentoDetalhes = (props) => {
 
 		if (!props.route.params?.agdmID) {
 			try {
-				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.id, props.route.params?.servicoID, servicoData.Serv_Valor, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
+				await postAgendamento(props.route.params?.barbeariaID, props.route.params?.barbeiroID, props.usuario.state.tipo=="C"?props.usuario.state.id:props.route.params?.usuarioID, props.route.params?.servicoID, servicoData.Serv_Valor, props.route.params?.tempServ, props.route.params?.horaInicio, globalFunction.formatDateToSql(props.route.params?.data));
 				Alert.alert("Atenção", "Agendamento realizado com sucesso");
 				props.navigation.navigate('Home');
 			} catch (error) {
