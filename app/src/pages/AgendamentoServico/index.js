@@ -5,8 +5,9 @@ import style from "./style";
 import { useIsFocused } from "@react-navigation/native";
 import AbsoluteModal from "../../components/AbsoluteModal";
 import { TextInput } from "react-native-paper";
-import { getBarbeariaCategoriaServicos, getBarbeariaCategorias } from "../../services/api";
+import { getBarbeariaCategoriaServicos, getBarbeariaCategoriaServicosByBarbeiro, getBarbeariaCategorias, getBarbeariaCategoriasByBarbeiro } from "../../services/api";
 import ServicoComponent from "../../components/ServicoComponent";
+import { connect } from "react-redux";
 
 const AgendamentoServico = (props) => {
     const isFocused = useIsFocused();
@@ -21,7 +22,12 @@ const AgendamentoServico = (props) => {
     const getCategorias = async() => {
         setRefresh(true);
         try {
-            const res = await getBarbeariaCategorias(props.route.params?.barbeariaID);
+            let res = [];
+            if (props.usuario.state.tipo !== "F") {
+                res = await getBarbeariaCategorias(props.route.params?.barbeariaID);
+            } else {
+                res = await getBarbeariaCategoriasByBarbeiro(props.route.params?.barbeariaID, props.usuario.state.id);
+            }
             setInitialCategorias(res.data);
             setFilteredCategorias(res.data);
         } catch (error) {
@@ -33,7 +39,12 @@ const AgendamentoServico = (props) => {
     const getCategoriaServicos = async(id) => {
         setLoadingServicos(true);
         try {
-            const res = await getBarbeariaCategoriaServicos(id);
+            let res = [];
+            if (props.usuario.state.tipo !== "F") {
+                res = await getBarbeariaCategoriaServicos(id);
+            } else {
+                res = await getBarbeariaCategoriaServicosByBarbeiro(id, props.usuario.state.id);
+            }
             setInitialCategoriaServicos(res.data);
             setFilteredCategoriaServicos(res.data);
         } catch (error) {
@@ -161,8 +172,8 @@ const AgendamentoServico = (props) => {
                                             tempo={e.Minutos} 
                                             id={e.Serv_Codigo} 
                                             idCategoria={e.ServCat_Codigo}
-                                            screenNavigation={'AgendamentoBarbeiro'}
-                                            screenProps={{ barbeariaID: props.route.params?.barbeariaID, usuarioID: props.route.params?.usuarioID }}
+                                            screenNavigation={props.usuario.state.tipo!=="F"?"AgendamentoBarbeiro":"AgendamentoHorario"}
+                                            screenProps={{ barbeariaID: props.route.params?.barbeariaID, usuarioID: props.route.params?.usuarioID, barbeiroID: props.usuario.state.tipo=="F"?props.usuario.state.id:null}}
                                             onPressSelect={onPressSelect}
                                             />
                                         </View>
@@ -176,5 +187,11 @@ const AgendamentoServico = (props) => {
         </SafeAreaView>
     )
 }
+
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario
+    }
+}
     
-export default AgendamentoServico;
+export default connect(mapStateToProps, null)(AgendamentoServico);

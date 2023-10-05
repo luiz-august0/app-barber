@@ -11,7 +11,6 @@ import perfil from "../../img/perfil.png";
 import { connect } from "react-redux";
 import { usuarioLogado } from "../../store/actions/usuario";
 import KeyboardAvoidingWrapper from "../../components/KeyboardAvoidingWrapper";
-import MAIcon from 'react-native-vector-icons/MaterialIcons';
 import Loading from "../../components/Loading";
 
 const Perfil = (props) => {

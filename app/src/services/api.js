@@ -120,7 +120,7 @@ export const postBarbeariaLogo = async (barbeariaID, file) => {
 };
 
 export const getHorarios = async () => {
-    return api.get('/barbearia_horarios');
+    return api.get('/horarios');
 };
 
 export const getBarbeariaHorariosDia = async (barbeariaID, dia) => {
@@ -230,6 +230,14 @@ export const postServicoBarbeiro = async(usuarioID, barbeariaID, servicoID) => {
 
 export const deleteServicoBarbeiro = async(usuarioID, barbeariaID) => {
     return api.post('/barbeiro/servico/remove', { usuarioID, barbeariaID });
+};
+
+export const getBarbeariaCategoriasByBarbeiro = async(idBarbearia, usuarioID) => {
+    return api.get(`/barbearia/barbeiro/categoria/?barbeariaID=${idBarbearia}&&barbeiroID=${usuarioID}`);
+};
+
+export const getBarbeariaCategoriaServicosByBarbeiro = async(categoriaID, usuarioID) => {
+    return api.get(`/barbearia/barbeiro/servicoscategoria/?categoriaID=${categoriaID}&&barbeiroID=${usuarioID}`);
 };
 
 //Rotas agendamento

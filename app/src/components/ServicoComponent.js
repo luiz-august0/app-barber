@@ -46,7 +46,7 @@ const ServicoComponent = ({props, nome, valor, tempo, id, idCategoria, screenNav
     }
 
     const handleClickSelect = () => {
-        props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: screenProps.barbeariaID, usuarioID: screenProps.usuarioID });
+        props.navigation.navigate(screenNavigation, { servicoID: id, categoriaID: idCategoria, barbeariaID: screenProps.barbeariaID, usuarioID: screenProps.usuarioID, barbeiroID: screenProps.barbeiroID });
 
         if (screenProps.barbeariaID) {
             onPressSelect();
