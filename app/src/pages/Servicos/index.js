@@ -58,6 +58,7 @@ const Servicos = (props) => {
                                 id={e.Serv_Codigo} 
                                 idCategoria={e.ServCat_Codigo}
                                 screenNavigation={'DadosServico'}
+                                screenProps={{}}
                                 />
                             </View>
                         )
