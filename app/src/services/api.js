@@ -11,8 +11,8 @@ export const getDadosCEP = async(cep) => {
 /**************************************************************/
 
 //Rota de sessão
-export const createSession = async (email, senha) => {
-    return api.put('/sessions', { email, senha });
+export const createSession = async (email, senha, tokenNotificacao) => {
+    return api.put('/sessions', { email, senha, tokenNotificacao });
 };
 /**************************************************************/
 

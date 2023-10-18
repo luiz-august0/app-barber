@@ -23,6 +23,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.barberapp.barberapp",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "permissions": [
         "android.permission.RECORD_AUDIO"

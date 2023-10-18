@@ -3,8 +3,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { api, createSession, getUsuario } from "../services/api";
 import * as Sentry from "@sentry/react-native";
+import * as Notifications from 'expo-notifications';
+import { expo } from '../../app.json';
 
 const initialState = {};
+
+const registerForPushNotificationsAsync = async() => {
+    let token;
+    
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+    }
+    if (finalStatus !== 'granted') return;
+
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId })).data;
+  
+    return token;
+}
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -14,9 +32,13 @@ const reducer = (state, action) => {
 };
 
 const login = (dispatch) => {
+    let tokenNotificacao = "";
+
     return async (email, senha) => {
         try {           
-            const response = await createSession(email, senha);
+            await registerForPushNotificationsAsync().then((res) => tokenNotificacao = res)
+
+            const response = await createSession(email, senha, tokenNotificacao);
 
             const usuarioLogado = response.data.usuario;
             const token = response.data.token;
@@ -39,6 +61,7 @@ const login = (dispatch) => {
                 Sentry.captureException(error);
                 Alert.alert('Atenção', 'Ops, ocorreu algum erro ao realizar o login, contate o suporte');
             }
+
             return {authenticated: false};
         }
     }
