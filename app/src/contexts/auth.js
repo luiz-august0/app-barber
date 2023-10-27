@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import { api, createSession, getUsuario } from "../services/api";
 import * as Sentry from "@sentry/react-native";
 import * as Notifications from 'expo-notifications';
-import { expo } from '../../app.json';
+import { extra } from '../../app.config.js';
 
 const initialState = {};
 
@@ -19,7 +19,7 @@ const registerForPushNotificationsAsync = async() => {
     }
     if (finalStatus !== 'granted') return;
 
-    token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId })).data;
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: extra.eas.projectId })).data;
   
     return token;
 }

@@ -7,7 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import storeConfig from './src/store/storeConfig';
 import * as Sentry from 'sentry-expo';
 import * as Notifications from 'expo-notifications';
-import { expo } from "./app.json";
+import { extra } from './app.config';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -55,7 +55,7 @@ async function registerForPushNotificationsAsync() {
     }
     if (finalStatus !== 'granted') return;
 
-    token = (await Notifications.getExpoPushTokenAsync({ projectId: expo.extra.eas.projectId })).data;
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: extra.eas.projectId })).data;
   
     return token;
 }
