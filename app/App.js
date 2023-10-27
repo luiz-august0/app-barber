@@ -19,8 +19,8 @@ Notifications.setNotificationHandler({
 
 Sentry.init({
     dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-    enableInExpoDevelopment: true,
-    debug: true,
+    enableInExpoDevelopment: false,
+    debug: true
 });
 
 let customFonts = {

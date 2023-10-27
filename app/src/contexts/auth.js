@@ -2,7 +2,7 @@ import createContext from "./createContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { api, createSession, getUsuario } from "../services/api";
-import * as Sentry from "@sentry/react-native";
+import * as Sentry from 'sentry-expo';
 import * as Notifications from 'expo-notifications';
 import { extra } from '../../app.config.js';
 
@@ -58,7 +58,7 @@ const login = (dispatch) => {
             if (error.message === "Request failed with status code 401") {
                 Alert.alert('Atenção', 'Email ou senha inválido');
             } else {
-                Sentry.captureException(error);
+                Sentry.Native.captureException(error);
                 Alert.alert('Atenção', 'Ops, ocorreu algum erro ao realizar o login, contate o suporte');
             }
 

@@ -49,7 +49,8 @@ module.exports = {
                 file: "sentry-expo/upload-sourcemaps",
                 config: {
                     organization: "app-barber",
-                    project: "app-barber"
+                    project: "app-barber",
+                    authToken: process.env.EXPO_PUBLIC_SENTRY_TOKEN
                 }
             }
         ]
