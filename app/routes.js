@@ -2,12 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator, DrawerItem, DrawerItemList, DrawerContentScrollView } from '@react-navigation/drawer';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
-import FIcon from 'react-native-vector-icons/FontAwesome';
 import { AuthProvider } from './src/contexts/auth';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { api } from "./src/services/api";
 import Login from './src/pages/Login/index';
 import C04, { C00, C01, C02, C03, RedefinirSenha } from './src/pages/Cadastro/index';
 import Home from './src/pages/Home/index';
@@ -23,7 +18,6 @@ import DadosServico from './src/pages/DadosServico';
 import Barbeiros from './src/pages/Barbeiros';
 import DadosBarbeiro from './src/pages/DadosBarbeiro';
 import MenuBarbeiro from './src/pages/MenuBarbeiro';
-import Header from './src/components/Header';
 import ServicosBarbeiro from './src/pages/ServicosBarbeiro';
 import AgendamentoBarbearia from './src/pages/AgendamentoBarbearia';
 import AgendamentoServico from './src/pages/AgendamentoServico';
@@ -34,6 +28,7 @@ import Agendamentos from './src/pages/Agendamentos';
 import PerfilBarbearia from './src/pages/PerfilBarbearia';
 import AgendamentoMapa from './src/pages/AgendamentoMapa';
 import AgendamentoCliente from './src/pages/AgendamentoCliente';
+import { Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 /*const Drawer = createDrawerNavigator();
@@ -105,6 +100,9 @@ const HomeNav = () => {
 }*/
 
 const Routes = () => {
+    const routeMapsOptionsANDROID = { headerTitle: "", headerStyle: 'none', statusBarHidden: true, navigationBarHidden: true };
+    const routeMapsOptionsIOS = { headerTitle: "", headerStyle: 'none' };
+
     return (
         <AuthProvider>
             <NavigationContainer>
@@ -115,7 +113,9 @@ const Routes = () => {
                     headerStyle: { backgroundColor: globalStyles.main_color },
                     headerTintColor: '#2B513B',
                     headerTransparent: true,
-                    headerTitleStyle: {fontFamily: 'Manrope-Regular'}
+                    headerTitleStyle: {fontFamily: 'Manrope-Regular'},
+                    statusBarColor: globalStyles.main_color,
+                    navigationBarColor: globalStyles.main_color
                 }}
                 initialRouteName='Login'>
                     <Stack.Screen
@@ -156,7 +156,7 @@ const Routes = () => {
                     <Stack.Screen 
                     name="Home" 
                     component={Home} 
-                    options={{ headerShown: false, gestureEnabled: false }}
+                    options={{ headerShown: false, gestureEnabled: false, statusBarColor: "#2B513B", navigationBarColor: "#2B513B" }}
                     />
                     <Stack.Screen
                     name="Perfil"
@@ -231,7 +231,7 @@ const Routes = () => {
                     <Stack.Screen
                     name="AgendamentoMapa"
                     component={AgendamentoMapa}
-                    options={{ headerTitle: "", headerStyle: 'none' }}
+                    options={Platform.OS=="android"?routeMapsOptionsANDROID:routeMapsOptionsIOS}
                     />
                     <Stack.Screen
                     name="AgendamentoServico"
