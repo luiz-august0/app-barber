@@ -100,7 +100,7 @@ const HomeNav = () => {
 }*/
 
 const Routes = () => {
-    const routeMapsOptionsANDROID = { headerTitle: "", headerStyle: 'none', statusBarHidden: true, navigationBarHidden: true };
+    const routeMapsOptionsANDROID = { headerTitle: "", headerStyle: 'none', statusBarHidden: false, navigationBarHidden: true, statusBarColor: "#FFFF", statusBarStyle: 'dark' };
     const routeMapsOptionsIOS = { headerTitle: "", headerStyle: 'none' };
 
     return (
@@ -115,6 +115,7 @@ const Routes = () => {
                     headerTransparent: true,
                     headerTitleStyle: {fontFamily: 'Manrope-Regular'},
                     statusBarColor: globalStyles.main_color,
+                    statusBarAnimation: 'slide',
                     navigationBarColor: globalStyles.main_color
                 }}
                 initialRouteName='Login'>
